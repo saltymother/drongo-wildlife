@@ -90,3 +90,17 @@
   - Added high-visibility archive upload banner above the media collection
   - Re-architected Curator Upload Studio with explicit 4-step workflow: format toggle (Photo vs Video), destination section pills (Gallery, Short Films, Birding Guides, Expeditions), drag-and-drop file review, and field metadata specs
   - Synchronized form bindings and active UI state in app.js
+
+## [v1.0.6] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UI/UX Refactor
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Removed former 'Field Dispatches & Visual Archives' header block and subtitle
+  - Added new clean, prominent section title 'Visuals'
+  - Restructured category pill filter bar in exact matching style: Photos, Video, Short Film, Travelling Guide, Ideas, and Information (with All Visuals master filter)
+  - Expanded catalog to 14 verified entries with dedicated badges (.badge-photo, .badge-video, .badge-short-film, .badge-guide, .badge-ideas, .badge-info)
+  - Updated upload modal destination selector with the 6 visual categories in a responsive 3-column grid
+  - Synchronized sub-navigation and drawer links directly to the Visuals category filters

@@ -11,35 +11,20 @@
 
   // Base institutional catalog of photographs and cinematic dispatches
   const INITIAL_CATALOG = [
+    // --- 1. PHOTOS (4 Items) ---
     {
       id: 'item-tiger-valmiki',
       type: 'photo',
       title: 'The Royal Bengal Tiger of Valmiki',
       category: 'photos',
-      section: 'GALLERY',
-      tags: ['expeditions', 'mammals', 'valmiki'],
+      section: 'Photos',
+      tags: ['photos', 'mammals', 'valmiki', 'tiger'],
       location: 'Valmiki Tiger Reserve, West Champaran, Bihar',
-      camera: 'Sony Alpha 1',
+      camera: 'Sony Alpha 1 Flagship',
       lens: 'FE 600mm f/4 GM OSS',
       exposure: '1/2000s at f/4 • ISO 640',
       mediaUrl: 'assets/images/valmiki_tiger.jpg',
-      fieldNotes: 'Spotted emerging from the misty sal forest shadows along the Gandak floodplains at first light. Valmiki is Bihar\'s sovereign wilderness corridor, preserving primeval Terai grasslands against the snowy backdrop of the Nepalese Himalayas.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-dolphin-vikramshila',
-      type: 'video',
-      title: 'Ganges River Dolphin (Susu) at Dawn',
-      category: 'videos',
-      section: 'SHORT FILMS',
-      tags: ['videos', 'wetlands', 'ganges'],
-      location: 'Vikramshila Gangetic Dolphin Sanctuary, Bhagalpur',
-      camera: 'RED V-Raptor 8K Cinema',
-      lens: 'Canon Cine-Servo 50-1000mm T5.0-8.9',
-      exposure: '8K UHD • 120fps Slow Motion • 180° Shutter',
-      mediaUrl: 'assets/images/gangetic_dolphin.jpg',
-      videoUrl: 'assets/videos/gangetic_dolphin_teaser.mp4',
-      fieldNotes: 'The Platanista gangetica is an archaic freshwater dolphin, functionally blind in the nutrient-rich silt of the Ganges. Capturing this breach required 6 dawn patrols on traditional wooden catamarans.',
+      fieldNotes: 'Spotted emerging from misty sal forest shadows along the Gandak floodplains at first light. Valmiki is Bihar\'s sovereign wilderness corridor, preserving primeval Terai grasslands against the snowy backdrop of the Nepalese Himalayas.',
       isUserUploaded: false
     },
     {
@@ -47,8 +32,8 @@
       type: 'photo',
       title: 'The Black Drongo: King of the Canopy',
       category: 'photos',
-      section: 'BIRDING GUIDES',
-      tags: ['birds', 'drongo', 'rajgir'],
+      section: 'Photos',
+      tags: ['photos', 'birds', 'drongo', 'rajgir'],
       location: 'Rajgir Wildlife Sanctuary, Nalanda, Bihar',
       camera: 'Nikon Z9 Flagship',
       lens: 'NIKKOR Z 400mm f/2.8 TC VR S',
@@ -58,28 +43,12 @@
       isUserUploaded: false
     },
     {
-      id: 'item-gharial-gandak',
-      type: 'video',
-      title: 'Gharial Patriarch of the Gandak River',
-      category: 'videos',
-      section: 'SHORT FILMS',
-      tags: ['videos', 'wetlands', 'reptiles'],
-      location: 'Gandak River Confluence, Bihar',
-      camera: 'ARRI Alexa Mini LF',
-      lens: 'Angénieux Optimo Ultra 12x Cine',
-      exposure: '4K ProRes 4444 • 60fps • T4.2',
-      mediaUrl: 'assets/images/gharial_gandak.jpg',
-      videoUrl: 'assets/videos/gharial_basking_4k.mp4',
-      fieldNotes: 'An eighteen-foot dominant male Gharial (Gavialis gangeticus) with his bulbous nasal ghara basking upon pristine river shingle. The Gandak river in Bihar remains one of Earth\'s most crucial sanctuaries for this critically endangered crocodylian.',
-      isUserUploaded: false
-    },
-    {
       id: 'item-crane-kabar-tal',
       type: 'photo',
       title: 'Courtship of the Sarus Crane',
       category: 'photos',
-      section: 'BIRDING GUIDES',
-      tags: ['birds', 'wetlands', 'kabar-tal'],
+      section: 'Photos',
+      tags: ['photos', 'birds', 'wetlands', 'kabar-tal'],
       location: 'Kabar Tal Wetland (Ramsar Site #2436), Begusarai',
       camera: 'Canon EOS R5 C',
       lens: 'RF 100-500mm f/4.5-7.1 L IS USM',
@@ -93,14 +62,178 @@
       type: 'photo',
       title: 'Asian Paradise Flycatcher Streamer Flight',
       category: 'photos',
-      section: 'BIRDING GUIDES',
-      tags: ['birds', 'expeditions', 'kaimur'],
+      section: 'Photos',
+      tags: ['photos', 'birds', 'expeditions', 'kaimur'],
       location: 'Kaimur Wildlife Sanctuary, Rohtas, Bihar',
-      camera: 'Sony Alpha 1',
+      camera: 'Sony Alpha 1 Flagship',
       lens: 'FE 400mm f/2.8 GM OSS',
       exposure: '1/5000s at f/2.8 • ISO 1000',
       mediaUrl: 'assets/images/paradise_flycatcher.jpg',
       fieldNotes: 'A ribbon-tailed adult male in white morph gliding gracefully through the dense canopy of Kaimur\'s deciduous plateau forests, tracking dragonflies with astonishing aerobatic dexterity.',
+      isUserUploaded: false
+    },
+
+    // --- 2. VIDEO (2 Items) ---
+    {
+      id: 'item-dolphin-vikramshila',
+      type: 'video',
+      title: 'Ganges River Dolphin (Susu) at Dawn',
+      category: 'video',
+      section: 'Video',
+      tags: ['video', 'wetlands', 'ganges', 'dolphin'],
+      location: 'Vikramshila Gangetic Dolphin Sanctuary, Bhagalpur',
+      camera: 'RED V-Raptor 8K Cinema',
+      lens: 'Canon Cine-Servo 50-1000mm T5.0-8.9',
+      exposure: '8K UHD • 120fps Slow Motion • 180° Shutter',
+      mediaUrl: 'assets/images/gangetic_dolphin.jpg',
+      videoUrl: 'assets/videos/gangetic_dolphin_teaser.mp4',
+      fieldNotes: 'The Platanista gangetica is an archaic freshwater dolphin, functionally blind in the nutrient-rich silt of the Ganges. Capturing this breach required 6 dawn patrols on traditional wooden catamarans.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-gharial-gandak',
+      type: 'video',
+      title: 'Gharial Patriarch of the Gandak River',
+      category: 'video',
+      section: 'Video',
+      tags: ['video', 'wetlands', 'reptiles', 'gharial'],
+      location: 'Gandak River Confluence, Bihar',
+      camera: 'ARRI Alexa Mini LF',
+      lens: 'Angénieux Optimo Ultra 12x Cine',
+      exposure: '4K ProRes 4444 • 60fps • T4.2',
+      mediaUrl: 'assets/images/gharial_gandak.jpg',
+      videoUrl: 'assets/videos/gharial_basking_4k.mp4',
+      fieldNotes: 'An eighteen-foot dominant male Gharial (Gavialis gangeticus) with his bulbous nasal ghara basking upon pristine river shingle. The Gandak river in Bihar remains one of Earth\'s most crucial sanctuaries for this critically endangered crocodylian.',
+      isUserUploaded: false
+    },
+
+    // --- 3. SHORT FILM (2 Items) ---
+    {
+      id: 'item-sal-chronicle-film',
+      type: 'video',
+      title: 'Shadows of the Sal Forest: A Valmiki Chronicle',
+      category: 'short-film',
+      section: 'Short Film',
+      tags: ['short-film', 'cinema', 'valmiki', 'tiger', 'sal-forest'],
+      location: 'Valmiki Tiger Reserve, West Champaran, Bihar',
+      camera: 'ARRI Alexa Mini LF Cinema Master',
+      lens: 'Zeiss Supreme Prime Lenses',
+      exposure: '4K CinemaScope • 24fps • Film Simulation',
+      mediaUrl: 'assets/images/bengal_tiger.jpg',
+      videoUrl: 'assets/videos/gharial_basking_4k.mp4',
+      fieldNotes: 'A 14-minute cinematic short documentary exploring the primeval predator-prey dynamics of tiger territories along the Indo-Nepal Himalayan foothills.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-wetlands-rhythm-film',
+      type: 'video',
+      title: 'Rhythm of the Wetlands: Kabar Tal & Gandak River',
+      category: 'short-film',
+      section: 'Short Film',
+      tags: ['short-film', 'cinema', 'wetlands', 'kabar-tal', 'skimmer'],
+      location: 'Kabar Tal Ramsar Basin & Gandak Shingle, Bihar',
+      camera: 'RED V-Raptor 8K VV Cinema',
+      lens: 'Canon Cine-Servo 50-1000mm T5.0',
+      exposure: '8K DCI • 120fps High-Speed • 180° Shutter',
+      mediaUrl: 'assets/images/indian_skimmer.jpg',
+      videoUrl: 'assets/videos/gangetic_dolphin_teaser.mp4',
+      fieldNotes: 'Cinematic short film documenting migratory waterbirds arriving along the Central Asian Flyway and rare Indian skimmers cutting through dawn river mists.',
+      isUserUploaded: false
+    },
+
+    // --- 4. TRAVELLING GUIDE (2 Items) ---
+    {
+      id: 'item-guide-valmiki',
+      type: 'photo',
+      title: 'Field Expedition Guide: Navigating Valmiki Tiger Reserve',
+      category: 'travelling-guide',
+      section: 'Travelling Guide',
+      tags: ['travelling-guide', 'logistics', 'valmiki', 'safari'],
+      location: 'Valmiki Tiger Reserve (Madanpur, Valmikinagar, Manguraha)',
+      camera: 'Field Logistics Dossier & Nikon Z8',
+      lens: 'NIKKOR Z 24-120mm f/4 S',
+      exposure: 'Comprehensive Trail & Permitting Guide',
+      mediaUrl: 'assets/images/racket_tailed_drongo.jpg',
+      fieldNotes: 'Complete naturalist travel and expedition guide: entry permits via Forest Department portals, best safari seasons (November to April), river raft crossings over the Gandak, and essential telephoto focal lengths for dense sal canopies.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-guide-vikramshila',
+      type: 'photo',
+      title: 'Riverboat Naturalist Guide: Vikramshila Dolphin Safari',
+      category: 'travelling-guide',
+      section: 'Travelling Guide',
+      tags: ['travelling-guide', 'logistics', 'dolphin', 'ganges', 'boats'],
+      location: 'Vikramshila Gangetic Dolphin Sanctuary, Bhagalpur to Sultanganj',
+      camera: 'River Expedition Map & Canon R5 C',
+      lens: 'RF 70-200mm f/2.8 L IS USM',
+      exposure: 'Boat Charter & Tidal Navigation Protocols',
+      mediaUrl: 'assets/images/river_dolphin.jpg',
+      fieldNotes: 'Essential guide for riverine wildlife photography: hiring authorized local wooden country boats from Barari Ghat, navigating seasonal river silt channels, respecting safe 50-meter observation distances for surfacing dolphins, and dawn light tracking.',
+      isUserUploaded: false
+    },
+
+    // --- 5. IDEAS (2 Items) ---
+    {
+      id: 'item-idea-watercraft-rig',
+      type: 'photo',
+      title: 'Low-Angle Watercraft Filming Rig for Elusive River Fauna',
+      category: 'ideas',
+      section: 'Ideas',
+      tags: ['ideas', 'filming-rig', 'river', 'innovation'],
+      location: 'Gandak & Ganges River Confluences, Bihar',
+      camera: 'Custom Dual-Gimbal Carbon Frame Rig',
+      lens: 'Super-Wide 14-24mm & 400mm Dual Mount',
+      exposure: 'Waterline Low-Perspective Cinematography',
+      mediaUrl: 'assets/images/drongo_bird.jpg',
+      fieldNotes: 'Innovative field filming concept: building an ultra-stable silent hydro-skiff mount that floats inches above waterlevel, enabling zero-vibration cinematic waterline perspectives of surfacing river dolphins and foraging waders without acoustic engine disturbance.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-idea-canopy-microphone',
+      type: 'photo',
+      title: 'Parabolic Acoustic Array for Nocturnal Canopy Dispatches',
+      category: 'ideas',
+      section: 'Ideas',
+      tags: ['ideas', 'bioacoustics', 'audio-rig', 'canopy'],
+      location: 'Kaimur Plateau Deciduous Canopy & Valmiki',
+      camera: 'Ultra-Low-Noise Ambisonic Parabolic Array',
+      lens: 'Optical Sight Calibration Unit',
+      exposure: '32-bit Float Multi-Channel Field Audio',
+      mediaUrl: 'assets/images/adjutant_stork.jpg',
+      fieldNotes: 'Field sound design innovation: deploying 26-inch parabolic dish microphones synchronized with high-ISO motion sensors to capture the acoustic repertoire of owls, nightjars, and alarm calls of spotted deer announcing prowling carnivores.',
+      isUserUploaded: false
+    },
+
+    // --- 6. INFORMATION (2 Items) ---
+    {
+      id: 'item-info-drongo-sentinel',
+      type: 'photo',
+      title: 'Ecological Dossier: The Black Drongo\'s Sentinel System',
+      category: 'information',
+      section: 'Information',
+      tags: ['information', 'ecology', 'drongo', 'mimicry', 'ethology'],
+      location: 'Rajgir & Valmiki Deciduous Woodlands, Bihar',
+      camera: 'Bioacoustics & Telephoto Documentation',
+      lens: 'FE 600mm f/4 GM OSS',
+      exposure: 'Behavioral Ethology Monograph',
+      mediaUrl: 'assets/images/black_drongo.jpg',
+      fieldNotes: 'Detailed scientific overview of Dicrurus macrocercus: its complex vocal mimicry replicating hawk and shikra distress calls, symbiotic cooperative feeding associations with grazing herbivores, and fearless territorial defense against raptors.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-info-kabar-tal-ecosystem',
+      type: 'photo',
+      title: 'Hydrological & Avian Status Report: Kabar Tal Ramsar Wetland',
+      category: 'information',
+      section: 'Information',
+      tags: ['information', 'wetlands', 'ramsar', 'conservation', 'birds'],
+      location: 'Kabar Tal (Begusarai), Bihar — Ramsar Site #2436',
+      camera: 'Ecological Survey & Aerial Imagery',
+      lens: 'High-Resolution Environmental Telephoto',
+      exposure: 'Ramsar Biosphere Conservation Survey',
+      mediaUrl: 'assets/images/sarus_crane.jpg',
+      fieldNotes: 'Comprehensive environmental status report on Asia\'s largest freshwater oxbow lake: seasonal water depths, macrophyte diversity, macroinvertebrate biodiversity supporting migratory waterfowl, and community conservation initiatives.',
       isUserUploaded: false
     }
   ];
@@ -180,7 +313,8 @@
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const userItems = JSON.parse(stored);
-        catalog = [...INITIAL_CATALOG, ...userItems];
+        const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded) : [];
+        catalog = [...INITIAL_CATALOG, ...customUploads];
       } else {
         catalog = [...INITIAL_CATALOG];
       }
@@ -209,13 +343,13 @@
     // Apply Filter
     currentlyFilteredItems = catalog.filter(item => {
       if (currentFilter === 'all') return true;
-      if (currentFilter === 'photos') return item.type === 'photo';
-      if (currentFilter === 'videos') return item.type === 'video';
-      if (currentFilter === 'birds') return item.tags.includes('birds') || item.section === 'BIRDING GUIDES';
-      if (currentFilter === 'expeditions') return item.tags.includes('expeditions') || item.section === 'EXPEDITIONS';
-      if (currentFilter === 'wetlands') return item.tags.includes('wetlands') || item.location.toLowerCase().includes('ganges') || item.location.toLowerCase().includes('kabar');
-      if (currentFilter === 'user-uploads') return item.isUserUploaded === true;
-      return true;
+      if (currentFilter === 'photos') return item.category === 'photos' || item.type === 'photo';
+      if (currentFilter === 'video') return item.category === 'video' || (item.type === 'video' && item.category !== 'short-film');
+      if (currentFilter === 'short-film') return item.category === 'short-film' || item.section === 'Short Film' || item.section === 'SHORT FILMS';
+      if (currentFilter === 'travelling-guide') return item.category === 'travelling-guide' || item.section === 'Travelling Guide';
+      if (currentFilter === 'ideas') return item.category === 'ideas' || item.section === 'Ideas';
+      if (currentFilter === 'information') return item.category === 'information' || item.section === 'Information';
+      return item.category === currentFilter;
     });
 
     if (currentlyFilteredItems.length === 0) {
@@ -226,19 +360,36 @@
           <button class="header-action-btn btn-gold trigger-upload-modal" style="margin: 0 auto;">+ Upload to This Section</button>
         </div>
       `;
-      // Re-bind the dynamically created upload button
       mediaGridEl.querySelector('.trigger-upload-modal')?.addEventListener('click', openUploadModal);
       return;
     }
 
     mediaGridEl.innerHTML = currentlyFilteredItems.map((item, index) => {
       const isVideo = item.type === 'video';
-      const categoryLabel = item.section || (isVideo ? 'SHORT FILM' : 'GALLERY');
+
+      let badgeClass = 'badge-photo';
+      let categoryLabel = item.section || 'PHOTO';
+      if (item.category === 'video' || (item.type === 'video' && item.category !== 'short-film')) {
+        badgeClass = 'badge-video';
+        categoryLabel = item.section || 'VIDEO';
+      } else if (item.category === 'short-film') {
+        badgeClass = 'badge-short-film';
+        categoryLabel = item.section || 'SHORT FILM';
+      } else if (item.category === 'travelling-guide') {
+        badgeClass = 'badge-guide';
+        categoryLabel = item.section || 'TRAVELLING GUIDE';
+      } else if (item.category === 'ideas') {
+        badgeClass = 'badge-ideas';
+        categoryLabel = item.section || 'IDEAS';
+      } else if (item.category === 'information') {
+        badgeClass = 'badge-info';
+        categoryLabel = item.section || 'INFORMATION';
+      }
 
       return `
         <article class="media-card" data-index="${index}" data-id="${item.id}" tabindex="0" role="button" aria-label="${escapeHtml(item.title)}">
           <div class="card-media-wrapper">
-            <span class="card-category-badge ${isVideo ? 'badge-film' : ''}">${escapeHtml(categoryLabel)}</span>
+            <span class="card-category-badge ${badgeClass}">${escapeHtml(categoryLabel)}</span>
             <img 
               src="${escapeHtml(item.mediaUrl)}" 
               alt="${escapeHtml(item.title)}" 
@@ -331,12 +482,13 @@
 
       let count = 0;
       if (filter === 'all') count = catalog.length;
-      else if (filter === 'photos') count = catalog.filter(i => i.type === 'photo').length;
-      else if (filter === 'videos') count = catalog.filter(i => i.type === 'video').length;
-      else if (filter === 'birds') count = catalog.filter(i => i.tags.includes('birds') || i.section === 'BIRDING GUIDES').length;
-      else if (filter === 'expeditions') count = catalog.filter(i => i.tags.includes('expeditions') || i.section === 'EXPEDITIONS').length;
-      else if (filter === 'wetlands') count = catalog.filter(i => i.tags.includes('wetlands') || i.location.toLowerCase().includes('ganges') || i.location.toLowerCase().includes('kabar')).length;
-      else if (filter === 'user-uploads') count = catalog.filter(i => i.isUserUploaded).length;
+      else if (filter === 'photos') count = catalog.filter(i => i.category === 'photos' || i.type === 'photo').length;
+      else if (filter === 'video') count = catalog.filter(i => i.category === 'video' || (i.type === 'video' && i.category !== 'short-film')).length;
+      else if (filter === 'short-film') count = catalog.filter(i => i.category === 'short-film' || i.section === 'Short Film' || i.section === 'SHORT FILMS').length;
+      else if (filter === 'travelling-guide') count = catalog.filter(i => i.category === 'travelling-guide' || i.section === 'Travelling Guide').length;
+      else if (filter === 'ideas') count = catalog.filter(i => i.category === 'ideas' || i.section === 'Ideas').length;
+      else if (filter === 'information') count = catalog.filter(i => i.category === 'information' || i.section === 'Information').length;
+      else count = catalog.filter(i => i.category === filter).length;
 
       countEl.textContent = count;
     });
@@ -431,8 +583,8 @@
       if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Video Here';
       if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports MP4, MOV, WEBM wildlife reels and cinematic clips.';
       if (dropzoneInput) dropzoneInput.accept = 'video/*';
-      if (sectionSelect && sectionSelect.value === 'GALLERY') {
-        setUploadSection('SHORT FILMS');
+      if (sectionSelect && sectionSelect.value === 'photos') {
+        setUploadSection('video');
       }
     } else {
       if (mediaTypeSelect) mediaTypeSelect.value = 'photo';
@@ -441,8 +593,8 @@
       if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Photo Here';
       if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports JPG, PNG, WEBP stills from cameras or phones.';
       if (dropzoneInput) dropzoneInput.accept = 'image/*';
-      if (sectionSelect && sectionSelect.value === 'SHORT FILMS') {
-        setUploadSection('GALLERY');
+      if (sectionSelect && (sectionSelect.value === 'video' || sectionSelect.value === 'short-film')) {
+        setUploadSection('photos');
       }
     }
   }
@@ -453,8 +605,16 @@
     sectionChoicePills.forEach(pill => {
       pill.classList.toggle('active', pill.getAttribute('data-section') === sec);
     });
+    const sectionDisplayNames = {
+      'photos': 'Photos',
+      'video': 'Video',
+      'short-film': 'Short Film',
+      'travelling-guide': 'Travelling Guide',
+      'ideas': 'Ideas',
+      'information': 'Information'
+    };
     if (submitBtnText) {
-      submitBtnText.textContent = `Publish Dispatch to ${sec}`;
+      submitBtnText.textContent = `Publish Dispatch to ${sectionDisplayNames[sec] || sec}`;
     }
   }
 
@@ -475,9 +635,9 @@
     if (targetSec) {
       setUploadSection(targetSec);
     } else if (targetType === 'video') {
-      setUploadSection('SHORT FILMS');
+      setUploadSection('video');
     } else {
-      setUploadSection('GALLERY');
+      setUploadSection('photos');
     }
   }
 
@@ -562,19 +722,27 @@
       }
     }
 
-    // Determine section-based tags
-    const tags = ['user-upload'];
-    if (mediaType === 'video') tags.push('videos');
+    // Determine section-based tags and display name
+    const tags = ['user-upload', section];
+    if (mediaType === 'video') tags.push('video');
     if (mediaType === 'photo') tags.push('photos');
-    if (section === 'BIRDING GUIDES') tags.push('birds');
-    if (section === 'EXPEDITIONS') tags.push('expeditions');
+
+    const sectionDisplayNames = {
+      'photos': 'Photos',
+      'video': 'Video',
+      'short-film': 'Short Film',
+      'travelling-guide': 'Travelling Guide',
+      'ideas': 'Ideas',
+      'information': 'Information'
+    };
+    const displaySection = sectionDisplayNames[section] || section;
 
     const newRecord = {
       id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7),
       type: mediaType,
       title: title || 'Expedition Dispatch #' + (catalog.length + 1),
-      category: mediaType === 'video' ? 'videos' : 'photos',
-      section: section,
+      category: section,
+      section: displaySection,
       tags: tags,
       location: location || 'Field Observation Site, India',
       camera: camera,
@@ -598,7 +766,7 @@
     showToast(`✓ "${newRecord.title}" successfully added to ${newRecord.section}!`);
 
     // Smooth scroll to gallery
-    document.getElementById('mediaGridSection')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   function deleteUpload(id) {
@@ -756,10 +924,7 @@
           document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.remove('active'));
           link.classList.add('active');
 
-          if (targetSection === 'GALLERY') currentFilter = 'all';
-          else if (targetSection === 'SHORT FILMS') currentFilter = 'videos';
-          else if (targetSection === 'BIRDING GUIDES') currentFilter = 'birds';
-          else if (targetSection === 'EXPEDITIONS') currentFilter = 'expeditions';
+          currentFilter = targetSection;
 
           // Sync filter buttons
           filterBtns.forEach(btn => {
@@ -767,7 +932,7 @@
           });
 
           renderGallery();
-          document.getElementById('mediaGridSection')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
