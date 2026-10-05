@@ -65,3 +65,15 @@
   - Styled Latin motto 'Alta alatis patent' in crisp, aesthetic serif white typography (#ffffff)
   - Removed extraneous domain labels from the header stack for a pure, minimal institutional aesthetic
   - Synchronized footer branding and page title
+
+## [v1.0.5] - 2026-10-06
+- **Commit:** 0310c24 (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Deployment | Bugfix
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed unconfigured CNAME to serve directly under official GitHub Pages domain
+  - Truncated .nojekyll to 0-byte file ensuring Jekyll engine bypass
+  - Configured local static development server on free port 8085
+  - Synchronized main and gh-pages branches with cryptographically verified commits
