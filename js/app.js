@@ -7,7 +7,7 @@
   'use strict';
 
   // Key for localStorage persistence of user uploads
-  const STORAGE_KEY = 'drongo_custom_catalog_v2';
+  const STORAGE_KEY = 'drongo_custom_catalog_v3';
 
   // Base catalog containing strictly user-provided media
   const INITIAL_CATALOG = [
@@ -25,6 +25,22 @@
       exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
       fieldNotes: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure.',
+      isUserUploaded: true
+    },
+    {
+      id: 'item-animal-ginger-cat',
+      type: 'photo',
+      title: 'Domestic Cat (Felis catus)',
+      category: 'photos',
+      photoSubject: 'animal',
+      section: 'Photos',
+      tags: ['photos', 'animal', 'feline', 'cat', 'felis-catus', 'fauna'],
+      location: 'Habitat Observation Point',
+      camera: 'Wildlife & Animal Portraiture',
+      lens: 'Wide Aperture Standard Lens',
+      exposure: 'Natural Ambient Daylight',
+      mediaUrl: 'assets/images/ginger_white_cat.jpg',
+      fieldNotes: 'Candid daylight subject study of a ginger-and-white domestic cat (Felis catus) showing alert posture, facial features, and amber ocular coloration.',
       isUserUploaded: true
     }
   ];
@@ -109,10 +125,12 @@
     try {
       // Clear out legacy mock cache if present
       localStorage.removeItem('drongo_custom_catalog_v1');
+      localStorage.removeItem('drongo_custom_catalog_v2');
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const userItems = JSON.parse(stored);
-        const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded && item.id !== 'item-insect-golden-wasp') : [];
+        const baseIds = new Set(INITIAL_CATALOG.map(item => item.id));
+        const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded && !baseIds.has(item.id)) : [];
         catalog = [...INITIAL_CATALOG, ...customUploads];
       } else {
         catalog = [...INITIAL_CATALOG];

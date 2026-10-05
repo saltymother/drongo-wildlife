@@ -140,3 +140,14 @@
   - Configured catalog to exclusively host pictures provided by the user, starting with the Golden Paper Wasp (Polistes wattii) in Photos > Insect
   - Reset live category counters to reflect strictly user-provided media (All Visuals: 1, Photos: 1, Insect: 1, other sections: 0)
   - Styled clean empty-state callouts with one-click upload triggers for empty visual categories
+
+## [v1.0.10] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Content Integration
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Added user-submitted photograph of a ginger-and-white domestic cat (Felis catus) to the Photos > Animal column
+  - Documented alert posture and natural ambient lighting details in the institutional catalog
+  - Updated live counters: All Visuals (2), Photos (2), Animal (1), Insect (1), All Photos (2)
