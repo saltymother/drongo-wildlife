@@ -17,9 +17,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Expires', '0')
         super().end_headers()
 
+class ThreadedHTTPServer(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+    daemon_threads = True
+
 if __name__ == '__main__':
     os.chdir(DIRECTORY)
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    with ThreadedHTTPServer(("", PORT), Handler) as httpd:
         print(f"==================================================")
         print(f"🦅 DRONGO Wildlife & Nature Visual Storytelling")
         print(f"🌐 Serving at: http://localhost:{PORT}")
