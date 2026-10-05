@@ -126,6 +126,13 @@
   const previewVideo = document.getElementById('uploadPreviewVideo');
   const clearPreviewBtn = document.getElementById('clearPreviewBtn');
   const mediaTypeSelect = document.getElementById('uploadMediaType');
+  const typeTogglePhoto = document.getElementById('typeTogglePhoto');
+  const typeToggleVideo = document.getElementById('typeToggleVideo');
+  const sectionChoicePills = document.querySelectorAll('.section-choice-pill');
+  const sectionSelect = document.getElementById('uploadSection');
+  const dropzoneTitleText = document.getElementById('dropzoneTitleText');
+  const dropzoneNoteText = document.getElementById('dropzoneNoteText');
+  const submitBtnText = document.getElementById('submitBtnText');
 
   // Lightbox Elements
   const lightboxModal = document.getElementById('lightboxModal');
@@ -416,10 +423,62 @@
   /* --------------------------------------------------------------------------
      Curator Studio: Media Upload System
      -------------------------------------------------------------------------- */
-  function openUploadModal() {
+  function setMediaType(type) {
+    if (type === 'video') {
+      if (mediaTypeSelect) mediaTypeSelect.value = 'video';
+      typeToggleVideo?.classList.add('active');
+      typeTogglePhoto?.classList.remove('active');
+      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Video Here';
+      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports MP4, MOV, WEBM wildlife reels and cinematic clips.';
+      if (dropzoneInput) dropzoneInput.accept = 'video/*';
+      if (sectionSelect && sectionSelect.value === 'GALLERY') {
+        setUploadSection('SHORT FILMS');
+      }
+    } else {
+      if (mediaTypeSelect) mediaTypeSelect.value = 'photo';
+      typeTogglePhoto?.classList.add('active');
+      typeToggleVideo?.classList.remove('active');
+      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Photo Here';
+      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports JPG, PNG, WEBP stills from cameras or phones.';
+      if (dropzoneInput) dropzoneInput.accept = 'image/*';
+      if (sectionSelect && sectionSelect.value === 'SHORT FILMS') {
+        setUploadSection('GALLERY');
+      }
+    }
+  }
+
+  function setUploadSection(sec) {
+    if (!sectionSelect) return;
+    sectionSelect.value = sec;
+    sectionChoicePills.forEach(pill => {
+      pill.classList.toggle('active', pill.getAttribute('data-section') === sec);
+    });
+    if (submitBtnText) {
+      submitBtnText.textContent = `Publish Dispatch to ${sec}`;
+    }
+  }
+
+  function openUploadModal(e) {
     uploadModal.classList.add('open');
     uploadModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    const targetType = e?.currentTarget?.getAttribute('data-upload-type');
+    const targetSec = e?.currentTarget?.getAttribute('data-upload-section');
+
+    if (targetType) {
+      setMediaType(targetType);
+    } else {
+      setMediaType('photo');
+    }
+
+    if (targetSec) {
+      setUploadSection(targetSec);
+    } else if (targetType === 'video') {
+      setUploadSection('SHORT FILMS');
+    } else {
+      setUploadSection('GALLERY');
+    }
   }
 
   function closeUploadModal() {
@@ -451,6 +510,8 @@
       return;
     }
 
+    setMediaType(isVideoFile ? 'video' : 'photo');
+
     const reader = new FileReader();
     reader.onload = function (e) {
       pendingFileDataUrl = e.target.result;
@@ -458,17 +519,15 @@
       previewContainer.style.display = 'block';
 
       if (isVideoFile) {
-        mediaTypeSelect.value = 'video';
         previewVideo.src = pendingFileDataUrl;
         previewVideo.style.display = 'block';
         previewImage.style.display = 'none';
       } else {
-        mediaTypeSelect.value = 'photo';
         previewImage.src = pendingFileDataUrl;
         previewImage.style.display = 'block';
         previewVideo.style.display = 'none';
       }
-      showToast('Media loaded for inspection.');
+      showToast('Media file loaded for review.');
     };
     reader.readAsDataURL(file);
   }
@@ -509,7 +568,6 @@
     if (mediaType === 'photo') tags.push('photos');
     if (section === 'BIRDING GUIDES') tags.push('birds');
     if (section === 'EXPEDITIONS') tags.push('expeditions');
-    if (section === 'ABOUT BIHAR') tags.push('wetlands');
 
     const newRecord = {
       id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7),
@@ -702,7 +760,6 @@
           else if (targetSection === 'SHORT FILMS') currentFilter = 'videos';
           else if (targetSection === 'BIRDING GUIDES') currentFilter = 'birds';
           else if (targetSection === 'EXPEDITIONS') currentFilter = 'expeditions';
-          else if (targetSection === 'ABOUT BIHAR') currentFilter = 'wetlands';
 
           // Sync filter buttons
           filterBtns.forEach(btn => {
@@ -715,12 +772,22 @@
       });
     });
 
-    // Upload Modal triggers
+    // Upload Modal triggers & step toggles
     openUploadModalBtns.forEach(btn => btn.addEventListener('click', openUploadModal));
     closeUploadModalBtn?.addEventListener('click', closeUploadModal);
     cancelUploadBtn?.addEventListener('click', closeUploadModal);
     uploadModal?.addEventListener('click', (e) => {
       if (e.target === uploadModal) closeUploadModal();
+    });
+
+    typeTogglePhoto?.addEventListener('click', () => setMediaType('photo'));
+    typeToggleVideo?.addEventListener('click', () => setMediaType('video'));
+
+    sectionChoicePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const sec = pill.getAttribute('data-section');
+        if (sec) setUploadSection(sec);
+      });
     });
 
     // Drag and Drop on dropzone

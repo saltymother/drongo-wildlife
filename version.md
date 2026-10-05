@@ -77,3 +77,16 @@
   - Truncated .nojekyll to 0-byte file ensuring Jekyll engine bypass
   - Configured local static development server on free port 8085
   - Synchronized main and gh-pages branches with cryptographically verified commits
+
+## [v1.0.5] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Refactor | Design
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Removed 'About Bihar' and 'Contact' navigation links across sub-navigation, mobile drawer, and footer
+  - Removed the expedition metrics bar (380+ species, 8K UHD, 14 rivers, 100% ethics)
+  - Added high-visibility archive upload banner above the media collection
+  - Re-architected Curator Upload Studio with explicit 4-step workflow: format toggle (Photo vs Video), destination section pills (Gallery, Short Films, Birding Guides, Expeditions), drag-and-drop file review, and field metadata specs
+  - Synchronized form bindings and active UI state in app.js
