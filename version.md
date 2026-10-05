@@ -40,3 +40,16 @@
   - Verified all local assets, photography cards, and 4K cinema video clips return HTTP 200
   - Verified HTML5 semantic structure and JavaScriptCore syntax execution
   - Synchronized deployment script and local development server
+
+## [v1.0.3] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Deployment | Release
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Configured custom domain CNAME record for drongowildlife.com
+  - Updated website name, page title, and meta tags to Drongo Wildlife (drongowildlife.com)
+  - Synchronized header brand title, drawer navigation, and institutional footer
+  - Updated canonical URLs and OpenGraph tags to https://drongowildlife.com
+  - Verified local dev server and updated deployment scripts

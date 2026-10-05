@@ -8,9 +8,9 @@ git push -u origin main:gh-pages
 
 if [ $? -eq 0 ]; then
   echo ""
-  echo "✅ Push successful!"
-  echo "🌐 Your repository is live at: https://github.com/saltymother/drongo"
-  echo "📄 GitHub Pages will be live shortly at: https://saltymother.github.io/drongo/"
+  echo "🌐 Your repository is live at: https://github.com/saltymother/drongo-wildlife"
+  echo "📄 Custom Domain: https://drongowildlife.com"
+  echo "📄 GitHub Pages fallback: https://saltymother.github.io/drongo-wildlife/"
 else
   echo ""
   echo "❌ Push failed. Please check repository permissions."
