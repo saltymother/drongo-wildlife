@@ -117,3 +117,14 @@
   - Added subject-specific card badges (.badge-subject-insect, .badge-subject-flowers, .badge-subject-animal, .badge-subject-birds, .badge-subject-other)
   - Integrated photo subject column selector into Step 2 of the Curator Upload Studio modal
   - Synchronized mobile drawer sub-navigation to filter directly to photo columns
+
+## [v1.0.8] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Content Integration
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Added user-submitted extreme macro photograph of the Golden Paper Wasp (Polistes wattii) to the Insect photo subject column
+  - Documented anatomical macro details including triangular light-polarizing ocelli and thoracic structure
+  - Updated live counters for Insect (2), Photos (8), and Total Visuals (18)

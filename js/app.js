@@ -29,6 +29,22 @@
       isUserUploaded: false
     },
     {
+      id: 'item-insect-golden-wasp',
+      type: 'photo',
+      title: 'Golden Paper Wasp (Polistes wattii)',
+      category: 'photos',
+      photoSubject: 'insect',
+      section: 'Photos',
+      tags: ['photos', 'insect', 'macro', 'wasp', 'hymenoptera', 'valmiki'],
+      location: 'Riverbank Outcrops & Sandstone, Terai Belt',
+      camera: 'High-Resolution Macro Telephoto Rig',
+      lens: 'Macro Prime 100mm f/2.8',
+      exposure: '1/1200s at f/4.5 • ISO 200 • Extreme Close-Up',
+      mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
+      fieldNotes: 'An exquisite head-on macro study of Polistes wattii, the Indian yellow paper wasp. Note the three simple optical ocelli arranged in a triangle between the antennae, used for light polarization and aerial navigation, flanked by large compound eyes.',
+      isUserUploaded: false
+    },
+    {
       id: 'item-insect-jewel-beetle',
       type: 'photo',
       title: 'Emerald Jewel Beetle of Valmiki Sal Forest',
