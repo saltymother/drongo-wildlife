@@ -128,3 +128,15 @@
   - Added user-submitted extreme macro photograph of the Golden Paper Wasp (Polistes wattii) to the Insect photo subject column
   - Documented anatomical macro details including triangular light-polarizing ocelli and thoracic structure
   - Updated live counters for Insect (2), Photos (8), and Total Visuals (18)
+
+## [v1.0.9] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor | Content Reset
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Removed all pre-populated sample and placeholder pictures across all visual categories
+  - Configured catalog to exclusively host pictures provided by the user, starting with the Golden Paper Wasp (Polistes wattii) in Photos > Insect
+  - Reset live category counters to reflect strictly user-provided media (All Visuals: 1, Photos: 1, Insect: 1, other sections: 0)
+  - Styled clean empty-state callouts with one-click upload triggers for empty visual categories

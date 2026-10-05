@@ -7,27 +7,10 @@
   'use strict';
 
   // Key for localStorage persistence of user uploads
-  const STORAGE_KEY = 'drongo_custom_catalog_v1';
+  const STORAGE_KEY = 'drongo_custom_catalog_v2';
 
-  // Base institutional catalog of photographs and cinematic dispatches
+  // Base catalog containing strictly user-provided media
   const INITIAL_CATALOG = [
-    // --- 1. PHOTOS (7 Items: Insect, Flowers, Animal, Birds, Other) ---
-    {
-      id: 'item-tiger-valmiki',
-      type: 'photo',
-      title: 'The Royal Bengal Tiger of Valmiki',
-      category: 'photos',
-      photoSubject: 'animal',
-      section: 'Photos',
-      tags: ['photos', 'animal', 'mammals', 'valmiki', 'tiger'],
-      location: 'Valmiki Tiger Reserve, West Champaran, Bihar',
-      camera: 'Sony Alpha 1 Flagship',
-      lens: 'FE 600mm f/4 GM OSS',
-      exposure: '1/2000s at f/4 • ISO 640',
-      mediaUrl: 'assets/images/valmiki_tiger.jpg',
-      fieldNotes: 'Spotted emerging from misty sal forest shadows along the Gandak floodplains at first light. Valmiki is Bihar\'s sovereign wilderness corridor, preserving primeval Terai grasslands against the snowy backdrop of the Nepalese Himalayas.',
-      isUserUploaded: false
-    },
     {
       id: 'item-insect-golden-wasp',
       type: 'photo',
@@ -35,274 +18,14 @@
       category: 'photos',
       photoSubject: 'insect',
       section: 'Photos',
-      tags: ['photos', 'insect', 'macro', 'wasp', 'hymenoptera', 'valmiki'],
-      location: 'Riverbank Outcrops & Sandstone, Terai Belt',
-      camera: 'High-Resolution Macro Telephoto Rig',
-      lens: 'Macro Prime 100mm f/2.8',
-      exposure: '1/1200s at f/4.5 • ISO 200 • Extreme Close-Up',
+      tags: ['photos', 'insect', 'macro', 'wasp', 'hymenoptera'],
+      location: 'Field Observation Site, Bihar',
+      camera: 'Macro Wildlife Photography',
+      lens: 'Macro Prime Lens',
+      exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
-      fieldNotes: 'An exquisite head-on macro study of Polistes wattii, the Indian yellow paper wasp. Note the three simple optical ocelli arranged in a triangle between the antennae, used for light polarization and aerial navigation, flanked by large compound eyes.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-insect-jewel-beetle',
-      type: 'photo',
-      title: 'Emerald Jewel Beetle of Valmiki Sal Forest',
-      category: 'photos',
-      photoSubject: 'insect',
-      section: 'Photos',
-      tags: ['photos', 'insect', 'macro', 'valmiki', 'beetle'],
-      location: 'Valmiki National Park Canopy, West Champaran',
-      camera: 'Sony Alpha 1 Flagship',
-      lens: 'FE 90mm f/2.8 Macro G OSS',
-      exposure: '1/800s at f/5.6 • ISO 400 • Macro 1:1',
-      mediaUrl: 'assets/images/jewel_beetle_macro.jpg',
-      fieldNotes: 'A rare iridescent jewel beetle (Buprestidae) glistening on rainforest leaves drenched in early morning Terai dew. Macro magnification reveals microscopic crystalline chitin reflections that deflect tropical sunlight.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-flower-kabar-lotus',
-      type: 'photo',
-      title: 'Wild Sacred Lotus Bloom at Dawn',
-      category: 'photos',
-      photoSubject: 'flowers',
-      section: 'Photos',
-      tags: ['photos', 'flowers', 'botany', 'wetlands', 'kabar-tal', 'lotus'],
-      location: 'Kabar Tal Wetland (Ramsar Site #2436), Begusarai',
-      camera: 'Canon EOS R5 C',
-      lens: 'RF 100-500mm f/4.5-7.1 L IS USM',
-      exposure: '1/1600s at f/5.0 • ISO 250',
-      mediaUrl: 'assets/images/kabar_lotus_flower.jpg',
-      fieldNotes: 'A solitary wild pink sacred lotus (Nelumbo nucifera) unfolding its pristine petals as the morning sun pierces through the mist above tranquil oxbow waters. Kabar Tal wetland nurtures one of northern India\'s most vibrant native aquatic floras.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-drongo-canopy',
-      type: 'photo',
-      title: 'The Black Drongo: King of the Canopy',
-      category: 'photos',
-      photoSubject: 'birds',
-      section: 'Photos',
-      tags: ['photos', 'birds', 'drongo', 'rajgir'],
-      location: 'Rajgir Wildlife Sanctuary, Nalanda, Bihar',
-      camera: 'Nikon Z9 Flagship',
-      lens: 'NIKKOR Z 400mm f/2.8 TC VR S',
-      exposure: '1/3200s at f/2.8 • ISO 320',
-      mediaUrl: 'assets/images/black_drongo.jpg',
-      fieldNotes: 'Dicrurus macrocercus in all its regal splendour. Perched upon an ancient lichen-encrusted branch, its iridescent midnight-blue plumage and deeply notched fork-tail symbolize fierce courage in Indian folklore, fearlessly mobbing raptors thrice its size.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-crane-kabar-tal',
-      type: 'photo',
-      title: 'Courtship of the Sarus Crane',
-      category: 'photos',
-      photoSubject: 'birds',
-      section: 'Photos',
-      tags: ['photos', 'birds', 'wetlands', 'kabar-tal'],
-      location: 'Kabar Tal Wetland (Ramsar Site #2436), Begusarai',
-      camera: 'Canon EOS R5 C',
-      lens: 'RF 100-500mm f/4.5-7.1 L IS USM',
-      exposure: '1/4000s at f/5.6 • ISO 800',
-      mediaUrl: 'assets/images/sarus_crane.jpg',
-      fieldNotes: 'Standing nearly six feet tall, the Sarus Crane is Earth\'s tallest flying bird. Photographed during synchronized dawn calling over pink water lily pads in the sprawling oxbow lake of Kabar Tal.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-flycatcher-kaimur',
-      type: 'photo',
-      title: 'Asian Paradise Flycatcher Streamer Flight',
-      category: 'photos',
-      photoSubject: 'birds',
-      section: 'Photos',
-      tags: ['photos', 'birds', 'expeditions', 'kaimur'],
-      location: 'Kaimur Wildlife Sanctuary, Rohtas, Bihar',
-      camera: 'Sony Alpha 1 Flagship',
-      lens: 'FE 400mm f/2.8 GM OSS',
-      exposure: '1/5000s at f/2.8 • ISO 1000',
-      mediaUrl: 'assets/images/paradise_flycatcher.jpg',
-      fieldNotes: 'A ribbon-tailed adult male in white morph gliding gracefully through the dense canopy of Kaimur\'s deciduous plateau forests, tracking dragonflies with astonishing aerobatic dexterity.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-other-banyan-canopy',
-      type: 'photo',
-      title: 'Ancient Banyan Aerial Roots & Canopy Ecosystem',
-      category: 'photos',
-      photoSubject: 'other',
-      section: 'Photos',
-      tags: ['photos', 'other', 'habitat', 'canopy', 'banyan', 'trees'],
-      location: 'Kaimur Plateau Ancient Forest, Bihar',
-      camera: 'Nikon Z9 Flagship',
-      lens: 'NIKKOR Z 14-24mm f/2.8 S',
-      exposure: '1/250s at f/8 • ISO 160',
-      mediaUrl: 'assets/images/drongo_bird.jpg',
-      fieldNotes: 'A sprawling centuries-old Ficus benghalensis whose cascading prop-roots and cathedral-like canopy create a micro-biosphere supporting dozens of bird, insect, and mammal species simultaneously.',
-      isUserUploaded: false
-    },
-
-    // --- 2. VIDEO (2 Items) ---
-    {
-      id: 'item-dolphin-vikramshila',
-      type: 'video',
-      title: 'Ganges River Dolphin (Susu) at Dawn',
-      category: 'video',
-      section: 'Video',
-      tags: ['video', 'wetlands', 'ganges', 'dolphin'],
-      location: 'Vikramshila Gangetic Dolphin Sanctuary, Bhagalpur',
-      camera: 'RED V-Raptor 8K Cinema',
-      lens: 'Canon Cine-Servo 50-1000mm T5.0-8.9',
-      exposure: '8K UHD • 120fps Slow Motion • 180° Shutter',
-      mediaUrl: 'assets/images/gangetic_dolphin.jpg',
-      videoUrl: 'assets/videos/gangetic_dolphin_teaser.mp4',
-      fieldNotes: 'The Platanista gangetica is an archaic freshwater dolphin, functionally blind in the nutrient-rich silt of the Ganges. Capturing this breach required 6 dawn patrols on traditional wooden catamarans.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-gharial-gandak',
-      type: 'video',
-      title: 'Gharial Patriarch of the Gandak River',
-      category: 'video',
-      section: 'Video',
-      tags: ['video', 'wetlands', 'reptiles', 'gharial'],
-      location: 'Gandak River Confluence, Bihar',
-      camera: 'ARRI Alexa Mini LF',
-      lens: 'Angénieux Optimo Ultra 12x Cine',
-      exposure: '4K ProRes 4444 • 60fps • T4.2',
-      mediaUrl: 'assets/images/gharial_gandak.jpg',
-      videoUrl: 'assets/videos/gharial_basking_4k.mp4',
-      fieldNotes: 'An eighteen-foot dominant male Gharial (Gavialis gangeticus) with his bulbous nasal ghara basking upon pristine river shingle. The Gandak river in Bihar remains one of Earth\'s most crucial sanctuaries for this critically endangered crocodylian.',
-      isUserUploaded: false
-    },
-
-    // --- 3. SHORT FILM (2 Items) ---
-    {
-      id: 'item-sal-chronicle-film',
-      type: 'video',
-      title: 'Shadows of the Sal Forest: A Valmiki Chronicle',
-      category: 'short-film',
-      section: 'Short Film',
-      tags: ['short-film', 'cinema', 'valmiki', 'tiger', 'sal-forest'],
-      location: 'Valmiki Tiger Reserve, West Champaran, Bihar',
-      camera: 'ARRI Alexa Mini LF Cinema Master',
-      lens: 'Zeiss Supreme Prime Lenses',
-      exposure: '4K CinemaScope • 24fps • Film Simulation',
-      mediaUrl: 'assets/images/bengal_tiger.jpg',
-      videoUrl: 'assets/videos/gharial_basking_4k.mp4',
-      fieldNotes: 'A 14-minute cinematic short documentary exploring the primeval predator-prey dynamics of tiger territories along the Indo-Nepal Himalayan foothills.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-wetlands-rhythm-film',
-      type: 'video',
-      title: 'Rhythm of the Wetlands: Kabar Tal & Gandak River',
-      category: 'short-film',
-      section: 'Short Film',
-      tags: ['short-film', 'cinema', 'wetlands', 'kabar-tal', 'skimmer'],
-      location: 'Kabar Tal Ramsar Basin & Gandak Shingle, Bihar',
-      camera: 'RED V-Raptor 8K VV Cinema',
-      lens: 'Canon Cine-Servo 50-1000mm T5.0',
-      exposure: '8K DCI • 120fps High-Speed • 180° Shutter',
-      mediaUrl: 'assets/images/indian_skimmer.jpg',
-      videoUrl: 'assets/videos/gangetic_dolphin_teaser.mp4',
-      fieldNotes: 'Cinematic short film documenting migratory waterbirds arriving along the Central Asian Flyway and rare Indian skimmers cutting through dawn river mists.',
-      isUserUploaded: false
-    },
-
-    // --- 4. TRAVELLING GUIDE (2 Items) ---
-    {
-      id: 'item-guide-valmiki',
-      type: 'photo',
-      title: 'Field Expedition Guide: Navigating Valmiki Tiger Reserve',
-      category: 'travelling-guide',
-      section: 'Travelling Guide',
-      tags: ['travelling-guide', 'logistics', 'valmiki', 'safari'],
-      location: 'Valmiki Tiger Reserve (Madanpur, Valmikinagar, Manguraha)',
-      camera: 'Field Logistics Dossier & Nikon Z8',
-      lens: 'NIKKOR Z 24-120mm f/4 S',
-      exposure: 'Comprehensive Trail & Permitting Guide',
-      mediaUrl: 'assets/images/racket_tailed_drongo.jpg',
-      fieldNotes: 'Complete naturalist travel and expedition guide: entry permits via Forest Department portals, best safari seasons (November to April), river raft crossings over the Gandak, and essential telephoto focal lengths for dense sal canopies.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-guide-vikramshila',
-      type: 'photo',
-      title: 'Riverboat Naturalist Guide: Vikramshila Dolphin Safari',
-      category: 'travelling-guide',
-      section: 'Travelling Guide',
-      tags: ['travelling-guide', 'logistics', 'dolphin', 'ganges', 'boats'],
-      location: 'Vikramshila Gangetic Dolphin Sanctuary, Bhagalpur to Sultanganj',
-      camera: 'River Expedition Map & Canon R5 C',
-      lens: 'RF 70-200mm f/2.8 L IS USM',
-      exposure: 'Boat Charter & Tidal Navigation Protocols',
-      mediaUrl: 'assets/images/river_dolphin.jpg',
-      fieldNotes: 'Essential guide for riverine wildlife photography: hiring authorized local wooden country boats from Barari Ghat, navigating seasonal river silt channels, respecting safe 50-meter observation distances for surfacing dolphins, and dawn light tracking.',
-      isUserUploaded: false
-    },
-
-    // --- 5. IDEAS (2 Items) ---
-    {
-      id: 'item-idea-watercraft-rig',
-      type: 'photo',
-      title: 'Low-Angle Watercraft Filming Rig for Elusive River Fauna',
-      category: 'ideas',
-      section: 'Ideas',
-      tags: ['ideas', 'filming-rig', 'river', 'innovation'],
-      location: 'Gandak & Ganges River Confluences, Bihar',
-      camera: 'Custom Dual-Gimbal Carbon Frame Rig',
-      lens: 'Super-Wide 14-24mm & 400mm Dual Mount',
-      exposure: 'Waterline Low-Perspective Cinematography',
-      mediaUrl: 'assets/images/drongo_bird.jpg',
-      fieldNotes: 'Innovative field filming concept: building an ultra-stable silent hydro-skiff mount that floats inches above waterlevel, enabling zero-vibration cinematic waterline perspectives of surfacing river dolphins and foraging waders without acoustic engine disturbance.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-idea-canopy-microphone',
-      type: 'photo',
-      title: 'Parabolic Acoustic Array for Nocturnal Canopy Dispatches',
-      category: 'ideas',
-      section: 'Ideas',
-      tags: ['ideas', 'bioacoustics', 'audio-rig', 'canopy'],
-      location: 'Kaimur Plateau Deciduous Canopy & Valmiki',
-      camera: 'Ultra-Low-Noise Ambisonic Parabolic Array',
-      lens: 'Optical Sight Calibration Unit',
-      exposure: '32-bit Float Multi-Channel Field Audio',
-      mediaUrl: 'assets/images/adjutant_stork.jpg',
-      fieldNotes: 'Field sound design innovation: deploying 26-inch parabolic dish microphones synchronized with high-ISO motion sensors to capture the acoustic repertoire of owls, nightjars, and alarm calls of spotted deer announcing prowling carnivores.',
-      isUserUploaded: false
-    },
-
-    // --- 6. INFORMATION (2 Items) ---
-    {
-      id: 'item-info-drongo-sentinel',
-      type: 'photo',
-      title: 'Ecological Dossier: The Black Drongo\'s Sentinel System',
-      category: 'information',
-      section: 'Information',
-      tags: ['information', 'ecology', 'drongo', 'mimicry', 'ethology'],
-      location: 'Rajgir & Valmiki Deciduous Woodlands, Bihar',
-      camera: 'Bioacoustics & Telephoto Documentation',
-      lens: 'FE 600mm f/4 GM OSS',
-      exposure: 'Behavioral Ethology Monograph',
-      mediaUrl: 'assets/images/black_drongo.jpg',
-      fieldNotes: 'Detailed scientific overview of Dicrurus macrocercus: its complex vocal mimicry replicating hawk and shikra distress calls, symbiotic cooperative feeding associations with grazing herbivores, and fearless territorial defense against raptors.',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-info-kabar-tal-ecosystem',
-      type: 'photo',
-      title: 'Hydrological & Avian Status Report: Kabar Tal Ramsar Wetland',
-      category: 'information',
-      section: 'Information',
-      tags: ['information', 'wetlands', 'ramsar', 'conservation', 'birds'],
-      location: 'Kabar Tal (Begusarai), Bihar — Ramsar Site #2436',
-      camera: 'Ecological Survey & Aerial Imagery',
-      lens: 'High-Resolution Environmental Telephoto',
-      exposure: 'Ramsar Biosphere Conservation Survey',
-      mediaUrl: 'assets/images/sarus_crane.jpg',
-      fieldNotes: 'Comprehensive environmental status report on Asia\'s largest freshwater oxbow lake: seasonal water depths, macrophyte diversity, macroinvertebrate biodiversity supporting migratory waterfowl, and community conservation initiatives.',
-      isUserUploaded: false
+      fieldNotes: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure.',
+      isUserUploaded: true
     }
   ];
 
@@ -384,10 +107,12 @@
 
   function loadCatalogFromStorage() {
     try {
+      // Clear out legacy mock cache if present
+      localStorage.removeItem('drongo_custom_catalog_v1');
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const userItems = JSON.parse(stored);
-        const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded) : [];
+        const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded && item.id !== 'item-insect-golden-wasp') : [];
         catalog = [...INITIAL_CATALOG, ...customUploads];
       } else {
         catalog = [...INITIAL_CATALOG];
@@ -440,11 +165,20 @@
     }
 
     if (currentlyFilteredItems.length === 0) {
+      const sectionName = currentFilter === 'photos' && currentPhotoSub !== 'all' 
+        ? `Photos • ${currentPhotoSub.charAt(0).toUpperCase() + currentPhotoSub.slice(1)}` 
+        : currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
+
       mediaGridEl.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 4px;">
-          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">No Entries Found in this Section</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Use the curator upload tool to add your photographs or cinematic reels to this category.</p>
-          <button class="header-action-btn btn-gold trigger-upload-modal" style="margin: 0 auto;">+ Upload to This Section</button>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
+          <div style="font-size: 34px; margin-bottom: 10px;">📷</div>
+          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">No Pictures in ${escapeHtml(sectionName)} Yet</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px; max-width: 460px; margin-left: auto; margin-right: auto;">
+            This section is waiting for your curated uploads. Use the upload tool to publish your pictures or video footage here.
+          </p>
+          <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="${escapeHtml(currentFilter)}" style="margin: 0 auto;">
+            + Upload to ${escapeHtml(sectionName)}
+          </button>
         </div>
       `;
       mediaGridEl.querySelector('.trigger-upload-modal')?.addEventListener('click', openUploadModal);
