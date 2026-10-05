@@ -260,11 +260,11 @@ a {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: 1.2rem;
-  opacity: 0.9;
-  letter-spacing: 1px;
-  color: var(--gold-light);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: #ffffff;
+  opacity: 0.95;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
 /* Header Right: Search & Actions */

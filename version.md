@@ -53,3 +53,15 @@
   - Synchronized header brand title, drawer navigation, and institutional footer
   - Updated canonical URLs and OpenGraph tags to https://drongowildlife.com
   - Verified local dev server and updated deployment scripts
+
+## [v1.0.4] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor | Design
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Streamlined center masthead brand title to exclusively display 'DRONGO'
+  - Styled Latin motto 'Alta alatis patent' in crisp, aesthetic serif white typography (#ffffff)
+  - Removed extraneous domain labels from the header stack for a pure, minimal institutional aesthetic
+  - Synchronized footer branding and page title
