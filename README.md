@@ -1,54 +1,56 @@
-# DRONGO — Wildlife & Editorial Photography
+# DRONGO — Institutional Wildlife & Nature Visual Storytelling
+> *"Alta alatis patent"* (The skies lie open to those with wings)
 
-> *"Alta alatis patent"* — The sky lies open to the winged.
-
-A modern, responsive, and high-editorial photography platform dedicated to chronicling India's threatened biodiversity across the Gangetic basin and eastern floodplains. Built with institutional rigor, typographic elegance, and real-time field telemetry.
-
----
-
-## 🦅 Architectural Highlights
-
-1. **Top Utility Bar:** White House-style clean notification bar with real-time field update indicators.
-2. **Main Navigation Header:** Deep ocean navy (`#0A2B47`) 3-column layout featuring the Drongo crest emblem, typography stack, Latin motto, and interactive trigger controls.
-3. **Sub-Navigation Strip:** Direct access to Gallery, Short Films, Birding Guides, Expeditions, About Bihar, and Contact.
-4. **Editorial Intro:** Refined serif typography showcasing field narratives and geographic telemetry.
-5. **Dynamic Media Grid:** Responsive CSS Grid (`repeat(auto-fit, minmax(300px, 1fr))`) with smooth 1.05 hover zoom on photo cards, centered SVG play overlays on cinema video cards, and technical camera data bars.
-6. **Telemetry & Lightbox Modal:** Full-screen modal inspector displaying high-resolution imagery and EXIF data (shutter, aperture, ISO, focal length, GPS coordinates, conservation status).
-7. **Mobile Drawer & Search Overlay:** 100% responsive design with collapsible off-canvas navigation and live keyword search.
+An editorial photography and cinematography digital institution dedicated to documenting the untamed beauty of India's wildlife—from the freshwater river dolphins of the Ganges to the rarest birds of the eastern floodplains and the sal forest tigers of the Himalayan Terai.
 
 ---
 
-## 🎨 Design System Variables
+## Architecture & Visual Standards
 
-```css
-:root {
-  --primary-ocean-blue: #0A2B47;
-  --pure-white: #FFFFFF;
-  --off-white-bg: #F8F9FA;
-  --text-dark: #1A1A1A;
-  --accent-gold: #C5A059;
+Designed with the structural rigor and elegance of institutional sites (White House, FDA, National Geographic):
 
-  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: 'Playfair Display', 'Merriweather', serif;
-  --font-display: 'Montserrat', sans-serif;
-}
-```
+- **Strict Custom Property System (`:root`):**
+  - `--primary-ocean-blue: #0A2B47;`
+  - `--pure-white: #FFFFFF;`
+  - `--off-white-bg: #F8F9FA;`
+  - `--text-dark: #1A1A1A;`
+  - `--accent-gold: #C5A059;`
+- **Typography Stacks:**
+  - Headings & Title: `'Montserrat', sans-serif;` (Bold italic 800)
+  - Editorial Prose & Motto: `'Playfair Display', serif;`
+  - Navigation & Utility: `'Inter', sans-serif;`
+- **Institutional Top Utility Bar:**
+  - Full-width White House style bulletin with real-time updates and expedition logs.
+- **Main Header (Core Blue Section):**
+  - 3-column layout: Slide-in hamburger `MENU`, brand identity vertical stack (Title, Drongo Crest Logo, Latin Motto), and `SEARCH` & `+ UPLOAD` action buttons.
+- **Separator & Sub-Navigation:**
+  - `GALLERY`, `SHORT FILMS`, `BIRDING GUIDES`, `EXPEDITIONS`, `ABOUT BIHAR`, `CONTACT`.
+- **Dynamic Media Grid:**
+  - Responsive CSS Grid (`repeat(auto-fit, minmax(300px, 1fr))`) with hover zoom transitions, video play overlays, and camera spec bars.
+- **Curator Studio & Upload Portal:**
+  - Upload photos and videos from your local device or URLs into specific sections.
+  - Automatically captures camera gear, lens, EXIF specs, and ecological field notes.
+  - Persistent via `localStorage` with JSON export/import capability.
+- **Lightbox & 4K Cinema Theater:**
+  - Full-resolution visual inspection with EXIF pane and keyboard navigation.
 
 ---
 
-## 🚀 Local Development
+## Running Locally
 
-Launch the local static server:
+To launch the local web server:
 
 ```bash
+cd drongo_wildlife
 python3 server.py
 ```
 
-Then navigate to `http://localhost:8089` in your web browser.
+Then navigate to `http://localhost:8085` in your browser.
 
 ---
 
-## 🌐 Production & GitHub Pages
+## Deployment & Verification
 
-- **Live URL:** [https://saltymother.github.io/drongo-wildlife/](https://saltymother.github.io/drongo-wildlife/)
-- **Repository:** [https://github.com/saltymother/drongo-wildlife](https://github.com/saltymother/drongo-wildlife)
+Deployable directly to GitHub Pages:
+- Static assets use relative paths (`./css/style.css`, `logo for my .png`, `assets/images/...`).
+- Includes `.nojekyll` and `.github/workflows/deploy.yml` for automated CI/CD.
