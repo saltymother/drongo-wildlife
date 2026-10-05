@@ -104,3 +104,16 @@
   - Expanded catalog to 14 verified entries with dedicated badges (.badge-photo, .badge-video, .badge-short-film, .badge-guide, .badge-ideas, .badge-info)
   - Updated upload modal destination selector with the 6 visual categories in a responsive 3-column grid
   - Synchronized sub-navigation and drawer links directly to the Visuals category filters
+
+## [v1.0.7] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UI/UX Enhancement
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Added dedicated Photo subject columns / sub-filter bar under Visuals: Insect, Flowers, Animal, Birds, and Other (with All Photos master counter)
+  - Integrated high-resolution macro photography of the Emerald Jewel Beetle (Valmiki Canopy) and Wild Sacred Lotus (Kabar Tal Wetland)
+  - Added subject-specific card badges (.badge-subject-insect, .badge-subject-flowers, .badge-subject-animal, .badge-subject-birds, .badge-subject-other)
+  - Integrated photo subject column selector into Step 2 of the Curator Upload Studio modal
+  - Synchronized mobile drawer sub-navigation to filter directly to photo columns

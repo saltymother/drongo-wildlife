@@ -11,14 +11,15 @@
 
   // Base institutional catalog of photographs and cinematic dispatches
   const INITIAL_CATALOG = [
-    // --- 1. PHOTOS (4 Items) ---
+    // --- 1. PHOTOS (7 Items: Insect, Flowers, Animal, Birds, Other) ---
     {
       id: 'item-tiger-valmiki',
       type: 'photo',
       title: 'The Royal Bengal Tiger of Valmiki',
       category: 'photos',
+      photoSubject: 'animal',
       section: 'Photos',
-      tags: ['photos', 'mammals', 'valmiki', 'tiger'],
+      tags: ['photos', 'animal', 'mammals', 'valmiki', 'tiger'],
       location: 'Valmiki Tiger Reserve, West Champaran, Bihar',
       camera: 'Sony Alpha 1 Flagship',
       lens: 'FE 600mm f/4 GM OSS',
@@ -28,10 +29,43 @@
       isUserUploaded: false
     },
     {
+      id: 'item-insect-jewel-beetle',
+      type: 'photo',
+      title: 'Emerald Jewel Beetle of Valmiki Sal Forest',
+      category: 'photos',
+      photoSubject: 'insect',
+      section: 'Photos',
+      tags: ['photos', 'insect', 'macro', 'valmiki', 'beetle'],
+      location: 'Valmiki National Park Canopy, West Champaran',
+      camera: 'Sony Alpha 1 Flagship',
+      lens: 'FE 90mm f/2.8 Macro G OSS',
+      exposure: '1/800s at f/5.6 • ISO 400 • Macro 1:1',
+      mediaUrl: 'assets/images/jewel_beetle_macro.jpg',
+      fieldNotes: 'A rare iridescent jewel beetle (Buprestidae) glistening on rainforest leaves drenched in early morning Terai dew. Macro magnification reveals microscopic crystalline chitin reflections that deflect tropical sunlight.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-flower-kabar-lotus',
+      type: 'photo',
+      title: 'Wild Sacred Lotus Bloom at Dawn',
+      category: 'photos',
+      photoSubject: 'flowers',
+      section: 'Photos',
+      tags: ['photos', 'flowers', 'botany', 'wetlands', 'kabar-tal', 'lotus'],
+      location: 'Kabar Tal Wetland (Ramsar Site #2436), Begusarai',
+      camera: 'Canon EOS R5 C',
+      lens: 'RF 100-500mm f/4.5-7.1 L IS USM',
+      exposure: '1/1600s at f/5.0 • ISO 250',
+      mediaUrl: 'assets/images/kabar_lotus_flower.jpg',
+      fieldNotes: 'A solitary wild pink sacred lotus (Nelumbo nucifera) unfolding its pristine petals as the morning sun pierces through the mist above tranquil oxbow waters. Kabar Tal wetland nurtures one of northern India\'s most vibrant native aquatic floras.',
+      isUserUploaded: false
+    },
+    {
       id: 'item-drongo-canopy',
       type: 'photo',
       title: 'The Black Drongo: King of the Canopy',
       category: 'photos',
+      photoSubject: 'birds',
       section: 'Photos',
       tags: ['photos', 'birds', 'drongo', 'rajgir'],
       location: 'Rajgir Wildlife Sanctuary, Nalanda, Bihar',
@@ -47,6 +81,7 @@
       type: 'photo',
       title: 'Courtship of the Sarus Crane',
       category: 'photos',
+      photoSubject: 'birds',
       section: 'Photos',
       tags: ['photos', 'birds', 'wetlands', 'kabar-tal'],
       location: 'Kabar Tal Wetland (Ramsar Site #2436), Begusarai',
@@ -62,6 +97,7 @@
       type: 'photo',
       title: 'Asian Paradise Flycatcher Streamer Flight',
       category: 'photos',
+      photoSubject: 'birds',
       section: 'Photos',
       tags: ['photos', 'birds', 'expeditions', 'kaimur'],
       location: 'Kaimur Wildlife Sanctuary, Rohtas, Bihar',
@@ -70,6 +106,22 @@
       exposure: '1/5000s at f/2.8 • ISO 1000',
       mediaUrl: 'assets/images/paradise_flycatcher.jpg',
       fieldNotes: 'A ribbon-tailed adult male in white morph gliding gracefully through the dense canopy of Kaimur\'s deciduous plateau forests, tracking dragonflies with astonishing aerobatic dexterity.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-other-banyan-canopy',
+      type: 'photo',
+      title: 'Ancient Banyan Aerial Roots & Canopy Ecosystem',
+      category: 'photos',
+      photoSubject: 'other',
+      section: 'Photos',
+      tags: ['photos', 'other', 'habitat', 'canopy', 'banyan', 'trees'],
+      location: 'Kaimur Plateau Ancient Forest, Bihar',
+      camera: 'Nikon Z9 Flagship',
+      lens: 'NIKKOR Z 14-24mm f/2.8 S',
+      exposure: '1/250s at f/8 • ISO 160',
+      mediaUrl: 'assets/images/drongo_bird.jpg',
+      fieldNotes: 'A sprawling centuries-old Ficus benghalensis whose cascading prop-roots and cathedral-like canopy create a micro-biosphere supporting dozens of bird, insect, and mammal species simultaneously.',
       isUserUploaded: false
     },
 
@@ -241,12 +293,18 @@
   // Application State
   let catalog = [];
   let currentFilter = 'all';
+  let currentPhotoSub = 'all';
   let activeLightboxIndex = 0;
   let currentlyFilteredItems = [];
 
   // DOM Elements
   const mediaGridEl = document.getElementById('dynamicMediaGrid');
   const filterBtns = document.querySelectorAll('.filter-btn');
+  const photoSubFilterRow = document.getElementById('photoSubFilterRow');
+  const photoSubBtns = document.querySelectorAll('.photo-sub-btn');
+  const photoSubjectPicker = document.getElementById('photoSubjectPicker');
+  const subjectPills = document.querySelectorAll('.subject-pill');
+  const uploadPhotoSubjectInput = document.getElementById('uploadPhotoSubject');
   const uploadModal = document.getElementById('uploadModal');
   const openUploadModalBtns = document.querySelectorAll('.trigger-upload-modal');
   const closeUploadModalBtn = document.getElementById('closeUploadModalBtn');
@@ -340,10 +398,18 @@
   function renderGallery() {
     if (!mediaGridEl) return;
 
-    // Apply Filter
+    // Apply Filter with Photo Sub-category support
     currentlyFilteredItems = catalog.filter(item => {
+      if (currentFilter === 'photos') {
+        const isPhoto = item.category === 'photos' || item.type === 'photo';
+        if (!isPhoto) return false;
+        if (currentPhotoSub !== 'all') {
+          return item.photoSubject === currentPhotoSub || item.tags?.includes(currentPhotoSub);
+        }
+        return true;
+      }
+
       if (currentFilter === 'all') return true;
-      if (currentFilter === 'photos') return item.category === 'photos' || item.type === 'photo';
       if (currentFilter === 'video') return item.category === 'video' || (item.type === 'video' && item.category !== 'short-film');
       if (currentFilter === 'short-film') return item.category === 'short-film' || item.section === 'Short Film' || item.section === 'SHORT FILMS';
       if (currentFilter === 'travelling-guide') return item.category === 'travelling-guide' || item.section === 'Travelling Guide';
@@ -351,6 +417,11 @@
       if (currentFilter === 'information') return item.category === 'information' || item.section === 'Information';
       return item.category === currentFilter;
     });
+
+    // Update Photo Sub-Filter Bar display visibility
+    if (photoSubFilterRow) {
+      photoSubFilterRow.style.display = (currentFilter === 'photos' || currentFilter === 'all') ? 'flex' : 'none';
+    }
 
     if (currentlyFilteredItems.length === 0) {
       mediaGridEl.innerHTML = `
@@ -369,7 +440,12 @@
 
       let badgeClass = 'badge-photo';
       let categoryLabel = item.section || 'PHOTO';
-      if (item.category === 'video' || (item.type === 'video' && item.category !== 'short-film')) {
+
+      if (item.category === 'photos' || item.type === 'photo') {
+        const sub = (item.photoSubject || 'birds').toLowerCase();
+        badgeClass = `badge-photo badge-subject-${sub}`;
+        categoryLabel = `PHOTO • ${sub.toUpperCase()}`;
+      } else if (item.category === 'video' || (item.type === 'video' && item.category !== 'short-film')) {
         badgeClass = 'badge-video';
         categoryLabel = item.section || 'VIDEO';
       } else if (item.category === 'short-film') {
@@ -492,6 +568,22 @@
 
       countEl.textContent = count;
     });
+
+    // Update Photo Sub-Category counts
+    photoSubBtns.forEach(btn => {
+      const sub = btn.getAttribute('data-photo-sub');
+      const countEl = btn.querySelector('.sub-count');
+      if (!countEl) return;
+
+      const photos = catalog.filter(i => i.category === 'photos' || i.type === 'photo');
+      let count = 0;
+      if (sub === 'all') {
+        count = photos.length;
+      } else {
+        count = photos.filter(i => i.photoSubject === sub || i.tags?.includes(sub)).length;
+      }
+      countEl.textContent = count;
+    });
   }
 
   /* --------------------------------------------------------------------------
@@ -605,6 +697,12 @@
     sectionChoicePills.forEach(pill => {
       pill.classList.toggle('active', pill.getAttribute('data-section') === sec);
     });
+
+    // Toggle photo subject picker visibility
+    if (photoSubjectPicker) {
+      photoSubjectPicker.style.display = (sec === 'photos') ? 'block' : 'none';
+    }
+
     const sectionDisplayNames = {
       'photos': 'Photos',
       'video': 'Video',
@@ -727,6 +825,9 @@
     if (mediaType === 'video') tags.push('video');
     if (mediaType === 'photo') tags.push('photos');
 
+    const chosenSubject = (section === 'photos' && uploadPhotoSubjectInput) ? uploadPhotoSubjectInput.value : null;
+    if (chosenSubject) tags.push(chosenSubject);
+
     const sectionDisplayNames = {
       'photos': 'Photos',
       'video': 'Video',
@@ -742,6 +843,7 @@
       type: mediaType,
       title: title || 'Expedition Dispatch #' + (catalog.length + 1),
       category: section,
+      photoSubject: chosenSubject,
       section: displaySection,
       tags: tags,
       location: location || 'Field Observation Site, India',
@@ -911,7 +1013,63 @@
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFilter = btn.getAttribute('data-filter');
+        if (currentFilter !== 'photos') {
+          currentPhotoSub = 'all';
+          photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === 'all'));
+        }
         renderGallery();
+      });
+    });
+
+    // Photo Sub-Filter Buttons (Insect, Flowers, Animal, Birds, Other)
+    photoSubBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        photoSubBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        currentPhotoSub = btn.getAttribute('data-photo-sub');
+
+        // Automatically activate main Photos tab
+        currentFilter = 'photos';
+        filterBtns.forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-filter') === 'photos');
+        });
+
+        renderGallery();
+      });
+    });
+
+    // Subject Pills in Upload Modal
+    subjectPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        subjectPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        if (uploadPhotoSubjectInput) {
+          uploadPhotoSubjectInput.value = pill.getAttribute('data-subject');
+        }
+      });
+    });
+
+    // Mobile Drawer Photo Sub-links
+    document.querySelectorAll('.drawer-sub-photo-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSub = link.getAttribute('data-photo-sub');
+        if (targetSub) {
+          currentFilter = 'photos';
+          currentPhotoSub = targetSub;
+
+          filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === 'photos'));
+          photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === targetSub));
+
+          renderGallery();
+          closeNavDrawer();
+          document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
+        }
       });
     });
 

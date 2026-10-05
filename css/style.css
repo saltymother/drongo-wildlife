@@ -599,6 +599,152 @@ a {
   color: var(--primary-ocean-blue);
 }
 
+/* Photo Sub-Categories (Insect, Flowers, Animal, Birds, Other) */
+.photo-sub-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: rgba(10, 43, 71, 0.03);
+  padding: 8px 14px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(10, 43, 71, 0.08);
+  margin-top: -6px;
+  width: 100%;
+  animation: fadeInDown 0.25s ease;
+}
+
+.photo-sub-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--primary-ocean-blue);
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.photo-sub-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.photo-sub-btn {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: var(--text-dark);
+  background-color: var(--pure-white);
+  border: 1px solid rgba(10, 43, 71, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.photo-sub-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--primary-ocean-blue);
+  transform: translateY(-1px);
+}
+
+.photo-sub-btn.active {
+  background-color: var(--ocean-blue-deep);
+  color: var(--pure-white);
+  border-color: var(--ocean-blue-deep);
+  box-shadow: 0 2px 6px rgba(10, 43, 71, 0.25);
+}
+
+.sub-count {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: rgba(10, 43, 71, 0.08);
+  color: var(--primary-ocean-blue);
+}
+
+.photo-sub-btn.active .sub-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Photo Subject Badges */
+.card-category-badge.badge-subject-insect {
+  background-color: rgba(46, 125, 50, 0.95);
+  color: #ffffff;
+}
+
+.card-category-badge.badge-subject-flowers {
+  background-color: rgba(194, 24, 91, 0.95);
+  color: #ffffff;
+}
+
+.card-category-badge.badge-subject-animal {
+  background-color: rgba(191, 54, 12, 0.95);
+  color: #ffffff;
+}
+
+.card-category-badge.badge-subject-birds {
+  background-color: rgba(10, 43, 71, 0.95);
+  color: #ffffff;
+}
+
+.card-category-badge.badge-subject-other {
+  background-color: rgba(69, 90, 100, 0.95);
+  color: #ffffff;
+}
+
+/* Modal Photo Subject Selector */
+.photo-subject-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.subject-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(10, 43, 71, 0.15);
+  background: var(--off-white-bg);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.subject-pill:hover {
+  border-color: var(--accent-gold);
+}
+
+.subject-pill.active {
+  background: var(--primary-ocean-blue);
+  color: #ffffff;
+  border-color: var(--primary-ocean-blue);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* CSS Grid with exact specification */
 .dynamic-media-grid {
   display: grid;

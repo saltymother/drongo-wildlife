@@ -130,10 +130,10 @@
       <!-- Interactive Filter Nav Tabs in the exact requested manner -->
       <div class="gallery-filter-tabs" role="tablist" aria-label="Visual Categories">
         <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
-          All Visuals <span class="filter-count">14</span>
+          All Visuals <span class="filter-count">17</span>
         </button>
         <button class="filter-btn" data-filter="photos" role="tab" aria-selected="false">
-          Photos <span class="filter-count">4</span>
+          Photos <span class="filter-count">7</span>
         </button>
         <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">
           Video <span class="filter-count">2</span>
@@ -150,6 +150,31 @@
         <button class="filter-btn" data-filter="information" role="tab" aria-selected="false">
           Information <span class="filter-count">2</span>
         </button>
+      </div>
+
+      <!-- Photo Sub-Categories (Insect, Flowers, Animal, Birds, Other) -->
+      <div class="photo-sub-filter-row" id="photoSubFilterRow" aria-label="Photo Subjects">
+        <span class="photo-sub-label">Photo Columns:</span>
+        <div class="photo-sub-tabs" role="tablist" aria-label="Photo Subject Columns">
+          <button class="photo-sub-btn active" data-photo-sub="all" role="tab" aria-selected="true">
+            All Photos <span class="sub-count">7</span>
+          </button>
+          <button class="photo-sub-btn" data-photo-sub="insect" role="tab" aria-selected="false">
+            Insect <span class="sub-count">1</span>
+          </button>
+          <button class="photo-sub-btn" data-photo-sub="flowers" role="tab" aria-selected="false">
+            Flowers <span class="sub-count">1</span>
+          </button>
+          <button class="photo-sub-btn" data-photo-sub="animal" role="tab" aria-selected="false">
+            Animal <span class="sub-count">1</span>
+          </button>
+          <button class="photo-sub-btn" data-photo-sub="birds" role="tab" aria-selected="false">
+            Birds <span class="sub-count">3</span>
+          </button>
+          <button class="photo-sub-btn" data-photo-sub="other" role="tab" aria-selected="false">
+            Other <span class="sub-count">1</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -416,6 +441,21 @@
               <option value="ideas">Ideas</option>
               <option value="information">Information</option>
             </select>
+
+            <!-- Sub-Category Column Selector for Photos -->
+            <div class="photo-subject-picker" id="photoSubjectPicker" style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(10, 43, 71, 0.15);">
+              <label style="display: block; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 6px; text-transform: uppercase;">
+                Photo Subject Column:
+              </label>
+              <div class="photo-subject-pills">
+                <button type="button" class="subject-pill active" data-subject="birds">Birds</button>
+                <button type="button" class="subject-pill" data-subject="animal">Animal</button>
+                <button type="button" class="subject-pill" data-subject="insect">Insect</button>
+                <button type="button" class="subject-pill" data-subject="flowers">Flowers</button>
+                <button type="button" class="subject-pill" data-subject="other">Other</button>
+              </div>
+              <input type="hidden" id="uploadPhotoSubject" value="birds" />
+            </div>
           </div>
 
           <!-- STEP 3: Dropzone & File Selection -->
@@ -591,6 +631,13 @@
     <div class="drawer-links-container">
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="all">All Visuals</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="photos">Photos</a>
+      <div class="drawer-photo-sub-list" style="margin: -6px 0 10px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="insect" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Insect</a>
+        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="flowers" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Flowers</a>
+        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="animal" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Animal</a>
+        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="birds" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Birds</a>
+        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="other" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Other</a>
+      </div>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="video">Video</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="short-film">Short Film</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">Travelling Guide</a>
