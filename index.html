@@ -1285,30 +1285,44 @@
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="destInputIntro">Brief Introductory Text *</label>
-            <textarea id="destInputIntro" class="form-textarea" rows="2" placeholder="Brief overview of history, landscape, and significance (auto-filled from Wikipedia if available)..." required></textarea>
+            <label for="destInputIntro">Brief Introductory Text</label>
+            <textarea id="destInputIntro" class="form-textarea" rows="2" placeholder="Brief overview of history, landscape, and significance (auto-filled from Wikipedia if available)..."></textarea>
           </div>
 
-          <div class="form-grid-2" style="margin-bottom: 12px;">
-            <div class="form-group">
-              <label for="destInputPhotoUrl">Photo Link (Instagram) *</label>
-              <input type="url" id="destInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/explore/tags/..." required />
-              <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
-                Default: Auto-configured Instagram explore link
+          <!-- Flexible Media Links: Either Instagram (Photos) or YouTube (Videos) or Both -->
+          <div style="background: rgba(10, 43, 71, 0.04); border: 1px solid rgba(200, 154, 61, 0.3); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+              <span style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--primary-ocean-blue); text-transform: uppercase; letter-spacing: 0.5px;">
+                Media Links (Fill Either or Both)
+              </span>
+              <span style="font-size: 10px; font-weight: 700; color: #1e3a8a; background: rgba(59, 130, 246, 0.15); padding: 2px 8px; border-radius: 4px;">
+                Flexible: Either Link Valid
               </span>
             </div>
-            <div class="form-group">
-              <label for="destInputVideoUrl">Video Link (YouTube) *</label>
-              <input type="url" id="destInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/results?search_query=..." required />
-              <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
-                Default: Auto-configured YouTube video tour link
-              </span>
+            <p style="font-size: 11px; color: #4A5568; margin: 0 0 10px; line-height: 1.4;">
+              You do <strong>not</strong> need to fill both! If you are posting photos, provide the Instagram link. If you are posting a video, provide the YouTube link.
+            </p>
+            <div class="form-grid-2">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="destInputPhotoUrl" style="font-size: 12px;">Photo Link (Instagram)</label>
+                <input type="url" id="destInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/..." />
+                <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
+                  📷 For photos (Leave empty if only video)
+                </span>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="destInputVideoUrl" style="font-size: 12px;">Video Link (YouTube / IG)</label>
+                <input type="url" id="destInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/..." />
+                <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
+                  🎥 For video tour (Leave empty if only photos)
+                </span>
+              </div>
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="destInputTips">Tourist Guidelines (Precautions, Timings, Facilities) *</label>
-            <textarea id="destInputTips" class="form-textarea" rows="3" placeholder="Precautions: ...&#10;Timings: ...&#10;Available Facilities: ..." required></textarea>
+            <label for="destInputTips">Tourist Guidelines (Precautions, Timings, Facilities)</label>
+            <textarea id="destInputTips" class="form-textarea" rows="3" placeholder="Precautions: ...&#10;Timings: ...&#10;Available Facilities: ..."></textarea>
           </div>
 
           <div class="form-group">
@@ -1392,25 +1406,36 @@
             <input type="text" id="faunaInputDesc" class="form-input" placeholder="Brief ecological notes or habitat overview..." />
           </div>
 
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label for="faunaInputPhotoUrl">Photo URL (Instagram) *</label>
-            <input type="url" id="faunaInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
+          <!-- Flexible Media Links for Flora & Fauna -->
+          <div style="background: rgba(10, 43, 71, 0.04); border: 1px solid rgba(200, 154, 61, 0.3); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+              <span style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--primary-ocean-blue); text-transform: uppercase; letter-spacing: 0.5px;">
+                Media Links (Fill Any or All)
+              </span>
+              <span style="font-size: 10px; font-weight: 700; color: #1e3a8a; background: rgba(59, 130, 246, 0.15); padding: 2px 8px; border-radius: 4px;">
+                Provide at least 1 link
+              </span>
+            </div>
+            <div class="form-group" style="margin-bottom: 8px;">
+              <label for="faunaInputPhotoUrl" style="font-size: 12px;">Photo URL (Instagram)</label>
+              <input type="url" id="faunaInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/p/..." />
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="faunaInputVideoUrl" style="font-size: 12px;">Video URL (YouTube)</label>
+                <input type="url" id="faunaInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." />
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="faunaInputShortUrl" style="font-size: 12px;">Short Film URL (IG / YT Short)</label>
+                <input type="url" id="faunaInputShortUrl" class="form-input" placeholder="https://www.instagram.com/reel/..." />
+              </div>
+            </div>
           </div>
 
-          <div class="form-grid-2" style="margin-bottom: 12px;">
-            <div class="form-group">
-              <label for="faunaInputVideoUrl">Video URL (YouTube) *</label>
-              <input type="url" id="faunaInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." required />
-            </div>
-            <div class="form-group">
-              <label for="faunaInputShortUrl">Short Film URL (IG / YT Short) *</label>
-              <input type="url" id="faunaInputShortUrl" class="form-input" placeholder="https://www.instagram.com/reel/..." required />
-            </div>
-          </div>
-
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="faunaInputTips">Spotting Tips &amp; Behavioral Notes *</label>
-            <textarea id="faunaInputTips" class="form-textarea" rows="3" placeholder="Best observation hours, behavioral signals, seasonal migrations..." required></textarea>
+            <label for="faunaInputTips">Spotting Tips &amp; Behavioral Notes</label>
+            <textarea id="faunaInputTips" class="form-textarea" rows="3" placeholder="Best observation hours, behavioral signals, seasonal migrations..."></textarea>
           </div>
 
           <div class="form-group">

@@ -508,3 +508,16 @@
   - Removed unused video controls CSS rules and event listeners from style.css and app.js
   - Kept seamless 15-second silent looping behavior active and uninterrupted in the background behind the introduction text
 
+## [v1.0.39] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Flexible Media Links (Either Instagram or YouTube)
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed mandatory dual-link requirement on Travel Destination and Flora & Fauna modals
+  - Users can now provide either an Instagram link for photos or a YouTube link for videos (or both) without getting blocked by form validation
+  - Removed HTML5 'required' constraints from Photo URL and Video URL input fields
+  - Updated card renderers to dynamically display only the media button matching the provided link (View Photos or Watch Video)
+  - Added clear user guidance in modal: 'Media Links (Fill Either or Both) - Flexible: Either Link Valid'
+

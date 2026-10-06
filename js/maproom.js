@@ -3028,8 +3028,13 @@
 
       <div class="maproom-dest-grid">
         ${spots.map((spot, index) => {
-          const photoLink = spot.photoUrl || spot.igUrl || `https://www.instagram.com/explore/tags/${encodeURIComponent(spot.name.replace(/\s+/g, ''))}/`;
-          const videoLink = spot.videoUrl || spot.ytUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(spot.name + ' documentary')}`;
+          let photoLink = spot.photoUrl || spot.igUrl || '';
+          let videoLink = spot.videoUrl || spot.ytUrl || '';
+          // Only for pre-seeded catalog destinations where neither is stored explicitly, supply exploratory defaults
+          if (!spot.isUserAdded) {
+            if (!photoLink) photoLink = `https://www.instagram.com/explore/tags/${encodeURIComponent(spot.name.replace(/\s+/g, ''))}/`;
+            if (!videoLink) videoLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(spot.name + ' documentary')}`;
+          }
 
           // Avoid displaying Nalanda ruins fallback if the spot is not actually Nalanda
           const spotImage = (spot.imageUrl && (spot.imageUrl !== 'assets/images/nalanda_ruins.jpg' || spot.name.toLowerCase().includes('nalanda')))
@@ -3066,14 +3071,18 @@
                   </div>
                   <p class="dest-card-intro">${escapeHtml(spot.description || spot.introText || '')}</p>
                   <div class="dest-link-buttons-row">
-                    <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View field photography on Instagram">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                      <span>View Photos</span>
-                    </a>
-                    <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch 4K video footage on YouTube">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                      <span>Watch Video</span>
-                    </a>
+                    ${photoLink ? `
+                      <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View field photography on Instagram">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>View Photos</span>
+                      </a>
+                    ` : ''}
+                    ${videoLink ? `
+                      <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch 4K video footage on YouTube">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Watch Video</span>
+                      </a>
+                    ` : ''}
                   </div>
                 </div>
               </div>
@@ -3355,9 +3364,14 @@
 
       <div class="maproom-fauna-grid">
         ${speciesList.map((spec, index) => {
-          const photoLink = spec.photoUrl || spec.igUrl || `https://www.instagram.com/explore/tags/${encodeURIComponent(spec.name.replace(/\s+/g, ''))}/`;
-          const videoLink = spec.videoUrl || spec.ytUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(spec.name + ' wildlife footage')}`;
-          const shortLink = spec.shortUrl || spec.igShortUrl || 'https://www.instagram.com/reels/';
+          let photoLink = spec.photoUrl || spec.igUrl || '';
+          let videoLink = spec.videoUrl || spec.ytUrl || '';
+          let shortLink = spec.shortUrl || spec.igShortUrl || '';
+          if (!spec.isUserAdded) {
+            if (!photoLink) photoLink = `https://www.instagram.com/explore/tags/${encodeURIComponent(spec.name.replace(/\s+/g, ''))}/`;
+            if (!videoLink) videoLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(spec.name + ' wildlife footage')}`;
+            if (!shortLink) shortLink = 'https://www.instagram.com/reels/';
+          }
 
           const tipsText = spec.spottingTips || spec.tips || 'Best observed at early morning and twilight near river channels and canopy corridors. Maintain ethical telephoto distance of 25+ meters.';
 
@@ -3375,18 +3389,24 @@
                   <div class="fauna-card-scientific"><em>${escapeHtml(spec.scientific || '')}</em></div>
                   ${(spec.notes || spec.description) ? `<p class="fauna-card-desc">${escapeHtml(spec.notes || spec.description)}</p>` : ''}
                   <div class="fauna-link-buttons-row">
-                    <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View photography on Instagram">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                      <span>Photos</span>
-                    </a>
-                    <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch video on YouTube">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                      <span>Videos</span>
-                    </a>
-                    <a href="${shortLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-short" title="Watch short film on Instagram">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                      <span>Short Films</span>
-                    </a>
+                    ${photoLink ? `
+                      <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View photography on Instagram">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>Photos</span>
+                      </a>
+                    ` : ''}
+                    ${videoLink ? `
+                      <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch video on YouTube">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Videos</span>
+                      </a>
+                    ` : ''}
+                    ${shortLink ? `
+                      <a href="${shortLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-short" title="Watch short film on Instagram">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>Short Films</span>
+                      </a>
+                    ` : ''}
                   </div>
                 </div>
               </div>
@@ -3779,6 +3799,12 @@
         return;
       }
 
+      // Flexible media requirement: either Instagram photo link OR YouTube video link (or both)
+      if (!photoUrl && !videoUrl) {
+        showMapToast('⚠️ Please provide at least one media link: either an Instagram photo link or a YouTube video link.');
+        return;
+      }
+
       const stateData = STATES_DATA[activeStateKey];
       if (stateData) {
         if (!stateData.touristSpots) stateData.touristSpots = [];
@@ -3788,14 +3814,6 @@
           generatedImage = generateAILandmarkIcon(name);
         }
 
-        // Apply smart defaults for Instagram, YouTube, Intro & Guidelines if empty
-        const cleanTag = name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'touristspot';
-        if (!photoUrl) {
-          photoUrl = `https://www.instagram.com/explore/tags/${cleanTag}/`;
-        }
-        if (!videoUrl) {
-          videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(name + ' tour travel')}`;
-        }
         if (!intro) {
           intro = `${name} is an important cultural, historical, and wildlife landmark in ${stateData.name}.`;
         }
@@ -3808,8 +3826,8 @@
           name: name,
           imageUrl: generatedImage,
           description: intro,
-          photoUrl: photoUrl,
-          videoUrl: videoUrl,
+          photoUrl: photoUrl || '',
+          videoUrl: videoUrl || '',
           guidelines: tips,
           tipsAndTricks: [{
             author: author,
@@ -3849,7 +3867,7 @@
       closeModal(spotTipModal);
     });
 
-    // Category B: Flora & Fauna Form Submit (External Hub - No direct file uploads)
+    // Category B: Flora & Fauna Form Submit (External Hub - Flexible Media Links)
     const sightingForm = document.getElementById('sightingForm');
     sightingForm?.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -3859,12 +3877,21 @@
       const photoUrl = document.getElementById('faunaInputPhotoUrl')?.value.trim();
       const videoUrl = document.getElementById('faunaInputVideoUrl')?.value.trim();
       const shortUrl = document.getElementById('faunaInputShortUrl')?.value.trim();
-      const tips = document.getElementById('faunaInputTips')?.value.trim();
+      let tips = document.getElementById('faunaInputTips')?.value.trim();
       const author = document.getElementById('faunaInputAuthor')?.value.trim() || 'Aadi [Creator]';
 
-      if (!commonName || !sciName || !photoUrl || !videoUrl || !shortUrl || !tips) {
-        showMapToast('⚠️ Please fill out all required species fields.');
+      if (!commonName || !sciName) {
+        showMapToast('⚠️ Please enter common and scientific names.');
         return;
+      }
+
+      if (!photoUrl && !videoUrl && !shortUrl) {
+        showMapToast('⚠️ Please provide at least one media link (Instagram photo, YouTube video, or Short film).');
+        return;
+      }
+
+      if (!tips) {
+        tips = 'Best observed at early morning and twilight near river channels and canopy corridors. Maintain ethical telephoto distance of 25+ meters.';
       }
 
       const stateData = STATES_DATA[activeStateKey];
@@ -3878,9 +3905,9 @@
           imageUrl: 'assets/images/black_drongo.jpg',
           notes: desc,
           description: desc,
-          photoUrl: photoUrl,
-          videoUrl: videoUrl,
-          shortUrl: shortUrl,
+          photoUrl: photoUrl || '',
+          videoUrl: videoUrl || '',
+          shortUrl: shortUrl || '',
           spottingTips: tips,
           author: author,
           isUserAdded: true
