@@ -262,3 +262,17 @@
   - Updated DRONGO title across header, navigation drawer, and footer to solid metallic golden-white aesthetic
   - Implemented 6-stop polished metallic gradient matching the WILDLIFE EDITION badge champagne and gold tones
   - Added specular top highlight reflection, reflective metallic core sheen, and warm gold bevel drop shadows
+
+## [v1.0.20] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Aesthetic | UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Implemented organic Tree Branch Scroll Option and interactive page navigator
+  - Styled global page scrollbar as rich textured oak & teak woodland branch with bark cleft track and wood-grain thumb
+  - Added on-screen floating Tree Branch companion with sculpted organic wood contours, knots, and leafy milestone twigs
+  - Integrated dynamic golden-amber tree sap progress vein that fills smoothly with scroll percentage
+  - Added perched Anime Drongo bird mascot slider that glides along the branch, draggable to scroll in real-time
+  - Added quick Canopy (top) and Roots (bottom) organic scroll action twig buttons and milestone section tooltips

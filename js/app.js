@@ -1400,6 +1400,175 @@
         showToast('Catalog restored to baseline.');
       }
     });
+
+    // -------------------------------------------------------------------------
+    // 14. Organic Tree Branch Scroll Companion & Navigator
+    // -------------------------------------------------------------------------
+    function initTreeBranchScroll() {
+      const widget = document.getElementById('treeBranchScrollWidget');
+      const track = document.getElementById('branchStemTrack');
+      const sapPath = document.getElementById('branchSapProgressPath');
+      const perchSlider = document.getElementById('branchPerchSlider');
+      const perchBadge = document.getElementById('perchScrollBadge');
+      const btnTop = document.getElementById('branchScrollToTopBtn');
+      const btnBottom = document.getElementById('branchScrollToBottomBtn');
+      const milestoneBtns = document.querySelectorAll('.branch-node-btn');
+
+      if (!widget || !track || !perchSlider) return;
+
+      let isDragging = false;
+      let pathLength = 400;
+      if (sapPath && sapPath.getTotalLength) {
+        try {
+          pathLength = sapPath.getTotalLength();
+          sapPath.style.strokeDasharray = pathLength;
+          sapPath.style.strokeDashoffset = pathLength;
+        } catch (e) {
+          pathLength = 400;
+        }
+      }
+
+      function updateBranchPosition() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        const percent = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+        const percentDisplay = Math.round(percent * 100);
+
+        // Update glowing sap core
+        if (sapPath) {
+          sapPath.style.strokeDashoffset = pathLength * (1 - percent);
+        }
+
+        // Update perched Drongo slider top position (clamped 0% to 100%)
+        perchSlider.style.top = `${percent * 100}%`;
+        perchSlider.setAttribute('aria-valuenow', percentDisplay);
+        if (perchBadge) {
+          perchBadge.textContent = `${percentDisplay}%`;
+        }
+
+        // Update milestone active status
+        const viewportCenter = scrollY + window.innerHeight * 0.35;
+        milestoneBtns.forEach((btn) => {
+          const targetSelector = btn.getAttribute('data-target');
+          if (!targetSelector) return;
+          const targetEl = document.querySelector(targetSelector);
+          if (targetEl) {
+            const top = targetEl.offsetTop;
+            const bottom = top + targetEl.offsetHeight;
+            if (viewportCenter >= top && viewportCenter <= bottom) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          }
+        });
+      }
+
+      // Smooth RAF scroll listener
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateBranchPosition();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Window resize re-calculation
+      window.addEventListener('resize', updateBranchPosition, { passive: true });
+
+      // Click anywhere on branch stem to scroll
+      track.addEventListener('click', (e) => {
+        if (e.target.closest('.branch-node-btn') || e.target.closest('.branch-perch-slider')) return;
+        const rect = track.getBoundingClientRect();
+        const clickY = e.clientY - rect.top;
+        const ratio = Math.min(Math.max(clickY / rect.height, 0), 1);
+        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        window.scrollTo({
+          top: ratio * maxScroll,
+          behavior: 'smooth'
+        });
+      });
+
+      // Drag perched Drongo slider
+      perchSlider.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        perchSlider.setPointerCapture(e.pointerId);
+        e.preventDefault();
+      });
+
+      perchSlider.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const rect = track.getBoundingClientRect();
+        const currentY = e.clientY - rect.top;
+        const ratio = Math.min(Math.max(currentY / rect.height, 0), 1);
+        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        window.scrollTo({
+          top: ratio * maxScroll,
+          behavior: 'auto'
+        });
+      });
+
+      function stopDrag(e) {
+        if (isDragging) {
+          isDragging = false;
+          try {
+            perchSlider.releasePointerCapture(e.pointerId);
+          } catch (_) {}
+        }
+      }
+
+      perchSlider.addEventListener('pointerup', stopDrag);
+      perchSlider.addEventListener('pointercancel', stopDrag);
+
+      // Keyboard navigation for accessibility
+      perchSlider.addEventListener('keydown', (e) => {
+        const step = window.innerHeight * 0.5;
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          window.scrollBy({ top: step, behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          window.scrollBy({ top: -step, behavior: 'smooth' });
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+        }
+      });
+
+      // Quick Scroll Buttons
+      btnTop?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      btnBottom?.addEventListener('click', () => {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      });
+
+      // Milestone buttons jump
+      milestoneBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetSelector = btn.getAttribute('data-target');
+          if (!targetSelector) return;
+          const targetEl = document.querySelector(targetSelector);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Initial layout tick
+      updateBranchPosition();
+    }
+
+    // Launch tree branch companion
+    initTreeBranchScroll();
   }
 
   // Start Engine on DOM Ready

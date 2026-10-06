@@ -59,7 +59,7 @@
   <!-- =======================================================================
        2. MAIN HEADER / NAVIGATION (Core Blue Section)
        ======================================================================= -->
-  <header class="main-header" role="banner">
+  <header class="main-header" role="banner" id="home">
     <!-- Hyperrealistic Tree branches spreading across header canopy -->
     <div class="header-tree-embellishment" aria-hidden="true"></div>
 
@@ -608,7 +608,7 @@
   <!-- =======================================================================
        7. INSTITUTIONAL FOOTER
        ======================================================================= -->
-  <footer class="main-footer" role="contentinfo">
+  <footer class="main-footer" role="contentinfo" id="footer">
     <div class="footer-container">
       
       <div class="footer-top-grid">
@@ -1210,7 +1210,174 @@
   </div>
 
   <!-- =======================================================================
-       14. TOAST NOTIFICATION SYSTEM
+       14. ORGANIC TREE BRANCH SCROLL COMPANION & NAVIGATOR
+       ======================================================================= -->
+  <aside class="tree-branch-scroll-widget" id="treeBranchScrollWidget" aria-label="Organic Tree Branch Page Scroll Navigator">
+    <!-- Quick Scroll to Top Canopy Twig -->
+    <button class="branch-nav-action-btn branch-btn-top" id="branchScrollToTopBtn" title="Ascend to Canopy (Top) 🌿" aria-label="Scroll to Canopy">
+      <svg viewBox="0 0 24 24" class="branch-btn-icon" aria-hidden="true">
+        <path d="M12 4L6 11H10V20H14V11H18L12 4Z" fill="currentColor"/>
+      </svg>
+      <span class="branch-sprout-leaf leaf-top" aria-hidden="true">🌿</span>
+    </button>
+
+    <!-- Branch SVG Track & Perched Drongo -->
+    <div class="branch-stem-track" id="branchStemTrack" title="Drag bird or click branch to scroll">
+      <!-- Background SVG: Sculpted Tree Branch with Bark & Leaves -->
+      <svg class="branch-stem-svg" viewBox="0 0 54 360" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <!-- Deep Organic Bark Gradient -->
+          <linearGradient id="barkGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#241408" />
+            <stop offset="25%" stop-color="#4A2D13" />
+            <stop offset="55%" stop-color="#70441E" />
+            <stop offset="85%" stop-color="#3D240E" />
+            <stop offset="100%" stop-color="#1B0E05" />
+          </linearGradient>
+
+          <!-- Golden Amber Sap Stream Gradient -->
+          <linearGradient id="sapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="15%" stop-color="#FFF275" />
+            <stop offset="50%" stop-color="#E5A93C" />
+            <stop offset="85%" stop-color="#55BA47" />
+            <stop offset="100%" stop-color="#D4AF37" />
+          </linearGradient>
+
+          <!-- Leaf Gradient -->
+          <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#81C784" />
+            <stop offset="50%" stop-color="#388E3C" />
+            <stop offset="100%" stop-color="#1B5E20" />
+          </linearGradient>
+
+          <!-- Branch Shadow Filter -->
+          <filter id="branchShadow" x="-30%" y="-10%" width="160%" height="120%">
+            <feDropShadow dx="-2" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.6)" />
+          </filter>
+        </defs>
+
+        <!-- Outer Tree Branch Shadow & Outer Bark -->
+        <path 
+          d="M 36 10 C 33 60, 42 120, 34 180 C 27 240, 39 300, 34 350" 
+          stroke="rgba(0,0,0,0.7)" 
+          stroke-width="14" 
+          stroke-linecap="round" 
+          fill="none" 
+        />
+
+        <!-- Main Wood Branch Trunk with Bark -->
+        <path 
+          id="branchBarkPath"
+          d="M 36 10 C 33 60, 42 120, 34 180 C 27 240, 39 300, 34 350" 
+          stroke="url(#barkGradient)" 
+          stroke-width="10" 
+          stroke-linecap="round" 
+          fill="none" 
+        />
+
+        <!-- Organic Wood Grain / Bark Texture Knots -->
+        <ellipse cx="37" cy="70" rx="3" ry="5" fill="#241408" opacity="0.6" />
+        <ellipse cx="35" cy="180" rx="2.5" ry="4" fill="#241408" opacity="0.7" />
+        <ellipse cx="33" cy="285" rx="3" ry="4.5" fill="#241408" opacity="0.6" />
+
+        <!-- Interior Sap Hollow / Groove -->
+        <path 
+          d="M 36 12 C 33 60, 42 120, 34 180 C 27 240, 39 300, 34 348" 
+          stroke="rgba(15, 8, 3, 0.85)" 
+          stroke-width="4.5" 
+          stroke-linecap="round" 
+          fill="none" 
+        />
+
+        <!-- Active Glowing Amber Sap Path (Drawn dynamically via strokeDashoffset) -->
+        <path 
+          id="branchSapProgressPath"
+          class="branch-sap-path"
+          d="M 36 12 C 33 60, 42 120, 34 180 C 27 240, 39 300, 34 348" 
+          stroke="url(#sapGradient)" 
+          stroke-width="3" 
+          stroke-linecap="round" 
+          fill="none" 
+        />
+
+        <!-- Decorative Lateral Twigs & Leaves at Milestone Sections -->
+        <!-- Node 1: Canopy (y ~ 20) -->
+        <path d="M 35 24 Q 22 20 12 18" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 12 18 Q 8 10 2 12 Q 10 22 12 18 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+
+        <!-- Node 2: Editorial Manifesto (y ~ 85) -->
+        <path d="M 35 88 Q 24 84 14 82" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 14 82 Q 8 74 3 77 Q 11 88 14 82 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+
+        <!-- Node 3: Visual Dispatches (y ~ 150) -->
+        <path d="M 38 152 Q 26 148 16 146" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 16 146 Q 10 138 4 141 Q 12 152 16 146 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+
+        <!-- Node 4: Map Room (y ~ 215) -->
+        <path d="M 31 218 Q 20 214 10 212" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 10 212 Q 4 204 -1 207 Q 7 218 10 212 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+
+        <!-- Node 5: Field Audio Expeditions (y ~ 280) -->
+        <path d="M 33 282 Q 22 278 12 276" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 12 276 Q 6 268 1 271 Q 9 282 12 276 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+
+        <!-- Node 6: Roots / Forest Floor (y ~ 340) -->
+        <path d="M 34 344 Q 22 342 12 340" stroke="#4A2D13" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 12 340 Q 6 332 0 335 Q 8 346 12 340 Z" fill="url(#leafGrad)" stroke="#1B5E20" stroke-width="0.8" />
+      </svg>
+
+      <!-- Clickable Leaf Milestone Buttons Overlay -->
+      <div class="branch-milestone-nodes">
+        <button class="branch-node-btn active" data-target="#home" style="top: 5%;" title="Canopy • Top" aria-label="Go to Canopy">
+          <span class="node-leaf-symbol">🌿</span>
+          <span class="node-tooltip">Canopy (Top)</span>
+        </button>
+        <button class="branch-node-btn" data-target="#editorialIntro" style="top: 24%;" title="The Wild Heart of India" aria-label="Go to Manifesto">
+          <span class="node-leaf-symbol">📜</span>
+          <span class="node-tooltip">Wild Heart Manifesto</span>
+        </button>
+        <button class="branch-node-btn" data-target="#visuals" style="top: 42%;" title="Visual Dispatches" aria-label="Go to Visual Dispatches">
+          <span class="node-leaf-symbol">📸</span>
+          <span class="node-tooltip">Dispatches &amp; Media</span>
+        </button>
+        <button class="branch-node-btn" data-target="#maproom" style="top: 60%;" title="India Map Room" aria-label="Go to Map Room">
+          <span class="node-leaf-symbol">🗺️</span>
+          <span class="node-tooltip">India Map Room</span>
+        </button>
+        <button class="branch-node-btn" data-target="#expeditions" style="top: 78%;" title="Expedition Audio" aria-label="Go to Expeditions">
+          <span class="node-leaf-symbol">🎙️</span>
+          <span class="node-tooltip">Nature Sounds</span>
+        </button>
+        <button class="branch-node-btn" data-target="#footer" style="top: 95%;" title="Forest Floor (Footer)" aria-label="Go to Footer">
+          <span class="node-leaf-symbol">🪵</span>
+          <span class="node-tooltip">Roots (Footer)</span>
+        </button>
+      </div>
+
+      <!-- The Drongo Perch Slider Carriage (Glides down the branch as you scroll) -->
+      <div class="branch-perch-slider" id="branchPerchSlider" role="slider" aria-label="Tree Branch Scroll Slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <!-- Wooden Perch Peg / Twig -->
+        <div class="perch-wooden-peg"></div>
+        <!-- Little Cute Anime Drongo Bird Perched on Branch -->
+        <div class="perch-bird-wrapper">
+          <img src="assets/images/drongo_anime_sticker.png" alt="Perched Drongo Scroll Indicator" class="perch-bird-img" />
+          <span class="perch-scroll-badge" id="perchScrollBadge">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Scroll to Bottom Roots Twig -->
+    <button class="branch-nav-action-btn branch-btn-bottom" id="branchScrollToBottomBtn" title="Descend to Roots (Bottom) 🪵" aria-label="Scroll to Roots">
+      <svg viewBox="0 0 24 24" class="branch-btn-icon" aria-hidden="true">
+        <path d="M12 20L18 13H14V4H10V13H6L12 20Z" fill="currentColor"/>
+      </svg>
+      <span class="branch-sprout-leaf leaf-bottom" aria-hidden="true">🍂</span>
+    </button>
+  </aside>
+
+  <!-- =======================================================================
+       15. TOAST NOTIFICATION SYSTEM
        ======================================================================= -->
   <div class="drongo-toast" id="drongoToast" role="status" aria-live="polite"></div>
 
