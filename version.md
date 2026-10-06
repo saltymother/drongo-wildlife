@@ -324,3 +324,15 @@
   - Removed redundant 'Contribute New Visual Records to Drongo' box below the Visuals gallery grid
   - Cleaned up redundant '+ Open Upload Studio', 'Export Catalog JSON', and 'Reset to Defaults' banner to prevent clutter
   - Retained dedicated upload access points beside SEARCH in the navigation bar and inside the gallery controls
+
+## [v1.0.25] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Asset Integration & UI/UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Integrated official state emblems from Wikipedia for all 13 interactive Indian state corridors
+  - Downloaded high-resolution official state seals (Bihar, Assam, West Bengal, Madhya Pradesh, Kerala, Rajasthan, Uttarakhand, Gujarat, Karnataka, Maharashtra, Odisha, Ladakh, Tamil Nadu) to local assets/images/emblems/
+  - Replaced SVG circle approximations with authentic official Wikipedia state seals rendered inside a polished circular gold frame
+  - Styled state emblem wrapper with pure white background, inner padding, and responsive hover scale micro-animations

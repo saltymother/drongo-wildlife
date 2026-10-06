@@ -1710,8 +1710,18 @@
     // Update Header
     if (stateTitleEl) stateTitleEl.textContent = data.name.toUpperCase();
     if (stateTaglineEl) stateTaglineEl.textContent = data.tagline;
-    if (stateBiomeEl) stateBiomeEl.textContent = `Biome: ${data.biome}`;
-    if (stateEmblemEl) stateEmblemEl.innerHTML = data.emblemSvg;
+    if (stateEmblemEl) {
+      const emblemSrc = data.emblemUrl || `assets/images/emblems/${stateKey}_emblem.png`;
+      stateEmblemEl.title = `${data.emblemTitle || `Official State Emblem of ${data.name}`} • Source: Wikipedia`;
+      stateEmblemEl.innerHTML = `
+        <img src="${emblemSrc}" 
+             alt="${escapeHtml(data.emblemTitle || `Official State Emblem of ${data.name}`)}" 
+             class="state-emblem-img" 
+             title="${escapeHtml(data.emblemTitle || `Official State Emblem of ${data.name}`)} (Source: Wikipedia)"
+             onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
+        />
+      `;
+    }
 
     // Synchronize Dropdown
     if (mapStateDropdown && mapStateDropdown.value !== stateKey) {
