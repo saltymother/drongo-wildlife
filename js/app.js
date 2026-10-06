@@ -673,6 +673,10 @@
     uploadModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
+    // Ensure modal body is scrolled to the top so user sees Step 1 immediately
+    const modalBodyEl = uploadModal.querySelector('.modal-body');
+    if (modalBodyEl) modalBodyEl.scrollTop = 0;
+
     const targetType = e?.currentTarget?.getAttribute('data-upload-type');
     const targetSec = e?.currentTarget?.getAttribute('data-upload-section');
 
@@ -1251,6 +1255,21 @@
 
     clearPreviewBtn?.addEventListener('click', resetUploadPreview);
     uploadForm?.addEventListener('submit', handleFormSubmit);
+
+    // Quick upload button inside preview area
+    document.getElementById('btnPreviewUploadNow')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleFormSubmit(e);
+    });
+
+    // Global Delegated click listener for any button with .trigger-upload-modal
+    document.addEventListener('click', (e) => {
+      const modalBtn = e.target.closest('.trigger-upload-modal');
+      if (modalBtn) {
+        e.preventDefault();
+        openUploadModal(e);
+      }
+    });
 
     // Lightbox Controls
     closeLightboxBtn?.addEventListener('click', closeLightbox);

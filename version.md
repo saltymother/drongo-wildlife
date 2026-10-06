@@ -204,3 +204,17 @@
   - Removed obsolete footer navigation link columns (Visual Dispatches, Visual Categories, Technical Specs) per user request
   - Refactored footer layout into a minimalist, centered brand identity showcase featuring the Drongo crest, Latin motto, description, and social media channels
   - Cleaned up obsolete footer grid media queries in style.css for responsive mobile-to-desktop presentation
+
+## [v1.0.15] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Bugfix | UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Resolved modal scrolling failure by fixing flexbox height propagation on `.upload-form` and `.modal-dialog`
+  - Added visible, custom gold scrollbar to `.modal-body` and ensured modal auto-scrolls to top upon opening
+  - Fixed clipped footer issue by pinning `.modal-footer` with high-contrast sticky positioning and prominent button labeled 'UPLOAD PHOTO / VIDEO NOW'
+  - Added instant 'UPLOAD THIS FILE NOW' button directly inside the dropzone media preview area
+  - Added persistent floating action button (+ UPLOAD) at bottom-right corner visible across all screen sizes
+  - Added header-level and Visuals-level '+ UPLOAD PHOTO / VIDEO' trigger buttons with delegated click listeners

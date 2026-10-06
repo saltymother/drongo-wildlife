@@ -75,8 +75,12 @@
         <p class="brand-motto">Alta alatis patent</p>
       </div>
 
-      <!-- Right Column: Subtle archive indicator -->
+      <!-- Right Column: Quick Upload action & archive indicator -->
       <div class="header-col-right">
+        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Upload Photo or Video" style="margin-bottom: 6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ UPLOAD</span>
+        </button>
         <div class="header-edition-tag">
           <span class="edition-dot"></span>
           <span>CURATOR ARCHIVE</span>
@@ -148,8 +152,12 @@
   <section class="media-grid-section" id="visuals">
     
     <div class="section-header-block">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; width: 100%;">
         <h2>Visuals</h2>
+        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Upload Photo or Video to Visuals">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ UPLOAD PHOTO / VIDEO</span>
+        </button>
       </div>
 
       <!-- Interactive Filter Nav Tabs in the exact requested manner -->
@@ -771,6 +779,12 @@
               <button type="button" class="clear-preview-btn" id="clearPreviewBtn" title="Remove file">&times;</button>
               <img id="uploadPreviewImage" alt="Upload Preview" style="display: none;" />
               <video id="uploadPreviewVideo" controls style="display: none; width: 100%; max-height: 240px; background: #000; border-radius: 4px;"></video>
+              <div class="preview-upload-bar" id="previewUploadBar" style="margin-top: 14px; text-align: center;">
+                <button type="submit" class="btn-preview-upload-cta" id="btnPreviewUploadNow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>⚡ UPLOAD THIS FILE NOW</span>
+                </button>
+              </div>
             </div>
 
             <!-- Web URL Fallback -->
@@ -837,9 +851,9 @@
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary" id="cancelUploadBtn">Cancel</button>
-          <button type="submit" class="btn-primary" id="submitUploadBtn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span id="submitBtnText">Publish Dispatch to Archive</span>
+          <button type="submit" class="btn-upload-gold-large" id="submitUploadBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span id="submitBtnText">UPLOAD PHOTO / VIDEO NOW</span>
           </button>
         </div>
       </form>
@@ -1127,6 +1141,14 @@
         </div>
       </form>
     </div>
+  </div>
+
+  <!-- Floating Quick Upload Action Button (Always Accessible on Desktop and Mobile) -->
+  <div class="floating-upload-fab-wrap">
+    <button class="floating-upload-fab trigger-upload-modal" id="floatingUploadFab" aria-label="Upload Photo or Video to Archive">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span>+ UPLOAD</span>
+    </button>
   </div>
 
   <!-- =======================================================================
