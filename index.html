@@ -160,31 +160,9 @@
   </nav>
 
   <!-- =======================================================================
-       4. MAIN EDITORIAL INTRO WITH CINEMATIC LOOPING VIDEO BACKGROUND
+       4. MAIN EDITORIAL INTRO (White Section)
        ======================================================================= -->
-  <section class="editorial-intro-section" id="editorialIntro" aria-label="Welcome Introduction to Drongo Wildlife">
-    <!-- Cinematic Looping Video Background Enclosure -->
-    <div class="editorial-video-bg-container" aria-hidden="true">
-      <!-- High-resolution Poster / Ambient Backdrop Image -->
-      <div class="editorial-video-poster" style="background-image: url('https://i.ytimg.com/vi/7kgvidNDUTY/maxresdefault.jpg');"></div>
-      
-      <!-- Video IFrame Scaled Wrapper for Seamless Cover Fit -->
-      <div class="editorial-video-iframe-wrapper">
-        <iframe
-          id="editorialIntroVideoIframe"
-          src="https://www.youtube-nocookie.com/embed/7kgvidNDUTY?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=7kgvidNDUTY&start=0&end=15&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0"
-          title="India Wildlife In 4K - Ambient Introduction Background Video"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          tabindex="-1"
-        ></iframe>
-      </div>
-
-      <!-- Dark Semi-Transparent High-Contrast Overlay for 100% Solid Text Legibility -->
-      <div class="editorial-video-overlay"></div>
-    </div>
-
-    <!-- Solid, Completely Opaque Foreground Editorial Content -->
+  <section class="editorial-intro-section" id="editorialIntro">
     <div class="editorial-intro-container">
       <span class="editorial-kicker">INSTITUTIONAL CURATION &amp; EXPEDITIONS ARCHIVE</span>
       <h2 class="editorial-intro-title">
@@ -194,18 +172,6 @@
       <p class="editorial-intro-text">
         We guide you through the country's most spectacular travel destinations, from hidden mountain trails to sun-drenched coasts. But our journey goes far beyond the map, diving deep into the incredible wildlife, flora, and fauna that make this land so magical. Discover the living identity of each region—from the rare, unique flowers that bloom in a single state to the majestic animals that roam its forests. Whether you are planning your next grand adventure or simply marveling at nature's hidden gems, you are in exactly the right place. Step off the beaten path and into the wild. Let the exploration begin!
       </p>
-
-      <!-- Ambient Video Info & Mute Toggle Controls -->
-      <div class="editorial-video-controls-bar">
-        <div class="video-ambient-pill">
-          <span class="ambient-pulse-dot"></span>
-          <span>4K Wildlife Ambient • 15s Continuous Loop</span>
-        </div>
-        <button type="button" class="btn-video-sound-toggle" id="btnIntroVideoAudioToggle" title="Toggle Nature Soundtrack" aria-label="Toggle Soundtrack">
-          <span id="soundToggleIcon">🔇</span>
-          <span id="soundToggleText">Audio Muted</span>
-        </button>
-      </div>
     </div>
   </section>
 
@@ -1551,6 +1517,78 @@
           <button type="submit" class="header-action-btn btn-gold">+ Publish Sighting Record</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Destination Detail Lightbox Modal (Tap Destination Card to Explore) -->
+  <div class="modal-backdrop destination-detail-modal-backdrop" id="destinationDetailModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog destination-modal-dialog">
+      <div class="modal-header destination-modal-header">
+        <div class="dest-modal-title-wrap">
+          <span class="dest-modal-badge" id="destModalBadge">HERITAGE &amp; WILDLIFE DESTINATION</span>
+          <h3 id="destModalTitle" class="dest-modal-title">Destination Title</h3>
+          <div class="dest-modal-subtitle" id="destModalSubtitle">Subtitle</div>
+        </div>
+        <button class="modal-close-btn dest-modal-close-btn" id="destModalCloseBtn" aria-label="Close destination details">&times;</button>
+      </div>
+      <div class="modal-body destination-modal-body">
+        <!-- Big Hero Media Image -->
+        <div class="dest-modal-hero-wrap">
+          <img id="destModalHeroImg" src="" alt="Destination" class="dest-modal-hero-img" />
+          <div class="dest-modal-hero-overlay">
+            <span class="dest-hero-badge" id="destModalStateBadge">STATE</span>
+            <button type="button" class="dest-hero-zoom-btn" id="destModalZoomBtn" title="View Fullscreen Photo">🔍 View Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- Description Narrative -->
+        <div class="dest-modal-desc-card">
+          <p id="destModalDesc" class="dest-modal-desc-text"></p>
+        </div>
+
+        <!-- Action Buttons: Upload Media & Share Tips -->
+        <div class="dest-modal-actions-bar">
+          <button type="button" class="btn-dest-action btn-dest-upload" id="destModalUploadBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>+ Add Photos, Videos &amp; Short Film</span>
+          </button>
+          <button type="button" class="btn-dest-action btn-dest-tip" id="destModalTipBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>+ Share Tips &amp; Tricks</span>
+          </button>
+        </div>
+
+        <!-- Tips & Tricks Feed -->
+        <div class="dest-modal-section">
+          <div class="dest-section-header">
+            <div class="dest-section-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Field Guidance &amp; Tips Feed</span>
+            </div>
+            <span class="dest-tips-count" id="destModalTipsCount">0 Tips</span>
+          </div>
+          <div class="dest-modal-tips-list" id="destModalTipsList">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Custom Uploads / Community Dispatches -->
+        <div class="dest-modal-section" id="destModalUploadsSection">
+          <div class="dest-section-header">
+            <div class="dest-section-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <span>Traveler Photos &amp; Video Dispatches</span>
+            </div>
+            <span class="dest-uploads-count" id="destModalUploadsCount">0 Dispatches</span>
+          </div>
+          <div class="dest-modal-uploads-grid" id="destModalUploadsGrid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer destination-modal-footer">
+        <button type="button" class="btn-secondary dest-modal-close-action" id="destModalCloseFooterBtn">Close Destination View</button>
+      </div>
     </div>
   </div>
 

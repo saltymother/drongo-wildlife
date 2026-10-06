@@ -2990,6 +2990,9 @@
     }
   }
 
+  let activeDetailSpot = null;
+  let activeDetailStateData = null;
+
   function renderTouristSpots(data) {
     if (!contentDisplayPane) return;
 
@@ -2998,104 +3001,16 @@
     contentDisplayPane.innerHTML = `
       <div class="maproom-spots-grid">
         ${spots.map(spot => {
-          // Merge custom user uploads for this spot from storage
-          const customSpotUploads = (maproomDispatches[spot.id]?.uploads) || [];
-          const customTips = (maproomDispatches[spot.id]?.tips) || [];
-          const allTips = [...spot.tipsAndTricks, ...customTips];
-
           return `
-            <article class="tourist-spot-card" id="${spot.id}">
-              <div class="spot-image-wrapper spot-open-lightbox-trigger" data-spot-name="${escapeHtml(spot.name)}" data-image-url="${spot.imageUrl}" data-spot-desc="${escapeHtml(spot.description)}" data-state-name="${escapeHtml(data.name)}" title="Click to view full photo of ${escapeHtml(spot.name)}" style="cursor: pointer;">
-                <img src="${spot.imageUrl}" alt="${spot.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';"/>
-                <span class="spot-badge">HERITAGE &amp; WILDLIFE DESTINATION</span>
-                <span class="spot-enlarge-badge">🔍 VIEW FULL PHOTO</span>
+            <article class="tourist-spot-card compact-spot-card" id="${spot.id}" data-spot-id="${spot.id}" role="button" tabindex="0" title="Tap to explore ${escapeHtml(spot.name)}">
+              <div class="spot-image-wrapper">
+                <img src="${spot.imageUrl}" alt="${spot.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';" />
+                <div class="spot-overlay-badge">
+                  <span class="spot-explore-hint">Tap to Open ↗</span>
+                </div>
               </div>
-
-              <div class="spot-body">
-                <h3 class="spot-name">${spot.name}</h3>
-                <div class="spot-italic-sub"><em>${spot.subName}</em></div>
-                <p class="spot-info">${spot.description}</p>
-
-                <!-- Actions: Upload Media & Add Tips -->
-                <div class="spot-action-buttons">
-                  <button type="button" class="btn-spot-action btn-upload-spot-media" data-spot-id="${spot.id}" data-spot-name="${escapeHtml(spot.name)}" data-state-name="${data.name}">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>+ Add Photos, Videos &amp; Short Film</span>
-                  </button>
-
-                  <button type="button" class="btn-spot-action btn-add-spot-tip" data-spot-id="${spot.id}" data-spot-name="${escapeHtml(spot.name)}">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                    <span>+ Share Tips &amp; Tricks</span>
-                  </button>
-                </div>
-
-                <!-- Tips & Tricks Feed (Highlighting Aadi [Creator]) -->
-                <div class="spot-tips-feed">
-                  <div class="tips-feed-title">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    <span>Tips, Tricks &amp; Experience Feed:</span>
-                  </div>
-
-                  ${allTips.map((t, tIdx) => {
-                    const isCreator = t.isCreator || t.author.toLowerCase().includes('aadi') || t.author.toLowerCase().includes('creator');
-                    const isCustomTip = tIdx >= spot.tipsAndTricks.length;
-                    return `
-                      <div class="tip-card ${isCreator ? 'creator-tip' : 'contributor-tip'}">
-                        <div class="tip-header">
-                          <span class="${isCreator ? 'creator-badge' : 'visitor-badge'}">
-                            ${isCreator ? '👑 Aadi [Creator]' : `🌿 ${escapeHtml(t.author)}`}
-                          </span>
-                          <span class="tip-date">${t.date || 'Field Guide'}</span>
-                          ${isCustomTip ? `
-                            <button type="button" class="btn-delete-tip" data-spot-id="${spot.id}" data-tip-index="${tIdx - spot.tipsAndTricks.length}" title="Delete this tip" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px; margin-left: auto;">
-                              ✕ Delete
-                            </button>
-                          ` : ''}
-                        </div>
-                        <p class="tip-text">${escapeHtml(t.tip)}</p>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-
-                <!-- Spot Community Uploads Gallery -->
-                ${customSpotUploads.length > 0 ? `
-                  <div class="spot-custom-uploads">
-                    <div class="uploads-feed-title">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                      <span>Field Dispatches &amp; Uploaded Media (${customSpotUploads.length}):</span>
-                    </div>
-                    <div class="mini-uploads-grid">
-                      ${customSpotUploads.map((up, uIdx) => {
-                        const uploadId = up.id || `up-${spot.id}-${uIdx}`;
-                        return `
-                        <div class="mini-upload-thumb" data-spot-id="${spot.id}" data-upload-id="${uploadId}" title="Tap to enlarge: ${escapeHtml(up.title)}">
-                          <div class="thumb-media-wrapper">
-                            ${up.type === 'video' ? `
-                              <video src="${up.url}" preload="metadata" muted></video>
-                              <span class="video-play-overlay">▶ 4K VIDEO</span>
-                            ` : `
-                              <img src="${up.url}" alt="${escapeHtml(up.title)}" loading="lazy" onerror="this.src='assets/images/nalanda_ruins.jpg';"/>
-                              <span class="photo-expand-overlay">🔍 ENLARGE</span>
-                            `}
-                            <button type="button" class="btn-delete-spot-media" data-spot-id="${spot.id}" data-upload-id="${uploadId}" data-spot-name="${escapeHtml(spot.name)}" title="Delete this ${up.type}">
-                              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                              Delete
-                            </button>
-                          </div>
-                          <div class="mini-upload-caption">
-                            <strong>${escapeHtml(up.title)}</strong>
-                            <div class="mini-upload-meta">
-                              <small>By ${escapeHtml(up.author)}</small>
-                              <span class="tap-to-open-hint">Open ↗</span>
-                            </div>
-                          </div>
-                        </div>
-                      `}).join('')}
-                    </div>
-                  </div>
-                ` : ''}
-
+              <div class="spot-compact-body">
+                <h4 class="spot-compact-name">${escapeHtml(spot.name)}</h4>
               </div>
             </article>
           `;
@@ -3103,98 +3018,235 @@
       </div>
     `;
 
-    // Attach click events to spot action buttons
-    contentDisplayPane.querySelectorAll('.btn-upload-spot-media').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const spotId = btn.getAttribute('data-spot-id');
-        const spotName = btn.getAttribute('data-spot-name');
-        const stateName = btn.getAttribute('data-state-name');
-        openSpotMediaModal(spotId, spotName, stateName);
-      });
-    });
+    // Click anywhere on compact spot card -> Open dedicated Destination Detail Lightbox Modal!
+    contentDisplayPane.querySelectorAll('.compact-spot-card').forEach(card => {
+      const spotId = card.getAttribute('data-spot-id');
+      const spotObj = spots.find(s => s.id === spotId);
+      if (!spotObj) return;
 
-    contentDisplayPane.querySelectorAll('.btn-add-spot-tip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const spotId = btn.getAttribute('data-spot-id');
-        const spotName = btn.getAttribute('data-spot-name');
-        openSpotTipModal(spotId, spotName);
-      });
-    });
+      const triggerOpen = () => openDestinationDetailModal(spotObj, data);
 
-    // Tap/Click on uploaded media thumbnail -> OPEN BIG IN LIGHTBOX
-    contentDisplayPane.querySelectorAll('.mini-upload-thumb').forEach(thumb => {
-      thumb.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-delete-spot-media')) return;
-
-        const spotId = thumb.getAttribute('data-spot-id');
-        const uploadId = thumb.getAttribute('data-upload-id');
-        const uploads = maproomDispatches[spotId]?.uploads || [];
-        const item = uploads.find(u => u.id === uploadId);
-        if (!item) return;
-
-        const spotObj = spots.find(s => s.id === spotId);
-        const spotName = spotObj ? spotObj.name : 'Tourist Spot';
-
-        if (window.openDrongoLightbox) {
-          window.openDrongoLightbox({
-            type: item.type || 'photo',
-            title: item.title,
-            mediaUrl: item.url,
-            videoUrl: item.type === 'video' ? item.url : null,
-            badge: `${item.type === 'video' ? '4K VIDEO' : 'PHOTO'} DISPATCH • ${data.name.toUpperCase()}`,
-            location: `${spotName} • ${data.name}`,
-            author: item.author,
-            date: item.date,
-            description: `Field media dispatch contributed to ${spotName} archive in ${data.name}. Recorded by ${item.author}.`,
-            onDelete: () => deleteSpotMedia(spotId, uploadId, spotName)
-          });
+      card.addEventListener('click', triggerOpen);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerOpen();
         }
       });
     });
+  }
 
-    // Delete Button inside thumbnail
-    contentDisplayPane.querySelectorAll('.btn-delete-spot-media').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const spotId = btn.getAttribute('data-spot-id');
-        const uploadId = btn.getAttribute('data-upload-id');
-        const spotName = btn.getAttribute('data-spot-name') || 'this spot';
-        deleteSpotMedia(spotId, uploadId, spotName);
-      });
-    });
+  function openDestinationDetailModal(spot, data) {
+    activeDetailSpot = spot;
+    activeDetailStateData = data;
 
-    // Delete tip button
-    contentDisplayPane.querySelectorAll('.btn-delete-tip').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const spotId = btn.getAttribute('data-spot-id');
-        const tipIdx = parseInt(btn.getAttribute('data-tip-index'), 10);
-        deleteSpotTip(spotId, tipIdx);
-      });
-    });
+    const modal = document.getElementById('destinationDetailModal');
+    if (!modal) return;
 
-    // Spot Main Image -> Open in Lightbox
-    contentDisplayPane.querySelectorAll('.spot-open-lightbox-trigger').forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const spotName = trigger.getAttribute('data-spot-name');
-        const imgUrl = trigger.getAttribute('data-image-url');
-        const spotDesc = trigger.getAttribute('data-spot-desc');
-        const stateName = trigger.getAttribute('data-state-name');
+    renderDestinationModalContent(spot, data);
 
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderDestinationModalContent(spot, data) {
+    const modal = document.getElementById('destinationDetailModal');
+    if (!modal || !spot || !data) return;
+
+    const customSpotUploads = (maproomDispatches[spot.id]?.uploads) || [];
+    const customTips = (maproomDispatches[spot.id]?.tips) || [];
+    const allTips = [...spot.tipsAndTricks, ...customTips];
+
+    // Badge, Title, Subtitle
+    const badgeEl = document.getElementById('destModalBadge');
+    if (badgeEl) badgeEl.textContent = `${data.name.toUpperCase()} • WILDLIFE & HERITAGE DESTINATION`;
+
+    const titleEl = document.getElementById('destModalTitle');
+    if (titleEl) titleEl.textContent = spot.name;
+
+    const subEl = document.getElementById('destModalSubtitle');
+    if (subEl) subEl.textContent = spot.subName || '';
+
+    // Hero image & State Badge
+    const heroImg = document.getElementById('destModalHeroImg');
+    if (heroImg) {
+      heroImg.src = spot.imageUrl;
+      heroImg.alt = spot.name;
+    }
+
+    const stateBadge = document.getElementById('destModalStateBadge');
+    if (stateBadge) stateBadge.textContent = data.name;
+
+    // Zoom button
+    const zoomBtn = document.getElementById('destModalZoomBtn');
+    if (zoomBtn) {
+      zoomBtn.onclick = () => {
         if (window.openDrongoLightbox) {
           window.openDrongoLightbox({
             type: 'photo',
-            title: spotName,
-            mediaUrl: imgUrl,
-            badge: `HERITAGE DESTINATION • ${stateName.toUpperCase()}`,
-            location: `${spotName} • ${stateName}`,
+            title: spot.name,
+            mediaUrl: spot.imageUrl,
+            badge: `HERITAGE DESTINATION • ${data.name.toUpperCase()}`,
+            location: `${spot.name} • ${data.name}`,
             author: 'Drongo Wildlife Cartography',
-            description: spotDesc,
+            description: spot.description,
             date: 'Institutional Record'
           });
         }
+      };
+    }
+
+    // Hero Image click also zooms
+    if (heroImg) {
+      heroImg.style.cursor = 'pointer';
+      heroImg.onclick = zoomBtn ? zoomBtn.onclick : null;
+    }
+
+    // Description text
+    const descEl = document.getElementById('destModalDesc');
+    if (descEl) descEl.textContent = spot.description;
+
+    // Action buttons inside modal
+    const uploadBtn = document.getElementById('destModalUploadBtn');
+    if (uploadBtn) {
+      uploadBtn.onclick = () => {
+        openSpotMediaModal(spot.id, spot.name, data.name);
+      };
+    }
+
+    const tipBtn = document.getElementById('destModalTipBtn');
+    if (tipBtn) {
+      tipBtn.onclick = () => {
+        openSpotTipModal(spot.id, spot.name);
+      };
+    }
+
+    // Tips count and list
+    const tipsCountEl = document.getElementById('destModalTipsCount');
+    if (tipsCountEl) tipsCountEl.textContent = `${allTips.length} ${allTips.length === 1 ? 'Tip' : 'Tips'}`;
+
+    const tipsListEl = document.getElementById('destModalTipsList');
+    if (tipsListEl) {
+      tipsListEl.innerHTML = allTips.map((t, tIdx) => {
+        const isCreator = t.isCreator || t.author.toLowerCase().includes('aadi') || t.author.toLowerCase().includes('creator');
+        const isCustomTip = tIdx >= spot.tipsAndTricks.length;
+        return `
+          <div class="tip-card ${isCreator ? 'creator-tip' : 'contributor-tip'}">
+            <div class="tip-header">
+              <span class="${isCreator ? 'creator-badge' : 'visitor-badge'}">
+                ${isCreator ? '👑 Aadi [Creator]' : `🌿 ${escapeHtml(t.author)}`}
+              </span>
+              <span class="tip-date">${t.date || 'Field Guide'}</span>
+              ${isCustomTip ? `
+                <button type="button" class="btn-delete-tip modal-tip-delete-btn" data-spot-id="${spot.id}" data-tip-index="${tIdx - spot.tipsAndTricks.length}" title="Delete this tip" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px; margin-left: auto;">
+                  ✕ Delete
+                </button>
+              ` : ''}
+            </div>
+            <p class="tip-text">${escapeHtml(t.tip)}</p>
+          </div>
+        `;
+      }).join('');
+
+      // Wire delete tip buttons inside modal
+      tipsListEl.querySelectorAll('.modal-tip-delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const spotId = btn.getAttribute('data-spot-id');
+          const tipIdx = parseInt(btn.getAttribute('data-tip-index'), 10);
+          deleteSpotTip(spotId, tipIdx);
+        });
       });
-    });
+    }
+
+    // Uploads section
+    const uploadsCountEl = document.getElementById('destModalUploadsCount');
+    if (uploadsCountEl) uploadsCountEl.textContent = `${customSpotUploads.length} ${customSpotUploads.length === 1 ? 'Dispatch' : 'Dispatches'}`;
+
+    const uploadsGridEl = document.getElementById('destModalUploadsGrid');
+    if (uploadsGridEl) {
+      if (customSpotUploads.length === 0) {
+        uploadsGridEl.innerHTML = `
+          <div class="dest-empty-uploads-prompt" style="padding: 10px; background: rgba(10, 43, 71, 0.03); border-radius: 6px; text-align: center;">
+            <p style="margin: 0 0 8px; font-size: 12px; color: var(--text-muted);">No traveler dispatches uploaded yet for ${escapeHtml(spot.name)}. Be the first to share your field photos or wildlife clips!</p>
+            <button type="button" class="btn-dest-inline-upload" style="background: #0A2B47; border: 1px solid rgba(212, 175, 55, 0.6); padding: 6px 14px; font-size: 11px; font-weight: 700; border-radius: 4px; color: #FFFFFF; cursor: pointer;">
+              + Upload First Photo / Video
+            </button>
+          </div>
+        `;
+        uploadsGridEl.querySelector('.btn-dest-inline-upload')?.addEventListener('click', () => {
+          openSpotMediaModal(spot.id, spot.name, data.name);
+        });
+      } else {
+        uploadsGridEl.innerHTML = customSpotUploads.map((up, uIdx) => {
+          const uploadId = up.id || `up-${spot.id}-${uIdx}`;
+          return `
+            <div class="mini-upload-thumb modal-upload-thumb" data-spot-id="${spot.id}" data-upload-id="${uploadId}" title="Tap to enlarge: ${escapeHtml(up.title)}">
+              <div class="thumb-media-wrapper">
+                ${up.type === 'video' ? `
+                  <video src="${up.url}" preload="metadata" muted></video>
+                  <span class="video-play-overlay">▶ 4K VIDEO</span>
+                ` : `
+                  <img src="${up.url}" alt="${escapeHtml(up.title)}" loading="lazy" onerror="this.src='assets/images/nalanda_ruins.jpg';"/>
+                  <span class="photo-expand-overlay">🔍 ENLARGE</span>
+                `}
+                <button type="button" class="btn-delete-spot-media modal-media-delete-btn" data-spot-id="${spot.id}" data-upload-id="${uploadId}" data-spot-name="${escapeHtml(spot.name)}" title="Delete this ${up.type}">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  Delete
+                </button>
+              </div>
+              <div class="mini-upload-caption">
+                <strong>${escapeHtml(up.title)}</strong>
+                <div class="mini-upload-meta">
+                  <small>By ${escapeHtml(up.author)}</small>
+                  <span class="tap-to-open-hint">Open ↗</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Wire media clicks & delete inside modal
+        uploadsGridEl.querySelectorAll('.modal-upload-thumb').forEach(thumb => {
+          thumb.addEventListener('click', (e) => {
+            if (e.target.closest('.modal-media-delete-btn')) return;
+            const spotId = thumb.getAttribute('data-spot-id');
+            const uploadId = thumb.getAttribute('data-upload-id');
+            const uploads = maproomDispatches[spotId]?.uploads || [];
+            const item = uploads.find(u => u.id === uploadId);
+            if (!item) return;
+
+            if (window.openDrongoLightbox) {
+              window.openDrongoLightbox({
+                type: item.type || 'photo',
+                title: item.title,
+                mediaUrl: item.url,
+                videoUrl: item.type === 'video' ? item.url : null,
+                badge: `${item.type === 'video' ? '4K VIDEO' : 'PHOTO'} DISPATCH • ${data.name.toUpperCase()}`,
+                location: `${spot.name} • ${data.name}`,
+                author: item.author,
+                date: item.date,
+                description: `Field media dispatch contributed to ${spot.name} archive in ${data.name}. Recorded by ${item.author}.`,
+                onDelete: () => {
+                  deleteSpotMedia(spotId, uploadId, spot.name);
+                }
+              });
+            }
+          });
+        });
+
+        uploadsGridEl.querySelectorAll('.modal-media-delete-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const spotId = btn.getAttribute('data-spot-id');
+            const uploadId = btn.getAttribute('data-upload-id');
+            const spotName = btn.getAttribute('data-spot-name') || 'this spot';
+            deleteSpotMedia(spotId, uploadId, spotName);
+          });
+        });
+      }
+    }
   }
 
   function renderFloraFauna(data) {
@@ -3407,6 +3459,9 @@
 
     saveMaproomData();
     renderStateDossier(activeStateKey);
+    if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
+      renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
+    }
     showMapToast(`✓ Media added to ${pendingSpotName || 'tourist spot'}!`);
   }
 
@@ -3416,6 +3471,9 @@
       maproomDispatches[spotId].uploads = maproomDispatches[spotId].uploads.filter(u => u.id !== uploadId);
       saveMaproomData();
       renderStateDossier(activeStateKey);
+      if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
+        renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
+      }
       if (window.closeDrongoLightbox) window.closeDrongoLightbox();
       showMapToast(`✓ Media dispatch deleted from ${spotName}.`);
     }
@@ -3427,6 +3485,9 @@
       maproomDispatches[spotId].tips.splice(tipIndex, 1);
       saveMaproomData();
       renderStateDossier(activeStateKey);
+      if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
+        renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
+      }
       showMapToast('✓ Tip removed from feed.');
     }
   }
@@ -3487,6 +3548,9 @@
 
     saveMaproomData();
     renderStateDossier(activeStateKey);
+    if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
+      renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
+    }
     showMapToast(`✓ Tips & tricks shared for ${pendingSpotName || 'tourist spot'}!`);
   }
 
@@ -3625,10 +3689,32 @@
       });
     });
 
-    [spotMediaModal, spotTipModal, sightingModal].forEach(m => {
+    // Close buttons on Destination Detail Modal
+    const destModal = document.getElementById('destinationDetailModal');
+    document.querySelectorAll('.dest-modal-close-btn, .dest-modal-close-action').forEach(btn => {
+      btn.addEventListener('click', () => {
+        closeModal(destModal);
+      });
+    });
+
+    [spotMediaModal, spotTipModal, sightingModal, destModal].forEach(m => {
       m?.addEventListener('click', (e) => {
         if (e.target === m) closeModal(m);
       });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (spotMediaModal?.classList.contains('open')) {
+          closeModal(spotMediaModal);
+        } else if (spotTipModal?.classList.contains('open')) {
+          closeModal(spotTipModal);
+        } else if (sightingModal?.classList.contains('open')) {
+          closeModal(sightingModal);
+        } else if (destModal?.classList.contains('open')) {
+          closeModal(destModal);
+        }
+      }
     });
   }
 
@@ -3636,7 +3722,14 @@
     if (!modal) return;
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (modal.id === 'destinationDetailModal') {
+      activeDetailSpot = null;
+      activeDetailStateData = null;
+    }
+    const anyModalOpen = document.querySelector('.modal-backdrop.open');
+    if (!anyModalOpen) {
+      document.body.style.overflow = '';
+    }
   }
 
   function showMapToast(msg) {

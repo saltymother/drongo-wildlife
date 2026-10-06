@@ -402,3 +402,17 @@
   - Applied dark, semi-transparent radial and linear gradient overlay (rgba(6, 26, 43, 0.72) to rgba(3, 13, 24, 0.9)) with subtle backdrop blur over the video
   - Rendered all introduction text (institutional kicker pill, display title, gold separator divider, and narrative paragraph) in 100% solid, fully opaque ivory/white typography with dual-layer text shadows for supreme legibility
   - Contained video strictly within the rectangular section bounds with responsive 16:9 cover scaling, preventing letterboxing or player chrome leakage
+
+## [v1.0.31] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UI/UX & Interactive Lightbox Modal
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Redesigned state tourist spot / destination cards into lightweight, compact visual cards showing only the destination image and title
+  - Removed lengthy descriptions, inline buttons, and bulky tips feeds from the grid cards, reducing vertical card height from over 800px to ~190px
+  - Created interactive Destination Detail Lightbox Modal (#destinationDetailModal) accessible by tapping any destination picture or card
+  - Equipped Destination Modal with high-res hero image, fullscreen zoom, historical and ecological narrative, and prominent '+ Add Photos, Videos & Short Film' and '+ Share Tips & Tricks' action buttons
+  - Included full Tips, Tricks & Experience Feed with verified creator badges and traveler uploads gallery with deletion and lightbox inspection directly inside the modal
+  - Implemented live data synchronization ensuring any new media or tips added/deleted inside the modal immediately update the view
