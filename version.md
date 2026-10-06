@@ -218,3 +218,14 @@
   - Added instant 'UPLOAD THIS FILE NOW' button directly inside the dropzone media preview area
   - Added persistent floating action button (+ UPLOAD) at bottom-right corner visible across all screen sizes
   - Added header-level and Visuals-level '+ UPLOAD PHOTO / VIDEO' trigger buttons with delegated click listeners
+
+## [v1.0.16] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Animation
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Added continuous golden marquee banner at the very top of the website
+  - Animated announcement moving smoothly from left to right: "Welcome to Drongo! 🐅 Discover hidden travel destinations, rare wildlife, and exotic flora across India. 🌺"
+  - Designed with seamless infinite CSS loop, paused on hover, and responsive typography scaling
