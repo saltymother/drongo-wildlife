@@ -388,3 +388,17 @@
   - Refined `.maproom-section` and `.drongo-signature-section` horizontal padding from 24px to 5% (matching expedition and media sections)
   - Balanced `.maproom-container` and `.drongo-section-container` max-width to 1240px with margin 0 auto and subtle right safety gutter (28px right, 12px left)
   - Eliminated all collision and visual overlap between the tree branch companion and tourist spot cards/images across all screen sizes without making the layout look off-center
+
+## [v1.0.30] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Multimedia & Ambient Background Video
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Integrated 4K looping background video ('India Wildlife in 4K', ID: 7kgvidNDUTY) into the rectangular Welcome to Drongo editorial introduction section (#editorialIntro)
+  - Configured continuous 15-second loop mechanism using YouTube player URL parameters (start=0, end=15, loop=1) and a dedicated JavaScript monitor via YouTube IFrame API (polling every 150ms to seamlessly seek back to 0s upon reaching 14.7s)
+  - Enforced muted playback by default for 100% compliance with modern browser autoplay policies, with an ambient pill and optional sound toggle button (Audio Muted / Audio Playing)
+  - Applied dark, semi-transparent radial and linear gradient overlay (rgba(6, 26, 43, 0.72) to rgba(3, 13, 24, 0.9)) with subtle backdrop blur over the video
+  - Rendered all introduction text (institutional kicker pill, display title, gold separator divider, and narrative paragraph) in 100% solid, fully opaque ivory/white typography with dual-layer text shadows for supreme legibility
+  - Contained video strictly within the rectangular section bounds with responsive 16:9 cover scaling, preventing letterboxing or player chrome leakage

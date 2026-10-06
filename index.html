@@ -160,9 +160,31 @@
   </nav>
 
   <!-- =======================================================================
-       4. MAIN EDITORIAL INTRO (White Section)
+       4. MAIN EDITORIAL INTRO WITH CINEMATIC LOOPING VIDEO BACKGROUND
        ======================================================================= -->
-  <section class="editorial-intro-section" id="editorialIntro">
+  <section class="editorial-intro-section" id="editorialIntro" aria-label="Welcome Introduction to Drongo Wildlife">
+    <!-- Cinematic Looping Video Background Enclosure -->
+    <div class="editorial-video-bg-container" aria-hidden="true">
+      <!-- High-resolution Poster / Ambient Backdrop Image -->
+      <div class="editorial-video-poster" style="background-image: url('https://i.ytimg.com/vi/7kgvidNDUTY/maxresdefault.jpg');"></div>
+      
+      <!-- Video IFrame Scaled Wrapper for Seamless Cover Fit -->
+      <div class="editorial-video-iframe-wrapper">
+        <iframe
+          id="editorialIntroVideoIframe"
+          src="https://www.youtube-nocookie.com/embed/7kgvidNDUTY?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=7kgvidNDUTY&start=0&end=15&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0"
+          title="India Wildlife In 4K - Ambient Introduction Background Video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          tabindex="-1"
+        ></iframe>
+      </div>
+
+      <!-- Dark Semi-Transparent High-Contrast Overlay for 100% Solid Text Legibility -->
+      <div class="editorial-video-overlay"></div>
+    </div>
+
+    <!-- Solid, Completely Opaque Foreground Editorial Content -->
     <div class="editorial-intro-container">
       <span class="editorial-kicker">INSTITUTIONAL CURATION &amp; EXPEDITIONS ARCHIVE</span>
       <h2 class="editorial-intro-title">
@@ -172,6 +194,18 @@
       <p class="editorial-intro-text">
         We guide you through the country's most spectacular travel destinations, from hidden mountain trails to sun-drenched coasts. But our journey goes far beyond the map, diving deep into the incredible wildlife, flora, and fauna that make this land so magical. Discover the living identity of each region—from the rare, unique flowers that bloom in a single state to the majestic animals that roam its forests. Whether you are planning your next grand adventure or simply marveling at nature's hidden gems, you are in exactly the right place. Step off the beaten path and into the wild. Let the exploration begin!
       </p>
+
+      <!-- Ambient Video Info & Mute Toggle Controls -->
+      <div class="editorial-video-controls-bar">
+        <div class="video-ambient-pill">
+          <span class="ambient-pulse-dot"></span>
+          <span>4K Wildlife Ambient • 15s Continuous Loop</span>
+        </div>
+        <button type="button" class="btn-video-sound-toggle" id="btnIntroVideoAudioToggle" title="Toggle Nature Soundtrack" aria-label="Toggle Soundtrack">
+          <span id="soundToggleIcon">🔇</span>
+          <span id="soundToggleText">Audio Muted</span>
+        </button>
+      </div>
     </div>
   </section>
 
