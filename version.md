@@ -496,3 +496,15 @@
   - Removed heavy backdrop blur filter to keep video details sharp and distinct
   - Boosted high-resolution poster backdrop brightness and opacity (0.85 opacity, 0.88 brightness)
   - Enhanced foreground title, narrative paragraph, and kicker text shadows (triple-layer soft scrim) ensuring 100% solid, crisp readability over the brighter video
+## [v1.0.38] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** UI/UX | Background Video Ambient Silence & Cleaner Introduction Layout
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed '4K WILDLIFE AMBIENT • 15S CONTINUOUS LOOP' text pill and 'Audio Muted' control button from the editorial introduction box
+  - Enforced permanent silent ambient video playback with zero sound controls or overlay text badges for a pristine editorial look
+  - Removed unused video controls CSS rules and event listeners from style.css and app.js
+  - Kept seamless 15-second silent looping behavior active and uninterrupted in the background behind the introduction text
+

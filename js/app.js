@@ -1305,18 +1305,15 @@
     // -------------------------------------------------------------------------
     function initEditorialBackgroundVideo() {
       const iframe = document.getElementById('editorialIntroVideoIframe');
-      const soundBtn = document.getElementById('btnIntroVideoAudioToggle');
-      const soundIcon = document.getElementById('soundToggleIcon');
-      const soundText = document.getElementById('soundToggleText');
       if (!iframe) return;
 
       let player = null;
       let loopCheckInterval = null;
-      let isMuted = true;
 
       function onPlayerReady(event) {
         try {
           event.target.mute();
+          if (event.target.setVolume) event.target.setVolume(0);
           event.target.playVideo();
         } catch (e) {}
 
@@ -1388,29 +1385,6 @@
             document.head.appendChild(tag);
           }
         }
-      }
-
-      // Discreet Audio Toggle Handler (Default is muted for autoplay compliance)
-      if (soundBtn) {
-        soundBtn.addEventListener('click', () => {
-          if (!player) return;
-          try {
-            if (isMuted) {
-              player.unMute();
-              player.setVolume(75);
-              isMuted = false;
-              if (soundIcon) soundIcon.textContent = '🔊';
-              if (soundText) soundText.textContent = 'Audio Playing';
-              soundBtn.classList.add('audio-active');
-            } else {
-              player.mute();
-              isMuted = true;
-              if (soundIcon) soundIcon.textContent = '🔇';
-              if (soundText) soundText.textContent = 'Audio Muted';
-              soundBtn.classList.remove('audio-active');
-            }
-          } catch (e) {}
-        });
       }
 
       // Ensure autoplay on first user interaction if browser has strict media restrictions
