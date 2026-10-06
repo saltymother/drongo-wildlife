@@ -193,3 +193,14 @@
   - Formatted heading as an imperial display serif title with subtle gold separator rule
   - Refined editorial paragraph typography and balanced max-width container for optimal reading experience
   - Updated meta description to align with the wild expeditions and state flora/fauna narrative
+
+## [v1.0.14] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor | UI
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed obsolete footer navigation link columns (Visual Dispatches, Visual Categories, Technical Specs) per user request
+  - Refactored footer layout into a minimalist, centered brand identity showcase featuring the Drongo crest, Latin motto, description, and social media channels
+  - Cleaned up obsolete footer grid media queries in style.css for responsive mobile-to-desktop presentation
