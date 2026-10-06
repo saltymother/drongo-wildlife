@@ -456,3 +456,17 @@
   - Applied dual-layer dark semi-transparent radial and linear gradient overlay with backdrop blur between video and foreground content
   - Styled all introduction title and narrative text in 100% solid, fully opaque ivory/white typography with dual-layer text shadows for crystal-clear readability
 
+## [v1.0.35] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Visuals Streamlining & Community Travel Guides
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Streamlined Visuals section exclusively into two dedicated options: Travelling Guide and Information (Creator Updates)
+  - Completely removed Photos and Videos columns, tabs, and subject sub-filters (Birds, Animals, Insects, Plants, Landscapes) from Visuals
+  - Implemented rich Travelling Guide card system displaying destination/place title (e.g. Dharadhon / Dehradun), how to move there & transit logistics, community traveler notes, and contributor attribution
+  - Added '+ WRITE TRAVEL NOTE / GUIDE' button and interactive modal form enabling any traveler to contribute destination titles, movement advice, and open personal notes
+  - Dedicated the Information section strictly to creator updates for announcing future platform releases, roadmap milestones, and expedition notes
+  - Added '+ POST CREATOR UPDATE' button and modal form allowing the creator to publish official notices with categories and full briefing texts
+  - Updated global navigation bar and drawer links to reflect the streamlined Travelling Guide and Creator Information structure

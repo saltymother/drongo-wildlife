@@ -127,13 +127,8 @@
     <div class="sub-navigation-bar">
       <!-- Section Links Group -->
       <div class="sub-nav-links-cluster">
-        <a href="#visuals" class="sub-nav-link active" data-section="all">ALL VISUALS</a>
-        <a href="#visuals" class="sub-nav-link" data-section="photos">PHOTOS</a>
-        <a href="#visuals" class="sub-nav-link" data-section="video">VIDEO</a>
-        <a href="#visuals" class="sub-nav-link" data-section="short-film">SHORT FILM</a>
-        <a href="#visuals" class="sub-nav-link" data-section="travelling-guide">TRAVELLING GUIDE</a>
-        <a href="#visuals" class="sub-nav-link" data-section="ideas">IDEAS</a>
-        <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION</a>
+        <a href="#visuals" class="sub-nav-link active" data-section="travelling-guide">TRAVELLING GUIDE</a>
+        <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION (CREATOR UPDATES)</a>
         <a href="#maproom" class="sub-nav-link" data-section="maproom">MAPROOM</a>
         <a href="#drongo" class="sub-nav-link" data-section="drongo">THE DRONGO</a>
       </div>
@@ -218,56 +213,25 @@
       <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; width: 100%;">
         <h2>Visuals</h2>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsUploadPhoto" data-upload-section="photos" aria-label="Upload Photo to Visuals Section">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-            <span>+ UPLOAD PHOTO</span>
+          <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsAddGuide" data-upload-section="travelling-guide" aria-label="Write a Travel Note or Guide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>+ WRITE TRAVEL NOTE / GUIDE</span>
           </button>
-          <button class="nav-action-btn btn-nav-secondary trigger-upload-modal" id="btnVisualsAddEntry" data-upload-section="photos" aria-label="Add Dispatch to Visuals External Hub">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>+ ADD DISPATCH</span>
+          <button class="nav-action-btn btn-nav-secondary trigger-upload-modal" id="btnVisualsAddInfo" data-upload-section="information" aria-label="Post Creator Future Update">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span>+ POST CREATOR UPDATE</span>
           </button>
         </div>
       </div>
 
-      <!-- Interactive Filter Nav Tabs: Photos, Videos & Short Films, Information, Travelling Guide -->
+      <!-- Interactive Filter Nav Tabs: Only Travelling Guide and Information -->
       <div class="gallery-filter-tabs" role="tablist" aria-label="Visual Categories">
-        <button class="filter-btn active" data-filter="photos" role="tab" aria-selected="true">
-          Photos <span class="filter-count">5</span>
-        </button>
-        <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">
-          Videos &amp; Short Films <span class="filter-count">2</span>
+        <button class="filter-btn active" data-filter="travelling-guide" role="tab" aria-selected="true">
+          🗺️ Travelling Guide <span class="filter-count">3</span>
         </button>
         <button class="filter-btn" data-filter="information" role="tab" aria-selected="false">
-          Information <span class="filter-count">3</span>
+          📢 Information (Future Updates) <span class="filter-count">3</span>
         </button>
-        <button class="filter-btn" data-filter="travelling-guide" role="tab" aria-selected="false">
-          Travelling Guide <span class="filter-count">0</span>
-        </button>
-      </div>
-
-      <!-- Subject Sub-Categories for Photos & Videos (Insect, Flowers, Animal, Birds, Other) -->
-      <div class="photo-sub-filter-row" id="photoSubFilterRow" aria-label="Photo and Video Subjects">
-        <span class="photo-sub-label" id="subjectFilterLabel">Photo Columns:</span>
-        <div class="photo-sub-tabs" role="tablist" aria-label="Subject Columns">
-          <button class="photo-sub-btn active" data-photo-sub="all" role="tab" aria-selected="true">
-            <span id="allSubLabelText">All Photos</span> <span class="sub-count">5</span>
-          </button>
-          <button class="photo-sub-btn" data-photo-sub="insect" role="tab" aria-selected="false">
-            Insect <span class="sub-count">1</span>
-          </button>
-          <button class="photo-sub-btn" data-photo-sub="flowers" role="tab" aria-selected="false">
-            Flowers <span class="sub-count">2</span>
-          </button>
-          <button class="photo-sub-btn" data-photo-sub="animal" role="tab" aria-selected="false">
-            Animal <span class="sub-count">2</span>
-          </button>
-          <button class="photo-sub-btn" data-photo-sub="birds" role="tab" aria-selected="false">
-            Birds <span class="sub-count">0</span>
-          </button>
-          <button class="photo-sub-btn" data-photo-sub="other" role="tab" aria-selected="false">
-            Other <span class="sub-count">0</span>
-          </button>
-        </div>
       </div>
     </div>
 
@@ -1042,176 +1006,85 @@
       <form id="uploadMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
-            <strong>External Hub Protocol:</strong> Direct video and high-resolution server uploads are disabled. Heavy media is hosted on Instagram and YouTube. Entries feature lightweight thumbnail icons with direct links to your content.
+            <strong>Visuals Dispatch Protocol:</strong> Visuals is dedicated to two community streams: <strong>Travelling Guides</strong> (documenting destination plans, routes, and freeform traveler notes) and <strong>Creator Updates</strong> (official creator updates on future features and releases).
           </p>
           
-          <!-- Category Selector Tabs -->
+          <!-- Category Selector Tabs: Travelling Guide & Creator Updates Only -->
           <div class="upload-step-block" style="margin-bottom: 16px;">
             <label class="step-label" style="margin-bottom: 10px;">
-              <strong>Select Dispatch Format:</strong>
+              <strong>Select Contribution Type:</strong>
             </label>
-            <div class="section-choice-grid" style="grid-template-columns: repeat(3, 1fr);">
-              <button type="button" class="section-choice-pill active" data-section="photos" id="hubTabBtnPhotos">
-                <span class="sec-icon">📷</span>
-                <span class="sec-title">PHOTOS</span>
-                <span class="sec-sub">Instagram Link</span>
-              </button>
-              <button type="button" class="section-choice-pill" data-section="video" id="hubTabBtnVideo">
-                <span class="sec-icon">🎬</span>
-                <span class="sec-title">VIDEOS &amp; REELS</span>
-                <span class="sec-sub">YouTube &amp; IG</span>
+            <div class="section-choice-grid" style="grid-template-columns: repeat(2, 1fr);">
+              <button type="button" class="section-choice-pill active" data-section="travelling-guide" id="hubTabBtnGuide">
+                <span class="sec-icon">🗺️</span>
+                <span class="sec-title">TRAVELLING GUIDE</span>
+                <span class="sec-sub">Places, Transit &amp; Notes</span>
               </button>
               <button type="button" class="section-choice-pill" data-section="information" id="hubTabBtnInfo">
-                <span class="sec-icon">ℹ️</span>
-                <span class="sec-title">INFORMATION</span>
-                <span class="sec-sub">Strictly Text</span>
+                <span class="sec-icon">📢</span>
+                <span class="sec-title">CREATOR UPDATES</span>
+                <span class="sec-sub">Future Release Info</span>
               </button>
             </div>
             <!-- Hidden native select for section binding -->
             <select id="uploadSection" class="form-select visually-hidden">
-              <option value="photos" selected>Photos</option>
-              <option value="video">Videos &amp; Short Films</option>
+              <option value="travelling-guide" selected>Travelling Guide</option>
               <option value="information">Information</option>
             </select>
           </div>
 
-          <!-- PANE 1: Photos Dispatch Form -->
-          <div id="hubPanePhotos" class="hub-form-pane">
-            <!-- Dedicated Photo Upload Option -->
-            <div class="form-group" style="margin-bottom: 14px;">
-              <label style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
-                <span><strong>Select / Upload Photo *</strong></span>
-                <span style="font-size: 11px; color: var(--accent-gold);">Auto-scaled &amp; compressed for rapid loading</span>
-              </label>
-              <div class="photo-file-upload-box" id="photoUploadBox">
-                <input type="file" id="hubPhotoFileInput" accept="image/*" style="display: none;" />
-                <div class="photo-dropzone-content" id="photoDropzoneContent">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-gold); margin-bottom: 4px;">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <div style="font-size: 13px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 2px;">Click to Browse Photo or Drag &amp; Drop Here</div>
-                  <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">Supports JPG, PNG, WEBP camera stills &amp; macro field photography</div>
-                  <button type="button" class="btn-browse-photo-styled" id="btnBrowsePhoto">
-                    📁 Choose Photo from Device
-                  </button>
-                </div>
-                <div class="photo-preview-wrap" id="photoPreviewWrap" style="display: none;">
-                  <img id="photoPreviewImg" src="" alt="Selected Photo Preview" />
-                  <div class="photo-preview-details">
-                    <span class="preview-filename" id="photoPreviewFilename">photo.jpg</span>
-                    <button type="button" class="btn-remove-photo-preview" id="btnRemovePhotoPreview">✕ Change Photo</button>
-                  </div>
-                </div>
-              </div>
+          <!-- PANE 1: Travelling Guide Form (Place, How to Move There, Freeform Note, Contributor) -->
+          <div id="hubPaneGuide" class="hub-form-pane">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubGuidePlace">Place / Destination Title *</label>
+              <input type="text" id="hubGuidePlace" class="form-input" placeholder="e.g. Dharadhon (Dehradun) / Kaziranga / Munnar" required />
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubPhotoName">Subject Name *</label>
-              <input type="text" id="hubPhotoName" class="form-input" placeholder="e.g. Black Drongo / Indian Jewel Beetle" required />
+              <label for="hubGuideRoute">Place Information &amp; Travel Guide (How to Move There &amp; Everything) *</label>
+              <textarea id="hubGuideRoute" class="form-textarea" rows="4" placeholder="Detail how to reach this place (train, flight, highway routes), transit options, local rentals, taxis/buses, best seasons, and navigation advice..." required></textarea>
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubPhotoScientific">Scientific Name *</label>
-              <input type="text" id="hubPhotoScientific" class="form-input" placeholder="e.g. Dicrurus macrocercus / Chrysochroa buqueti" required />
+              <label for="hubGuideNote">Traveler Notes &amp; Tips (Write anything about this place) *</label>
+              <textarea id="hubGuideNote" class="form-textarea" rows="4" placeholder="Write anything here: personal travel notes, planning tips, local cuisine, hidden viewpoints, packing advice, safety recommendations..." required></textarea>
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubPhotoDesc">Short Description (2-3 lines) *</label>
-              <textarea id="hubPhotoDesc" class="form-textarea" rows="3" placeholder="Describe the behavior observed, unique physical traits, lighting and habitat..." required></textarea>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubPhotoIgUrl">Instagram URL (Optional link to high-res still)</label>
-              <input type="url" id="hubPhotoIgUrl" class="form-input" placeholder="https://www.instagram.com/p/... (or leave blank)" />
-            </div>
-
-            <div class="form-grid-2" style="margin-bottom: 8px;">
-              <div class="form-group">
-                <label for="hubPhotoSubjectSelect">Subject Classification</label>
-                <select id="hubPhotoSubjectSelect" class="form-select">
-                  <option value="animal">Animal</option>
-                  <option value="birds">Birds</option>
-                  <option value="insect">Insect</option>
-                  <option value="flowers">Flowers</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="hubPhotoIconSelect">Or Choose Baseline Icon</label>
-                <select id="hubPhotoIconSelect" class="form-select">
-                  <option value="assets/images/black_drongo.jpg">🦅 Drongo (Avian)</option>
-                  <option value="assets/images/golden_paper_wasp_macro.jpg">🦋 Wasp (Insect Macro)</option>
-                  <option value="assets/images/peach_hibiscus_flower.jpg">🌺 Hibiscus (Flora)</option>
-                  <option value="assets/images/valmiki_tiger.jpg">🐅 Bengal Tiger (Mammal)</option>
-                  <option value="assets/images/ginger_white_cat.jpg">🐾 Domestic Cat (Fauna)</option>
-                  <option value="assets/images/periwinkle_flower_art.jpg">🌸 Periwinkle (Botanical)</option>
-                </select>
-              </div>
+              <label for="hubGuideAuthor">Who Wrote That (Contributor Name) *</label>
+              <input type="text" id="hubGuideAuthor" class="form-input" placeholder="e.g. Vaibhav / Himalayan Explorer / Your Name" required />
             </div>
           </div>
 
-          <!-- PANE 2: Videos & Short Films Dispatch Form -->
-          <div id="hubPaneVideo" class="hub-form-pane" style="display: none;">
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubVideoName">Name *</label>
-              <input type="text" id="hubVideoName" class="form-input" placeholder="e.g. Drongo Aerial Raptor Mobbing Tactics" />
-            </div>
-
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubVideoScientific">Scientific Name *</label>
-              <input type="text" id="hubVideoScientific" class="form-input" placeholder="e.g. Dicrurus macrocercus" />
-            </div>
-
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubVideoDesc">Brief Info / Short Description *</label>
-              <textarea id="hubVideoDesc" class="form-textarea" rows="3" placeholder="Summary of video footage, acoustic vocalizations, filming context..."></textarea>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubVideoYtUrl">YouTube URL (Watch Video) *</label>
-              <input type="url" id="hubVideoYtUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." />
-            </div>
-
-            <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubVideoIgUrl">Instagram URL (Watch Short / Reel) *</label>
-              <input type="url" id="hubVideoIgUrl" class="form-input" placeholder="https://www.instagram.com/reel/..." />
-            </div>
-
-            <div class="form-group">
-              <label for="hubVideoIconSelect">Subject Icon Representation</label>
-              <select id="hubVideoIconSelect" class="form-select">
-                <option value="🌿">🌿 Plant / Flora Graphic</option>
-                <option value="🦅">🦅 Avian / Bird Flight</option>
-                <option value="🐅">🐅 Wildlife / Big Cat</option>
-                <option value="🌊">🌊 Aquatic / River</option>
-                <option value="🎬">🎬 Cinematic Reel</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- PANE 3: Information Dispatch Form (Strictly Text-Based) -->
+          <!-- PANE 2: Creator Information / Future Updates Form -->
           <div id="hubPaneInfo" class="hub-form-pane" style="display: none;">
+            <div style="background: rgba(197, 160, 89, 0.12); border-left: 3px solid var(--accent-gold); padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; color: var(--primary-ocean-blue);">
+              <strong>📢 Creator Notice Desk:</strong> This section is dedicated to the creator for sharing upcoming features, future platform updates, release schedules, and expedition announcements.
+            </div>
+
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubInfoCategory">Category Selection *</label>
+              <label for="hubInfoCategory">Update Category *</label>
               <select id="hubInfoCategory" class="form-select" required>
-                <option value="Insect">Insect</option>
-                <option value="Plant">Plant</option>
-                <option value="Flower">Flower</option>
-                <option value="Animal">Animal</option>
-                <option value="General" selected>General</option>
+                <option value="Platform Roadmap" selected>Platform Roadmap</option>
+                <option value="Future Feature Preview">Future Feature Preview</option>
+                <option value="Expedition Announcement">Upcoming Expedition</option>
+                <option value="Maintenance & Release">Maintenance &amp; Release Notes</option>
               </select>
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubInfoTitle">Topic / Subject Title *</label>
-              <input type="text" id="hubInfoTitle" class="form-input" placeholder="e.g. Diurnal Hunting Strategies of Dicrurus macrocercus" />
+              <label for="hubInfoTitle">Update Headline / Topic *</label>
+              <input type="text" id="hubInfoTitle" class="form-input" placeholder="e.g. Visuals 2.0 Launch: Interactive Community Travel Guides" required />
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubInfoText">Information &amp; Ecological Dossier *</label>
-              <textarea id="hubInfoText" class="form-textarea" rows="6" placeholder="Provide complete ecological research notes, scientific taxonomy, behavioral patterns, seasonal cycles, and conservation status. (Strictly text-based: images and icons are disabled in this section)." required></textarea>
+              <label for="hubInfoText">Future Update Details &amp; Roadmap *</label>
+              <textarea id="hubInfoText" class="form-textarea" rows="5" placeholder="Detail the future updates, upcoming release features, dates, and what users can look forward to..." required></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubInfoAuthor">Posted By (Creator Desk)</label>
+              <input type="text" id="hubInfoAuthor" class="form-input" value="Creator / Drongo Core Team" />
             </div>
           </div>
 
@@ -1346,32 +1219,14 @@
     </div>
 
     <div class="drawer-links-container">
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="all">All Visuals</a>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="photos">Photos</a>
-      <div class="drawer-photo-sub-list" style="margin: -6px 0 10px 18px; display: flex; flex-direction: column; gap: 5px;">
-        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="insect" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Insect</a>
-        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="flowers" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Flowers</a>
-        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="animal" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Animal</a>
-        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="birds" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Birds</a>
-        <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="other" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Other</a>
-      </div>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="video">Video</a>
-      <div class="drawer-video-sub-list" style="margin: -6px 0 10px 18px; display: flex; flex-direction: column; gap: 5px;">
-        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="insect" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Insect</a>
-        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="flowers" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Flowers</a>
-        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="animal" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Animal</a>
-        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="birds" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Birds</a>
-        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="other" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Other</a>
-      </div>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="short-film">Short Film</a>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">Travelling Guide</a>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="ideas">Ideas</a>
-      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="information">Information</a>
-      <a href="#maproom" class="drawer-nav-link sub-nav-link" data-section="maproom">Maproom Cartography</a>
+      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">🗺️ Travelling Guide</a>
+      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="information">📢 Information (Creator Updates)</a>
+      <a href="#maproom" class="drawer-nav-link sub-nav-link" data-section="maproom">🧭 Maproom Cartography</a>
+      <a href="#drongo" class="drawer-nav-link sub-nav-link" data-section="drongo">🦅 The Drongo Monograph</a>
       
       <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-        <button class="header-action-btn btn-gold trigger-upload-modal" style="width: 100%; justify-content: center;">
-          + Upload Media to Archive
+        <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="travelling-guide" style="width: 100%; justify-content: center;">
+          + Write Travel Note / Guide
         </button>
       </div>
     </div>

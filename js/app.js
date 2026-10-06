@@ -8,173 +8,90 @@
   'use strict';
 
   // Storage key for catalog metadata in localStorage
-  const STORAGE_KEY = 'drongo_custom_catalog_v5';
+  const STORAGE_KEY = 'drongo_custom_catalog_v6';
 
-  // Base catalog containing strictly External Hub records (No heavy server media)
+  // Base catalog containing strictly Travelling Guides and Creator Future Updates
   const INITIAL_CATALOG = [
     {
-      id: 'item-insect-golden-wasp',
-      type: 'photo',
-      title: 'Golden Paper Wasp',
-      scientificName: 'Polistes wattii',
-      category: 'photos',
-      photoSubject: 'insect',
-      section: 'Photos',
-      tags: ['photos', 'insect', 'macro', 'wasp'],
-      location: 'Field Observation Site, Bihar',
-      mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
-      thumbIcon: 'assets/images/golden_paper_wasp_macro.jpg',
-      description: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure in natural daylight.',
-      instagramUrl: 'https://www.instagram.com/explore/tags/polisteswattii/',
+      id: 'guide-dehradun-dharadhon',
+      type: 'travelling-guide',
+      category: 'travelling-guide',
+      section: 'Travelling Guide',
+      title: 'Dharadhon (Dehradun) — Foothills of the Garhwal Himalayas & Doon Valley',
+      place: 'Dharadhon (Dehradun), Uttarakhand',
+      travelGuide: 'How to move there: Reach via direct Vande Bharat or Shatabdi Express from New Delhi to Dehradun Junction (4.5 hours), or fly into Jolly Grant Airport (DED). For local movement, rented self-drive scooters and local Vikrams (shared autos) are best for navigating Rajpur Road and Sahastradhara routes. To reach Mussoorie hills or Chakrata, hire local mountain cabs from Dehradun taxi union.',
+      travelerNote: 'If you are planning to Dharadhon next, start early mornings towards Robber’s Cave (Guchhupani) to avoid weekend crowds. Don’t miss trying hot Bun-Tikka at Dwarka Store on Rajpur Road and authentic Garhwali Thali. Keep a light windcheater jacket as valley winds drop temperatures fast in the evening.',
+      author: 'Vaibhav (Himalayan Explorer)',
+      date: 'Verified Community Guide',
       isUserUploaded: false
     },
     {
-      id: 'item-animal-ginger-cat',
-      type: 'photo',
-      title: 'Domestic Cat',
-      scientificName: 'Felis catus',
-      category: 'photos',
-      photoSubject: 'animal',
-      section: 'Photos',
-      tags: ['photos', 'animal', 'cat'],
-      location: 'Habitat Observation Point',
-      mediaUrl: 'assets/images/ginger_white_cat.jpg',
-      thumbIcon: 'assets/images/ginger_white_cat.jpg',
-      description: 'Candid daylight subject study of a ginger-and-white domestic cat showing alert posture, facial features, and warm amber ocular coloration.',
-      instagramUrl: 'https://www.instagram.com/explore/tags/feliscatus/',
+      id: 'guide-kaziranga-assam',
+      type: 'travelling-guide',
+      category: 'travelling-guide',
+      section: 'Travelling Guide',
+      title: 'Kaziranga National Park — Floodplains of the Mighty Brahmaputra',
+      place: 'Kaziranga, Assam',
+      travelGuide: 'How to move there: Nearest airports are Jorhat (97 km) and Guwahati (217 km). Take ASTC AC buses or private cabs along NH 715 directly to Kohora (central range). Jeep safaris can be booked at the central tourist complex counter for morning (7:30 AM) and afternoon (1:30 PM) slots.',
+      travelerNote: 'Bagori (Western Range) has the highest rhino density at water bodies, whereas Agoratoli (Eastern Range) is unbeatable for birdwatchers looking for pelicans and fish eagles. Carry binocular harness and neutral earth-toned clothing.',
+      author: 'Rohan Barua (Wildlife Guide)',
+      date: 'Verified Community Guide',
       isUserUploaded: false
     },
     {
-      id: 'item-flowers-peach-hibiscus',
-      type: 'photo',
-      title: 'Peach Hibiscus Flower',
-      scientificName: 'Hibiscus rosa-sinensis',
-      category: 'photos',
-      photoSubject: 'flowers',
-      section: 'Photos',
-      tags: ['photos', 'flowers', 'flora'],
-      location: 'Garden Observation Point',
-      mediaUrl: 'assets/images/peach_hibiscus_flower.jpg',
-      thumbIcon: 'assets/images/peach_hibiscus_flower.jpg',
-      description: 'Vibrant peach-toned hibiscus flower in full bloom with visible stamen and delicate ruffled petals, captured in soft ambient morning daylight.',
-      instagramUrl: 'https://www.instagram.com/explore/tags/hibiscus/',
+      id: 'guide-munnar-shola',
+      type: 'travelling-guide',
+      category: 'travelling-guide',
+      section: 'Travelling Guide',
+      title: 'Munnar & Eravikulam Shola Corridors — High Range Western Ghats',
+      place: 'Munnar, Kerala',
+      travelGuide: 'How to move there: Drive up from Cochin International Airport (COK) via Kochi-Dhanushkodi road (110 km, scenic 3.5 hr climb). Local jeep rentals are required for off-road tea estate tracks and trekking basecamps at Rajamalai.',
+      travelerNote: 'Book morning safari passes for Eravikulam National Park online to see Nilgiri Tahrs grazing near misty hairpin curves. Pack thermal layers as cloud forest humidity creates deep chill before 9 AM.',
+      author: 'Dr. Ananya Nair (Botanist)',
+      date: 'Verified Community Guide',
       isUserUploaded: false
     },
     {
-      id: 'item-animal-fawn-pug',
-      type: 'photo',
-      title: 'Fawn Pug Dog',
-      scientificName: 'Canis lupus familiaris',
-      category: 'photos',
-      photoSubject: 'animal',
-      section: 'Photos',
-      tags: ['photos', 'animal', 'dog'],
-      location: 'Domestic Interior Habitat',
-      mediaUrl: 'assets/images/pug_dog_portrait.jpg',
-      thumbIcon: 'assets/images/pug_dog_portrait.jpg',
-      description: 'Expressive close-up portrait of a fawn pug dog lying on its back, capturing facial skin wrinkles, glossy dark eyes, and velvet black muzzle.',
-      instagramUrl: 'https://www.instagram.com/explore/tags/pug/',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-flowers-periwinkle',
-      type: 'photo',
-      title: 'Madagascar Periwinkle Blossom',
-      scientificName: 'Catharanthus roseus',
-      category: 'photos',
-      photoSubject: 'flowers',
-      section: 'Photos',
-      tags: ['photos', 'flowers', 'flora'],
-      location: 'Flora Field Study',
-      mediaUrl: 'assets/images/periwinkle_flower_art.jpg',
-      thumbIcon: 'assets/images/periwinkle_flower_art.jpg',
-      description: 'Fine botanical monochrome study of a five-petaled periwinkle blossom with water droplet on petal, accented with field annotation contour overlays.',
-      instagramUrl: 'https://www.instagram.com/explore/tags/catharanthusroseus/',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-video-drongo-flight',
-      type: 'video',
-      title: 'The Black Drongo in Aerial Combat',
-      scientificName: 'Dicrurus macrocercus',
-      category: 'video',
-      photoSubject: 'birds',
-      section: 'Videos & Short Films',
-      tags: ['video', 'birds', 'drongo', 'short-film'],
-      location: 'Open Savannah Corridors, India',
-      mediaUrl: 'assets/images/black_drongo.jpg',
-      thumbIcon: 'assets/images/black_drongo.jpg',
-      iconSymbol: '🦅',
-      description: 'High-speed behavioral study tracking aerial acrobatics, fork-tailed maneuvers, and fearless raptor mobbing tactics across open scrublands.',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      instagramUrl: 'https://www.instagram.com/reels/',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-video-dolphin-breach',
-      type: 'video',
-      title: 'Ganges River Dolphin Echolocation Breaching',
-      scientificName: 'Platanista gangetica',
-      category: 'video',
-      photoSubject: 'animal',
-      section: 'Videos & Short Films',
-      tags: ['video', 'animal', 'dolphin'],
-      location: 'Vikramshila Dolphin Sanctuary, Bihar',
-      mediaUrl: 'assets/images/gangetic_dolphin.jpg',
-      thumbIcon: 'assets/images/gangetic_dolphin.jpg',
-      iconSymbol: '🌿',
-      description: 'Documentary footage capturing ultrasonic echolocating freshwater dolphins surfacing across turbulent Ganges river currents in early morning light.',
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      instagramUrl: 'https://www.instagram.com/reels/',
-      isUserUploaded: false
-    },
-    {
-      id: 'item-info-tiger-thermo',
+      id: 'item-info-future-update-1',
       type: 'information',
-      title: 'Thermoregulation & Camouflage in Royal Bengal Tigers',
-      scientificName: 'Panthera tigris tigris',
       category: 'information',
-      infoCategory: 'Animal',
       section: 'Information',
-      tags: ['information', 'animal'],
-      author: 'Drongo Naturalist Desk',
-      date: 'Field Dossier',
-      infoText: 'The vertical stripe pattern of Panthera tigris functions as disruptive camouflage in tall elephant grass and dense sal canopies, breaking up the tiger’s bodily outline against dappled sunlight.\n\nEach individual possesses a unique stripe fingerprint that remains unchanged through life. During intense Terai summer heatwaves exceeding 42°C, tigers lack efficient sweat glands and rely heavily on wallowing in deep river channels and secluded pools to dissipate excess heat.',
+      title: 'Creator Update: Drongo Visuals 2.0 Community Transition',
+      infoCategory: 'Platform Roadmap',
+      author: 'Creator / Drongo Core Team',
+      date: 'Official Creator Notice',
+      infoText: 'Welcome to Drongo Visuals 2.0! Based on user direction, the Visuals section is now exclusively streamlined into two dedicated pillars: Travelling Guides (where any traveler can document destinations, transport routes, and freeform planning notes) and Creator Updates (where the creator posts official announcements on future updates and release milestones).',
       isUserUploaded: false
     },
     {
-      id: 'item-info-bodhi-ecology',
+      id: 'item-info-future-update-2',
       type: 'information',
-      title: 'Ecological Adaptations of the Sacred Bodhi Tree',
-      scientificName: 'Ficus religiosa',
       category: 'information',
-      infoCategory: 'Plant',
       section: 'Information',
-      tags: ['information', 'plant'],
-      author: 'Botanical Field Division',
-      date: 'Field Dossier',
-      infoText: 'Ficus religiosa displays remarkable adaptations for monsoon floodplains. Its distinct heart-shaped leaves feature an extended drip tip (acuminate apex) that accelerates the runoff of rainwater, keeping the foliage dry and drastically reducing parasitic fungal growth.\n\nEcologically, it serves as a keystone species in northern Indian river basins, sustaining hundreds of frugivorous birds, bats, and pollinators that feed on its syconia figs throughout the year.',
+      title: 'Creator Update: Upcoming 2026 Interactive Tiger Corridor & GPS Trails',
+      infoCategory: 'Future Feature Preview',
+      author: 'Creator / Drongo Core Team',
+      date: 'Roadmap Announcement',
+      infoText: 'We are currently developing real-time interactive wildlife corridor tracking for Central India and Western Ghats sanctuaries. Future updates will incorporate live seasonal weather radars, offline GPS route downloads, and government permit booking shortcuts.',
       isUserUploaded: false
     },
     {
-      id: 'item-info-wasp-vision',
+      id: 'item-info-future-update-3',
       type: 'information',
-      title: 'Optical Ocelli & Polarized Vision in Paper Wasps',
-      scientificName: 'Polistes wattii',
       category: 'information',
-      infoCategory: 'Insect',
       section: 'Information',
-      tags: ['information', 'insect'],
-      author: 'Micro-Entomology Lab',
-      date: 'Field Dossier',
-      infoText: 'The Indian yellow paper wasp navigates through a dual optical system consisting of compound eyes and three dorsal ocelli situated on the vertex of the head in a triangle.\n\nThese ocelli detect polarized skylight and ultra-violet wavelengths, allowing the wasp to orient itself and calculate compass directions even when the sun is obstructed by thick monsoon cloud covers.',
+      title: 'Creator Update: Verified Contributor Badges & Offline Field Dossiers',
+      infoCategory: 'Upcoming Release',
+      author: 'Creator / Drongo Core Team',
+      date: 'Future Update Notice',
+      infoText: 'Our next release will bring verified contributor badges for active community travel writers, printable offline destination dossiers, and an automated recommendation engine for state-wise wildlife spotting seasons.',
       isUserUploaded: false
     }
   ];
 
   // Application State
   let catalog = [];
-  let currentFilter = 'all';
+  let currentFilter = 'travelling-guide';
   let currentPhotoSub = 'all';
   let activeLightboxIndex = 0;
   let currentlyFilteredItems = [];
@@ -326,54 +243,35 @@
   function renderGallery() {
     if (!mediaGridEl) return;
 
+    // Filter only for the active tab (travelling-guide or information)
     currentlyFilteredItems = catalog.filter(item => {
-      // Sub-category filter for photos and video
-      if (currentPhotoSub !== 'all') {
-        const matchesSub = item.photoSubject === currentPhotoSub || item.tags?.includes(currentPhotoSub);
-        if (!matchesSub) return false;
+      if (currentFilter === 'information') {
+        return item.category === 'information' || item.type === 'information' || item.section === 'Information';
       }
-
-      if (currentFilter === 'all') return true;
-      if (currentFilter === 'photos') return item.category === 'photos' || item.type === 'photo';
-      if (currentFilter === 'video') return item.category === 'video' || item.type === 'video';
-      if (currentFilter === 'short-film') return item.category === 'short-film' || item.section === 'Short Film';
-      if (currentFilter === 'travelling-guide') return item.category === 'travelling-guide' || item.section === 'Travelling Guide';
-      if (currentFilter === 'ideas') return item.category === 'ideas' || item.section === 'Ideas';
-      if (currentFilter === 'information') return item.category === 'information' || item.section === 'Information';
-      return item.category === currentFilter;
+      // Default to travelling-guide
+      return item.category === 'travelling-guide' || item.type === 'travelling-guide' || item.section === 'Travelling Guide';
     });
 
-    // Sub-Filter Bar visibility & label
+    // Ensure sub-filter bar is hidden since photos and videos columns are removed
     if (photoSubFilterRow) {
-      const showSubRow = (currentFilter === 'photos' || currentFilter === 'video' || currentFilter === 'all');
-      photoSubFilterRow.style.display = showSubRow ? 'flex' : 'none';
-
-      if (subjectFilterLabel) {
-        if (currentFilter === 'video') subjectFilterLabel.textContent = 'Video Columns:';
-        else if (currentFilter === 'photos') subjectFilterLabel.textContent = 'Photo Columns:';
-        else subjectFilterLabel.textContent = 'Subject Columns:';
-      }
-      if (allSubLabelText) {
-        if (currentFilter === 'video') allSubLabelText.textContent = 'All Videos';
-        else if (currentFilter === 'photos') allSubLabelText.textContent = 'All Photos';
-        else allSubLabelText.textContent = 'All Visuals';
-      }
+      photoSubFilterRow.style.display = 'none';
     }
 
     if (currentlyFilteredItems.length === 0) {
-      const sectionName = (currentFilter === 'photos' || currentFilter === 'video') && currentPhotoSub !== 'all'
-        ? `${currentFilter.toUpperCase()} • ${currentPhotoSub.charAt(0).toUpperCase() + currentPhotoSub.slice(1)}`
-        : currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
-
+      const isInfo = currentFilter === 'information';
       mediaGridEl.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
-          <div style="font-size: 34px; margin-bottom: 10px;">🌿</div>
-          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">No Media in ${escapeHtml(sectionName)} Yet</h3>
+          <div style="font-size: 34px; margin-bottom: 10px;">${isInfo ? '📢' : '🗺️'}</div>
+          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">
+            ${isInfo ? 'No Creator Updates Yet' : 'No Travelling Guides Yet'}
+          </h3>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px; max-width: 480px; margin-left: auto; margin-right: auto;">
-            This section is waiting for your curated uploads. Use the upload tool to publish your pictures or video footage here.
+            ${isInfo 
+              ? 'Official roadmap milestones and future platform updates from the creator will appear here.' 
+              : 'Be the first explorer to write a destination guide, route directions, and personal travel notes!'}
           </p>
           <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="${escapeHtml(currentFilter)}" style="margin: 0 auto;">
-            + Upload to ${escapeHtml(sectionName)}
+            ${isInfo ? '+ Post Creator Update' : '+ Write Travel Note / Guide'}
           </button>
         </div>
       `;
@@ -382,32 +280,30 @@
     }
 
     mediaGridEl.innerHTML = currentlyFilteredItems.map((item, index) => {
-      // 1. Photos Tab Card: Left tiny thumbnail icon, Right Name + Scientific + 2-3 line desc, Bottom IG button
-      if (item.category === 'photos' || item.type === 'photo') {
-        const thumbSrc = item.thumbIcon || item.mediaUrl || 'assets/images/black_drongo.jpg';
-        const igLink = item.instagramUrl || 'https://www.instagram.com/explore/tags/wildlifeindia/';
+      // 1. Travelling Guide Card: Place, How to move there, Traveler Note (anyone can write), Author
+      if (item.category === 'travelling-guide' || item.type === 'travelling-guide' || item.section === 'Travelling Guide') {
         return `
-          <article class="hub-photo-card" data-index="${index}" data-id="${item.id}">
-            <div class="hub-photo-top-row">
-              <img 
-                src="${escapeHtml(thumbSrc)}" 
-                alt="${escapeHtml(item.title)}" 
-                class="hub-thumb-icon"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='assets/images/black_drongo.jpg';"
-              />
-              <div class="hub-photo-info">
-                <h3 class="hub-photo-name">${escapeHtml(item.title)}</h3>
-                <span class="hub-scientific-name">${escapeHtml(item.scientificName || item.title)}</span>
-                <p class="hub-desc-text">${escapeHtml(item.description || item.fieldNotes || '')}</p>
-              </div>
+          <article class="travel-guide-card" data-index="${index}" data-id="${item.id}">
+            <div class="guide-card-top">
+              <span class="guide-place-badge">📍 DESTINATION GUIDE</span>
+              <span class="guide-author-pill">✍️ By ${escapeHtml(item.author || 'Traveler')}</span>
             </div>
-            <div class="hub-photo-bottom-row">
-              <a href="${escapeHtml(igLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View high-res photo on Instagram">
-                📸 View High-Res on Instagram ↗
-              </a>
+            <h3 class="guide-card-place-title">${escapeHtml(item.place || item.title)}</h3>
+            
+            <div class="guide-block-section">
+              <h4 class="guide-section-heading">🧭 How to Move There & Logistics</h4>
+              <div class="guide-block-content">${escapeHtml(item.travelGuide || item.fieldNotes || '')}</div>
+            </div>
+            
+            <div class="guide-note-section">
+              <div class="guide-note-label">📝 Traveler Note & Tips</div>
+              <div class="guide-note-content">${escapeHtml(item.travelerNote || item.description || '')}</div>
+            </div>
+            
+            <div class="guide-card-footer">
+              <span class="guide-footer-date">📅 ${escapeHtml(item.date || 'Community Travel Record')}</span>
               ${item.isUserUploaded ? `
-                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
+                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this travel guide" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
                   ✕ Delete
                 </button>
               ` : ''}
@@ -416,74 +312,16 @@
         `;
       }
 
-      // 2. Videos & Short Films Tab Card: Left tiny icon, Right Name + Scientific + brief info, Bottom YT & IG buttons
-      if (item.category === 'video' || item.type === 'video' || item.category === 'short-film') {
-        const iconSymbol = item.iconSymbol || '🌿';
-        const ytLink = item.youtubeUrl || 'https://www.youtube.com/';
-        const igLink = item.instagramUrl || 'https://www.instagram.com/reels/';
-        return `
-          <article class="hub-video-card" data-index="${index}" data-id="${item.id}">
-            <div class="hub-video-top-row">
-              <div class="hub-video-icon" title="${escapeHtml(item.title)}">
-                <span>${iconSymbol}</span>
-              </div>
-              <div class="hub-video-info">
-                <h3 class="hub-video-name">${escapeHtml(item.title)}</h3>
-                <span class="hub-scientific-name">${escapeHtml(item.scientificName || '')}</span>
-                <p class="hub-desc-text">${escapeHtml(item.description || item.fieldNotes || '')}</p>
-              </div>
-            </div>
-            <div class="hub-video-bottom-buttons">
-              <a href="${escapeHtml(ytLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch full video on YouTube">
-                ▶ Watch Video on YouTube ↗
-              </a>
-              <a href="${escapeHtml(igLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="Watch short reel on Instagram">
-                🎬 Watch Short on Instagram ↗
-              </a>
-              ${item.isUserUploaded ? `
-                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px; margin-left: auto;">
-                  ✕ Delete
-                </button>
-              ` : ''}
-            </div>
-          </article>
-        `;
-      }
-
-      // 3. Information Tab Card: Strictly text-based! No images or icons allowed.
-      if (item.category === 'information' || item.type === 'information') {
-        const catBadge = (item.infoCategory || 'GENERAL').toUpperCase();
-        return `
-          <article class="hub-info-card" data-index="${index}" data-id="${item.id}">
-            <span class="hub-info-category-badge">[${escapeHtml(catBadge)}]</span>
-            <h3 class="hub-info-title">${escapeHtml(item.title)}</h3>
-            <div class="hub-info-body">${escapeHtml(item.infoText || item.fieldNotes || '')}</div>
-            <div class="hub-info-footer">
-              <span>Field Dossier • ${escapeHtml(item.author || 'Drongo Research Desk')}</span>
-              <span>${escapeHtml(item.date || 'Verified Archive')}</span>
-              ${item.isUserUploaded ? `
-                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
-                  ✕ Delete
-                </button>
-              ` : ''}
-            </div>
-          </article>
-        `;
-      }
-
-      // 4. Travelling Guide Tab Card (Leave as is for now)
+      // 2. Information Card: Strictly Creator Updates for Future Updates & Roadmap
+      const catBadge = (item.infoCategory || 'FUTURE UPDATE').toUpperCase();
       return `
-        <article class="hub-photo-card" data-index="${index}" data-id="${item.id}">
-          <div class="hub-photo-top-row">
-            <div class="hub-thumb-icon">🧭</div>
-            <div class="hub-photo-info">
-              <h3 class="hub-photo-name">${escapeHtml(item.title)}</h3>
-              <span class="hub-scientific-name">${escapeHtml(item.location || 'India Trails')}</span>
-              <p class="hub-desc-text">${escapeHtml(item.fieldNotes || item.description || '')}</p>
-            </div>
-          </div>
-          <div class="hub-photo-bottom-row">
-            <span style="font-size: 11px; color: var(--accent-gold); font-weight: 700;">TRAVELLING GUIDE</span>
+        <article class="hub-info-card" data-index="${index}" data-id="${item.id}">
+          <span class="hub-info-category-badge">[${escapeHtml(catBadge)}]</span>
+          <h3 class="hub-info-title">${escapeHtml(item.title)}</h3>
+          <div class="hub-info-body">${escapeHtml(item.infoText || item.fieldNotes || '')}</div>
+          <div class="hub-info-footer">
+            <span>📢 Creator Update • ${escapeHtml(item.author || 'Creator / Drongo Core Team')}</span>
+            <span>${escapeHtml(item.date || 'Official Notice')}</span>
             ${item.isUserUploaded ? `
               <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
                 ✕ Delete
@@ -493,37 +331,6 @@
         </article>
       `;
     }).join('');
-
-    // Attach card click handlers for Lightbox
-    mediaGridEl.querySelectorAll('.media-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('.card-delete-btn')) return;
-        if (e.target.closest('.card-know-more-btn')) {
-          const index = parseInt(card.getAttribute('data-index'), 10);
-          openLightbox(index, true); // Opens directly with To Know More expanded
-          return;
-        }
-        const index = parseInt(card.getAttribute('data-index'), 10);
-        openLightbox(index, false);
-      });
-
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const index = parseInt(card.getAttribute('data-index'), 10);
-          openLightbox(index, false);
-        }
-      });
-    });
-
-    // Attach card click handlers for hub-photo-card to enlarge photo in lightbox
-    mediaGridEl.querySelectorAll('.hub-photo-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('.card-delete-btn') || e.target.closest('.btn-hub-link')) return;
-        const index = parseInt(card.getAttribute('data-index'), 10);
-        openLightbox(index, false);
-      });
-    });
 
     // Delete handler
     mediaGridEl.querySelectorAll('.card-delete-btn').forEach(btn => {
@@ -542,37 +349,14 @@
       if (!countEl) return;
 
       let count = 0;
-      if (filter === 'all') count = catalog.length;
-      else if (filter === 'photos') count = catalog.filter(i => i.category === 'photos' || i.type === 'photo').length;
-      else if (filter === 'video') count = catalog.filter(i => i.category === 'video' || i.type === 'video').length;
-      else if (filter === 'short-film') count = catalog.filter(i => i.category === 'short-film' || i.section === 'Short Film').length;
-      else if (filter === 'travelling-guide') count = catalog.filter(i => i.category === 'travelling-guide' || i.section === 'Travelling Guide').length;
-      else if (filter === 'ideas') count = catalog.filter(i => i.category === 'ideas' || i.section === 'Ideas').length;
-      else if (filter === 'information') count = catalog.filter(i => i.category === 'information' || i.section === 'Information').length;
-      else count = catalog.filter(i => i.category === filter).length;
-
-      countEl.textContent = count;
-    });
-
-    // Update Sub-Category counts dynamically for photos or video
-    photoSubBtns.forEach(btn => {
-      const sub = btn.getAttribute('data-photo-sub');
-      const countEl = btn.querySelector('.sub-count');
-      if (!countEl) return;
-
-      let targetSet = catalog;
-      if (currentFilter === 'video') {
-        targetSet = catalog.filter(i => i.category === 'video' || i.type === 'video');
-      } else if (currentFilter === 'photos') {
-        targetSet = catalog.filter(i => i.category === 'photos' || i.type === 'photo');
-      }
-
-      let count = 0;
-      if (sub === 'all') {
-        count = targetSet.length;
+      if (filter === 'travelling-guide') {
+        count = catalog.filter(i => i.category === 'travelling-guide' || i.type === 'travelling-guide' || i.section === 'Travelling Guide').length;
+      } else if (filter === 'information') {
+        count = catalog.filter(i => i.category === 'information' || i.type === 'information' || i.section === 'Information').length;
       } else {
-        count = targetSet.filter(i => i.photoSubject === sub || i.tags?.includes(sub)).length;
+        count = catalog.filter(i => i.category === filter).length;
       }
+
       countEl.textContent = count;
     });
   }
@@ -814,32 +598,29 @@
      Curator Studio: Video & Photo Upload Engine
      -------------------------------------------------------------------------- */
   /* --------------------------------------------------------------------------
-     Curator Studio: External Hub Dispatch Engine (No File Uploads)
+     Curator Studio: Travelling Guide & Creator Updates Engine
      -------------------------------------------------------------------------- */
   function setUploadSection(sec) {
     if (sectionSelect) sectionSelect.value = sec;
 
-    const tabPhotos = document.getElementById('hubTabBtnPhotos');
-    const tabVideo = document.getElementById('hubTabBtnVideo');
+    const tabGuide = document.getElementById('hubTabBtnGuide');
     const tabInfo = document.getElementById('hubTabBtnInfo');
 
-    const panePhotos = document.getElementById('hubPanePhotos');
-    const paneVideo = document.getElementById('hubPaneVideo');
+    const paneGuide = document.getElementById('hubPaneGuide');
     const paneInfo = document.getElementById('hubPaneInfo');
 
-    if (tabPhotos) tabPhotos.classList.toggle('active', sec === 'photos');
-    if (tabVideo) tabVideo.classList.toggle('active', sec === 'video');
+    if (tabGuide) tabGuide.classList.toggle('active', sec === 'travelling-guide');
     if (tabInfo) tabInfo.classList.toggle('active', sec === 'information');
 
-    if (panePhotos) panePhotos.style.display = (sec === 'photos') ? 'block' : 'none';
-    if (paneVideo) paneVideo.style.display = (sec === 'video') ? 'block' : 'none';
+    if (paneGuide) paneGuide.style.display = (sec === 'travelling-guide') ? 'block' : 'none';
     if (paneInfo) paneInfo.style.display = (sec === 'information') ? 'block' : 'none';
 
     if (submitBtnText) {
-      if (sec === 'photos') submitBtnText.textContent = 'PUBLISH TO PHOTOS ARCHIVE';
-      else if (sec === 'video') submitBtnText.textContent = 'PUBLISH TO VIDEOS & FILMS';
-      else if (sec === 'information') submitBtnText.textContent = 'PUBLISH RESEARCH DOSSIER';
-      else submitBtnText.textContent = 'PUBLISH TO DRONGO HUB';
+      if (sec === 'information') {
+        submitBtnText.textContent = 'PUBLISH CREATOR UPDATE';
+      } else {
+        submitBtnText.textContent = 'PUBLISH TRAVEL GUIDE & NOTE';
+      }
     }
   }
 
@@ -852,123 +633,53 @@
     if (modalBodyEl) modalBodyEl.scrollTop = 0;
 
     const targetSec = e?.currentTarget?.getAttribute('data-upload-section');
-    if (targetSec === 'video' || currentFilter === 'video') {
-      setUploadSection('video');
-    } else if (targetSec === 'information' || currentFilter === 'information') {
+    if (targetSec === 'information' || currentFilter === 'information') {
       setUploadSection('information');
     } else {
-      setUploadSection('photos');
+      setUploadSection('travelling-guide');
     }
-  }
-
-  function handlePhotoFileSelection(file) {
-    if (!file) return;
-    if (!file.type || !file.type.startsWith('image/')) {
-      showToast('⚠️ Please select a valid image file (JPG, PNG, WEBP).');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onerror = function() {
-      showToast('⚠️ Could not read image file. Please try another.');
-    };
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onerror = function() {
-        showToast('⚠️ Invalid image file format.');
-      };
-      img.onload = function() {
-        // Auto-scale to max 1200px and compress to JPEG 0.85 to maintain crisp quality while keeping size ~50-80KB
-        const maxDim = 1200;
-        let w = img.width;
-        let h = img.height;
-        if (w > maxDim || h > maxDim) {
-          if (w > h) {
-            h = Math.round((h * maxDim) / w);
-            w = maxDim;
-          } else {
-            w = Math.round((w * maxDim) / h);
-            h = maxDim;
-          }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-
-        pendingPhotoDataUrl = compressedDataUrl;
-        if (photoPreviewImg) photoPreviewImg.src = compressedDataUrl;
-        if (photoPreviewFilename) {
-          const approxKb = Math.round((compressedDataUrl.length * 0.75) / 1024);
-          photoPreviewFilename.textContent = `${file.name} (~${approxKb} KB)`;
-        }
-        if (photoDropzoneContent) photoDropzoneContent.style.display = 'none';
-        if (photoPreviewWrap) photoPreviewWrap.style.display = 'flex';
-        showToast(`✓ Photo "${file.name}" ready to publish!`);
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function resetPhotoUploadPreview() {
-    pendingPhotoDataUrl = null;
-    if (hubPhotoFileInput) hubPhotoFileInput.value = '';
-    if (photoPreviewImg) photoPreviewImg.src = '';
-    if (photoDropzoneContent) photoDropzoneContent.style.display = 'flex';
-    if (photoPreviewWrap) photoPreviewWrap.style.display = 'none';
   }
 
   function closeUploadModal() {
     uploadModal.classList.remove('open');
     uploadModal.setAttribute('aria-hidden', 'true');
     uploadForm.reset();
-    resetPhotoUploadPreview();
     document.body.style.overflow = '';
   }
 
   function handleFormSubmit(e) {
     if (e && e.preventDefault) e.preventDefault();
-    const sec = sectionSelect ? sectionSelect.value : 'photos';
+    const sec = sectionSelect ? sectionSelect.value : 'travelling-guide';
     const uniqueId = 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
+    const currentDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-    if (sec === 'photos') {
-      const name = (document.getElementById('hubPhotoName')?.value || '').trim();
-      const sciName = (document.getElementById('hubPhotoScientific')?.value || '').trim();
-      const desc = (document.getElementById('hubPhotoDesc')?.value || '').trim();
-      const igUrl = (document.getElementById('hubPhotoIgUrl')?.value || '').trim() || 'https://www.instagram.com/explore/tags/wildlifeindia/';
-      const subject = document.getElementById('hubPhotoSubjectSelect')?.value || 'animal';
-      const fallbackThumb = document.getElementById('hubPhotoIconSelect')?.value || 'assets/images/black_drongo.jpg';
-      const finalPhoto = pendingPhotoDataUrl || fallbackThumb;
+    if (sec === 'travelling-guide') {
+      const place = (document.getElementById('hubGuidePlace')?.value || '').trim();
+      const route = (document.getElementById('hubGuideRoute')?.value || '').trim();
+      const note = (document.getElementById('hubGuideNote')?.value || '').trim();
+      const author = (document.getElementById('hubGuideAuthor')?.value || '').trim() || 'Explorer';
 
-      if (!name || !sciName || !desc) {
-        showToast('⚠️ Please fill out Subject Name, Scientific Name, and Short Description.');
+      if (!place) {
+        showToast('⚠️ Please enter the Destination / Place Title (e.g. Dharadhon).');
         return;
       }
 
-      if (!pendingPhotoDataUrl && !fallbackThumb) {
-        showToast('⚠️ Please upload or select a photo.');
+      if (!route && !note) {
+        showToast('⚠️ Please provide how to move there or a traveler note.');
         return;
       }
 
       const newRecord = {
         id: uniqueId,
-        type: 'photo',
-        title: name,
-        scientificName: sciName,
-        category: 'photos',
-        photoSubject: subject,
-        section: 'Photos',
-        tags: ['user-upload', 'photos', subject],
-        location: 'Field Observation Site, India',
-        mediaUrl: finalPhoto,
-        thumbIcon: finalPhoto,
-        description: desc,
-        fieldNotes: desc,
-        instagramUrl: igUrl,
-        knowMoreInfo: `Subject: ${name}\nScientific Name: ${sciName}\nSubject Classification: ${subject.toUpperCase()}\nField Notes: ${desc}\nInstagram: ${igUrl}`,
+        type: 'travelling-guide',
+        category: 'travelling-guide',
+        section: 'Travelling Guide',
+        title: `${place} — Destination & Movement Guide`,
+        place: place,
+        travelGuide: route || 'Take local transit and regional highway corridors to reach this destination.',
+        travelerNote: note || 'Explore with an open mind and respect local customs.',
+        author: author,
+        date: `${currentDate} • Verified Travel Note`,
         isUserUploaded: true,
         timestamp: Date.now()
       };
@@ -976,69 +687,22 @@
       catalog.unshift(newRecord);
       saveUserItemsToStorage();
 
-      currentFilter = 'photos';
-      currentPhotoSub = subject;
-      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'photos'));
-      photoSubBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-photo-sub') === subject));
+      currentFilter = 'travelling-guide';
+      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'travelling-guide'));
       renderGallery();
       updateFilterCounts();
       closeUploadModal();
-      showToast(`✓ "${name}" photo posted successfully to Visuals!`);
-      document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
-
-    } else if (sec === 'video') {
-      const name = (document.getElementById('hubVideoName')?.value || '').trim();
-      const sciName = (document.getElementById('hubVideoScientific')?.value || '').trim();
-      const desc = (document.getElementById('hubVideoDesc')?.value || '').trim();
-      const ytUrl = (document.getElementById('hubVideoYtUrl')?.value || '').trim();
-      const igUrl = (document.getElementById('hubVideoIgUrl')?.value || '').trim();
-      const icon = document.getElementById('hubVideoIconSelect')?.value || '🌿';
-
-      if (!name || !sciName || !desc || !ytUrl) {
-        showToast('⚠️ Please provide Name, Scientific Name, Brief Info, and YouTube URL.');
-        return;
-      }
-
-      const newRecord = {
-        id: uniqueId,
-        type: 'video',
-        title: name,
-        scientificName: sciName,
-        category: 'video',
-        photoSubject: 'other',
-        section: 'Videos & Short Films',
-        tags: ['user-upload', 'video', 'external-hub'],
-        location: 'Cinematography Field Corridor',
-        mediaUrl: 'assets/images/gangetic_dolphin.jpg',
-        thumbIcon: 'assets/images/gangetic_dolphin.jpg',
-        iconSymbol: icon,
-        description: desc,
-        fieldNotes: desc,
-        youtubeUrl: ytUrl,
-        instagramUrl: igUrl || 'https://www.instagram.com/reels/',
-        knowMoreInfo: `Film Title: ${name}\nScientific Name: ${sciName}\nCinematography Summary: ${desc}\nYouTube Stream: ${ytUrl}\nInstagram Reel: ${igUrl || 'N/A'}`,
-        isUserUploaded: true,
-        timestamp: Date.now()
-      };
-
-      catalog.unshift(newRecord);
-      saveUserItemsToStorage();
-
-      currentFilter = 'video';
-      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'video'));
-      renderGallery();
-      updateFilterCounts();
-      closeUploadModal();
-      showToast(`✓ "${name}" published to Videos & Short Films!`);
+      showToast(`✓ Travel guide & note for "${place}" published successfully!`);
       document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
 
     } else if (sec === 'information') {
-      const cat = document.getElementById('hubInfoCategory')?.value || 'General';
-      const title = (document.getElementById('hubInfoTitle')?.value || '').trim() || `${cat} Ecological Monograph`;
+      const cat = document.getElementById('hubInfoCategory')?.value || 'Platform Update';
+      const title = (document.getElementById('hubInfoTitle')?.value || '').trim();
       const text = (document.getElementById('hubInfoText')?.value || '').trim();
+      const author = (document.getElementById('hubInfoAuthor')?.value || '').trim() || 'Creator / Drongo Core Team';
 
-      if (!text) {
-        showToast('⚠️ Please provide the text dossier for this information dispatch.');
+      if (!title || !text) {
+        showToast('⚠️ Please provide the update headline and announcement details.');
         return;
       }
 
@@ -1049,12 +713,10 @@
         category: 'information',
         infoCategory: cat,
         section: 'Information',
-        tags: ['user-upload', 'information', cat.toLowerCase()],
-        location: 'Drongo Research Desk',
-        description: text.substring(0, 160) + (text.length > 160 ? '...' : ''),
-        fieldNotes: text,
+        tags: ['user-upload', 'creator-update', cat.toLowerCase()],
+        author: author,
         infoText: text,
-        knowMoreInfo: `Dossier: ${title}\nCategory: ${cat}\nInformation:\n${text}`,
+        date: `${currentDate} • Official Creator Notice`,
         isUserUploaded: true,
         timestamp: Date.now()
       };
@@ -1067,7 +729,7 @@
       renderGallery();
       updateFilterCounts();
       closeUploadModal();
-      showToast(`✓ "${title}" added to Information Dossiers!`);
+      showToast(`✓ Creator update "${title}" published successfully!`);
       document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
     }
   }
@@ -1276,44 +938,6 @@
       });
     });
 
-    // Drawer Photo Sub Links
-    document.querySelectorAll('.drawer-sub-photo-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const sub = link.getAttribute('data-photo-sub');
-        currentFilter = 'photos';
-        currentPhotoSub = sub;
-
-        filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'photos'));
-        photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === sub));
-        document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('data-section') === 'photos'));
-
-        renderGallery();
-        updateFilterCounts();
-        closeNavDrawer();
-        document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Drawer Video Sub Links
-    document.querySelectorAll('.drawer-sub-video-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const sub = link.getAttribute('data-video-sub');
-        currentFilter = 'video';
-        currentPhotoSub = sub;
-
-        filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'video'));
-        photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === sub));
-        document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('data-section') === 'video'));
-
-        renderGallery();
-        updateFilterCounts();
-        closeNavDrawer();
-        document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
     // Upload Modal triggers & step toggles
     openUploadModalBtns.forEach(btn => btn.addEventListener('click', openUploadModal));
     closeUploadModalBtn?.addEventListener('click', closeUploadModal);
@@ -1322,67 +946,24 @@
       if (e.target === uploadModal) closeUploadModal();
     });
 
-    // External Hub Modal Tabs
-    document.getElementById('hubTabBtnPhotos')?.addEventListener('click', () => setUploadSection('photos'));
-    document.getElementById('hubTabBtnVideo')?.addEventListener('click', () => setUploadSection('video'));
+    // Travelling Guide & Creator Information Modal Tabs
+    document.getElementById('hubTabBtnGuide')?.addEventListener('click', () => setUploadSection('travelling-guide'));
     document.getElementById('hubTabBtnInfo')?.addEventListener('click', () => setUploadSection('information'));
 
-    sectionChoicePills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        const sec = pill.getAttribute('data-section');
-        if (sec) setUploadSection(sec);
-      });
+    // Visuals Section Header Action Buttons
+    document.getElementById('btnVisualsAddGuide')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      setUploadSection('travelling-guide');
+      openUploadModal(e);
+    });
+
+    document.getElementById('btnVisualsAddInfo')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      setUploadSection('information');
+      openUploadModal(e);
     });
 
     uploadForm?.addEventListener('submit', handleFormSubmit);
-
-    // Dedicated Photo Upload Listeners (Visuals Section & Dispatch Modal)
-    btnBrowsePhoto?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hubPhotoFileInput?.click();
-    });
-
-    photoUploadBox?.addEventListener('click', (e) => {
-      if (e.target.closest('#btnRemovePhotoPreview')) return;
-      hubPhotoFileInput?.click();
-    });
-
-    hubPhotoFileInput?.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (file) handlePhotoFileSelection(file);
-    });
-
-    btnRemovePhotoPreview?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      resetPhotoUploadPreview();
-    });
-
-    ['dragenter', 'dragover'].forEach(evtName => {
-      photoUploadBox?.addEventListener(evtName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        photoUploadBox.classList.add('dragover');
-      });
-    });
-
-    ['dragleave', 'drop'].forEach(evtName => {
-      photoUploadBox?.addEventListener(evtName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        photoUploadBox.classList.remove('dragover');
-      });
-    });
-
-    photoUploadBox?.addEventListener('drop', (e) => {
-      const file = e.dataTransfer?.files?.[0];
-      if (file) handlePhotoFileSelection(file);
-    });
-
-    btnVisualsUploadPhoto?.addEventListener('click', (e) => {
-      e.preventDefault();
-      openUploadModal(e);
-      setUploadSection('photos');
-    });
 
     // Global Delegated click listener for any button with .trigger-upload-modal
     document.addEventListener('click', (e) => {
