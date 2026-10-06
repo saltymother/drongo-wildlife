@@ -181,3 +181,15 @@
   - Implemented dynamic State Dossier displaying official State Emblems (Bihar, Assam, West Bengal, MP, Kerala, Rajasthan, Uttarakhand)
   - Added Option 1 (Tourist Spots & Expeditions) with photo, italic title, description, spot media contribution modal, and Tips & Tricks feed attributed to Aadi [Creator]
   - Added Option 2 (Indigenous Flora & Fauna) featuring top 10 authentic Wikipedia species per state with sighting log modal for photos, videos, and reels
+
+## [v1.0.13] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Typography
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Updated primary editorial intro title and manifesto to: "Welcome to Drongo, your compass to the wild, vibrant, and breathtaking heart of India..."
+  - Formatted heading as an imperial display serif title with subtle gold separator rule
+  - Refined editorial paragraph typography and balanced max-width container for optimal reading experience
+  - Updated meta description to align with the wild expeditions and state flora/fauna narrative

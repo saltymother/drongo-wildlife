@@ -504,7 +504,7 @@ a {
 }
 
 .editorial-intro-container {
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
   text-align: center;
 }
@@ -518,29 +518,38 @@ a {
   color: var(--accent-gold);
   margin-bottom: 20px;
   display: inline-block;
-  padding: 4px 14px;
-  background-color: rgba(197, 160, 89, 0.1);
+  padding: 5px 16px;
+  background-color: rgba(197, 160, 89, 0.12);
+  border: 1px solid rgba(197, 160, 89, 0.25);
   border-radius: var(--radius-xs);
+}
+
+.editorial-intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.7vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--primary-ocean-blue);
+  margin: 0 auto 16px;
+  max-width: 980px;
+  letter-spacing: -0.015em;
+}
+
+.editorial-intro-divider {
+  width: 68px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  margin: 18px auto 24px;
 }
 
 .editorial-intro-text {
   font-family: var(--font-serif);
-  line-height: 1.8;
-  font-size: 1.25rem;
-  color: #24292e;
-  margin: 0 0 35px;
+  line-height: 1.88;
+  font-size: 1.16rem;
+  color: #374151;
+  margin: 0 auto 24px;
+  max-width: 940px;
   text-align: center;
-}
-
-.editorial-intro-text::first-letter {
-  font-size: 3.4rem;
-  float: left;
-  line-height: 0.85;
-  margin-right: 12px;
-  margin-top: 4px;
-  font-weight: 700;
-  color: var(--primary-ocean-blue);
-  font-family: var(--font-display);
 }
 
 /* Upload Callout Prompt Card in Media Section */
@@ -2228,8 +2237,14 @@ a {
     padding: 50px 6% 40px;
   }
 
+  .editorial-intro-title {
+    font-size: 1.45rem;
+    line-height: 1.35;
+  }
+
   .editorial-intro-text {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
   }
 
   .section-header-block {
