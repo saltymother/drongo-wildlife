@@ -251,3 +251,14 @@
   - Created custom anime chibi-style black drongo bird sticker perched directly on top of the 'WILDLIFE EDITION' badge
   - Processed transparent die-cut PNG with white border outline and subtle forked tail
   - Added subtle floating bob micro-animation, scale hover effect, and mascot click chirp interaction
+
+## [v1.0.19] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Aesthetic | Typography
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Updated DRONGO title across header, navigation drawer, and footer to solid metallic golden-white aesthetic
+  - Implemented 6-stop polished metallic gradient matching the WILDLIFE EDITION badge champagne and gold tones
+  - Added specular top highlight reflection, reflective metallic core sheen, and warm gold bevel drop shadows

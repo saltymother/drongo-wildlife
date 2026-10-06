@@ -314,15 +314,30 @@ a {
   font-size: 3.2rem;
   letter-spacing: 4px;
   line-height: 1;
-  background: linear-gradient(180deg, #FFFFFF 10%, #F5F9FD 60%, #CCDCEB 100%);
+  background: linear-gradient(
+    175deg,
+    #FFFFFF 0%,
+    #FFF9E6 18%,
+    #F3D99E 42%,
+    #D4AF37 68%,
+    #FFF0C2 82%,
+    #AA8022 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.55));
-  transition: var(--transition-fast);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.7))
+          drop-shadow(0 4px 14px rgba(212, 175, 55, 0.38));
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.brand-title:hover {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7))
+          drop-shadow(0 0 24px rgba(243, 217, 158, 0.75));
 }
 
 .brand-title a {
   color: inherit;
+  text-decoration: none;
 }
 
 /* Sharp, Aesthetic Rectangular Wildlife Edition Badge */
@@ -1363,10 +1378,21 @@ a {
 .footer-brand-name {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 1.5rem;
-  color: var(--pure-white);
   line-height: 1;
+  background: linear-gradient(
+    175deg,
+    #FFFFFF 0%,
+    #FFF9E6 18%,
+    #F3D99E 42%,
+    #D4AF37 68%,
+    #FFF0C2 82%,
+    #AA8022 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .footer-brand-motto {
@@ -2341,9 +2367,21 @@ a {
 .drawer-title {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 1.3rem;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  background: linear-gradient(
+    175deg,
+    #FFFFFF 0%,
+    #FFF9E6 18%,
+    #F3D99E 42%,
+    #D4AF37 68%,
+    #FFF0C2 82%,
+    #AA8022 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .drawer-links-container {
