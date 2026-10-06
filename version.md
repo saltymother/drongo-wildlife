@@ -302,3 +302,14 @@
   - Reduced spot image wrapper height to 140px with 16:10 aspect ratio and compact typography to eliminate distorted oversized presentation
   - Added State Selector Dropdown menu in the map topbar synchronized with map clicks and chips toolbar
   - Expanded regional wildlife corridor data for Gujarat, Karnataka, Maharashtra, Odisha, Ladakh, and Tamil Nadu
+
+## [v1.0.23] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor | UI/UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed redundant '+ UPLOAD' button and 'CURATOR ARCHIVE' badge from the primary masthead header right column
+  - Retained the primary '+ UPLOAD PHOTO / VIDEO' studio action directly beside SEARCH and INFORMATION in the sub-navigation bar
+  - Preserved symmetrical three-column header grid layout to maintain brand identity and logo crest alignment
