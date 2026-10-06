@@ -229,3 +229,14 @@
   - Added continuous golden marquee banner at the very top of the website
   - Animated announcement moving smoothly from left to right: "Welcome to Drongo! 🐅 Discover hidden travel destinations, rare wildlife, and exotic flora across India. 🌺"
   - Designed with seamless infinite CSS loop, paused on hover, and responsive typography scaling
+
+## [v1.0.17] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Added tap-to-enlarge detail lightbox for the Drongo logo crest across header, navigation drawer, and footer
+  - Rendered oversized emblem showcase with gold circular halo, breathing glow aura, and official Latin motto description
+  - Added zoom cursor, gold hover glow, smooth scale-in animation, and dismiss via click or Escape key

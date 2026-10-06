@@ -352,12 +352,23 @@ a {
   height: auto;
   margin: 15px auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .brand-logo-img:hover {
-  transform: scale(1.04) rotate(1deg);
+  transform: scale(1.08) rotate(1deg);
+  filter: drop-shadow(0 0 18px rgba(197, 160, 89, 0.75));
+}
+
+.footer-logo-img, .drawer-logo-img {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.footer-logo-img:hover, .drawer-logo-img:hover {
+  transform: scale(1.1);
 }
 
 .brand-motto {
@@ -2090,9 +2101,158 @@ a {
   transition: var(--transition-fast);
 }
 
-.lightbox-close-btn:hover {
-  background-color: var(--accent-gold);
-  color: var(--ocean-blue-deep);
+/* --------------------------------------------------------------------------
+   11.1 Drongo Crest Detail Lightbox Modal (Tap to Enlarge)
+   -------------------------------------------------------------------------- */
+.logo-detail-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.logo-detail-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.logo-detail-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(4, 16, 26, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  cursor: pointer;
+}
+
+.logo-detail-content {
+  position: relative;
+  z-index: 2;
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: scale(0.85);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-detail-modal.open .logo-detail-content {
+  transform: scale(1);
+}
+
+.logo-detail-close-btn {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  color: var(--pure-white);
+  font-size: 26px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.logo-detail-close-btn:hover {
+  background: var(--accent-gold);
+  color: var(--primary-ocean-blue);
+  transform: rotate(90deg);
+}
+
+.logo-detail-emblem-wrap {
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  padding: 12px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.25) 0%, rgba(10, 43, 71, 0.8) 75%, rgba(4, 16, 26, 0.95) 100%);
+  border: 3px solid var(--accent-gold);
+  box-shadow: 0 0 50px rgba(197, 160, 89, 0.55), 0 20px 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logoPulseAura 4s ease-in-out infinite alternate;
+  margin-bottom: 22px;
+}
+
+@keyframes logoPulseAura {
+  0% {
+    box-shadow: 0 0 35px rgba(197, 160, 89, 0.45), 0 20px 40px rgba(0, 0, 0, 0.7);
+    border-color: rgba(197, 160, 89, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 70px rgba(197, 160, 89, 0.75), 0 20px 40px rgba(0, 0, 0, 0.7);
+    border-color: #ffd875;
+  }
+}
+
+.logo-detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6));
+}
+
+.logo-detail-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-detail-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--pure-white);
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.logo-detail-motto {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin: 0;
+  letter-spacing: 1.5px;
+}
+
+.logo-detail-desc {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 440px;
+  margin: 4px 0 12px;
+}
+
+.logo-detail-hint {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(197, 160, 89, 0.85);
+  padding: 5px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  cursor: pointer;
 }
 
 /* --------------------------------------------------------------------------

@@ -1324,10 +1324,43 @@
     closeDrawerBtn?.addEventListener('click', closeNavDrawer);
     drawerBackdrop?.addEventListener('click', closeNavDrawer);
 
+    // Drongo Crest / Logo Detail Lightbox Controls
+    const logoDetailModal = document.getElementById('logoDetailModal');
+    const closeLogoDetailBtn = document.getElementById('closeLogoDetailBtn');
+    const logoDetailBackdrop = document.getElementById('logoDetailBackdrop');
+    const logoDetailCloseHint = document.getElementById('logoDetailCloseHint');
+
+    function openLogoDetailModal() {
+      logoDetailModal?.classList.add('open');
+      logoDetailModal?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLogoDetailModal() {
+      logoDetailModal?.classList.remove('open');
+      logoDetailModal?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.trigger-logo-modal, #drongoMainLogo').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLogoDetailModal();
+      });
+    });
+
+    closeLogoDetailBtn?.addEventListener('click', closeLogoDetailModal);
+    logoDetailBackdrop?.addEventListener('click', closeLogoDetailModal);
+    logoDetailCloseHint?.addEventListener('click', closeLogoDetailModal);
+    logoDetailModal?.addEventListener('click', (e) => {
+      if (e.target === logoDetailModal) closeLogoDetailModal();
+    });
+
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (lightboxModal?.classList.contains('open')) closeLightbox();
+        if (logoDetailModal?.classList.contains('open')) closeLogoDetailModal();
+        else if (lightboxModal?.classList.contains('open')) closeLightbox();
         else if (uploadModal?.classList.contains('open')) closeUploadModal();
         else if (searchModal?.classList.contains('open')) closeSearchModal();
         else if (navDrawer?.classList.contains('open')) closeNavDrawer();

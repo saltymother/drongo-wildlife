@@ -88,8 +88,9 @@
         <img 
           src="logo for my .png" 
           alt="Drongo Logo" 
-          class="brand-logo-img" 
+          class="brand-logo-img trigger-logo-modal" 
           id="drongoMainLogo"
+          title="Click to view logo details"
           onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
         />
         <p class="brand-motto">Alta alatis patent</p>
@@ -608,7 +609,8 @@
             <img 
               src="logo for my .png" 
               alt="Drongo Small Logo" 
-              class="footer-logo-img"
+              class="footer-logo-img trigger-logo-modal"
+              title="Click to view logo details"
               onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
             />
             <div>
@@ -973,7 +975,8 @@
         <img 
           src="logo for my .png" 
           alt="Drongo Crest" 
-          class="drawer-logo"
+          class="drawer-logo trigger-logo-modal"
+          title="Click to view logo details"
           onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
         />
         <div class="drawer-brand-text">
@@ -1172,7 +1175,32 @@
   </div>
 
   <!-- =======================================================================
-       13. TOAST NOTIFICATION SYSTEM
+       13. DRONGO CREST DETAIL LIGHTBOX MODAL (Tap Logo to Enlarge)
+       ======================================================================= -->
+  <div class="logo-detail-modal" id="logoDetailModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Drongo Crest Detail View">
+    <div class="logo-detail-backdrop" id="logoDetailBackdrop"></div>
+    <div class="logo-detail-content">
+      <button class="logo-detail-close-btn" id="closeLogoDetailBtn" aria-label="Close Logo View">&times;</button>
+      <div class="logo-detail-emblem-wrap">
+        <img 
+          src="logo for my .png" 
+          alt="Drongo Crest Detail" 
+          class="logo-detail-img" 
+          id="logoDetailLargeImg"
+          onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
+        />
+      </div>
+      <div class="logo-detail-caption">
+        <h3 class="logo-detail-title">DRONGO WILDLIFE • OFFICIAL CREST</h3>
+        <p class="logo-detail-motto">Alta alatis patent</p>
+        <p class="logo-detail-desc">The official insignia and visual emblem of Drongo Wildlife — representing the untamed natural heritage, biodiversity, and avian spirit of India.</p>
+        <span class="logo-detail-hint" id="logoDetailCloseHint">Click anywhere to close</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       14. TOAST NOTIFICATION SYSTEM
        ======================================================================= -->
   <div class="drongo-toast" id="drongoToast" role="status" aria-live="polite"></div>
 
