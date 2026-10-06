@@ -289,3 +289,16 @@
   - Added header with common name, scientific name in brackets, and ceremonial royal talwar sword divider SVG
   - Embedded comprehensive Wikipedia dossier detailing plumage, King Crow aggression, sentinel nesting, and deceptive vocal mimicry
   - Synchronized navigation bar, drawer links, and Tree Branch scroll companion with new #drongo section
+## [v1.0.22] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Bugfix | UI/UX & Cartography
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Corrected India SVG map geometry, replacing coarse polygonal approximations with smooth, organic, authentic geographic curves
+  - Resized and contained Maproom card and SVG viewport to compact, balanced dimensions (max-width 380px, max-height 480px, sticky positioning)
+  - Redesigned Tourist Spot and Flora/Fauna cards in the State Dossier into a multi-column responsive grid matching the compact Visuals section format
+  - Reduced spot image wrapper height to 140px with 16:10 aspect ratio and compact typography to eliminate distorted oversized presentation
+  - Added State Selector Dropdown menu in the map topbar synchronized with map clicks and chips toolbar
+  - Expanded regional wildlife corridor data for Gujarat, Karnataka, Maharashtra, Odisha, Ladakh, and Tamil Nadu

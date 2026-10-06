@@ -291,20 +291,44 @@
           <button class="state-chip-btn" data-state="kerala">Kerala</button>
           <button class="state-chip-btn" data-state="rajasthan">Rajasthan</button>
           <button class="state-chip-btn" data-state="uttarakhand">Uttarakhand</button>
+          <button class="state-chip-btn" data-state="gujarat">Gujarat</button>
+          <button class="state-chip-btn" data-state="karnataka">Karnataka</button>
+          <button class="state-chip-btn" data-state="maharashtra">Maharashtra</button>
+          <button class="state-chip-btn" data-state="odisha">Odisha</button>
+          <button class="state-chip-btn" data-state="ladakh">Ladakh</button>
+          <button class="state-chip-btn" data-state="tamil_nadu">Tamil Nadu</button>
         </div>
       </div>
 
       <!-- Main Maproom Dual Column Layout Grid -->
       <div class="maproom-grid-layout">
         
-        <!-- Left Column: Realistic Map of India with Clickable State Borders -->
+        <!-- Left Column: Realistic Proportioned Map of India with Clickable State Borders -->
         <div class="maproom-map-card">
           <div class="map-card-topbar">
             <div class="map-card-title-group">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
               <span>Map of India • State Corridors</span>
             </div>
-            <span class="map-tap-prompt">Tap any state border</span>
+            <div class="map-topbar-controls">
+              <label for="mapStateDropdown" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;">Select State</label>
+              <select class="map-state-dropdown" id="mapStateDropdown" aria-label="Select Indian State Corridor">
+                <option value="bihar">Bihar (Gangetic &amp; Terai)</option>
+                <option value="assam">Assam (Brahmaputra Valley)</option>
+                <option value="west_bengal">West Bengal (Sundarbans)</option>
+                <option value="madhya_pradesh">Madhya Pradesh (Tiger Heartland)</option>
+                <option value="kerala">Kerala (Western Ghats)</option>
+                <option value="rajasthan">Rajasthan (Thar &amp; Ranthambore)</option>
+                <option value="uttarakhand">Uttarakhand (Corbett &amp; Himalayas)</option>
+                <option value="gujarat">Gujarat (Gir Asiatic Lions)</option>
+                <option value="maharashtra">Maharashtra (Tadoba Corridor)</option>
+                <option value="karnataka">Karnataka (Nagarhole &amp; Nilgiris)</option>
+                <option value="odisha">Odisha (Similipal &amp; Chilika)</option>
+                <option value="ladakh">Ladakh &amp; J&amp;K (Himalayan Crown)</option>
+                <option value="tamil_nadu">Tamil Nadu (Anamalai &amp; Nilgiris)</option>
+              </select>
+              <span class="map-tap-prompt">Tap border or select</span>
+            </div>
           </div>
 
           <!-- Realistic India SVG Map -->
@@ -339,173 +363,197 @@
               <text x="470" y="520" fill="rgba(243, 217, 158, 0.25)" font-family="'Cinzel', serif" font-size="11" letter-spacing="2">BAY OF BENGAL</text>
               <text x="280" y="695" fill="rgba(243, 217, 158, 0.3)" font-family="'Cinzel', serif" font-size="12" letter-spacing="3" text-anchor="middle">INDIAN OCEAN</text>
 
-              <!-- All Indian States with realistic borders and data-state attributes -->
+              <!-- All Indian States with realistic curved vector borders and data-state attributes -->
               <g class="india-states-layer">
-                <!-- Ladakh & Jammu & Kashmir -->
-                <path class="map-state-path" data-state="ladakh" d="M220 50 L270 30 L320 60 L335 110 L300 120 L270 115 L245 130 L210 110 L205 75 Z" aria-label="Ladakh and Jammu & Kashmir">
-                  <title>Ladakh &amp; Jammu &amp; Kashmir</title>
+                <!-- Ladakh & Jammu & Kashmir (Himalayan Crown) -->
+                <path class="map-state-path highlight-state" data-state="ladakh" d="M 195,115 C 190,85 205,50 240,32 C 265,20 295,28 325,48 C 345,65 350,95 342,122 C 325,126 305,122 280,126 C 255,130 230,138 215,135 C 205,130 198,122 195,115 Z" aria-label="Ladakh and Jammu & Kashmir">
+                  <title>Ladakh &amp; Jammu &amp; Kashmir • Himalayan Snow Leopard Realm</title>
                 </path>
 
                 <!-- Himachal Pradesh -->
-                <path class="map-state-path" data-state="himachal" d="M245 130 L270 115 L300 120 L295 150 L260 160 L240 145 Z" aria-label="Himachal Pradesh">
-                  <title>Himachal Pradesh</title>
+                <path class="map-state-path" data-state="himachal" d="M 240,138 C 255,132 278,128 300,124 C 310,126 318,135 320,150 C 316,165 295,172 278,170 C 265,168 250,165 240,152 Z" aria-label="Himachal Pradesh">
+                  <title>Himachal Pradesh • Pin Valley &amp; Western Tragopan</title>
                 </path>
 
                 <!-- Punjab -->
-                <path class="map-state-path" data-state="punjab" d="M205 135 L240 145 L235 175 L195 170 L200 145 Z" aria-label="Punjab">
-                  <title>Punjab</title>
+                <path class="map-state-path" data-state="punjab" d="M 188,132 C 202,130 220,132 238,138 C 238,155 235,175 230,186 C 210,186 195,180 184,168 C 182,152 184,140 188,132 Z" aria-label="Punjab">
+                  <title>Punjab • Harike Wetland &amp; Indus Dolphin</title>
                 </path>
 
-                <!-- Uttarakhand (Interactive Wildlife State) -->
-                <path class="map-state-path highlight-state" data-state="uttarakhand" d="M295 150 L340 160 L330 195 L285 190 L260 160 Z" aria-label="Uttarakhand">
+                <!-- Uttarakhand (Corbett & Garhwal Himalayan Foothills) -->
+                <path class="map-state-path highlight-state" data-state="uttarakhand" d="M 278,170 C 295,172 316,165 320,150 C 330,155 348,168 355,182 C 348,198 332,208 305,204 C 290,202 282,185 278,170 Z" aria-label="Uttarakhand">
                   <title>Uttarakhand • Garhwal &amp; Corbett Tiger Basin</title>
                 </path>
 
                 <!-- Haryana & Delhi -->
-                <path class="map-state-path" data-state="haryana" d="M235 175 L260 160 L285 190 L270 215 L230 205 Z" aria-label="Haryana &amp; Delhi">
-                  <title>Haryana &amp; National Capital Region</title>
+                <path class="map-state-path" data-state="haryana" d="M 230,186 C 248,184 265,180 278,170 C 282,185 290,202 305,204 C 295,220 280,230 262,230 C 245,225 235,210 230,186 Z" aria-label="Haryana &amp; Delhi">
+                  <title>Haryana &amp; National Capital Region • Sultanpur Wetland</title>
                 </path>
 
-                <!-- Rajasthan (Interactive Wildlife State) -->
-                <path class="map-state-path highlight-state" data-state="rajasthan" d="M140 185 L230 205 L260 250 L230 305 L160 300 L120 250 Z" aria-label="Rajasthan">
-                  <title>Rajasthan • Thar Desert &amp; Ranthambore</title>
+                <!-- Rajasthan (Thar Desert & Ranthambore) -->
+                <path class="map-state-path highlight-state" data-state="rajasthan" d="M 184,168 C 195,180 210,186 230,186 C 235,210 245,225 262,230 C 268,255 260,285 245,308 C 220,314 185,310 152,298 C 125,285 110,250 120,225 C 135,195 160,180 184,168 Z" aria-label="Rajasthan">
+                  <title>Rajasthan • Thar Desert &amp; Ranthambore Tiger Realm</title>
                 </path>
 
-                <!-- Uttar Pradesh -->
-                <path class="map-state-path" data-state="uttar_pradesh" d="M270 215 L285 190 L330 195 L405 240 L395 295 L310 290 L260 250 Z" aria-label="Uttar Pradesh">
-                  <title>Uttar Pradesh • Dudhwa Terai &amp; Gangetic Plain</title>
+                <!-- Uttar Pradesh (Gangetic Plain & Terai) -->
+                <path class="map-state-path" data-state="uttar_pradesh" d="M 262,230 C 280,230 295,220 305,204 C 332,208 348,198 355,182 C 385,212 410,235 425,252 C 418,278 395,298 360,302 C 320,306 285,290 268,255 C 262,245 262,238 262,230 Z" aria-label="Uttar Pradesh">
+                  <title>Uttar Pradesh • Dudhwa Terai &amp; Gangetic Basin</title>
                 </path>
 
-                <!-- Bihar (Interactive Wildlife State - Prominently Featured) -->
-                <path class="map-state-path highlight-state active" data-state="bihar" d="M405 240 L480 235 L475 290 L455 305 L395 295 Z" aria-label="Bihar">
+                <!-- Bihar (Featured Interactive State) -->
+                <path class="map-state-path highlight-state active" data-state="bihar" d="M 425,252 C 445,248 472,245 490,250 C 492,275 480,296 460,310 C 438,312 418,308 408,300 C 415,280 420,265 425,252 Z" aria-label="Bihar">
                   <title>Bihar • Nalanda Mahavihara &amp; Valmiki Tiger Reserve</title>
                 </path>
 
                 <!-- Sikkim -->
-                <path class="map-state-path" data-state="sikkim" d="M480 220 L500 220 L495 240 L480 235 Z" aria-label="Sikkim">
-                  <title>Sikkim • Kangchenjunga Biosphere</title>
+                <path class="map-state-path" data-state="sikkim" d="M 490,222 C 498,214 512,216 515,226 C 512,238 498,242 490,238 C 488,230 488,225 490,222 Z" aria-label="Sikkim">
+                  <title>Sikkim • Kangchenjunga Red Panda Biosphere</title>
                 </path>
 
-                <!-- Assam (Interactive Wildlife State - Prominently Featured) -->
-                <path class="map-state-path highlight-state" data-state="assam" d="M515 240 L590 230 L610 265 L575 285 L535 270 L515 280 L495 260 Z" aria-label="Assam">
-                  <title>Assam • Kaziranga &amp; Brahmaputra Valley</title>
+                <!-- West Bengal (Sundarbans Tiger Realm & Darjeeling) -->
+                <path class="map-state-path highlight-state" data-state="west_bengal" d="M 490,238 C 498,242 512,238 515,248 C 500,260 488,280 488,305 C 498,328 502,352 485,372 C 468,375 452,365 448,345 C 448,325 460,310 460,310 C 480,296 492,275 490,250 Z" aria-label="West Bengal">
+                  <title>West Bengal • Sundarbans Tiger Realm &amp; Mangrove Delta</title>
                 </path>
 
-                <!-- Arunachal Pradesh, Meghalaya & Northeast States -->
-                <path class="map-state-path" data-state="arunachal" d="M545 190 L620 200 L635 240 L590 230 L545 220 Z" aria-label="Arunachal Pradesh">
-                  <title>Arunachal Pradesh</title>
+                <!-- Assam (Brahmaputra Valley & Kaziranga) -->
+                <path class="map-state-path highlight-state" data-state="assam" d="M 515,248 C 538,240 575,235 605,242 C 615,255 618,272 598,280 C 572,282 548,270 530,272 C 520,274 515,262 515,248 Z" aria-label="Assam">
+                  <title>Assam • Kaziranga Rhino Basin &amp; Brahmaputra Valley</title>
                 </path>
-                <path class="map-state-path" data-state="meghalaya" d="M515 275 L565 270 L560 290 L510 290 Z" aria-label="Meghalaya">
+
+                <!-- Arunachal Pradesh -->
+                <path class="map-state-path" data-state="arunachal" d="M 538,240 C 555,212 590,200 625,210 C 640,225 642,248 625,260 C 610,255 605,242 575,235 C 555,235 545,238 538,240 Z" aria-label="Arunachal Pradesh">
+                  <title>Arunachal Pradesh • Namdapha &amp; Clouded Leopard Sanctuary</title>
+                </path>
+
+                <!-- Meghalaya -->
+                <path class="map-state-path" data-state="meghalaya" d="M 522,274 C 542,272 562,272 572,278 C 568,295 540,298 522,295 C 518,286 518,280 522,274 Z" aria-label="Meghalaya">
                   <title>Meghalaya • Living Root Bridges &amp; Cloud Forests</title>
                 </path>
-                <path class="map-state-path" data-state="northeast_other" d="M575 285 L615 280 L605 350 L570 350 L560 295 Z" aria-label="Nagaland, Manipur, Mizoram &amp; Tripura">
-                  <title>Nagaland, Manipur, Mizoram &amp; Tripura</title>
+
+                <!-- Other Northeast States -->
+                <path class="map-state-path" data-state="northeast_other" d="M 598,280 C 618,272 628,290 622,320 C 612,355 588,368 575,360 C 572,335 582,305 572,282 C 585,280 592,280 598,280 Z" aria-label="Nagaland, Manipur, Mizoram &amp; Tripura">
+                  <title>Nagaland, Manipur, Mizoram &amp; Tripura • Keibul Lamjao Sangai</title>
                 </path>
 
-                <!-- West Bengal (Interactive Wildlife State - Prominently Featured) -->
-                <path class="map-state-path highlight-state" data-state="west_bengal" d="M475 238 L495 240 L485 280 L495 330 L455 355 L445 315 L470 290 Z" aria-label="West Bengal">
-                  <title>West Bengal • Sundarbans Tiger Realm &amp; Darjeeling</title>
+                <!-- Gujarat (Gir Asiatic Lion Peninsula) -->
+                <path class="map-state-path highlight-state" data-state="gujarat" d="M 152,298 C 185,310 195,330 195,355 C 185,372 165,378 145,375 C 148,362 140,352 128,352 C 105,352 82,342 75,322 C 70,305 85,290 115,288 C 128,288 135,278 122,272 C 100,268 78,272 65,280 C 60,265 80,255 115,255 C 135,255 145,275 152,298 Z" aria-label="Gujarat">
+                  <title>Gujarat • Gir National Park Asiatic Lion Sanctuary</title>
                 </path>
 
-                <!-- Gujarat -->
-                <path class="map-state-path" data-state="gujarat" d="M85 270 L150 255 L160 300 L180 340 L125 365 L105 320 L70 310 Z" aria-label="Gujarat">
-                  <title>Gujarat • Gir Asiatic Lion Sanctuary</title>
-                </path>
-
-                <!-- Madhya Pradesh (Interactive Wildlife State - Prominently Featured) -->
-                <path class="map-state-path highlight-state" data-state="madhya_pradesh" d="M230 305 L260 250 L310 290 L395 295 L400 350 L330 375 L250 365 L220 340 Z" aria-label="Madhya Pradesh">
+                <!-- Madhya Pradesh (Central Tiger Heartland) -->
+                <path class="map-state-path highlight-state" data-state="madhya_pradesh" d="M 245,308 C 260,285 268,255 268,255 C 285,290 320,306 360,302 C 390,325 390,345 390,368 C 365,385 330,392 295,388 C 265,385 235,370 225,355 C 235,335 240,320 245,308 Z" aria-label="Madhya Pradesh">
                   <title>Madhya Pradesh • Kanha &amp; Bandhavgarh Sal Canopies</title>
                 </path>
 
                 <!-- Jharkhand -->
-                <path class="map-state-path" data-state="jharkhand" d="M400 295 L455 305 L445 355 L395 360 L390 325 Z" aria-label="Jharkhand">
-                  <title>Jharkhand • Betla National Park</title>
+                <path class="map-state-path" data-state="jharkhand" d="M 408,300 C 418,308 438,312 460,310 C 448,325 448,345 448,358 C 428,368 402,362 390,345 C 390,325 398,310 408,300 Z" aria-label="Jharkhand">
+                  <title>Jharkhand • Betla National Park &amp; Palamu Reserve</title>
                 </path>
 
-                <!-- Odisha -->
-                <path class="map-state-path" data-state="odisha" d="M395 360 L455 355 L460 410 L415 450 L370 415 L380 370 Z" aria-label="Odisha">
-                  <title>Odisha • Similipal &amp; Chilika Lake</title>
+                <!-- Odisha (Similipal & Chilika Lake) -->
+                <path class="map-state-path highlight-state" data-state="odisha" d="M 448,358 C 468,368 472,392 462,422 C 445,445 415,455 388,435 C 388,410 395,385 402,362 C 420,362 435,360 448,358 Z" aria-label="Odisha">
+                  <title>Odisha • Similipal Tiger Reserve &amp; Chilika Lake</title>
                 </path>
 
                 <!-- Chhattisgarh -->
-                <path class="map-state-path" data-state="chhattisgarh" d="M360 325 L395 360 L375 430 L345 440 L340 370 Z" aria-label="Chhattisgarh">
-                  <title>Chhattisgarh • Kanger Ghati &amp; Bastar Sal</title>
+                <path class="map-state-path" data-state="chhattisgarh" d="M 360,325 C 378,322 390,345 390,368 C 395,385 388,410 388,435 C 372,448 358,450 350,425 C 348,390 352,355 360,325 Z" aria-label="Chhattisgarh">
+                  <title>Chhattisgarh • Kanger Ghati &amp; Bastar Wild Buffalo</title>
                 </path>
 
-                <!-- Maharashtra -->
-                <path class="map-state-path" data-state="maharashtra" d="M155 355 L250 365 L330 375 L320 440 L240 460 L180 435 L160 380 Z" aria-label="Maharashtra">
-                  <title>Maharashtra • Tadoba Andhari Tiger Corridor</title>
+                <!-- Maharashtra (Tadoba & Sahyadri Western Ghats) -->
+                <path class="map-state-path highlight-state" data-state="maharashtra" d="M 195,355 C 225,355 265,385 295,388 C 330,392 352,355 350,425 C 332,445 298,458 260,465 C 225,465 190,455 178,435 C 172,405 180,375 195,355 Z" aria-label="Maharashtra">
+                  <title>Maharashtra • Tadoba-Andhari Tiger Reserve &amp; Sahyadri</title>
                 </path>
 
                 <!-- Goa -->
-                <path class="map-state-path" data-state="goa" d="M185 490 L200 488 L198 505 L182 505 Z" aria-label="Goa">
-                  <title>Goa • Bhagwan Mahaveer Sanctuary</title>
+                <path class="map-state-path" data-state="goa" d="M 178,485 C 188,482 195,488 192,498 C 185,502 176,498 178,485 Z" aria-label="Goa">
+                  <title>Goa • Bhagwan Mahaveer &amp; Mollem Sanctuary</title>
                 </path>
 
-                <!-- Karnataka -->
-                <path class="map-state-path" data-state="karnataka" d="M190 475 L240 460 L280 490 L270 560 L210 565 L185 505 Z" aria-label="Karnataka">
-                  <title>Karnataka • Nagarhole &amp; Bandipur Elephant Corridor</title>
+                <!-- Karnataka (Nagarhole, Bandipur & Western Ghats) -->
+                <path class="map-state-path highlight-state" data-state="karnataka" d="M 178,435 C 190,455 225,465 260,465 C 275,488 285,520 278,555 C 255,572 225,575 200,560 C 188,535 180,505 178,485 C 176,498 185,502 192,498 C 188,482 178,485 178,435 Z" aria-label="Karnataka">
+                  <title>Karnataka • Nagarhole &amp; Bandipur Elephant Corridors</title>
                 </path>
 
                 <!-- Telangana & Andhra Pradesh -->
-                <path class="map-state-path" data-state="telangana_andhra" d="M280 440 L340 440 L370 415 L415 450 L350 560 L275 540 L280 490 Z" aria-label="Telangana &amp; Andhra Pradesh">
-                  <title>Telangana &amp; Andhra Pradesh</title>
+                <path class="map-state-path" data-state="telangana_andhra" d="M 260,465 C 298,458 332,445 350,425 C 358,450 372,448 388,435 C 415,455 425,485 398,525 C 365,565 320,580 292,572 C 285,520 275,488 260,465 Z" aria-label="Telangana &amp; Andhra Pradesh">
+                  <title>Telangana &amp; Andhra Pradesh • Nagarjunsagar-Srisailam Tiger Reserve</title>
                 </path>
 
-                <!-- Kerala (Interactive Wildlife State - Prominently Featured) -->
-                <path class="map-state-path highlight-state" data-state="kerala" d="M210 565 L240 565 L250 635 L225 670 L210 630 Z" aria-label="Kerala">
-                  <title>Kerala • Periyar &amp; Western Ghats Shola</title>
+                <!-- Kerala (Malabar Coast & Periyar Shola) -->
+                <path class="map-state-path highlight-state" data-state="kerala" d="M 200,560 C 225,575 235,595 240,625 C 238,655 232,675 224,675 C 215,665 208,635 202,605 C 198,585 198,570 200,560 Z" aria-label="Kerala">
+                  <title>Kerala • Periyar &amp; Western Ghats Shola Canopies</title>
                 </path>
 
-                <!-- Tamil Nadu -->
-                <path class="map-state-path" data-state="tamil_nadu" d="M240 565 L275 540 L330 565 L290 665 L250 675 L250 635 Z" aria-label="Tamil Nadu">
-                  <title>Tamil Nadu • Mudumalai &amp; Anamalai</title>
+                <!-- Tamil Nadu (Nilgiri Biosphere & Anamalai) -->
+                <path class="map-state-path highlight-state" data-state="tamil_nadu" d="M 278,555 C 292,572 320,580 305,615 C 285,655 258,680 232,680 C 232,675 240,625 235,595 C 255,572 270,565 278,555 Z" aria-label="Tamil Nadu">
+                  <title>Tamil Nadu • Mudumalai, Anamalai &amp; Nilgiri Tahr</title>
                 </path>
 
                 <!-- Andaman & Nicobar Islands -->
-                <g class="map-islands" fill="#C5A059" opacity="0.8">
-                  <ellipse cx="585" cy="540" rx="3" ry="8" />
-                  <ellipse cx="587" cy="565" rx="3" ry="10" />
-                  <ellipse cx="590" cy="595" rx="4" ry="12" />
-                  <ellipse cx="593" cy="625" rx="3.5" ry="8" />
+                <g class="map-islands" fill="#C5A059" opacity="0.85">
+                  <ellipse cx="585" cy="540" rx="3.5" ry="8" />
+                  <ellipse cx="587" cy="565" rx="3.5" ry="10" />
+                  <ellipse cx="590" cy="595" rx="4.5" ry="12" />
+                  <ellipse cx="593" cy="625" rx="4" ry="8" />
                 </g>
                 <!-- Lakshadweep -->
-                <g class="map-islands" fill="#C5A059" opacity="0.8">
-                  <circle cx="160" cy="590" r="2.5" />
-                  <circle cx="165" cy="610" r="3" />
-                  <circle cx="170" cy="635" r="2.5" />
+                <g class="map-islands" fill="#C5A059" opacity="0.85">
+                  <circle cx="160" cy="590" r="3" />
+                  <circle cx="165" cy="610" r="3.5" />
+                  <circle cx="170" cy="635" r="3" />
                 </g>
               </g>
 
               <!-- State Markers & Labels for Key Wildlife States -->
               <g class="map-labels-group" pointer-events="none">
                 <!-- Bihar pin -->
-                <circle cx="440" cy="270" r="4.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="440" y="260" fill="#F3D99E" font-family="'Cinzel', serif" font-size="9" font-weight="bold" text-anchor="middle">BIHAR</text>
+                <circle cx="445" cy="278" r="4.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="445" y="268" fill="#F3D99E" font-family="'Cinzel', serif" font-size="9" font-weight="bold" text-anchor="middle">BIHAR</text>
 
                 <!-- Assam pin -->
-                <circle cx="560" cy="260" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="560" y="250" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">ASSAM</text>
+                <circle cx="560" cy="256" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="560" y="246" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">ASSAM</text>
 
                 <!-- West Bengal pin -->
-                <circle cx="465" cy="325" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="495" y="325" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">BENGAL</text>
+                <circle cx="482" cy="330" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="512" y="333" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">BENGAL</text>
 
                 <!-- Madhya Pradesh pin -->
-                <circle cx="310" cy="325" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="310" y="342" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">M.P.</text>
+                <circle cx="305" cy="340" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="305" y="356" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">M.P.</text>
 
                 <!-- Rajasthan pin -->
-                <circle cx="195" cy="250" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="195" y="240" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">RAJASTHAN</text>
+                <circle cx="185" cy="245" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="185" y="235" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">RAJASTHAN</text>
+
+                <!-- Gujarat pin -->
+                <circle cx="130" cy="325" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="130" y="315" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">GUJARAT</text>
+
+                <!-- Maharashtra pin -->
+                <circle cx="240" cy="415" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="240" y="405" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">MAHARASHTRA</text>
+
+                <!-- Karnataka pin -->
+                <circle cx="230" cy="510" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="230" y="500" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">KARNATAKA</text>
 
                 <!-- Kerala pin -->
-                <circle cx="230" cy="620" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="195" y="622" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">KERALA</text>
+                <circle cx="220" cy="620" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="180" y="623" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">KERALA</text>
+
+                <!-- Tamil Nadu pin -->
+                <circle cx="270" cy="625" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="312" y="628" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold">TAMIL NADU</text>
 
                 <!-- Uttarakhand pin -->
-                <circle cx="300" cy="175" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="300" y="168" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">UTTARAKHAND</text>
+                <circle cx="310" cy="180" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="310" y="172" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">UTTARAKHAND</text>
+
+                <!-- Ladakh pin -->
+                <circle cx="265" cy="75" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="265" y="66" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">LADAKH</text>
               </g>
             </svg>
           </div>

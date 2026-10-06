@@ -3004,34 +3004,39 @@ a {
 /* Dual Column Layout Grid */
 .maproom-grid-layout {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 32px;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
   align-items: start;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
   .maproom-grid-layout {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
 /* Left Column: Map Card */
 .maproom-map-card {
   background: #061B2E;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(197, 160, 89, 0.3);
-  box-shadow: 0 12px 36px rgba(10, 43, 71, 0.25);
+  box-shadow: 0 8px 24px rgba(10, 43, 71, 0.2);
   overflow: hidden;
-  padding: 20px;
+  padding: 16px;
+  position: sticky;
+  top: 90px;
 }
 
 .map-card-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 14px;
+  padding-bottom: 12px;
   border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .map-card-title-group {
@@ -3041,17 +3046,43 @@ a {
   color: #F3D99E;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13.5px;
   letter-spacing: 0.8px;
 }
 
+.map-topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-state-dropdown {
+  background: #082238;
+  color: #F3D99E;
+  border: 1px solid rgba(197, 160, 89, 0.5);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.map-state-dropdown:focus,
+.map-state-dropdown:hover {
+  border-color: #F3D99E;
+  background: #0D3354;
+}
+
 .map-tap-prompt {
-  font-size: 11px;
-  color: rgba(243, 217, 158, 0.7);
-  background: rgba(197, 160, 89, 0.15);
+  font-size: 10.5px;
+  color: rgba(243, 217, 158, 0.75);
+  background: rgba(197, 160, 89, 0.12);
   padding: 3px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(197, 160, 89, 0.3);
+  border: 1px solid rgba(197, 160, 89, 0.25);
 }
 
 .india-map-viewport {
@@ -3061,14 +3092,15 @@ a {
   align-items: center;
   background: #051829;
   border-radius: 6px;
-  padding: 10px;
+  padding: 6px;
 }
 
 .india-svg-map {
   width: 100%;
-  max-width: 580px;
+  max-width: 380px;
+  max-height: 480px;
   height: auto;
-  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
 }
 
 /* SVG State Borders & Hover Interactions */
@@ -3253,31 +3285,35 @@ a {
   box-shadow: 0 2px 8px rgba(10, 43, 71, 0.15);
 }
 
-/* Tourist Spots Grid */
+/* Tourist Spots Grid (Compact Visual Section Style) */
 .maproom-spots-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .tourist-spot-card {
   background: #FFFFFF;
   border: 1px solid rgba(10, 43, 71, 0.1);
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(10, 43, 71, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .tourist-spot-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(10, 43, 71, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(10, 43, 71, 0.1);
+  border-color: rgba(197, 160, 89, 0.45);
 }
 
 .spot-image-wrapper {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 140px;
+  aspect-ratio: 16 / 10;
   background: #0A2B47;
   overflow: hidden;
 }
@@ -3286,71 +3322,81 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
 .tourist-spot-card:hover .spot-image-wrapper img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .spot-badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(10, 43, 71, 0.85);
+  top: 8px;
+  left: 8px;
+  background: rgba(10, 43, 71, 0.88);
   backdrop-filter: blur(4px);
   color: #F3D99E;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: 2px;
   border: 1px solid rgba(197, 160, 89, 0.4);
 }
 
 .spot-body {
-  padding: 18px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .spot-name {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--primary-ocean-blue);
-  margin: 0 0 4px;
+  margin: 0 0 3px;
+  line-height: 1.3;
 }
 
 .spot-italic-sub {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--accent-gold);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  line-height: 1.35;
 }
 
 .spot-info {
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 11.5px;
+  line-height: 1.5;
   color: #4A5568;
-  margin: 0 0 16px;
+  margin: 0 0 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Spot Actions */
 .spot-action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  margin-top: auto;
 }
 
 .btn-spot-action {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 11.5px;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 3px;
+  font-size: 10.5px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -3375,35 +3421,40 @@ a {
 
 .btn-add-spot-tip:hover {
   background: var(--primary-ocean-blue);
+  color: #F3D99E;
+}
+
+.btn-add-spot-tip:hover {
+  background: var(--primary-ocean-blue);
   color: #FFFFFF;
 }
 
 /* Tips & Tricks Feed with Creator Attribution */
 .spot-tips-feed {
   background: #F8FAFC;
-  padding: 14px;
-  border-radius: 6px;
+  padding: 8px 10px;
+  border-radius: 4px;
   border: 1px solid rgba(10, 43, 71, 0.08);
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .tips-feed-title {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--primary-ocean-blue);
-  margin-bottom: 10px;
-  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+  letter-spacing: 0.6px;
 }
 
 .tip-card {
-  padding: 10px 12px;
+  padding: 6px 8px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .tip-card:last-child {
@@ -3425,36 +3476,36 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .creator-badge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   color: #9A7727;
   background: rgba(197, 160, 89, 0.18);
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 3px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 .visitor-badge, .contributor-badge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--primary-ocean-blue);
   background: rgba(10, 43, 71, 0.06);
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 3px;
 }
 
 .tip-date {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--text-muted);
 }
 
 .tip-text {
-  font-size: 12.5px;
-  line-height: 1.55;
+  font-size: 11px;
+  line-height: 1.45;
   color: #2D3748;
   margin: 0;
 }
@@ -3514,41 +3565,36 @@ a {
   color: var(--text-muted);
 }
 
-/* Option 2: Flora & Fauna Grid (Top 10 Species) */
+/* Option 2: Flora & Fauna Grid (Compact Visual Section Style) */
 .maproom-fauna-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
 }
 
 .fauna-card {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
   background: #FFFFFF;
   border: 1px solid rgba(10, 43, 71, 0.1);
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.04);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(10, 43, 71, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .fauna-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(10, 43, 71, 0.08);
-}
-
-@media (max-width: 640px) {
-  .fauna-card {
-    grid-template-columns: 1fr;
-  }
+  box-shadow: 0 6px 16px rgba(10, 43, 71, 0.08);
 }
 
 .fauna-image-wrapper {
   position: relative;
   width: 100%;
-  min-height: 120px;
+  height: 130px;
+  aspect-ratio: 16 / 10;
   background: #0A2B47;
+  overflow: hidden;
 }
 
 .fauna-image-wrapper img {
@@ -3556,6 +3602,56 @@ a {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.fauna-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fauna-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin: 0 0 2px;
+}
+
+.fauna-scientific {
+  font-size: 10.5px;
+  color: var(--accent-gold);
+  margin-bottom: 5px;
+}
+
+.fauna-notes {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #4A5568;
+  margin: 0 0 8px;
+}
+
+.btn-record-sighting {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 3px;
+  background: #F0FDF4;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-record-sighting:hover {
+  background: #166534;
+  color: #FFFFFF;
 }
 
 .fauna-rank {
