@@ -1579,8 +1579,39 @@
       updateBranchPosition();
     }
 
-    // Launch tree branch companion
+    // -------------------------------------------------------------------------
+    // Magical Latin Motto Glow & Translation Interactive Reveal
+    // -------------------------------------------------------------------------
+    function initMagicalMottoGlow() {
+      const mottos = document.querySelectorAll('.brand-motto');
+      mottos.forEach((motto) => {
+        // Toggle on tap or click
+        motto.addEventListener('click', () => {
+          motto.classList.toggle('active-glow');
+        });
+
+        // Accessible keyboard toggle (Enter / Space)
+        motto.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            motto.classList.toggle('active-glow');
+          }
+        });
+      });
+
+      // Dismiss active-glow when clicking elsewhere on the page
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.brand-motto')) {
+          document.querySelectorAll('.brand-motto.active-glow').forEach((el) => {
+            el.classList.remove('active-glow');
+          });
+        }
+      });
+    }
+
+    // Launch tree branch companion & magical motto glow
     initTreeBranchScroll();
+    initMagicalMottoGlow();
   }
 
   // Start Engine on DOM Ready

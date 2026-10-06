@@ -336,3 +336,16 @@
   - Downloaded high-resolution official state seals (Bihar, Assam, West Bengal, Madhya Pradesh, Kerala, Rajasthan, Uttarakhand, Gujarat, Karnataka, Maharashtra, Odisha, Ladakh, Tamil Nadu) to local assets/images/emblems/
   - Replaced SVG circle approximations with authentic official Wikipedia state seals rendered inside a polished circular gold frame
   - Styled state emblem wrapper with pure white background, inner padding, and responsive hover scale micro-animations
+## [v1.0.26] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Aesthetic & Animation
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Implemented magical golden luminescence effect when hovering over the Latin motto 'Alta alatis patent'
+  - Created slowly unfolding English translation ribbon ('The skies lie open to those who have wings') appearing just to the right of the motto
+  - Designed smooth starlight reveal transition with blur-to-sharp animation, gold starlight sparkle (✦), and breathing aura
+  - Preserved rock-solid positioning of the Latin motto to prevent jitter or layout shifts
+  - Added tap-to-toggle mobile support and keyboard accessibility across header, footer, drawer, and crest detail modal
+
