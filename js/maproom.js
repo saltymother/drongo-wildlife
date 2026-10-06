@@ -2820,6 +2820,20 @@
               if (!s.id) s.id = 'sighting-' + key + '-' + idx + '-' + Date.now();
             });
           }
+          if (Array.isArray(maproomDispatches[key].customDestinations) && STATES_DATA[key]) {
+            if (!STATES_DATA[key].touristSpots) STATES_DATA[key].touristSpots = [];
+            const existingIds = new Set(STATES_DATA[key].touristSpots.map(s => s.id));
+            maproomDispatches[key].customDestinations.forEach(spot => {
+              if (!spot.id) spot.id = 'custom-spot-' + key + '-' + Date.now();
+              // Correct any obsolete hardcoded Nalanda fallback icon
+              if (spot.imageUrl === 'assets/images/nalanda_ruins.jpg' && !spot.name.toLowerCase().includes('nalanda')) {
+                spot.imageUrl = generateAILandmarkIcon(spot.name);
+              }
+              if (!existingIds.has(spot.id)) {
+                STATES_DATA[key].touristSpots.unshift(spot);
+              }
+            });
+          }
         });
       } else {
         maproomDispatches = {};
@@ -3017,6 +3031,11 @@
           const photoLink = spot.photoUrl || spot.igUrl || `https://www.instagram.com/explore/tags/${encodeURIComponent(spot.name.replace(/\s+/g, ''))}/`;
           const videoLink = spot.videoUrl || spot.ytUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(spot.name + ' documentary')}`;
 
+          // Avoid displaying Nalanda ruins fallback if the spot is not actually Nalanda
+          const spotImage = (spot.imageUrl && (spot.imageUrl !== 'assets/images/nalanda_ruins.jpg' || spot.name.toLowerCase().includes('nalanda')))
+            ? spot.imageUrl
+            : generateAILandmarkIcon(spot.name);
+
           let guidelinesHtml = '';
           if (spot.guidelines) {
             guidelinesHtml = escapeHtml(spot.guidelines).replace(/\n/g, '<br/>');
@@ -3031,12 +3050,19 @@
             <article class="maproom-dest-card" id="${spot.id}">
               <div class="dest-card-top-row">
                 <div class="dest-card-thumb-wrap">
-                  <img src="${spot.imageUrl || 'assets/images/nalanda_ruins.jpg'}" alt="${escapeHtml(spot.name)}" class="dest-card-thumb" loading="lazy" onerror="this.src='assets/images/nalanda_ruins.jpg';" />
+                  <img src="${spotImage}" alt="${escapeHtml(spot.name)}" class="dest-card-thumb" loading="lazy" onerror="this.onerror=null; this.src=generateAILandmarkIcon('${escapeHtml(spot.name)}');" />
                 </div>
                 <div class="dest-card-main">
                   <div class="dest-header-row">
                     <h4 class="dest-card-title">${escapeHtml(spot.name)}</h4>
-                    <span class="dest-index-badge">#${index + 1}</span>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <span class="dest-index-badge">#${index + 1}</span>
+                      ${spot.isUserAdded ? `
+                        <button type="button" class="dest-card-delete-btn" data-spot-id="${spot.id}" title="Delete destination record">
+                          ✕ Delete
+                        </button>
+                      ` : ''}
+                    </div>
                   </div>
                   <p class="dest-card-intro">${escapeHtml(spot.description || spot.introText || '')}</p>
                   <div class="dest-link-buttons-row">
@@ -3065,9 +3091,34 @@
       </div>
     `;
 
+    // Attach delete listeners
+    contentDisplayPane.querySelectorAll('.dest-card-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const spotId = btn.getAttribute('data-spot-id');
+        deleteCustomSpot(spotId);
+      });
+    });
+
     document.getElementById('btnAddTravelDest')?.addEventListener('click', () => {
       openSpotMediaModal(data.id, data.name, data.name);
     });
+  }
+
+  function deleteCustomSpot(spotId) {
+    const stateData = STATES_DATA[activeStateKey];
+    if (!stateData) return;
+    if (confirm('Delete this travel destination?')) {
+      if (stateData.touristSpots) {
+        stateData.touristSpots = stateData.touristSpots.filter(s => s.id !== spotId);
+      }
+      if (maproomDispatches[activeStateKey] && maproomDispatches[activeStateKey].customDestinations) {
+        maproomDispatches[activeStateKey].customDestinations = maproomDispatches[activeStateKey].customDestinations.filter(s => s.id !== spotId);
+      }
+      saveMaproomData();
+      renderTouristSpots(stateData);
+      showMapToast('✓ Destination deleted successfully.');
+    }
   }
 
   function openDestinationDetailModal(spot, data) {
@@ -3359,8 +3410,251 @@
   }
 
   /* --------------------------------------------------------------------------
+     AI Landmark Icon Generator & Wikipedia Image Auto-Fetcher Engine
+     -------------------------------------------------------------------------- */
+  function generateAILandmarkIcon(name) {
+    const size = 160;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return 'assets/images/black_drongo.jpg';
+
+    // Hash name to determine palette
+    const clean = (name || 'Landmark').trim();
+    let hash = 0;
+    for (let i = 0; i < clean.length; i++) {
+      hash = (hash << 5) - hash + clean.charCodeAt(i);
+      hash |= 0;
+    }
+    const palettes = [
+      { bg1: '#0A2B47', bg2: '#164871', gold: '#F3D99E', accent: '#C89A3D' }, // Imperial Navy
+      { bg1: '#0B3323', bg2: '#185B40', gold: '#E2F3D9', accent: '#48BB78' }, // Wildlife Emerald
+      { bg1: '#3A1508', bg2: '#682A13', gold: '#FDE68A', accent: '#ED8936' }, // Terai Terracotta
+      { bg1: '#240D3A', bg2: '#4A1D75', gold: '#E9D8FD', accent: '#9F7AEA' }, // Royal Monograph
+      { bg1: '#1F2937', bg2: '#374151', gold: '#FEF3C7', accent: '#ECC94B' }  // Dark Mineral
+    ];
+    const pal = palettes[Math.abs(hash) % palettes.length];
+
+    // Radial gradient background
+    const bgGrad = ctx.createRadialGradient(size / 2, size / 2, 10, size / 2, size / 2, size * 0.75);
+    bgGrad.addColorStop(0, pal.bg2);
+    bgGrad.addColorStop(1, pal.bg1);
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, size, size);
+
+    // Decorative inner gold border
+    ctx.strokeStyle = pal.gold;
+    ctx.lineWidth = 2.5;
+    ctx.strokeRect(8, 8, size - 16, size - 16);
+
+    // Corner flourishes
+    ctx.fillStyle = pal.accent;
+    const cornerSize = 7;
+    ctx.fillRect(8, 8, cornerSize, cornerSize);
+    ctx.fillRect(size - 8 - cornerSize, 8, cornerSize, cornerSize);
+    ctx.fillRect(8, size - 8 - cornerSize, cornerSize, cornerSize);
+    ctx.fillRect(size - 8 - cornerSize, size - 8 - cornerSize, cornerSize, cornerSize);
+
+    // Architectural / Landmark Symbol Silhouette
+    ctx.save();
+    ctx.fillStyle = 'rgba(243, 217, 158, 0.18)';
+    ctx.beginPath();
+    ctx.moveTo(35, 120);
+    ctx.lineTo(35, 65);
+    ctx.arc(80, 65, 45, Math.PI, 0, false);
+    ctx.lineTo(125, 120);
+    ctx.lineTo(110, 120);
+    ctx.lineTo(110, 75);
+    ctx.arc(80, 75, 30, 0, Math.PI, true);
+    ctx.lineTo(50, 120);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // Landmark Initials (e.g. VM for Victoria Memorial, TQ for test q)
+    const words = clean.split(/\s+/).filter(Boolean);
+    let initials = '';
+    if (words.length >= 2) {
+      initials = (words[0][0] + words[1][0]).toUpperCase();
+    } else if (clean.length >= 2) {
+      initials = clean.substring(0, 2).toUpperCase();
+    } else {
+      initials = clean.toUpperCase();
+    }
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetX = 1;
+    ctx.shadowOffsetY = 2;
+
+    ctx.fillStyle = pal.gold;
+    ctx.font = 'bold 36px "Cinzel", Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials, size / 2, size / 2 - 2);
+
+    // Subtitle label "LANDMARK"
+    ctx.font = '700 9px "Cinzel", sans-serif';
+    ctx.fillStyle = pal.accent;
+    ctx.fillText('LANDMARK', size / 2, size - 26);
+    ctx.restore();
+
+    return canvas.toDataURL('image/jpeg', 0.88);
+  }
+
+  function cropToAppIcon(imgUrl) {
+    return new Promise((resolve) => {
+      if (!imgUrl || imgUrl.startsWith('data:')) {
+        resolve(imgUrl);
+        return;
+      }
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const size = 160;
+          const canvas = document.createElement('canvas');
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(imgUrl);
+            return;
+          }
+          const srcW = img.naturalWidth || img.width;
+          const srcH = img.naturalHeight || img.height;
+          const scale = Math.max(size / srcW, size / srcH);
+          const drawW = srcW * scale;
+          const drawH = srcH * scale;
+          const dx = (size - drawW) / 2;
+          const dy = (size - drawH) / 2;
+
+          ctx.drawImage(img, dx, dy, drawW, drawH);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        } catch (e) {
+          // If crossOrigin canvas export is blocked, return original image url
+          resolve(imgUrl);
+        }
+      };
+      img.onerror = () => resolve(imgUrl);
+      img.src = imgUrl;
+    });
+  }
+
+  let autoFetchAbortController = null;
+
+  async function fetchWikipediaOrAIImage(name) {
+    const cleanName = (name || '').trim();
+    const previewImg = document.getElementById('destAppIconPreview');
+    const loader = document.getElementById('destAppIconLoader');
+    const statusText = document.getElementById('destThumbStatusText');
+    const badge = document.getElementById('destThumbBadge');
+    const hiddenInput = document.getElementById('destInputGeneratedImage');
+    const introTextarea = document.getElementById('destInputIntro');
+    const photoInput = document.getElementById('destInputPhotoUrl');
+    const videoInput = document.getElementById('destInputVideoUrl');
+    const tipsTextarea = document.getElementById('destInputTips');
+
+    if (!cleanName) {
+      const placeholder = generateAILandmarkIcon('Tourist Destination');
+      if (previewImg) previewImg.src = placeholder;
+      if (hiddenInput) hiddenInput.value = placeholder;
+      if (statusText) statusText.textContent = 'Enter destination name above to auto-fetch picture or generate AI icon.';
+      if (badge) badge.textContent = 'AUTO-SYNC';
+      return placeholder;
+    }
+
+    // Default Instagram & YouTube links + guidelines
+    const cleanTag = cleanName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'touristspot';
+    if (photoInput && (!photoInput.value || photoInput.value.includes('/tags/'))) {
+      photoInput.value = `https://www.instagram.com/explore/tags/${cleanTag}/`;
+    }
+    if (videoInput && (!videoInput.value || videoInput.value.includes('search_query='))) {
+      videoInput.value = `https://www.youtube.com/results?search_query=${encodeURIComponent(cleanName + ' tour travel')}`;
+    }
+    if (tipsTextarea && !tipsTextarea.value.trim()) {
+      tipsTextarea.value = `Precautions: Wear comfortable walking shoes and follow heritage rules.\nTimings: 09:00 AM – 06:00 PM.\nAvailable Facilities: Drinking water, restrooms, certified local guides.`;
+    }
+
+    if (loader) loader.style.display = 'flex';
+    if (badge) badge.textContent = 'SEARCHING';
+
+    try {
+      if (autoFetchAbortController) autoFetchAbortController.abort();
+      autoFetchAbortController = new AbortController();
+
+      // 1. Try Wikipedia REST Summary
+      const summaryUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanName)}`;
+      const res = await fetch(summaryUrl, { signal: autoFetchAbortController.signal });
+
+      if (res.ok) {
+        const data = await res.json();
+        const rawImgUrl = data.thumbnail?.source || data.originalimage?.source;
+
+        if (data.extract && introTextarea && !introTextarea.value.trim()) {
+          introTextarea.value = data.extract.substring(0, 240) + (data.extract.length > 240 ? '...' : '');
+        }
+
+        if (rawImgUrl) {
+          const cropped = await cropToAppIcon(rawImgUrl);
+          if (previewImg) previewImg.src = cropped;
+          if (hiddenInput) hiddenInput.value = cropped;
+          if (statusText) statusText.textContent = `✓ Found on Wikipedia: ${data.title}`;
+          if (badge) badge.textContent = 'WIKIPEDIA';
+          if (loader) loader.style.display = 'none';
+          return cropped;
+        }
+      }
+
+      // 2. Fallback: Wikipedia Search API for partial queries (e.g. "Victoria Memorial Kolkata")
+      const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(cleanName + ' landmark India')}&gsrlimit=1&prop=pageimages|extracts&piprop=thumbnail&pithumbsize=400&exintro=1&explaintext=1&exchars=240&format=json&origin=*`;
+      const searchRes = await fetch(searchUrl, { signal: autoFetchAbortController.signal });
+
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        const pages = searchData.query?.pages;
+        if (pages) {
+          const firstPage = Object.values(pages)[0];
+          const rawImgUrl = firstPage?.thumbnail?.source;
+
+          if (firstPage?.extract && introTextarea && !introTextarea.value.trim()) {
+            introTextarea.value = firstPage.extract.substring(0, 240) + (firstPage.extract.length > 240 ? '...' : '');
+          }
+
+          if (rawImgUrl) {
+            const cropped = await cropToAppIcon(rawImgUrl);
+            if (previewImg) previewImg.src = cropped;
+            if (hiddenInput) hiddenInput.value = cropped;
+            if (statusText) statusText.textContent = `✓ Found on Wikipedia: ${firstPage.title}`;
+            if (badge) badge.textContent = 'WIKIPEDIA';
+            if (loader) loader.style.display = 'none';
+            return cropped;
+          }
+        }
+      }
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        console.warn('Wikipedia fetch warning, generating AI icon', e);
+      }
+    }
+
+    // 3. Fallback: Generate AI Landmark Icon
+    const aiIcon = generateAILandmarkIcon(cleanName);
+    if (previewImg) previewImg.src = aiIcon;
+    if (hiddenInput) hiddenInput.value = aiIcon;
+    if (statusText) statusText.textContent = '✨ AI Generated Landmark App-Icon Badge';
+    if (badge) badge.textContent = 'AI ICON';
+    if (loader) loader.style.display = 'none';
+    return aiIcon;
+  }
+
+  /* --------------------------------------------------------------------------
      User Contributions: Travel Destination Modal (External Hub)
      -------------------------------------------------------------------------- */
+  let destInputDebounceTimer = null;
+
   function openSpotMediaModal(spotId, spotName, stateName) {
     const targetState = STATES_DATA[activeStateKey] || STATES_DATA['bihar'];
     const modal = document.getElementById('maproomSpotMediaModal');
@@ -3383,6 +3677,43 @@
 
     const tipsInput = document.getElementById('destInputTips');
     if (tipsInput) tipsInput.value = '';
+
+    // Reset AI App-Icon Preview
+    const initialPlaceholder = generateAILandmarkIcon('Tourist Spot');
+    const previewImg = document.getElementById('destAppIconPreview');
+    const hiddenInput = document.getElementById('destInputGeneratedImage');
+    const statusText = document.getElementById('destThumbStatusText');
+    const badge = document.getElementById('destThumbBadge');
+    if (previewImg) previewImg.src = initialPlaceholder;
+    if (hiddenInput) hiddenInput.value = initialPlaceholder;
+    if (statusText) statusText.textContent = 'Enter destination name above to auto-fetch picture or generate AI icon.';
+    if (badge) badge.textContent = 'AUTO-SYNC';
+
+    // Setup live debounce listener on nameInput
+    if (nameInput && !nameInput.dataset.boundAutoFetch) {
+      nameInput.dataset.boundAutoFetch = 'true';
+      nameInput.addEventListener('input', () => {
+        clearTimeout(destInputDebounceTimer);
+        destInputDebounceTimer = setTimeout(() => {
+          fetchWikipediaOrAIImage(nameInput.value);
+        }, 450);
+      });
+      nameInput.addEventListener('blur', () => {
+        if (nameInput.value.trim()) {
+          fetchWikipediaOrAIImage(nameInput.value);
+        }
+      });
+    }
+
+    // Refresh button
+    const refreshBtn = document.getElementById('btnRefreshDestImage');
+    if (refreshBtn && !refreshBtn.dataset.boundClick) {
+      refreshBtn.dataset.boundClick = 'true';
+      refreshBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        fetchWikipediaOrAIImage(nameInput ? nameInput.value : '');
+      });
+    }
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
@@ -3436,24 +3767,46 @@
     spotMediaForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('destInputName')?.value.trim();
-      const intro = document.getElementById('destInputIntro')?.value.trim();
-      const photoUrl = document.getElementById('destInputPhotoUrl')?.value.trim();
-      const videoUrl = document.getElementById('destInputVideoUrl')?.value.trim();
-      const tips = document.getElementById('destInputTips')?.value.trim();
+      let intro = document.getElementById('destInputIntro')?.value.trim();
+      let photoUrl = document.getElementById('destInputPhotoUrl')?.value.trim();
+      let videoUrl = document.getElementById('destInputVideoUrl')?.value.trim();
+      let tips = document.getElementById('destInputTips')?.value.trim();
       const author = document.getElementById('destInputAuthor')?.value.trim() || 'Aadi [Creator]';
+      let generatedImage = document.getElementById('destInputGeneratedImage')?.value.trim();
 
-      if (!name || !intro || !photoUrl || !videoUrl || !tips) {
-        showMapToast('⚠️ Please fill out all required destination fields.');
+      if (!name) {
+        showMapToast('⚠️ Please enter the destination name.');
         return;
       }
 
       const stateData = STATES_DATA[activeStateKey];
       if (stateData) {
         if (!stateData.touristSpots) stateData.touristSpots = [];
+
+        // Ensure we have an AI or Wikipedia image, never hardcoded Nalanda
+        if (!generatedImage || generatedImage === 'assets/images/nalanda_ruins.jpg') {
+          generatedImage = generateAILandmarkIcon(name);
+        }
+
+        // Apply smart defaults for Instagram, YouTube, Intro & Guidelines if empty
+        const cleanTag = name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'touristspot';
+        if (!photoUrl) {
+          photoUrl = `https://www.instagram.com/explore/tags/${cleanTag}/`;
+        }
+        if (!videoUrl) {
+          videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(name + ' tour travel')}`;
+        }
+        if (!intro) {
+          intro = `${name} is an important cultural, historical, and wildlife landmark in ${stateData.name}.`;
+        }
+        if (!tips) {
+          tips = `Precautions: Wear comfortable shoes and preserve heritage integrity.\nTimings: 09:00 AM – 06:00 PM.\nAvailable Facilities: Drinking water, restrooms, authorized guides.`;
+        }
+
         const newSpot = {
           id: 'custom-spot-' + Date.now(),
           name: name,
-          imageUrl: 'assets/images/nalanda_ruins.jpg',
+          imageUrl: generatedImage,
           description: intro,
           photoUrl: photoUrl,
           videoUrl: videoUrl,

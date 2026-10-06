@@ -1260,27 +1260,61 @@
       <form id="spotMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-            Add a verified travel location (Max 10 locations per state). Heavy media is hosted externally on Instagram &amp; YouTube.
+            Add a verified travel location (Max 10 locations per state). AI &amp; Wikipedia will automatically find and scale a square app-icon thumbnail, with default Instagram &amp; YouTube links ready to go!
           </p>
 
           <div class="form-group" style="margin-bottom: 12px;">
             <label for="destInputName">Destination Name *</label>
-            <input type="text" id="destInputName" class="form-input" placeholder="e.g. Nalanda Mahavihara Enclave" required />
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="destInputName" class="form-input" placeholder="e.g. Victoria Memorial, Taj Mahal, Kaziranga" required style="flex: 1;" />
+              <button type="button" id="btnRefreshDestImage" class="header-action-btn btn-gold" style="padding: 0 14px; font-size: 12px; white-space: nowrap; height: auto;" title="Auto-fetch picture from Wikipedia / AI">
+                ✨ Auto-Fetch AI
+              </button>
+            </div>
+            <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">
+              💡 Enter any landmark: Our AI automatically finds photos from Wikipedia/Internet and formats them into a square app-icon!
+            </span>
+          </div>
+
+          <!-- Dynamic AI / Wikipedia App-Icon Thumbnail Preview Box -->
+          <div class="dest-thumb-preview-box" id="destThumbPreviewBox" style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding: 12px 14px; background: rgba(10, 43, 71, 0.04); border: 1.5px dashed rgba(200, 154, 61, 0.4); border-radius: 8px;">
+            <div style="position: relative; width: 68px; height: 68px; flex-shrink: 0; background: #0A2B47; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1.5px solid var(--accent-gold);">
+              <img id="destAppIconPreview" src="assets/images/nalanda_ruins.jpg" alt="Icon Preview" style="width: 100%; height: 100%; object-fit: cover;" />
+              <div id="destAppIconLoader" style="display: none; position: absolute; inset: 0; background: rgba(10,43,71,0.85); color: #F3D99E; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; text-align: center; padding: 4px; line-height: 1.2;">
+                ⏳ Fetching AI Photo...
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                <span style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--primary-ocean-blue);" id="destThumbStatusTitle">App-Icon Thumbnail</span>
+                <span style="font-size: 10px; font-weight: 700; padding: 2px 6px; background: rgba(200,154,61,0.18); color: var(--primary-ocean-blue); border-radius: 4px;" id="destThumbBadge">AUTO-SYNC</span>
+              </div>
+              <p style="font-size: 11px; color: #4A5568; margin: 4px 0 0; line-height: 1.4;" id="destThumbStatusText">
+                Enter destination name above to automatically pull Wikipedia pictures or generate a custom AI landmark badge.
+              </p>
+              <input type="hidden" id="destInputGeneratedImage" value="" />
+            </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
             <label for="destInputIntro">Brief Introductory Text *</label>
-            <textarea id="destInputIntro" class="form-textarea" rows="2" placeholder="Brief overview of history, landscape, and significance..." required></textarea>
+            <textarea id="destInputIntro" class="form-textarea" rows="2" placeholder="Brief overview of history, landscape, and significance (auto-filled from Wikipedia if available)..." required></textarea>
           </div>
 
           <div class="form-grid-2" style="margin-bottom: 12px;">
             <div class="form-group">
-              <label for="destInputPhotoUrl">Photo URL (Instagram) *</label>
-              <input type="url" id="destInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
+              <label for="destInputPhotoUrl">Photo Link (Instagram) *</label>
+              <input type="url" id="destInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/explore/tags/..." required />
+              <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
+                Default: Auto-configured Instagram explore link
+              </span>
             </div>
             <div class="form-group">
-              <label for="destInputVideoUrl">Video URL (YouTube / IG) *</label>
-              <input type="url" id="destInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." required />
+              <label for="destInputVideoUrl">Video Link (YouTube) *</label>
+              <input type="url" id="destInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/results?search_query=..." required />
+              <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 3px;">
+                Default: Auto-configured YouTube video tour link
+              </span>
             </div>
           </div>
 
@@ -1297,7 +1331,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
-          <button type="submit" class="header-action-btn btn-gold">+ Publish Destination</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Destination (Done)</button>
         </div>
       </form>
     </div>

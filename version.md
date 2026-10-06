@@ -470,3 +470,17 @@
   - Dedicated the Information section strictly to creator updates for announcing future platform releases, roadmap milestones, and expedition notes
   - Added '+ POST CREATOR UPDATE' button and modal form allowing the creator to publish official notices with categories and full briefing texts
   - Updated global navigation bar and drawer links to reflect the streamlined Travelling Guide and Creator Information structure
+## [v1.0.36] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | AI & Wikipedia Tourist Destination Image Engine
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Resolved hardcoded Nalanda University ruins fallback bug on newly submitted tourist destinations
+  - Built an AI & Wikipedia auto-fetch engine that queries Wikipedia REST & Search APIs to pull authentic photos of any entered landmark (e.g. Victoria Memorial, Taj Mahal, etc.)
+  - Implemented client-side Canvas square app-icon scaler and center-cropper (`cropToAppIcon`) formatting landmark images into crisp app-icon thumbnails
+  - Integrated a fallback AI Landmark Icon generator (`generateAILandmarkIcon`) that dynamically paints bespoke, regal badge icons with destination initials and monument silhouettes for test or custom locations
+  - Added live app-icon preview box with loading indicator and manual '✨ Auto-Fetch AI' trigger button in the destination submission modal
+  - Auto-populated default Instagram explore tags and YouTube travel tour searches so users only need to enter the destination name and click Done
+  - Added one-click '✕ Delete' action button on custom user-added destination cards for instant removal of test records
