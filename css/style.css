@@ -5792,32 +5792,227 @@ a {
   padding: 2px 6px;
   border-radius: 4px;
 }
-.maproom-dest-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 20px;
-}
-@media (max-width: 768px) {
-  .maproom-dest-grid {
-    grid-template-columns: 1fr;
-  }
+/* Alphabetical Index Filter Bar */
+.maproom-az-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.04);
 }
 
-.maproom-dest-card {
+.az-filter-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary-ocean-blue);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.az-pill {
+  border: 1px solid rgba(10, 43, 71, 0.15);
+  background: rgba(10, 43, 71, 0.03);
+  color: var(--primary-ocean-blue);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.az-pill:hover {
+  border-color: var(--accent-gold);
+  background: rgba(200, 154, 61, 0.15);
+}
+
+.az-pill.active {
+  background: #0A2B47;
+  color: #F3D99E;
+  border-color: var(--accent-gold);
+  box-shadow: 0 2px 6px rgba(10, 43, 71, 0.2);
+}
+
+.maproom-dest-grid,
+.maproom-fauna-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.maproom-dest-card,
+.maproom-fauna-card {
   background: #FFFFFF;
   border: 1px solid rgba(10, 43, 71, 0.12);
   border-radius: 8px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 4px 14px rgba(10, 43, 71, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(10, 43, 71, 0.04);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
-.maproom-dest-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(10, 43, 71, 0.12);
+
+.maproom-dest-card:hover,
+.maproom-fauna-card:hover {
+  border-color: rgba(200, 154, 61, 0.6);
+  box-shadow: 0 4px 14px rgba(10, 43, 71, 0.08);
+}
+
+.maproom-dest-card.is-expanded,
+.maproom-fauna-card.is-expanded {
   border-color: var(--accent-gold);
+  box-shadow: 0 8px 22px rgba(10, 43, 71, 0.12);
+}
+
+/* Accordion Header - Clean, Compact Single Row by Default */
+.dest-accordion-header,
+.fauna-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  cursor: pointer;
+  user-select: none;
+  gap: 12px;
+  transition: background 0.2s ease;
+}
+
+.dest-accordion-header:hover,
+.fauna-accordion-header:hover {
+  background: rgba(10, 43, 71, 0.025);
+}
+
+.maproom-dest-card.is-expanded .dest-accordion-header,
+.maproom-fauna-card.is-expanded .fauna-accordion-header {
+  background: rgba(10, 43, 71, 0.04);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+.dest-accordion-header-left,
+.fauna-accordion-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dest-accordion-header-right,
+.fauna-accordion-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.dest-letter-badge {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  color: #0A2B47;
+  background: rgba(197, 160, 89, 0.22);
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+}
+
+.dest-card-title-compact,
+.fauna-card-name-compact {
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.fauna-header-names {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.fauna-card-scientific-compact {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  color: #8C6D2B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dest-accordion-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  background: rgba(10, 43, 71, 0.05);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  padding: 4px 10px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.dest-accordion-header:hover .dest-accordion-toggle-btn,
+.fauna-accordion-header:hover .dest-accordion-toggle-btn {
+  background: #0A2B47;
+  color: #F3D99E;
+  border-color: var(--accent-gold);
+}
+
+.toggle-icon {
+  transition: transform 0.25s ease;
+}
+
+.maproom-dest-card.is-expanded .toggle-icon,
+.maproom-fauna-card.is-expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Accordion Body - Expands on click with full picture and details */
+.dest-accordion-body,
+.fauna-accordion-body {
+  display: none;
+  padding: 18px 20px;
+  background: #FFFFFF;
+  animation: destAccordionSlideDown 0.25s ease forwards;
+}
+
+.maproom-dest-card.is-expanded .dest-accordion-body,
+.maproom-fauna-card.is-expanded .fauna-accordion-body {
+  display: block;
+}
+
+@keyframes destAccordionSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .dest-card-top-row {
   display: flex;
@@ -5921,34 +6116,7 @@ a {
   color: var(--primary-ocean-blue);
 }
 
-/* Flora and Fauna Card */
-.maproom-fauna-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 20px;
-}
-@media (max-width: 768px) {
-  .maproom-fauna-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.maproom-fauna-card {
-  background: #FFFFFF;
-  border: 1px solid rgba(10, 43, 71, 0.12);
-  border-radius: 8px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 4px 14px rgba(10, 43, 71, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.maproom-fauna-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(10, 43, 71, 0.12);
-  border-color: var(--accent-gold);
-}
+/* Flora and Fauna Card Inner Styles */
 .fauna-card-top-row {
   display: flex;
   gap: 14px;

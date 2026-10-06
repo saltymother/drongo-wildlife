@@ -3007,18 +3007,73 @@
   let activeDetailSpot = null;
   let activeDetailStateData = null;
 
+  function attachAccordionAndAZFilterListeners() {
+    if (!contentDisplayPane) return;
+
+    // Toggle expand/collapse on header click
+    contentDisplayPane.querySelectorAll('.dest-accordion-header, .fauna-accordion-header').forEach(header => {
+      header.addEventListener('click', (e) => {
+        if (e.target.closest('.dest-card-delete-btn')) return;
+        const item = header.closest('.maproom-accordion-item');
+        if (!item) return;
+        const isExp = item.classList.contains('is-expanded');
+        item.classList.toggle('is-expanded');
+        header.setAttribute('aria-expanded', !isExp);
+        const toggleText = header.querySelector('.toggle-text');
+        if (toggleText) {
+          toggleText.textContent = isExp ? (header.classList.contains('fauna-accordion-header') ? 'Details' : 'Explore') : 'Close';
+        }
+      });
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+    });
+
+    // A-Z Quick Filter Pills
+    contentDisplayPane.querySelectorAll('.az-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        contentDisplayPane.querySelectorAll('.az-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const letter = pill.getAttribute('data-letter');
+        const items = contentDisplayPane.querySelectorAll('.maproom-accordion-item');
+        items.forEach(item => {
+          if (letter === 'all' || item.getAttribute('data-letter') === letter) {
+            item.style.display = 'block';
+            if (letter !== 'all') {
+              // Automatically expand when user jumps directly to this letter
+              item.classList.add('is-expanded');
+              const tText = item.querySelector('.toggle-text');
+              if (tText) tText.textContent = 'Close';
+              const hdr = item.querySelector('[aria-expanded]');
+              if (hdr) hdr.setAttribute('aria-expanded', 'true');
+            }
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
   function renderTouristSpots(data) {
     if (!contentDisplayPane) return;
 
-    // Category A: Travel Destinations (Max 10 locations per state for now)
-    const spots = (data.touristSpots || []).slice(0, 10);
+    // 1. Sort Alphabetical from A to Z
+    const spots = (data.touristSpots || [])
+      .slice(0, 10)
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+
+    const alphabetLetters = [...new Set(spots.map(s => (s.name.trim()[0] || 'A').toUpperCase()))].sort();
 
     contentDisplayPane.innerHTML = `
       <div class="maproom-category-header">
         <div class="category-meta">
           <span class="category-pill-tag">CATEGORY A</span>
           <h3 class="category-title">Travel Destinations in ${escapeHtml(data.name)}</h3>
-          <p class="category-desc">Verified archaeological enclaves, national parks, and wild river corridors (Max 10 locations). Visuals and footage hosted on Instagram &amp; YouTube.</p>
+          <p class="category-desc">Verified archaeological enclaves, national parks, and wild river corridors (Alphabetical A–Z Index). Click any location name to expand details, photography, and YouTube tour.</p>
         </div>
         <button type="button" class="btn-maproom-add-action" id="btnAddTravelDest">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -3026,17 +3081,24 @@
         </button>
       </div>
 
+      <!-- Alphabetical Index Quick-Jump Bar -->
+      <div class="maproom-az-filter-bar">
+        <span class="az-filter-label">🔤 Alphabet Index:</span>
+        <button type="button" class="az-pill active" data-letter="all">ALL (${spots.length})</button>
+        ${alphabetLetters.map(l => `<button type="button" class="az-pill" data-letter="${l}">${l}</button>`).join('')}
+      </div>
+
       <div class="maproom-dest-grid">
         ${spots.map((spot, index) => {
+          const numStr = (index + 1) < 10 ? `0${index + 1}` : `${index + 1}`;
+          const firstLetter = (spot.name.trim()[0] || 'A').toUpperCase();
           let photoLink = spot.photoUrl || spot.igUrl || '';
           let videoLink = spot.videoUrl || spot.ytUrl || '';
-          // Only for pre-seeded catalog destinations where neither is stored explicitly, supply exploratory defaults
           if (!spot.isUserAdded) {
             if (!photoLink) photoLink = `https://www.instagram.com/explore/tags/${encodeURIComponent(spot.name.replace(/\s+/g, ''))}/`;
             if (!videoLink) videoLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(spot.name + ' documentary')}`;
           }
 
-          // Avoid displaying Nalanda ruins fallback if the spot is not actually Nalanda
           const spotImage = (spot.imageUrl && (spot.imageUrl !== 'assets/images/nalanda_ruins.jpg' || spot.name.toLowerCase().includes('nalanda')))
             ? spot.imageUrl
             : generateAILandmarkIcon(spot.name);
@@ -3052,46 +3114,58 @@
           }
 
           return `
-            <article class="maproom-dest-card" id="${spot.id}">
-              <div class="dest-card-top-row">
-                <div class="dest-card-thumb-wrap">
-                  <img src="${spotImage}" alt="${escapeHtml(spot.name)}" class="dest-card-thumb" loading="lazy" onerror="this.onerror=null; this.src=generateAILandmarkIcon('${escapeHtml(spot.name)}');" />
+            <article class="maproom-dest-card maproom-accordion-item" id="${spot.id}" data-letter="${firstLetter}">
+              <!-- Compact Name Bar (Only Number and Name by default, no photo) -->
+              <div class="dest-accordion-header" role="button" tabindex="0" aria-expanded="false" title="Click to view details for ${escapeHtml(spot.name)}">
+                <div class="dest-accordion-header-left">
+                  <span class="dest-index-badge">#${numStr}</span>
+                  <span class="dest-letter-badge">${firstLetter}</span>
+                  <h4 class="dest-card-title-compact">${escapeHtml(spot.name)}</h4>
                 </div>
-                <div class="dest-card-main">
-                  <div class="dest-header-row">
-                    <h4 class="dest-card-title">${escapeHtml(spot.name)}</h4>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      <span class="dest-index-badge">#${index + 1}</span>
-                      ${spot.isUserAdded ? `
-                        <button type="button" class="dest-card-delete-btn" data-spot-id="${spot.id}" title="Delete destination record">
-                          ✕ Delete
-                        </button>
+                <div class="dest-accordion-header-right">
+                  ${spot.isUserAdded ? `
+                    <button type="button" class="dest-card-delete-btn" data-spot-id="${spot.id}" title="Delete destination record">
+                      ✕ Delete
+                    </button>
+                  ` : ''}
+                  <span class="dest-accordion-toggle-btn">
+                    <span class="toggle-text">Explore</span>
+                    <svg class="toggle-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Expanded Card Details (Becomes big when opened) -->
+              <div class="dest-accordion-body">
+                <div class="dest-card-top-row">
+                  <div class="dest-card-thumb-wrap">
+                    <img src="${spotImage}" alt="${escapeHtml(spot.name)}" class="dest-card-thumb" loading="lazy" onerror="this.onerror=null; this.src=generateAILandmarkIcon('${escapeHtml(spot.name)}');" />
+                  </div>
+                  <div class="dest-card-main">
+                    <p class="dest-card-intro">${escapeHtml(spot.description || spot.introText || '')}</p>
+                    <div class="dest-link-buttons-row">
+                      ${photoLink ? `
+                        <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View field photography on Instagram">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                          <span>View Photos</span>
+                        </a>
+                      ` : ''}
+                      ${videoLink ? `
+                        <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch 4K video footage on YouTube">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                          <span>Watch Video</span>
+                        </a>
                       ` : ''}
                     </div>
                   </div>
-                  <p class="dest-card-intro">${escapeHtml(spot.description || spot.introText || '')}</p>
-                  <div class="dest-link-buttons-row">
-                    ${photoLink ? `
-                      <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View field photography on Instagram">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        <span>View Photos</span>
-                      </a>
-                    ` : ''}
-                    ${videoLink ? `
-                      <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch 4K video footage on YouTube">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        <span>Watch Video</span>
-                      </a>
-                    ` : ''}
+                </div>
+                <div class="dest-tips-structured-block" style="margin-top: 14px;">
+                  <div class="dest-tips-title">
+                    <span>✦ Tourist Guidelines (Precautions, Timings, Available Facilities)</span>
                   </div>
-                </div>
-              </div>
-              <div class="dest-tips-structured-block">
-                <div class="dest-tips-title">
-                  <span>✦ Tourist Guidelines (Precautions, Timings, Available Facilities)</span>
-                </div>
-                <div class="dest-guidelines-body">
-                  ${guidelinesHtml}
+                  <div class="dest-guidelines-body">
+                    ${guidelinesHtml}
+                  </div>
                 </div>
               </div>
             </article>
@@ -3099,6 +3173,8 @@
         }).join('')}
       </div>
     `;
+
+    attachAccordionAndAZFilterListeners();
 
     // Attach delete listeners
     contentDisplayPane.querySelectorAll('.dest-card-delete-btn').forEach(btn => {
@@ -3346,15 +3422,19 @@
   function renderFloraFauna(data) {
     if (!contentDisplayPane) return;
 
-    // Category B: Flora and Fauna
-    const speciesList = data.floraFauna || [];
+    // 1. Sort Alphabetical from A to Z
+    const speciesList = (data.floraFauna || [])
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+
+    const alphabetLetters = [...new Set(speciesList.map(s => (s.name.trim()[0] || 'A').toUpperCase()))].sort();
 
     contentDisplayPane.innerHTML = `
       <div class="maproom-category-header">
         <div class="category-meta">
           <span class="category-pill-tag">CATEGORY B</span>
           <h3 class="category-title">Flora and Fauna of ${escapeHtml(data.name)}</h3>
-          <p class="category-desc">Indigenous species, state emblems, and migratory wildlife. Media hosted externally on Instagram &amp; YouTube with instant access links.</p>
+          <p class="category-desc">Indigenous species, state emblems, and migratory wildlife (Alphabetical A–Z Index). Click any species name to expand identification profile, photography &amp; video footage.</p>
         </div>
         <button type="button" class="btn-maproom-add-action" id="btnAddFaunaRecord">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -3362,8 +3442,17 @@
         </button>
       </div>
 
+      <!-- Alphabetical Index Quick-Jump Bar -->
+      <div class="maproom-az-filter-bar">
+        <span class="az-filter-label">🔤 Alphabet Index:</span>
+        <button type="button" class="az-pill active" data-letter="all">ALL (${speciesList.length})</button>
+        ${alphabetLetters.map(l => `<button type="button" class="az-pill" data-letter="${l}">${l}</button>`).join('')}
+      </div>
+
       <div class="maproom-fauna-grid">
         ${speciesList.map((spec, index) => {
+          const numStr = (index + 1) < 10 ? `0${index + 1}` : `${index + 1}`;
+          const firstLetter = (spec.name.trim()[0] || 'A').toUpperCase();
           let photoLink = spec.photoUrl || spec.igUrl || '';
           let videoLink = spec.videoUrl || spec.ytUrl || '';
           let shortLink = spec.shortUrl || spec.igShortUrl || '';
@@ -3376,46 +3465,62 @@
           const tipsText = spec.spottingTips || spec.tips || 'Best observed at early morning and twilight near river channels and canopy corridors. Maintain ethical telephoto distance of 25+ meters.';
 
           return `
-            <article class="maproom-fauna-card" id="${spec.id}">
-              <div class="fauna-card-top-row">
-                <div class="fauna-card-icon-wrap">
-                  <img src="${spec.imageUrl || 'assets/images/black_drongo.jpg'}" alt="${escapeHtml(spec.name)}" class="fauna-card-icon" loading="lazy" onerror="this.src='assets/images/black_drongo.jpg';" />
+            <article class="maproom-fauna-card maproom-accordion-item" id="${spec.id}" data-letter="${firstLetter}">
+              <!-- Compact Name Bar (Only Number, Common Name & Scientific Name by default, no photo) -->
+              <div class="fauna-accordion-header" role="button" tabindex="0" aria-expanded="false" title="Click to view species profile for ${escapeHtml(spec.name)}">
+                <div class="fauna-accordion-header-left">
+                  <span class="fauna-rank-badge">#${numStr}</span>
+                  <span class="dest-letter-badge">${firstLetter}</span>
+                  <div class="fauna-header-names">
+                    <h4 class="fauna-card-name-compact">${escapeHtml(spec.name)}</h4>
+                    <span class="fauna-card-scientific-compact"><em>${escapeHtml(spec.scientific || '')}</em></span>
+                  </div>
                 </div>
-                <div class="fauna-card-main">
-                  <div class="fauna-header-row">
-                    <h4 class="fauna-card-name">${escapeHtml(spec.name)}</h4>
-                    <span class="fauna-rank-badge">#${index + 1}</span>
-                  </div>
-                  <div class="fauna-card-scientific"><em>${escapeHtml(spec.scientific || '')}</em></div>
-                  ${(spec.notes || spec.description) ? `<p class="fauna-card-desc">${escapeHtml(spec.notes || spec.description)}</p>` : ''}
-                  <div class="fauna-link-buttons-row">
-                    ${photoLink ? `
-                      <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View photography on Instagram">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        <span>Photos</span>
-                      </a>
-                    ` : ''}
-                    ${videoLink ? `
-                      <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch video on YouTube">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        <span>Videos</span>
-                      </a>
-                    ` : ''}
-                    ${shortLink ? `
-                      <a href="${shortLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-short" title="Watch short film on Instagram">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span>Short Films</span>
-                      </a>
-                    ` : ''}
-                  </div>
+                <div class="fauna-accordion-header-right">
+                  <span class="dest-accordion-toggle-btn">
+                    <span class="toggle-text">Details</span>
+                    <svg class="toggle-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </span>
                 </div>
               </div>
-              <div class="fauna-tips-block">
-                <div class="fauna-tips-title">
-                  <span>💡 Spotting Tips &amp; Behavioral Notes</span>
+
+              <!-- Expanded Details: Photo, Notes, Links & Spotting Tips (Becomes big when opened) -->
+              <div class="fauna-accordion-body">
+                <div class="fauna-card-top-row">
+                  <div class="fauna-card-icon-wrap">
+                    <img src="${spec.imageUrl || 'assets/images/black_drongo.jpg'}" alt="${escapeHtml(spec.name)}" class="fauna-card-icon" loading="lazy" onerror="this.src='assets/images/black_drongo.jpg';" />
+                  </div>
+                  <div class="fauna-card-main">
+                    ${(spec.notes || spec.description) ? `<p class="fauna-card-desc">${escapeHtml(spec.notes || spec.description)}</p>` : ''}
+                    <div class="fauna-link-buttons-row">
+                      ${photoLink ? `
+                        <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View photography on Instagram">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                          <span>Photos</span>
+                        </a>
+                      ` : ''}
+                      ${videoLink ? `
+                        <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch video on YouTube">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                          <span>Videos</span>
+                        </a>
+                      ` : ''}
+                      ${shortLink ? `
+                        <a href="${shortLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-short" title="Watch short film on Instagram">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                          <span>Short Films</span>
+                        </a>
+                      ` : ''}
+                    </div>
+                  </div>
                 </div>
-                <div class="fauna-tips-text">
-                  ${escapeHtml(tipsText).replace(/\n/g, '<br/>')}
+                <div class="fauna-tips-block" style="margin-top: 14px;">
+                  <div class="fauna-tips-title">
+                    <span>💡 Spotting Tips &amp; Behavioral Notes</span>
+                  </div>
+                  <div class="fauna-tips-text">
+                    ${escapeHtml(tipsText).replace(/\n/g, '<br/>')}
+                  </div>
                 </div>
               </div>
             </article>
@@ -3423,6 +3528,8 @@
         }).join('')}
       </div>
     `;
+
+    attachAccordionAndAZFilterListeners();
 
     document.getElementById('btnAddFaunaRecord')?.addEventListener('click', () => {
       openSpeciesSightingModal(data.id, data.name);

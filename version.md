@@ -521,3 +521,17 @@
   - Updated card renderers to dynamically display only the media button matching the provided link (View Photos or Watch Video)
   - Added clear user guidance in modal: 'Media Links (Fill Either or Both) - Flexible: Either Link Valid'
 
+## [v1.0.40] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** UI/UX | Compact Alphabetical Numbered Directory & Accordion Expansion
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Resolved disproportionate right-pane layout where destination cards were massive and stretched the page unevenly beside the map
+  - Implemented alphabetical sorting (A to Z) for both Travel Destinations and Flora & Fauna across all Indian states
+  - Formatted destinations into sequentially numbered compact items (#01, #02, #03...) displaying only the location name and letter badge initially (no photos or large text)
+  - Added smooth interactive accordion expansion: clicking any destination name expands it into full size with photo/app-icon, details, Instagram & YouTube links, and guidelines
+  - Added a dedicated A–Z alphabet quick-jump bar at the top of the destination panel to instantly navigate or filter directly to any initial letter (e.g. 'N' for Nalanda University)
+  - Balanced the Maproom proportions so the destination list fits cleanly alongside the sticky India map
+
