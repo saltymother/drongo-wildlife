@@ -294,6 +294,21 @@
     } catch (e) {
       console.error('Event listeners binding error', e);
     }
+    try {
+      initTreeBranchScroll();
+    } catch (e) {
+      console.error('Tree branch init error', e);
+    }
+    try {
+      initMagicalMottoGlow();
+    } catch (e) {
+      console.error('Motto glow init error', e);
+    }
+    try {
+      initEditorialBackgroundVideo();
+    } catch (e) {
+      console.error('Video background init error', e);
+    }
   }
 
   function loadCatalogFromStorage() {
@@ -1417,36 +1432,51 @@
 
       let isDragging = false;
       let pathLength = 400;
-      if (sapPath && sapPath.getTotalLength) {
+
+      if (sapPath && typeof sapPath.getTotalLength === 'function') {
         try {
           pathLength = sapPath.getTotalLength();
-          sapPath.style.strokeDasharray = pathLength;
-          sapPath.style.strokeDashoffset = pathLength;
-        } catch (e) {
+          sapPath.style.strokeDasharray = `${pathLength}px`;
+          sapPath.style.strokeDashoffset = `${pathLength}px`;
+        } catch (_) {
           pathLength = 400;
         }
       }
 
-      function updateBranchPosition() {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-        const percent = Math.min(Math.max(scrollY / maxScroll, 0), 1);
-        const percentDisplay = Math.round(percent * 100);
+      function getScrollPercent() {
+        const docElem = document.documentElement;
+        const scrollY = window.pageYOffset || docElem.scrollTop || document.body.scrollTop || 0;
+        const maxScroll = Math.max((docElem.scrollHeight || document.body.scrollHeight) - window.innerHeight, 1);
+        return Math.min(Math.max(scrollY / maxScroll, 0), 1);
+      }
 
-        // Update glowing sap core
+      function scrollToPercent(percent, smooth = false) {
+        const docElem = document.documentElement;
+        const maxScroll = Math.max((docElem.scrollHeight || document.body.scrollHeight) - window.innerHeight, 1);
+        const targetY = percent * maxScroll;
+        window.scrollTo({
+          top: targetY,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+      }
+
+      function updateBranchUI(percent) {
+        const clamped = Math.min(Math.max(percent, 0), 1);
+        const percentDisplay = Math.round(clamped * 100);
+
         if (sapPath) {
-          sapPath.style.strokeDashoffset = pathLength * (1 - percent);
+          sapPath.style.strokeDashoffset = `${pathLength * (1 - clamped)}px`;
         }
 
-        // Update perched Drongo slider top position (clamped 0% to 100%)
-        perchSlider.style.top = `${percent * 100}%`;
+        perchSlider.style.top = `${clamped * 100}%`;
         perchSlider.setAttribute('aria-valuenow', percentDisplay);
         if (perchBadge) {
           perchBadge.textContent = `${percentDisplay}%`;
         }
 
-        // Update milestone active status
-        const viewportCenter = scrollY + window.innerHeight * 0.35;
+        // Update active milestone
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const viewMarker = scrollY + window.innerHeight * 0.35;
         milestoneBtns.forEach((btn) => {
           const targetSelector = btn.getAttribute('data-target');
           if (!targetSelector) return;
@@ -1454,7 +1484,7 @@
           if (targetEl) {
             const top = targetEl.offsetTop;
             const bottom = top + targetEl.offsetHeight;
-            if (viewportCenter >= top && viewportCenter <= bottom) {
+            if (viewMarker >= top && viewMarker <= bottom) {
               btn.classList.add('active');
             } else {
               btn.classList.remove('active');
@@ -1463,68 +1493,64 @@
         });
       }
 
-      // Smooth RAF scroll listener
+      // Smooth scroll synchronization
       let ticking = false;
-      window.addEventListener('scroll', () => {
+      function onScroll() {
+        if (isDragging) return;
         if (!ticking) {
           window.requestAnimationFrame(() => {
-            updateBranchPosition();
+            updateBranchUI(getScrollPercent());
             ticking = false;
           });
           ticking = true;
         }
-      }, { passive: true });
+      }
 
-      // Window resize re-calculation
-      window.addEventListener('resize', updateBranchPosition, { passive: true });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => updateBranchUI(getScrollPercent()), { passive: true });
 
-      // Click anywhere on branch stem to scroll
-      track.addEventListener('click', (e) => {
-        if (e.target.closest('.branch-node-btn') || e.target.closest('.branch-perch-slider')) return;
+      // Handle pointer events for dragging anywhere along the track or bird
+      function handlePointerPosition(clientY, smooth = false) {
         const rect = track.getBoundingClientRect();
-        const clickY = e.clientY - rect.top;
-        const ratio = Math.min(Math.max(clickY / rect.height, 0), 1);
-        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-        window.scrollTo({
-          top: ratio * maxScroll,
-          behavior: 'smooth'
-        });
-      });
+        const clampedY = Math.min(Math.max(clientY - rect.top, 0), rect.height);
+        const ratio = clampedY / (rect.height || 1);
+        updateBranchUI(ratio);
+        scrollToPercent(ratio, smooth);
+      }
 
-      // Drag perched Drongo slider
-      perchSlider.addEventListener('pointerdown', (e) => {
+      function onTrackPointerDown(e) {
+        if (e.target.closest('.branch-node-btn')) return;
         isDragging = true;
-        perchSlider.setPointerCapture(e.pointerId);
+        perchSlider.classList.add('is-dragging');
+        handlePointerPosition(e.clientY, false);
+        window.addEventListener('pointermove', onWindowPointerMove, { passive: false });
+        window.addEventListener('pointerup', onWindowPointerUp);
+        window.addEventListener('pointercancel', onWindowPointerUp);
         e.preventDefault();
-      });
+      }
 
-      perchSlider.addEventListener('pointermove', (e) => {
+      function onWindowPointerMove(e) {
         if (!isDragging) return;
-        const rect = track.getBoundingClientRect();
-        const currentY = e.clientY - rect.top;
-        const ratio = Math.min(Math.max(currentY / rect.height, 0), 1);
-        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-        window.scrollTo({
-          top: ratio * maxScroll,
-          behavior: 'auto'
-        });
-      });
+        handlePointerPosition(e.clientY, false);
+        e.preventDefault();
+      }
 
-      function stopDrag(e) {
+      function onWindowPointerUp() {
         if (isDragging) {
           isDragging = false;
-          try {
-            perchSlider.releasePointerCapture(e.pointerId);
-          } catch (_) {}
+          perchSlider.classList.remove('is-dragging');
+          window.removeEventListener('pointermove', onWindowPointerMove);
+          window.removeEventListener('pointerup', onWindowPointerUp);
+          window.removeEventListener('pointercancel', onWindowPointerUp);
+          updateBranchUI(getScrollPercent());
         }
       }
 
-      perchSlider.addEventListener('pointerup', stopDrag);
-      perchSlider.addEventListener('pointercancel', stopDrag);
+      track.addEventListener('pointerdown', onTrackPointerDown);
 
       // Keyboard navigation for accessibility
       perchSlider.addEventListener('keydown', (e) => {
-        const step = window.innerHeight * 0.5;
+        const step = window.innerHeight * 0.4;
         if (e.key === 'ArrowDown' || e.key === 'PageDown') {
           e.preventDefault();
           window.scrollBy({ top: step, behavior: 'smooth' });
@@ -1541,29 +1567,37 @@
       });
 
       // Quick Scroll Buttons
-      btnTop?.addEventListener('click', () => {
+      btnTop?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      btnBottom?.addEventListener('click', () => {
-        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      btnBottom?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        window.scrollTo({ top: maxScroll, behavior: 'smooth' });
       });
 
-      // Milestone buttons jump
+      // Milestone buttons jump with robust scrollIntoView
       milestoneBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           const targetSelector = btn.getAttribute('data-target');
           if (!targetSelector) return;
           const targetEl = document.querySelector(targetSelector);
           if (targetEl) {
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            milestoneBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
           }
         });
       });
 
-      // Initial layout tick
-      updateBranchPosition();
+      // Initial tick
+      updateBranchUI(getScrollPercent());
     }
 
     // -------------------------------------------------------------------------

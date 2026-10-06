@@ -562,3 +562,16 @@
   - Embedded Vaibhav's personal manifesto detailing Drongo as a love letter to India's breathing landscapes and its mission of mindful observation and conservation
   - Added editorial typography styling (.creator-manifesto-body) and highlighted golden pledge callout for the conservation sign-off
   - Connected 'ABOUT THE CREATOR' navigation anchors into both the primary sub-navigation bar and slide-in drawer
+
+## [v1.0.43] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor & Bugfix | Navigation & Interactive Scroll Companion
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed both 'ADD DISPATCH' buttons: eliminated sub-navigation header button (#topUploadBtn) and floating circular FAB (#floatingUploadFab)
+  - Fixed side organic Tree Branch scroll companion by engineering unified pointerdown and window-level pointermove dragging across the entire stem track and perched Drongo mascot
+  - Eliminated CSS drag-lag transition fighting with JavaScript position updates via dynamic .is-dragging class override
+  - Boosted tree branch widget layering to z-index 2200 and updated milestone node targets and tooltips (linking node 5 to 'About the Creator')
+  - Isolated tree branch companion, motto glow, and video player initializations in safe individual try/catch execution blocks inside init()
