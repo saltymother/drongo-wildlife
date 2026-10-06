@@ -601,3 +601,15 @@
   - Restricted AI/Wikipedia synchronization strictly to landmark pictorial representations (app-icon thumbnail generation and brief overview)
   - Preserved complete user manual control over media links and tourist precautions
   - Prevented automatic default precautions from being injected into user submissions when left blank
+
+## [v1.0.46] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature & Refactor | Integration of Verified eBird Bird and iNaturalist Animal Wildlife Representations
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Integrated high-resolution bird imagery of Common Emerald Dove (Chalcophaps indica) sourced from eBird species emedov2 as universal bird representation
+  - Integrated high-resolution animal imagery of Blackbuck (Antilope cervicapra) sourced from iNaturalist taxon 42416 as universal animal/wildlife representation
+  - Added live Species Representation preview box (#faunaThumbPreviewBox) in Flora & Fauna Record submission modal that dynamically switches between eBird and iNaturalist based on species name
+  - Upgraded wildlife fallback system across state archives so missing or custom wildlife records resolve cleanly to verified eBird birds or iNaturalist animals

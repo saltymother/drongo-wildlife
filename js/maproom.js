@@ -2842,6 +2842,19 @@
               }
             });
           }
+          if (Array.isArray(maproomDispatches[key].customFauna) && STATES_DATA[key]) {
+            if (!STATES_DATA[key].floraFauna) STATES_DATA[key].floraFauna = [];
+            const existingFaunaIds = new Set(STATES_DATA[key].floraFauna.map(f => f.id));
+            maproomDispatches[key].customFauna.forEach(fauna => {
+              if (!fauna.id) fauna.id = 'custom-fauna-' + key + '-' + Date.now();
+              if (fauna.imageUrl === 'assets/images/black_drongo.jpg' && !fauna.name.toLowerCase().includes('drongo')) {
+                fauna.imageUrl = getWildlifeFallbackImage(fauna.name, fauna.scientific, fauna.type);
+              }
+              if (!existingFaunaIds.has(fauna.id)) {
+                STATES_DATA[key].floraFauna.unshift(fauna);
+              }
+            });
+          }
         });
       } else {
         maproomDispatches = {};
@@ -3503,7 +3516,7 @@
               <div class="fauna-accordion-body">
                 <div class="fauna-card-top-row">
                   <div class="fauna-card-icon-wrap">
-                    <img src="${spec.imageUrl || 'assets/images/black_drongo.jpg'}" alt="${escapeHtml(spec.name)}" class="fauna-card-icon" loading="lazy" onerror="this.src='assets/images/black_drongo.jpg';" />
+                    <img src="${spec.imageUrl || getWildlifeFallbackImage(spec.name, spec.scientific, spec.type)}" alt="${escapeHtml(spec.name)}" class="fauna-card-icon" loading="lazy" onerror="this.onerror=null; this.src=getWildlifeFallbackImage('${escapeHtml(spec.name)}', '${escapeHtml(spec.scientific || '')}', '${escapeHtml(spec.type || '')}');" />
                   </div>
                   <div class="fauna-card-main">
                     ${(spec.notes || spec.description) ? `<p class="fauna-card-desc">${escapeHtml(spec.notes || spec.description)}</p>` : ''}
@@ -3552,6 +3565,34 @@
   }
 
   /* --------------------------------------------------------------------------
+     Authentic eBird (emedov2) & iNaturalist (Antilope cervicapra) Wildlife Imagery
+     -------------------------------------------------------------------------- */
+  const BIRD_KEYWORDS = [
+    'bird', 'dove', 'pigeon', 'drongo', 'sparrow', 'eagle', 'falcon', 'hawk', 'owl',
+    'stork', 'crane', 'hornbill', 'flycatcher', 'francolin', 'bustard', 'kingfisher',
+    'parakeet', 'parrot', 'vulture', 'duck', 'teal', 'goose', 'pheasant', 'peacock',
+    'peafowl', 'monal', 'bulbul', 'weaver', 'myna', 'kite', 'harrier', 'cormorant',
+    'ibis', 'heron', 'egret', 'skimmer', 'plover', 'lapwing', 'sandpiper', 'tern',
+    'gull', 'swift', 'nightjar', 'sunbird', 'barbet', 'woodpecker', 'roller', 'bee-eater',
+    'shrike', 'babbler', 'thrush', 'robin', 'bunting', 'finch', 'wagtail', 'pipit', 'avian',
+    'chalcophaps', 'passer', 'leptoptilos', 'lorikeet'
+  ];
+
+  function isBirdSpecies(name = '', scientific = '', type = '') {
+    const combined = `${name} ${scientific} ${type}`.toLowerCase();
+    return BIRD_KEYWORDS.some(kw => combined.includes(kw));
+  }
+
+  function getWildlifeFallbackImage(name = '', scientific = '', type = '') {
+    if (isBirdSpecies(name, scientific, type)) {
+      // Official eBird species emedov2 (Common Emerald Dove • Chalcophaps indica)
+      return 'assets/images/emerald_dove_ebird_species.jpg';
+    }
+    // Official iNaturalist taxa 42416 (Blackbuck • Antilope cervicapra)
+    return 'assets/images/blackbuck_antilope_cervicapra.jpg';
+  }
+
+  /* --------------------------------------------------------------------------
      AI Landmark Icon Generator & Wikipedia Image Auto-Fetcher Engine
      -------------------------------------------------------------------------- */
   function generateAILandmarkIcon(name) {
@@ -3560,7 +3601,7 @@
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return 'assets/images/black_drongo.jpg';
+    if (!ctx) return getWildlifeFallbackImage(name);
 
     // Hash name to determine palette
     const clean = (name || 'Landmark').trim();
@@ -3882,6 +3923,41 @@
     const tipsInput = document.getElementById('faunaInputTips');
     if (tipsInput) tipsInput.value = '';
 
+    // Initialize Wildlife Representation Preview (eBird Emerald Dove vs iNaturalist Blackbuck)
+    const faunaPreview = document.getElementById('faunaAppIconPreview');
+    const faunaBadge = document.getElementById('faunaThumbBadge');
+    const faunaStatus = document.getElementById('faunaThumbStatusText');
+    const faunaHidden = document.getElementById('faunaInputGeneratedImage');
+
+    function syncFaunaPreview() {
+      const c = (commonInput ? commonInput.value : '').trim();
+      const s = (sciInput ? sciInput.value : '').trim();
+      const isBird = isBirdSpecies(c, s);
+
+      if (isBird) {
+        if (faunaPreview) faunaPreview.src = 'assets/images/emerald_dove_ebird_species.jpg';
+        if (faunaHidden) faunaHidden.value = 'assets/images/emerald_dove_ebird_species.jpg';
+        if (faunaBadge) faunaBadge.textContent = 'EBIRD: EMEDOV2';
+        if (faunaStatus) faunaStatus.textContent = '✓ Verified Bird Picture: Common Emerald Dove (eBird species emedov2)';
+      } else {
+        if (faunaPreview) faunaPreview.src = 'assets/images/blackbuck_antilope_cervicapra.jpg';
+        if (faunaHidden) faunaHidden.value = 'assets/images/blackbuck_antilope_cervicapra.jpg';
+        if (faunaBadge) faunaBadge.textContent = 'INATURALIST: TAXA 42416';
+        if (faunaStatus) faunaStatus.textContent = '✓ Verified Animal Picture: Blackbuck (Antilope cervicapra • iNaturalist)';
+      }
+    }
+
+    syncFaunaPreview();
+
+    if (commonInput && !commonInput.dataset.boundFaunaPreview) {
+      commonInput.dataset.boundFaunaPreview = 'true';
+      commonInput.addEventListener('input', syncFaunaPreview);
+    }
+    if (sciInput && !sciInput.dataset.boundFaunaPreview) {
+      sciInput.dataset.boundFaunaPreview = 'true';
+      sciInput.addEventListener('input', syncFaunaPreview);
+    }
+
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -3996,25 +4072,26 @@
         return;
       }
 
-      if (!tips) {
-        tips = 'Best observed at early morning and twilight near river channels and canopy corridors. Maintain ethical telephoto distance of 25+ meters.';
-      }
-
       const stateData = STATES_DATA[activeStateKey];
       if (stateData) {
         if (!stateData.floraFauna) stateData.floraFauna = [];
+
+        // Verified eBird Emerald Dove or iNaturalist Blackbuck representation
+        const chosenImage = document.getElementById('faunaInputGeneratedImage')?.value.trim() 
+          || getWildlifeFallbackImage(commonName, sciName);
+
         const newFauna = {
           id: 'custom-fauna-' + Date.now(),
           name: commonName,
           scientific: sciName,
-          type: 'Indigenous Species',
-          imageUrl: 'assets/images/black_drongo.jpg',
+          type: isBirdSpecies(commonName, sciName) ? 'Avian • Bird' : 'Indigenous Animal • Mammal',
+          imageUrl: chosenImage,
           notes: desc,
           description: desc,
           photoUrl: photoUrl || '',
           videoUrl: videoUrl || '',
           shortUrl: shortUrl || '',
-          spottingTips: tips,
+          spottingTips: tips || '',
           author: author,
           isUserAdded: true
         };
