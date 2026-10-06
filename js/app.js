@@ -1356,6 +1356,12 @@
       if (e.target === logoDetailModal) closeLogoDetailModal();
     });
 
+    // Cute Anime Bird Mascot Click Interaction
+    document.getElementById('animeBirdStickerWrap')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast('🐦 Chirp! Welcome to Drongo Wildlife Edition!');
+    });
+
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {

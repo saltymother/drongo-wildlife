@@ -240,3 +240,14 @@
   - Added tap-to-enlarge detail lightbox for the Drongo logo crest across header, navigation drawer, and footer
   - Rendered oversized emblem showcase with gold circular halo, breathing glow aura, and official Latin motto description
   - Added zoom cursor, gold hover glow, smooth scale-in animation, and dismiss via click or Escape key
+
+## [v1.0.18] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Aesthetic
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Created custom anime chibi-style black drongo bird sticker perched directly on top of the 'WILDLIFE EDITION' badge
+  - Processed transparent die-cut PNG with white border outline and subtle forked tail
+  - Added subtle floating bob micro-animation, scale hover effect, and mascot click chirp interaction

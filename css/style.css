@@ -327,6 +327,7 @@ a {
 
 /* Sharp, Aesthetic Rectangular Wildlife Edition Badge */
 .wildlife-edition-badge {
+  position: relative;
   display: inline-flex;
   align-items: center;
   font-family: var(--font-sans);
@@ -335,16 +336,53 @@ a {
   letter-spacing: 2.2px;
   text-transform: uppercase;
   color: #F3D99E;
-  padding: 4px 10px;
-  background: linear-gradient(135deg, rgba(8, 25, 45, 0.92) 0%, rgba(18, 48, 80, 0.85) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.55);
-  border-radius: 2px;
+  padding: 4px 11px;
+  background: linear-gradient(135deg, rgba(8, 25, 45, 0.95) 0%, rgba(18, 48, 80, 0.9) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  border-radius: 3px;
   box-shadow: 
     0 2px 8px rgba(0, 0, 0, 0.4),
-    inset 0 0 8px rgba(212, 175, 55, 0.12);
+    inset 0 0 8px rgba(212, 175, 55, 0.15);
   vertical-align: middle;
   transform: translateY(-2px);
   user-select: none;
+}
+
+/* Anime Style Small Bird Sticker perched on Wildlife Edition */
+.anime-bird-sticker-wrap {
+  position: absolute;
+  top: -34px;
+  right: 4px;
+  width: 32px;
+  height: 45px;
+  z-index: 5;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  animation: birdPerchBob 4s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+}
+
+.anime-bird-sticker-wrap:hover {
+  transform: translateY(-5px) scale(1.18) rotate(-4deg);
+  filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.75));
+}
+
+.anime-bird-sticker-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+}
+
+@keyframes birdPerchBob {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(2deg);
+  }
 }
 
 .brand-logo-img {
