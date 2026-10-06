@@ -484,3 +484,15 @@
   - Added live app-icon preview box with loading indicator and manual '✨ Auto-Fetch AI' trigger button in the destination submission modal
   - Auto-populated default Instagram explore tags and YouTube travel tour searches so users only need to enter the destination name and click Done
   - Added one-click '✕ Delete' action button on custom user-added destination cards for instant removal of test records
+## [v1.0.37] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** UI/UX | Editorial Video Background Visibility & Brightness Tuning
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Brightened the ambient looping background video in the introduction section (#editorialIntro) for clearer visibility of wildlife and river landscapes
+  - Replaced the previous dual stacked dark overlays with a balanced, single radial overlay (0.38 center to 0.75 edge opacity)
+  - Removed heavy backdrop blur filter to keep video details sharp and distinct
+  - Boosted high-resolution poster backdrop brightness and opacity (0.85 opacity, 0.88 brightness)
+  - Enhanced foreground title, narrative paragraph, and kicker text shadows (triple-layer soft scrim) ensuring 100% solid, crisp readability over the brighter video
