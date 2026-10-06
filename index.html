@@ -23,6 +23,9 @@
 </head>
 <body>
 
+  <!-- Hyperrealistic Ancient Tree rising from bottom-left to top-left -->
+  <div class="ancient-tree-scenic-left" aria-hidden="true"></div>
+
   <!-- =======================================================================
        1. TOP UTILITY BAR (White House style banner)
        ======================================================================= -->
@@ -37,6 +40,9 @@
        2. MAIN HEADER / NAVIGATION (Core Blue Section)
        ======================================================================= -->
   <header class="main-header" role="banner">
+    <!-- Hyperrealistic Tree branches spreading across header canopy -->
+    <div class="header-tree-embellishment" aria-hidden="true"></div>
+
     <div class="header-grid">
       
       <!-- Left Column: Menu Trigger -->
@@ -53,9 +59,12 @@
 
       <!-- Center Column: Brand Identity Stack -->
       <div class="header-col-center">
-        <h1 class="brand-title">
-          <a href="#home">DRONGO</a>
-        </h1>
+        <div class="brand-title-wrap">
+          <h1 class="brand-title">
+            <a href="#home">DRONGO</a>
+          </h1>
+          <span class="wildlife-edition-badge">WILDLIFE EDITION</span>
+        </div>
         <img 
           src="logo for my .png" 
           alt="Drongo Logo" 
@@ -66,23 +75,12 @@
         <p class="brand-motto">Alta alatis patent</p>
       </div>
 
-      <!-- Right Column: Search & Curator Studio Upload Trigger -->
+      <!-- Right Column: Subtle archive indicator -->
       <div class="header-col-right">
-        <button class="header-action-btn trigger-search-modal" aria-label="Search Archives">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <span>SEARCH</span>
-        </button>
-
-        <button class="header-action-btn btn-gold trigger-upload-modal" aria-label="Open Curator Upload Studio" id="topUploadBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          <span>+ UPLOAD PHOTO / VIDEO</span>
-        </button>
+        <div class="header-edition-tag">
+          <span class="edition-dot"></span>
+          <span>CURATOR ARCHIVE</span>
+        </div>
       </div>
 
     </div>
@@ -95,13 +93,35 @@
   
   <nav class="sub-navigation-wrapper" aria-label="Primary Catalog Sections">
     <div class="sub-navigation-bar">
-      <a href="#visuals" class="sub-nav-link active" data-section="all">ALL VISUALS</a>
-      <a href="#visuals" class="sub-nav-link" data-section="photos">PHOTOS</a>
-      <a href="#visuals" class="sub-nav-link" data-section="video">VIDEO</a>
-      <a href="#visuals" class="sub-nav-link" data-section="short-film">SHORT FILM</a>
-      <a href="#visuals" class="sub-nav-link" data-section="travelling-guide">TRAVELLING GUIDE</a>
-      <a href="#visuals" class="sub-nav-link" data-section="ideas">IDEAS</a>
-      <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION</a>
+      <!-- Section Links Group -->
+      <div class="sub-nav-links-cluster">
+        <a href="#visuals" class="sub-nav-link active" data-section="all">ALL VISUALS</a>
+        <a href="#visuals" class="sub-nav-link" data-section="photos">PHOTOS</a>
+        <a href="#visuals" class="sub-nav-link" data-section="video">VIDEO</a>
+        <a href="#visuals" class="sub-nav-link" data-section="short-film">SHORT FILM</a>
+        <a href="#visuals" class="sub-nav-link" data-section="travelling-guide">TRAVELLING GUIDE</a>
+        <a href="#visuals" class="sub-nav-link" data-section="ideas">IDEAS</a>
+        <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION</a>
+      </div>
+
+      <!-- Search & Upload placed directly beside Information per user wireframe -->
+      <div class="sub-nav-actions-cluster">
+        <button class="nav-action-btn trigger-search-modal" aria-label="Search Archives">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>SEARCH</span>
+        </button>
+
+        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Open Curator Upload Studio" id="topUploadBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>+ UPLOAD PHOTO / VIDEO</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -130,10 +150,10 @@
       <!-- Interactive Filter Nav Tabs in the exact requested manner -->
       <div class="gallery-filter-tabs" role="tablist" aria-label="Visual Categories">
         <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
-          All Visuals <span class="filter-count">2</span>
+          All Visuals <span class="filter-count">5</span>
         </button>
         <button class="filter-btn" data-filter="photos" role="tab" aria-selected="false">
-          Photos <span class="filter-count">2</span>
+          Photos <span class="filter-count">5</span>
         </button>
         <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">
           Video <span class="filter-count">0</span>
@@ -152,21 +172,21 @@
         </button>
       </div>
 
-      <!-- Photo Sub-Categories (Insect, Flowers, Animal, Birds, Other) -->
-      <div class="photo-sub-filter-row" id="photoSubFilterRow" aria-label="Photo Subjects">
-        <span class="photo-sub-label">Photo Columns:</span>
-        <div class="photo-sub-tabs" role="tablist" aria-label="Photo Subject Columns">
+      <!-- Subject Sub-Categories for Photos & Videos (Insect, Flowers, Animal, Birds, Other) -->
+      <div class="photo-sub-filter-row" id="photoSubFilterRow" aria-label="Photo and Video Subjects">
+        <span class="photo-sub-label" id="subjectFilterLabel">Photo Columns:</span>
+        <div class="photo-sub-tabs" role="tablist" aria-label="Subject Columns">
           <button class="photo-sub-btn active" data-photo-sub="all" role="tab" aria-selected="true">
-            All Photos <span class="sub-count">2</span>
+            <span id="allSubLabelText">All Photos</span> <span class="sub-count">5</span>
           </button>
           <button class="photo-sub-btn" data-photo-sub="insect" role="tab" aria-selected="false">
             Insect <span class="sub-count">1</span>
           </button>
           <button class="photo-sub-btn" data-photo-sub="flowers" role="tab" aria-selected="false">
-            Flowers <span class="sub-count">0</span>
+            Flowers <span class="sub-count">2</span>
           </button>
           <button class="photo-sub-btn" data-photo-sub="animal" role="tab" aria-selected="false">
-            Animal <span class="sub-count">1</span>
+            Animal <span class="sub-count">2</span>
           </button>
           <button class="photo-sub-btn" data-photo-sub="birds" role="tab" aria-selected="false">
             Birds <span class="sub-count">0</span>
@@ -442,19 +462,19 @@
               <option value="information">Information</option>
             </select>
 
-            <!-- Sub-Category Column Selector for Photos -->
+            <!-- Sub-Category Column Selector for Photos and Videos -->
             <div class="photo-subject-picker" id="photoSubjectPicker" style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(10, 43, 71, 0.15);">
-              <label style="display: block; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 6px; text-transform: uppercase;">
-                Photo Subject Column:
+              <label style="display: block; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 6px; text-transform: uppercase;" id="uploadSubjectPickerLabel">
+                Subject Column (for Photos &amp; Video):
               </label>
               <div class="photo-subject-pills">
-                <button type="button" class="subject-pill active" data-subject="birds">Birds</button>
-                <button type="button" class="subject-pill" data-subject="animal">Animal</button>
+                <button type="button" class="subject-pill active" data-subject="animal">Animal</button>
+                <button type="button" class="subject-pill" data-subject="birds">Birds</button>
                 <button type="button" class="subject-pill" data-subject="insect">Insect</button>
                 <button type="button" class="subject-pill" data-subject="flowers">Flowers</button>
                 <button type="button" class="subject-pill" data-subject="other">Other</button>
               </div>
-              <input type="hidden" id="uploadPhotoSubject" value="birds" />
+              <input type="hidden" id="uploadPhotoSubject" value="animal" />
             </div>
           </div>
 
@@ -463,7 +483,7 @@
             <label class="step-label">
               <span class="step-num">3</span>
               <strong>Select or Drop your File</strong>
-              <span class="step-help" id="fileHelpText">Browse device or drag & drop</span>
+              <span class="step-help" id="fileHelpText">Photo or video file</span>
             </label>
             
             <div class="upload-dropzone" id="uploadDropzoneArea">
@@ -473,22 +493,22 @@
                 <polyline points="17 8 12 3 7 8"></polyline>
                 <line x1="12" y1="3" x2="12" y2="15"></line>
               </svg>
-              <p class="dropzone-title" id="dropzoneTitleText">Click to Browse or Drag &amp; Drop Photo Here</p>
-              <p class="dropzone-note" id="dropzoneNoteText">Supports JPG, PNG, WEBP stills from cameras or phones.</p>
+              <p class="dropzone-title" id="dropzoneTitleText">Click to Browse or Drag &amp; Drop Photo / Video Here</p>
+              <p class="dropzone-note" id="dropzoneNoteText">Supports JPG, PNG, WEBP stills and MP4, WEBM, MOV video footage.</p>
             </div>
 
             <!-- Preview Area -->
             <div class="upload-preview-container" id="uploadPreviewContainer">
               <button type="button" class="clear-preview-btn" id="clearPreviewBtn" title="Remove file">&times;</button>
               <img id="uploadPreviewImage" alt="Upload Preview" style="display: none;" />
-              <video id="uploadPreviewVideo" controls style="display: none;"></video>
+              <video id="uploadPreviewVideo" controls style="display: none; width: 100%; max-height: 240px; background: #000; border-radius: 4px;"></video>
             </div>
 
             <!-- Web URL Fallback -->
             <div style="margin-top: 8px;">
               <details class="url-fallback-details">
                 <summary>Or paste an external web URL instead of a file</summary>
-                <input type="url" id="uploadUrlInput" class="form-input" style="margin-top: 8px;" placeholder="https://images.unsplash.com/... or https://domain.com/video.mp4" />
+                <input type="url" id="uploadUrlInput" class="form-input" style="margin-top: 8px;" placeholder="https://... or video URL" />
               </details>
             </div>
           </div>
@@ -497,42 +517,50 @@
           <div class="upload-step-block">
             <label class="step-label">
               <span class="step-num">4</span>
-              <strong>Field Details &amp; Location</strong>
-              <span class="step-help">Title &amp; location</span>
+              <strong>Subject Information &amp; Narrative</strong>
+              <span class="step-help">Title &amp; species notes</span>
             </label>
 
             <div class="form-grid-2">
               <div class="form-group">
                 <label for="uploadTitle">Title / Species Name *</label>
-                <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. Crested Serpent Eagle" required />
+                <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. Indian Rock Python / Snake" required />
               </div>
 
               <div class="form-group">
                 <label for="uploadLocation">Field Observation Location *</label>
-                <input type="text" id="uploadLocation" class="form-input" placeholder="e.g. Terai Forest Canopy" required />
+                <input type="text" id="uploadLocation" class="form-input" placeholder="e.g. Habitat Observation Site" required />
               </div>
             </div>
 
-            <div class="form-grid-2">
+            <div class="form-group" style="margin-top: 10px;">
+              <label for="uploadStory">Short Description / Field Notes</label>
+              <textarea id="uploadStory" class="form-textarea" rows="2" placeholder="Describe about the subject (behavior observed, context of sighting)..."></textarea>
+            </div>
+
+            <div class="form-group" style="margin-top: 12px; background: rgba(10, 43, 71, 0.03); padding: 12px; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
+              <label for="uploadKnowMore" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-weight: 700; color: var(--primary-ocean-blue); font-size: 12px;">📖 "To Know More" Information (Detailed Dossier)</span>
+                <span style="font-size: 10px; color: var(--accent-gold); font-weight: 700;">Author Verified Notes</span>
+              </label>
+              <textarea id="uploadKnowMore" class="form-textarea" rows="3" placeholder="Write full details about this animal, bird, insect, or flower (diet, habits, physical traits, habitat). Only your authentic notes will be shown when people click 'To Know More'!"></textarea>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: 10px;">
               <div class="form-group">
-                <label for="uploadCamera">Camera Gear Rig (Optional)</label>
-                <input type="text" id="uploadCamera" class="form-input" placeholder="e.g. Sony Alpha 1 / RED Cinema" />
+                <label for="uploadCamera">Camera Rig (Optional)</label>
+                <input type="text" id="uploadCamera" class="form-input" placeholder="e.g. Wildlife Photography Rig" />
               </div>
 
               <div class="form-group">
-                <label for="uploadLens">Optics &amp; Focal Length (Optional)</label>
-                <input type="text" id="uploadLens" class="form-input" placeholder="e.g. FE 600mm f/4 GM OSS" />
+                <label for="uploadLens">Lens / Optics (Optional)</label>
+                <input type="text" id="uploadLens" class="form-input" placeholder="e.g. Telephoto Prime Lens" />
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 8px;">
               <label for="uploadExposure">EXIF / Exposure Specs (Optional)</label>
-              <input type="text" id="uploadExposure" class="form-input" placeholder="e.g. 1/2500s at f/4 • ISO 400" />
-            </div>
-
-            <div class="form-group">
-              <label for="uploadStory">Field Notes &amp; Ecological Narrative (Optional)</label>
-              <textarea id="uploadStory" class="form-textarea" rows="2" placeholder="Context of sighting, behavior observed, conservation notes..."></textarea>
+              <input type="text" id="uploadExposure" class="form-input" placeholder="e.g. Natural Ambient Light" />
             </div>
           </div>
 
@@ -569,6 +597,28 @@
           <h2 class="lightbox-title" id="lightboxTitle">Title Placeholder</h2>
           <div class="lightbox-location" id="lightboxLocation">Location Placeholder</div>
           <p class="lightbox-field-story" id="lightboxStory">Narrative notes...</p>
+
+          <!-- "To Know More" Species Information Section -->
+          <div class="lightbox-know-more-wrap" style="margin-top: 16px;">
+            <button class="btn-know-more" id="lightboxKnowMoreBtn" type="button" aria-expanded="false" aria-controls="lightboxKnowMorePanel">
+              <span class="btn-know-more-icon">📖</span>
+              <span id="knowMoreBtnText">To Know More</span>
+              <span class="know-more-arrow">&darr;</span>
+            </button>
+
+            <div class="lightbox-know-more-panel" id="lightboxKnowMorePanel" style="display: none;">
+              <div class="know-more-header">
+                <span class="dossier-tag">SPECIES INFORMATION DOSSIER</span>
+                <button type="button" class="btn-edit-species-notes" id="btnEditSpeciesNotes" title="Edit or Add Notes">✏️ Edit Notes</button>
+              </div>
+              <div class="know-more-body" id="lightboxKnowMoreContent">
+                <!-- Injected via js/app.js -->
+              </div>
+              <div class="know-more-curator-banner">
+                <span>Verified Author Notes • No AI-Generated Filler Text</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div>
@@ -623,7 +673,10 @@
           class="drawer-logo"
           onerror="this.onerror=null; this.src='assets/images/drongo_crest_logo.png';"
         />
-        <span class="drawer-title">DRONGO</span>
+        <div class="drawer-brand-text">
+          <span class="drawer-title">DRONGO</span>
+          <span class="drawer-motto" style="font-family: var(--font-display); font-style: italic; font-size: 11px; color: rgba(255, 255, 255, 0.75); display: block; margin-top: 2px;">Alta alatis patent</span>
+        </div>
       </div>
       <button class="modal-close-btn" id="closeDrawerBtn" aria-label="Close Navigation Drawer">&times;</button>
     </div>
@@ -639,6 +692,13 @@
         <a href="#visuals" class="drawer-sub-photo-link" data-photo-sub="other" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Other</a>
       </div>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="video">Video</a>
+      <div class="drawer-video-sub-list" style="margin: -6px 0 10px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="insect" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Insect</a>
+        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="flowers" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Flowers</a>
+        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="animal" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Animal</a>
+        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="birds" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Birds</a>
+        <a href="#visuals" class="drawer-sub-video-link" data-video-sub="other" style="font-size: 11px; color: var(--accent-gold); text-decoration: none;">&bull; Other</a>
+      </div>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="short-film">Short Film</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">Travelling Guide</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="ideas">Ideas</a>

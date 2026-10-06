@@ -1,13 +1,76 @@
 /**
  * DRONGO — Institutional Wildlife & Nature Visual Storytelling
  * Core Application Engine & Curator Upload System
+ * Version 1.0.11
  */
 
 (function () {
   'use strict';
 
-  // Key for localStorage persistence of user uploads
-  const STORAGE_KEY = 'drongo_custom_catalog_v3';
+  // Storage key for catalog metadata in localStorage
+  const STORAGE_KEY = 'drongo_custom_catalog_v4';
+
+  // IndexedDB Configuration for reliable Large Media (Video & Raw Stills)
+  const IDB_NAME = 'DrongoMediaStore';
+  const IDB_VERSION = 1;
+  const IDB_STORE = 'media_blobs';
+  let dbInstance = null;
+
+  function initMediaDB() {
+    return new Promise((resolve) => {
+      if (!window.indexedDB) {
+        resolve(null);
+        return;
+      }
+      const request = indexedDB.open(IDB_NAME, IDB_VERSION);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) {
+          db.createObjectStore(IDB_STORE, { keyPath: 'id' });
+        }
+      };
+      request.onsuccess = (e) => {
+        dbInstance = e.target.result;
+        resolve(dbInstance);
+      };
+      request.onerror = () => {
+        console.warn('IndexedDB unavailable, continuing with memory cache');
+        resolve(null);
+      };
+    });
+  }
+
+  async function persistMediaBlob(id, fileOrBlob) {
+    if (!dbInstance) await initMediaDB();
+    if (!dbInstance) return false;
+    return new Promise((resolve) => {
+      try {
+        const tx = dbInstance.transaction(IDB_STORE, 'readwrite');
+        const store = tx.objectStore(IDB_STORE);
+        store.put({ id: id, blob: fileOrBlob, timestamp: Date.now() });
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (err) {
+        resolve(false);
+      }
+    });
+  }
+
+  async function retrieveMediaBlob(id) {
+    if (!dbInstance) await initMediaDB();
+    if (!dbInstance) return null;
+    return new Promise((resolve) => {
+      try {
+        const tx = dbInstance.transaction(IDB_STORE, 'readonly');
+        const store = tx.objectStore(IDB_STORE);
+        const req = store.get(id);
+        req.onsuccess = () => resolve(req.result ? req.result.blob : null);
+        req.onerror = () => resolve(null);
+      } catch (err) {
+        resolve(null);
+      }
+    });
+  }
 
   // Base catalog containing strictly user-provided media
   const INITIAL_CATALOG = [
@@ -25,6 +88,7 @@
       exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
       fieldNotes: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure.',
+      knowMoreInfo: 'Scientific Name: Polistes wattii (Indian yellow paper wasp)\nClassification: Hymenoptera • Vespidae\nObserved Traits: Distinct golden-yellow coloration, intricate antenna segments, triangular light-polarizing ocelli between compound eyes.\nEcological Role: Natural predator of caterpillars and garden pests, vital for ecosystem balance.\nCurator Notes: Awaiting detailed field notes from curator. Click "Edit Notes" above to add your observations.',
       isUserUploaded: true
     },
     {
@@ -41,6 +105,58 @@
       exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/ginger_white_cat.jpg',
       fieldNotes: 'Candid daylight subject study of a ginger-and-white domestic cat (Felis catus) showing alert posture, facial features, and amber ocular coloration.',
+      knowMoreInfo: 'Subject: Domestic Cat (Felis catus)\nColoration: Ginger marmalade and white bicolor coat.\nBehavior: Keen alert posture, forward-facing ears, observant gaze.\nHabitat: Human settlement and rural borders.\nCurator Notes: Awaiting detailed field notes from curator. Click "Edit Notes" above to add your observations.',
+      isUserUploaded: true
+    },
+    {
+      id: 'item-flowers-peach-hibiscus',
+      type: 'photo',
+      title: 'Peach Hibiscus Flower',
+      category: 'photos',
+      photoSubject: 'flowers',
+      section: 'Photos',
+      tags: ['photos', 'flowers', 'flora', 'hibiscus', 'botanical'],
+      location: 'Garden Observation Point',
+      camera: 'Botanical Macro Photography',
+      lens: 'Wide Aperture Prime Lens',
+      exposure: 'Soft Ambient Morning Light',
+      mediaUrl: 'assets/images/peach_hibiscus_flower.jpg',
+      fieldNotes: 'Vibrant peach-toned hibiscus flower in full bloom with visible stamen and delicate ruffled petals, captured in natural daylight.',
+      knowMoreInfo: 'Botanical Subject: Peach Hibiscus (Hibiscus rosa-sinensis cultivar)\nFamily: Malvaceae\nCharacteristics: Delicate apricot-peach ruffled petals with an elongated central staminal column tipped with golden pollen grains.\nGrowth Habit: Tropical evergreen flowering shrub.\nCurator Notes: Awaiting detailed botanical notes from curator. Click "Edit Notes" above to add your observations.',
+      isUserUploaded: true
+    },
+    {
+      id: 'item-animal-fawn-pug',
+      type: 'photo',
+      title: 'Fawn Pug Dog',
+      category: 'photos',
+      photoSubject: 'animal',
+      section: 'Photos',
+      tags: ['photos', 'animal', 'canine', 'dog', 'pug', 'fauna'],
+      location: 'Domestic Interior Habitat',
+      camera: 'Animal Close-Up Photography',
+      lens: 'Standard Portrait Lens',
+      exposure: 'Ambient Room Light',
+      mediaUrl: 'assets/images/pug_dog_portrait.jpg',
+      fieldNotes: 'Expressive close-up portrait of a fawn pug dog lying on its back, capturing facial wrinkles, glossy eyes, and characteristic muzzle.',
+      knowMoreInfo: 'Subject: Fawn Pug (Canis lupus familiaris)\nBreed Type: Toy canine breed of ancient lineage.\nDistinctive Features: Brachycephalic facial structure with deep forehead skin wrinkles, curled tail, large expressive dark eyes, and black velvet muzzle mask.\nCurator Notes: Awaiting detailed notes from curator. Click "Edit Notes" above to add your observations.',
+      isUserUploaded: true
+    },
+    {
+      id: 'item-flowers-periwinkle',
+      type: 'photo',
+      title: 'Periwinkle Blossom (Catharanthus roseus)',
+      category: 'photos',
+      photoSubject: 'flowers',
+      section: 'Photos',
+      tags: ['photos', 'flowers', 'flora', 'periwinkle', 'botanical'],
+      location: 'Flora Field Study',
+      camera: 'Monochrome Botanical Study',
+      lens: 'Close-Up Prime Lens',
+      exposure: 'Diffused Daylight',
+      mediaUrl: 'assets/images/periwinkle_flower_art.jpg',
+      fieldNotes: 'Fine monochrome study of a five-petaled periwinkle blossom with water droplet on petal, accented with field annotation contour overlays.',
+      knowMoreInfo: 'Botanical Subject: Madagascar Periwinkle / Sadabahar (Catharanthus roseus)\nFamily: Apocynaceae\nMorphology: Symmetrical salverform corolla with five spreading lobes, central eye with glistening dewdrop.\nMedicinal Significance: Renowned source of vinca alkaloids (vincristine and vinblastine).\nCurator Notes: Awaiting detailed botanical notes from curator. Click "Edit Notes" above to add your observations.',
       isUserUploaded: true
     }
   ];
@@ -57,6 +173,8 @@
   const filterBtns = document.querySelectorAll('.filter-btn');
   const photoSubFilterRow = document.getElementById('photoSubFilterRow');
   const photoSubBtns = document.querySelectorAll('.photo-sub-btn');
+  const subjectFilterLabel = document.getElementById('subjectFilterLabel');
+  const allSubLabelText = document.getElementById('allSubLabelText');
   const photoSubjectPicker = document.getElementById('photoSubjectPicker');
   const subjectPills = document.querySelectorAll('.subject-pill');
   const uploadPhotoSubjectInput = document.getElementById('uploadPhotoSubject');
@@ -91,6 +209,10 @@
   const lightboxSpecs = document.getElementById('lightboxSpecs');
   const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
   const lightboxNextBtn = document.getElementById('lightboxNextBtn');
+  const lightboxKnowMoreBtn = document.getElementById('lightboxKnowMoreBtn');
+  const lightboxKnowMorePanel = document.getElementById('lightboxKnowMorePanel');
+  const lightboxKnowMoreContent = document.getElementById('lightboxKnowMoreContent');
+  const btnEditSpeciesNotes = document.getElementById('btnEditSpeciesNotes');
 
   // Search Elements
   const searchTriggerBtns = document.querySelectorAll('.trigger-search-modal');
@@ -108,90 +230,120 @@
   // Toast Container
   const toastEl = document.getElementById('drongoToast');
 
-  // Temporary container for newly selected file data URL
+  // Temporary container for newly selected media file & preview
   let pendingFileDataUrl = null;
+  let pendingVideoBlob = null;
+  let pendingVideoPoster = null;
 
   /* --------------------------------------------------------------------------
      Initialization & Storage Sync
      -------------------------------------------------------------------------- */
-  function init() {
-    loadCatalogFromStorage();
+  async function init() {
+    await initMediaDB();
+    await loadCatalogFromStorage();
     renderGallery();
     updateFilterCounts();
     bindEventListeners();
   }
 
-  function loadCatalogFromStorage() {
+  async function loadCatalogFromStorage() {
     try {
-      // Clear out legacy mock cache if present
       localStorage.removeItem('drongo_custom_catalog_v1');
       localStorage.removeItem('drongo_custom_catalog_v2');
+      localStorage.removeItem('drongo_custom_catalog_v3');
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const userItems = JSON.parse(stored);
         const baseIds = new Set(INITIAL_CATALOG.map(item => item.id));
         const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded && !baseIds.has(item.id)) : [];
+        
+        // Rehydrate videos from IndexedDB if needed
+        for (const item of customUploads) {
+          if (item.hasBlobInDB && !item.videoUrl) {
+            const blob = await retrieveMediaBlob(item.id);
+            if (blob) {
+              item.videoUrl = URL.createObjectURL(blob);
+            }
+          }
+        }
         catalog = [...INITIAL_CATALOG, ...customUploads];
       } else {
         catalog = [...INITIAL_CATALOG];
       }
     } catch (e) {
-      console.warn('Could not read user catalog from localStorage', e);
+      console.warn('Could not read user catalog from storage', e);
       catalog = [...INITIAL_CATALOG];
     }
   }
 
   function saveUserItemsToStorage() {
     try {
-      const userItems = catalog.filter(item => item.isUserUploaded);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(userItems));
+      // Clean clone without giant video base64 to prevent QuotaExceededError
+      const safeItemsToStore = catalog
+        .filter(item => item.isUserUploaded)
+        .map(item => {
+          const clone = Object.assign({}, item);
+          if (clone.videoUrl && clone.videoUrl.startsWith('blob:')) {
+            clone.videoUrl = ''; // will be rehydrated from IndexedDB
+          }
+          return clone;
+        });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(safeItemsToStore));
     } catch (e) {
-      console.error('Failed to write to localStorage', e);
-      showToast('Warning: LocalStorage limit reached for large media.');
+      console.warn('Failed to write metadata to localStorage', e);
     }
   }
 
   /* --------------------------------------------------------------------------
-     Gallery Rendering
+     Gallery Rendering with "To Know More" Direct Access
      -------------------------------------------------------------------------- */
   function renderGallery() {
     if (!mediaGridEl) return;
 
-    // Apply Filter with Photo Sub-category support
     currentlyFilteredItems = catalog.filter(item => {
-      if (currentFilter === 'photos') {
-        const isPhoto = item.category === 'photos' || item.type === 'photo';
-        if (!isPhoto) return false;
-        if (currentPhotoSub !== 'all') {
-          return item.photoSubject === currentPhotoSub || item.tags?.includes(currentPhotoSub);
-        }
-        return true;
+      // Sub-category filter for photos and video
+      if (currentPhotoSub !== 'all') {
+        const matchesSub = item.photoSubject === currentPhotoSub || item.tags?.includes(currentPhotoSub);
+        if (!matchesSub) return false;
       }
 
       if (currentFilter === 'all') return true;
-      if (currentFilter === 'video') return item.category === 'video' || (item.type === 'video' && item.category !== 'short-film');
-      if (currentFilter === 'short-film') return item.category === 'short-film' || item.section === 'Short Film' || item.section === 'SHORT FILMS';
+      if (currentFilter === 'photos') return item.category === 'photos' || item.type === 'photo';
+      if (currentFilter === 'video') return item.category === 'video' || item.type === 'video';
+      if (currentFilter === 'short-film') return item.category === 'short-film' || item.section === 'Short Film';
       if (currentFilter === 'travelling-guide') return item.category === 'travelling-guide' || item.section === 'Travelling Guide';
       if (currentFilter === 'ideas') return item.category === 'ideas' || item.section === 'Ideas';
       if (currentFilter === 'information') return item.category === 'information' || item.section === 'Information';
       return item.category === currentFilter;
     });
 
-    // Update Photo Sub-Filter Bar display visibility
+    // Sub-Filter Bar visibility & label
     if (photoSubFilterRow) {
-      photoSubFilterRow.style.display = (currentFilter === 'photos' || currentFilter === 'all') ? 'flex' : 'none';
+      const showSubRow = (currentFilter === 'photos' || currentFilter === 'video' || currentFilter === 'all');
+      photoSubFilterRow.style.display = showSubRow ? 'flex' : 'none';
+
+      if (subjectFilterLabel) {
+        if (currentFilter === 'video') subjectFilterLabel.textContent = 'Video Columns:';
+        else if (currentFilter === 'photos') subjectFilterLabel.textContent = 'Photo Columns:';
+        else subjectFilterLabel.textContent = 'Subject Columns:';
+      }
+      if (allSubLabelText) {
+        if (currentFilter === 'video') allSubLabelText.textContent = 'All Videos';
+        else if (currentFilter === 'photos') allSubLabelText.textContent = 'All Photos';
+        else allSubLabelText.textContent = 'All Visuals';
+      }
     }
 
     if (currentlyFilteredItems.length === 0) {
-      const sectionName = currentFilter === 'photos' && currentPhotoSub !== 'all' 
-        ? `Photos • ${currentPhotoSub.charAt(0).toUpperCase() + currentPhotoSub.slice(1)}` 
+      const sectionName = (currentFilter === 'photos' || currentFilter === 'video') && currentPhotoSub !== 'all'
+        ? `${currentFilter.toUpperCase()} • ${currentPhotoSub.charAt(0).toUpperCase() + currentPhotoSub.slice(1)}`
         : currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
 
       mediaGridEl.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
-          <div style="font-size: 34px; margin-bottom: 10px;">📷</div>
-          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">No Pictures in ${escapeHtml(sectionName)} Yet</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px; max-width: 460px; margin-left: auto; margin-right: auto;">
+          <div style="font-size: 34px; margin-bottom: 10px;">🌿</div>
+          <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">No Media in ${escapeHtml(sectionName)} Yet</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px; max-width: 480px; margin-left: auto; margin-right: auto;">
             This section is waiting for your curated uploads. Use the upload tool to publish your pictures or video footage here.
           </p>
           <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="${escapeHtml(currentFilter)}" style="margin: 0 auto;">
@@ -213,21 +365,22 @@
         const sub = (item.photoSubject || 'birds').toLowerCase();
         badgeClass = `badge-photo badge-subject-${sub}`;
         categoryLabel = `PHOTO • ${sub.toUpperCase()}`;
-      } else if (item.category === 'video' || (item.type === 'video' && item.category !== 'short-film')) {
+      } else if (item.category === 'video' || item.type === 'video') {
+        const sub = (item.photoSubject || 'general').toLowerCase();
         badgeClass = 'badge-video';
-        categoryLabel = item.section || 'VIDEO';
+        categoryLabel = `VIDEO • ${sub.toUpperCase()}`;
       } else if (item.category === 'short-film') {
         badgeClass = 'badge-short-film';
-        categoryLabel = item.section || 'SHORT FILM';
+        categoryLabel = 'SHORT FILM';
       } else if (item.category === 'travelling-guide') {
         badgeClass = 'badge-guide';
-        categoryLabel = item.section || 'TRAVELLING GUIDE';
+        categoryLabel = 'TRAVELLING GUIDE';
       } else if (item.category === 'ideas') {
         badgeClass = 'badge-ideas';
-        categoryLabel = item.section || 'IDEAS';
+        categoryLabel = 'IDEAS';
       } else if (item.category === 'information') {
         badgeClass = 'badge-info';
-        categoryLabel = item.section || 'INFORMATION';
+        categoryLabel = 'INFORMATION';
       }
 
       return `
@@ -265,20 +418,16 @@
             <div class="card-specs">
               <span><strong>Gear:</strong> ${escapeHtml(item.camera)}</span>
               ${item.lens ? `<span class="spec-bullet">•</span><span>${escapeHtml(item.lens)}</span>` : ''}
-              ${item.exposure ? `<span class="spec-bullet">•</span><span>${escapeHtml(item.exposure)}</span>` : ''}
             </div>
 
             <div class="card-actions-row">
-              <span class="view-entry-btn">
-                <span>View Full Record</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2.44z"/>
-                </svg>
-              </span>
+              <button class="card-know-more-btn" data-know-more-index="${index}" title="Learn more about ${escapeHtml(item.title)}">
+                📖 To Know More &rarr;
+              </button>
 
               ${item.isUserUploaded ? `
-                <button class="card-delete-btn" data-delete-id="${item.id}" title="Remove this upload">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <button class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                   </svg>
                   Remove
@@ -293,22 +442,26 @@
     // Attach card click handlers for Lightbox
     mediaGridEl.querySelectorAll('.media-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        // Prevent opening if clicked on delete button
         if (e.target.closest('.card-delete-btn')) return;
+        if (e.target.closest('.card-know-more-btn')) {
+          const index = parseInt(card.getAttribute('data-index'), 10);
+          openLightbox(index, true); // Opens directly with To Know More expanded
+          return;
+        }
         const index = parseInt(card.getAttribute('data-index'), 10);
-        openLightbox(index);
+        openLightbox(index, false);
       });
 
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           const index = parseInt(card.getAttribute('data-index'), 10);
-          openLightbox(index);
+          openLightbox(index, false);
         }
       });
     });
 
-    // Attach card delete handlers
+    // Delete handler
     mediaGridEl.querySelectorAll('.card-delete-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -327,8 +480,8 @@
       let count = 0;
       if (filter === 'all') count = catalog.length;
       else if (filter === 'photos') count = catalog.filter(i => i.category === 'photos' || i.type === 'photo').length;
-      else if (filter === 'video') count = catalog.filter(i => i.category === 'video' || (i.type === 'video' && i.category !== 'short-film')).length;
-      else if (filter === 'short-film') count = catalog.filter(i => i.category === 'short-film' || i.section === 'Short Film' || i.section === 'SHORT FILMS').length;
+      else if (filter === 'video') count = catalog.filter(i => i.category === 'video' || i.type === 'video').length;
+      else if (filter === 'short-film') count = catalog.filter(i => i.category === 'short-film' || i.section === 'Short Film').length;
       else if (filter === 'travelling-guide') count = catalog.filter(i => i.category === 'travelling-guide' || i.section === 'Travelling Guide').length;
       else if (filter === 'ideas') count = catalog.filter(i => i.category === 'ideas' || i.section === 'Ideas').length;
       else if (filter === 'information') count = catalog.filter(i => i.category === 'information' || i.section === 'Information').length;
@@ -337,43 +490,69 @@
       countEl.textContent = count;
     });
 
-    // Update Photo Sub-Category counts
+    // Update Sub-Category counts dynamically for photos or video
     photoSubBtns.forEach(btn => {
       const sub = btn.getAttribute('data-photo-sub');
       const countEl = btn.querySelector('.sub-count');
       if (!countEl) return;
 
-      const photos = catalog.filter(i => i.category === 'photos' || i.type === 'photo');
+      let targetSet = catalog;
+      if (currentFilter === 'video') {
+        targetSet = catalog.filter(i => i.category === 'video' || i.type === 'video');
+      } else if (currentFilter === 'photos') {
+        targetSet = catalog.filter(i => i.category === 'photos' || i.type === 'photo');
+      }
+
       let count = 0;
       if (sub === 'all') {
-        count = photos.length;
+        count = targetSet.length;
       } else {
-        count = photos.filter(i => i.photoSubject === sub || i.tags?.includes(sub)).length;
+        count = targetSet.filter(i => i.photoSubject === sub || i.tags?.includes(sub)).length;
       }
       countEl.textContent = count;
     });
   }
 
   /* --------------------------------------------------------------------------
-     Lightbox & Cinema Modal
+     Lightbox & "To Know More" Species Information Viewer
      -------------------------------------------------------------------------- */
-  function openLightbox(index) {
+  function openLightbox(index, openKnowMore = false) {
     if (!currentlyFilteredItems[index]) return;
     activeLightboxIndex = index;
     const item = currentlyFilteredItems[index];
 
     // Populate Info
-    lightboxBadge.textContent = item.section || (item.type === 'video' ? 'CINEMATIC DISPATCH' : 'WILDLIFE PHOTOGRAPH');
+    lightboxBadge.textContent = item.section || (item.type === 'video' ? 'VIDEO DISPATCH' : 'WILDLIFE PHOTOGRAPH');
     lightboxTitle.textContent = item.title;
     lightboxLocation.textContent = item.location;
-    lightboxStory.textContent = item.fieldNotes || 'Recorded during the Drongo Eastern Floodplains Expedition.';
+    lightboxStory.textContent = item.fieldNotes || 'Recorded during field observation.';
 
+    // Populate "To Know More" panel
+    if (lightboxKnowMoreContent) {
+      lightboxKnowMoreContent.textContent = item.knowMoreInfo || 
+        `Subject: ${item.title}\nClassification: ${item.section} • ${item.photoSubject ? item.photoSubject.toUpperCase() : 'GENERAL'}\nLocation: ${item.location}\nCurator Notes: Awaiting detailed field notes from author. Click "Edit Notes" above to add your observations.`;
+    }
+
+    if (lightboxKnowMorePanel && lightboxKnowMoreBtn) {
+      if (openKnowMore) {
+        lightboxKnowMorePanel.style.display = 'block';
+        lightboxKnowMoreBtn.classList.add('active');
+        lightboxKnowMoreBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        lightboxKnowMorePanel.style.display = 'none';
+        lightboxKnowMoreBtn.classList.remove('active');
+        lightboxKnowMoreBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    // Specs
     lightboxSpecs.innerHTML = `
+      <div class="spec-line"><strong>Subject Title</strong> ${escapeHtml(item.title)}</div>
       <div class="spec-line"><strong>Capture Gear</strong> ${escapeHtml(item.camera || 'High-Resolution Wildlife Rig')}</div>
-      <div class="spec-line"><strong>Optics</strong> ${escapeHtml(item.lens || 'Prime Super-Telephoto Lens')}</div>
+      <div class="spec-line"><strong>Optics</strong> ${escapeHtml(item.lens || 'Prime Telephoto Lens')}</div>
       <div class="spec-line"><strong>EXIF / Settings</strong> ${escapeHtml(item.exposure || 'Natural Ambient Light')}</div>
-      <div class="spec-line"><strong>Classification</strong> ${escapeHtml(item.section || 'Editorial Visual Catalog')}</div>
-      ${item.isUserUploaded ? '<div class="spec-line"><strong>Source</strong> Verified Expedition Contributor Upload</div>' : ''}
+      <div class="spec-line"><strong>Classification</strong> ${escapeHtml(item.section)} • ${escapeHtml((item.photoSubject || 'General').toUpperCase())}</div>
+      ${item.isUserUploaded ? '<div class="spec-line"><strong>Source</strong> Verified Contributor Upload</div>' : ''}
     `;
 
     // Render Media (Video or Photo)
@@ -386,7 +565,7 @@
           controls 
           autoplay 
           playsinline 
-          style="width: 100%; max-height: 80vh; outline: none; background: #000;"
+          style="width: 100%; max-height: 80vh; outline: none; background: #000; border-radius: 4px;"
         >
           Your browser does not support HTML5 video playback.
         </video>
@@ -396,7 +575,7 @@
         <img 
           src="${escapeHtml(item.mediaUrl)}" 
           alt="${escapeHtml(item.title)}" 
-          style="max-width: 100%; max-height: 80vh; object-fit: contain;"
+          style="max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 4px;"
           onerror="this.onerror=null; this.src='assets/images/black_drongo.jpg';"
         />
       `;
@@ -410,7 +589,6 @@
   function closeLightbox() {
     lightboxModal.classList.remove('open');
     lightboxModal.setAttribute('aria-hidden', 'true');
-    // Stop video playback if playing
     const video = lightboxMediaPane.querySelector('video');
     if (video) {
       video.pause();
@@ -423,25 +601,25 @@
   function showNextLightbox() {
     if (currentlyFilteredItems.length <= 1) return;
     activeLightboxIndex = (activeLightboxIndex + 1) % currentlyFilteredItems.length;
-    openLightbox(activeLightboxIndex);
+    openLightbox(activeLightboxIndex, false);
   }
 
   function showPrevLightbox() {
     if (currentlyFilteredItems.length <= 1) return;
     activeLightboxIndex = (activeLightboxIndex - 1 + currentlyFilteredItems.length) % currentlyFilteredItems.length;
-    openLightbox(activeLightboxIndex);
+    openLightbox(activeLightboxIndex, false);
   }
 
   /* --------------------------------------------------------------------------
-     Curator Studio: Media Upload System
+     Curator Studio: Video & Photo Upload Engine
      -------------------------------------------------------------------------- */
   function setMediaType(type) {
     if (type === 'video') {
       if (mediaTypeSelect) mediaTypeSelect.value = 'video';
       typeToggleVideo?.classList.add('active');
       typeTogglePhoto?.classList.remove('active');
-      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Video Here';
-      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports MP4, MOV, WEBM wildlife reels and cinematic clips.';
+      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Video Footage Here';
+      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports MP4, MOV, WEBM wildlife reels and clips.';
       if (dropzoneInput) dropzoneInput.accept = 'video/*';
       if (sectionSelect && sectionSelect.value === 'photos') {
         setUploadSection('video');
@@ -453,7 +631,7 @@
       if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Photo Here';
       if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports JPG, PNG, WEBP stills from cameras or phones.';
       if (dropzoneInput) dropzoneInput.accept = 'image/*';
-      if (sectionSelect && (sectionSelect.value === 'video' || sectionSelect.value === 'short-film')) {
+      if (sectionSelect && sectionSelect.value === 'video') {
         setUploadSection('photos');
       }
     }
@@ -466,9 +644,13 @@
       pill.classList.toggle('active', pill.getAttribute('data-section') === sec);
     });
 
-    // Toggle photo subject picker visibility
+    // Show subject picker for both Photos AND Video
     if (photoSubjectPicker) {
-      photoSubjectPicker.style.display = (sec === 'photos') ? 'block' : 'none';
+      photoSubjectPicker.style.display = (sec === 'photos' || sec === 'video') ? 'block' : 'none';
+      const pickerLabel = document.getElementById('uploadSubjectPickerLabel');
+      if (pickerLabel) {
+        pickerLabel.textContent = sec === 'video' ? 'Video Subject Column:' : 'Photo Subject Column:';
+      }
     }
 
     const sectionDisplayNames = {
@@ -498,7 +680,7 @@
       setMediaType('photo');
     }
 
-    if (targetSec) {
+    if (targetSec && targetSec !== 'all') {
       setUploadSection(targetSec);
     } else if (targetType === 'video') {
       setUploadSection('video');
@@ -517,12 +699,48 @@
 
   function resetUploadPreview() {
     pendingFileDataUrl = null;
+    pendingVideoBlob = null;
+    pendingVideoPoster = null;
     previewContainer.style.display = 'none';
     previewImage.style.display = 'none';
     previewImage.src = '';
     previewVideo.style.display = 'none';
     previewVideo.src = '';
     dropzoneArea.style.display = 'block';
+  }
+
+  function generateVideoThumbnail(videoUrl) {
+    return new Promise((resolve) => {
+      const tempVideo = document.createElement('video');
+      tempVideo.src = videoUrl;
+      tempVideo.muted = true;
+      tempVideo.playsInline = true;
+      tempVideo.crossOrigin = 'anonymous';
+
+      tempVideo.addEventListener('loadeddata', () => {
+        tempVideo.currentTime = Math.min(0.5, (tempVideo.duration || 1) / 2);
+      });
+
+      tempVideo.addEventListener('seeked', () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = tempVideo.videoWidth || 640;
+          canvas.height = tempVideo.videoHeight || 360;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          resolve(dataUrl);
+        } catch (e) {
+          resolve('assets/images/gangetic_dolphin.jpg');
+        }
+      });
+
+      tempVideo.addEventListener('error', () => {
+        resolve('assets/images/gangetic_dolphin.jpg');
+      });
+
+      setTimeout(() => resolve('assets/images/gangetic_dolphin.jpg'), 3500);
+    });
   }
 
   function handleFileSelection(file) {
@@ -536,64 +754,81 @@
       return;
     }
 
-    setMediaType(isVideoFile ? 'video' : 'photo');
+    if (isVideoFile) {
+      setMediaType('video');
+      pendingVideoBlob = file;
+      const objectUrl = URL.createObjectURL(file);
+      pendingFileDataUrl = objectUrl;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      pendingFileDataUrl = e.target.result;
       dropzoneArea.style.display = 'none';
       previewContainer.style.display = 'block';
+      previewVideo.src = objectUrl;
+      previewVideo.style.display = 'block';
+      previewImage.style.display = 'none';
 
-      if (isVideoFile) {
-        previewVideo.src = pendingFileDataUrl;
-        previewVideo.style.display = 'block';
-        previewImage.style.display = 'none';
-      } else {
+      // Extract video frame thumbnail for gallery card
+      generateVideoThumbnail(objectUrl).then(poster => {
+        pendingVideoPoster = poster;
+      });
+
+      showToast('Video clip loaded for preview.');
+    } else {
+      setMediaType('photo');
+      pendingVideoBlob = null;
+      pendingVideoPoster = null;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        pendingFileDataUrl = e.target.result;
+        dropzoneArea.style.display = 'none';
+        previewContainer.style.display = 'block';
         previewImage.src = pendingFileDataUrl;
         previewImage.style.display = 'block';
         previewVideo.style.display = 'none';
-      }
-      showToast('Media file loaded for review.');
-    };
-    reader.readAsDataURL(file);
+        showToast('Image file loaded.');
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
-  function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
 
     const title = document.getElementById('uploadTitle').value.trim();
     const mediaType = mediaTypeSelect.value;
     const section = document.getElementById('uploadSection').value;
     const location = document.getElementById('uploadLocation').value.trim();
-    const camera = document.getElementById('uploadCamera').value.trim() || 'Professional Wildlife Cinema Rig';
-    const lens = document.getElementById('uploadLens').value.trim() || 'Super-Telephoto Prime';
-    const exposure = document.getElementById('uploadExposure').value.trim() || 'Natural Daylight';
-    const fieldNotes = document.getElementById('uploadStory').value.trim() || 'Documented during Drongo expedition field survey.';
+    const camera = document.getElementById('uploadCamera').value.trim() || 'Wildlife Camera Rig';
+    const lens = document.getElementById('uploadLens').value.trim() || 'Telephoto Lens';
+    const exposure = document.getElementById('uploadExposure').value.trim() || 'Natural Ambient Light';
+    const fieldNotes = document.getElementById('uploadStory').value.trim() || 'Documented during field observation.';
+    const knowMoreInput = document.getElementById('uploadKnowMore');
+    const knowMoreInfo = knowMoreInput ? knowMoreInput.value.trim() : '';
     const externalUrl = document.getElementById('uploadUrlInput').value.trim();
 
-    // Determine final media source
     let finalMediaUrl = pendingFileDataUrl || externalUrl;
     let finalVideoUrl = null;
 
-    if (!finalMediaUrl) {
-      showToast('Please upload a file or specify a valid media URL.');
+    if (!finalMediaUrl && !pendingVideoBlob) {
+      showToast('Please select a photo/video file or enter a valid URL.');
       return;
     }
 
+    const uniqueId = 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
+
     if (mediaType === 'video') {
-      finalVideoUrl = finalMediaUrl;
-      // If external video and no separate poster image, fallback to representative poster
-      if (!finalMediaUrl.startsWith('data:image')) {
-        finalMediaUrl = 'assets/images/gangetic_dolphin.jpg';
+      finalVideoUrl = pendingFileDataUrl;
+      finalMediaUrl = pendingVideoPoster || 'assets/images/gangetic_dolphin.jpg';
+      if (pendingVideoBlob) {
+        await persistMediaBlob(uniqueId, pendingVideoBlob);
       }
     }
 
-    // Determine section-based tags and display name
+    const chosenSubject = (section === 'photos' || section === 'video') && uploadPhotoSubjectInput ? uploadPhotoSubjectInput.value : null;
+
     const tags = ['user-upload', section];
     if (mediaType === 'video') tags.push('video');
     if (mediaType === 'photo') tags.push('photos');
-
-    const chosenSubject = (section === 'photos' && uploadPhotoSubjectInput) ? uploadPhotoSubjectInput.value : null;
     if (chosenSubject) tags.push(chosenSubject);
 
     const sectionDisplayNames = {
@@ -607,25 +842,27 @@
     const displaySection = sectionDisplayNames[section] || section;
 
     const newRecord = {
-      id: 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7),
+      id: uniqueId,
       type: mediaType,
       title: title || 'Expedition Dispatch #' + (catalog.length + 1),
       category: section,
       photoSubject: chosenSubject,
       section: displaySection,
       tags: tags,
-      location: location || 'Field Observation Site, India',
+      location: location || 'Field Observation Site',
       camera: camera,
       lens: lens,
       exposure: exposure,
       mediaUrl: finalMediaUrl,
       videoUrl: finalVideoUrl,
       fieldNotes: fieldNotes,
+      knowMoreInfo: knowMoreInfo || `Subject: ${title}\nCategory: ${displaySection} • ${(chosenSubject || 'General').toUpperCase()}\nLocation: ${location}\nCurator Field Notes: ${fieldNotes}`,
       isUserUploaded: true,
+      hasBlobInDB: !!pendingVideoBlob,
       timestamp: Date.now()
     };
 
-    // Add to active catalog
+    // Add record to catalog
     catalog.unshift(newRecord);
     saveUserItemsToStorage();
 
@@ -640,25 +877,25 @@
   }
 
   function deleteUpload(id) {
-    if (!confirm('Are you sure you want to remove this dispatch record?')) return;
-
-    catalog = catalog.filter(item => item.id !== id);
-    saveUserItemsToStorage();
-    renderGallery();
-    updateFilterCounts();
-    showToast('Entry removed from your catalog.');
+    if (confirm('Delete this upload from your local catalog?')) {
+      catalog = catalog.filter(item => item.id !== id);
+      saveUserItemsToStorage();
+      renderGallery();
+      updateFilterCounts();
+      showToast('Record removed.');
+    }
   }
 
   /* --------------------------------------------------------------------------
-     Institutional Live Search
+     Search Modal
      -------------------------------------------------------------------------- */
   function openSearchModal() {
     searchModal.classList.add('open');
     searchModal.setAttribute('aria-hidden', 'false');
-    searchInputField.value = '';
-    searchInputField.focus();
-    renderSearchResults('');
     document.body.style.overflow = 'hidden';
+    searchInputField.value = '';
+    renderSearchResults('');
+    setTimeout(() => searchInputField.focus(), 150);
   }
 
   function closeSearchModal() {
@@ -668,46 +905,32 @@
   }
 
   function renderSearchResults(query) {
-    const q = query.trim().toLowerCase();
-    const results = catalog.filter(item => {
-      if (!q) return true;
-      return (
-        item.title.toLowerCase().includes(q) ||
-        item.location.toLowerCase().includes(q) ||
-        item.camera.toLowerCase().includes(q) ||
-        (item.fieldNotes && item.fieldNotes.toLowerCase().includes(q)) ||
-        (item.section && item.section.toLowerCase().includes(q)) ||
-        item.tags.some(t => t.toLowerCase().includes(q))
-      );
-    });
+    const q = query.toLowerCase().trim();
+    const results = q === '' 
+      ? catalog.slice(0, 8)
+      : catalog.filter(item => 
+          item.title.toLowerCase().includes(q) ||
+          item.location.toLowerCase().includes(q) ||
+          item.fieldNotes.toLowerCase().includes(q) ||
+          (item.knowMoreInfo && item.knowMoreInfo.toLowerCase().includes(q)) ||
+          item.tags.some(tag => tag.toLowerCase().includes(q))
+        );
 
     if (results.length === 0) {
       searchResultsBox.innerHTML = `
-        <div style="padding: 30px 20px; text-align: center; color: var(--text-muted); font-size: 13px;">
-          No matching wildlife records found for "<strong>${escapeHtml(query)}</strong>".
+        <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+          <p>No matching wildlife dispatches found for "${escapeHtml(query)}".</p>
         </div>
       `;
       return;
     }
 
     searchResultsBox.innerHTML = results.map(item => `
-      <div class="search-result-item" data-id="${item.id}">
-        <img 
-          src="${escapeHtml(item.mediaUrl)}" 
-          alt="${escapeHtml(item.title)}" 
-          class="search-thumb"
-          onerror="this.onerror=null; this.src='assets/images/black_drongo.jpg';"
-        />
-        <div style="flex: 1; min-width: 0;">
-          <div style="font-weight: 700; font-family: var(--font-display); font-size: 0.95rem; color: var(--primary-ocean-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            ${escapeHtml(item.title)}
-          </div>
-          <div style="font-size: 11px; color: var(--accent-gold); font-family: var(--font-serif); font-style: italic;">
-            ${escapeHtml(item.location)}
-          </div>
-          <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">
-            ${escapeHtml(item.section)} • ${escapeHtml(item.camera)}
-          </div>
+      <div class="search-result-item" data-id="${item.id}" tabindex="0">
+        <img src="${escapeHtml(item.mediaUrl)}" alt="${escapeHtml(item.title)}" class="search-thumb" onerror="this.src='assets/images/black_drongo.jpg';"/>
+        <div class="search-details">
+          <h4>${escapeHtml(item.title)}</h4>
+          <p>${escapeHtml(item.location)} • ${escapeHtml(item.section)} ${item.photoSubject ? '• ' + escapeHtml(item.photoSubject.toUpperCase()) : ''}</p>
         </div>
       </div>
     `).join('');
@@ -715,50 +938,50 @@
     searchResultsBox.querySelectorAll('.search-result-item').forEach(el => {
       el.addEventListener('click', () => {
         const id = el.getAttribute('data-id');
+        const index = currentlyFilteredItems.findIndex(i => i.id === id);
         closeSearchModal();
-        // Locate in catalog and open lightbox
-        const idx = currentlyFilteredItems.findIndex(i => i.id === id);
-        if (idx !== -1) {
-          openLightbox(idx);
+        if (index !== -1) {
+          openLightbox(index, false);
         } else {
-          // Switch to all to ensure it's visible
+          // Reset filters and open
           currentFilter = 'all';
+          currentPhotoSub = 'all';
           filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === 'all'));
+          photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === 'all'));
           renderGallery();
-          const newIdx = currentlyFilteredItems.findIndex(i => i.id === id);
-          if (newIdx !== -1) openLightbox(newIdx);
+          const newIndex = currentlyFilteredItems.findIndex(i => i.id === id);
+          if (newIndex !== -1) openLightbox(newIndex, false);
         }
       });
     });
   }
 
   /* --------------------------------------------------------------------------
-     Navigation Drawer (Mobile & Expanded)
+     Navigation Drawer
      -------------------------------------------------------------------------- */
   function openNavDrawer() {
     navDrawer.classList.add('open');
+    navDrawer.setAttribute('aria-hidden', 'false');
     drawerBackdrop.classList.add('open');
+    menuTriggerBtn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
 
   function closeNavDrawer() {
     navDrawer.classList.remove('open');
+    navDrawer.setAttribute('aria-hidden', 'true');
     drawerBackdrop.classList.remove('open');
+    menuTriggerBtn.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
 
-  /* --------------------------------------------------------------------------
-     Toast Notification Helper
-     -------------------------------------------------------------------------- */
-  let toastTimer = null;
   function showToast(message) {
     if (!toastEl) return;
     toastEl.textContent = message;
     toastEl.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
+    setTimeout(() => {
       toastEl.classList.remove('show');
-    }, 3600);
+    }, 3800);
   }
 
   function escapeHtml(str) {
@@ -775,38 +998,35 @@
      Event Listeners Binding
      -------------------------------------------------------------------------- */
   function bindEventListeners() {
-    // Filter Buttons
+    // Primary Filter Nav Tabs
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        currentFilter = btn.getAttribute('data-filter');
-        if (currentFilter !== 'photos') {
-          currentPhotoSub = 'all';
-          photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === 'all'));
-        }
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        currentPhotoSub = 'all';
+
+        // Reset sub buttons to 'all'
+        photoSubBtns.forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-photo-sub') === 'all');
+        });
+
+        // Sync Sub-Nav Bar links
+        document.querySelectorAll('.sub-nav-link').forEach(link => {
+          link.classList.toggle('active', link.getAttribute('data-section') === currentFilter);
+        });
+
         renderGallery();
+        updateFilterCounts();
       });
     });
 
-    // Photo Sub-Filter Buttons (Insect, Flowers, Animal, Birds, Other)
+    // Photo & Video Sub-Subject Filter Buttons
     photoSubBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        photoSubBtns.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
+        photoSubBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-
-        currentPhotoSub = btn.getAttribute('data-photo-sub');
-
-        // Automatically activate main Photos tab
-        currentFilter = 'photos';
-        filterBtns.forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-filter') === 'photos');
-        });
-
+        currentPhotoSub = btn.getAttribute('data-photo-sub') || 'all';
         renderGallery();
       });
     });
@@ -816,32 +1036,12 @@
       pill.addEventListener('click', () => {
         subjectPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
-        if (uploadPhotoSubjectInput) {
-          uploadPhotoSubjectInput.value = pill.getAttribute('data-subject');
-        }
+        const chosen = pill.getAttribute('data-subject');
+        if (uploadPhotoSubjectInput) uploadPhotoSubjectInput.value = chosen;
       });
     });
 
-    // Mobile Drawer Photo Sub-links
-    document.querySelectorAll('.drawer-sub-photo-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetSub = link.getAttribute('data-photo-sub');
-        if (targetSub) {
-          currentFilter = 'photos';
-          currentPhotoSub = targetSub;
-
-          filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === 'photos'));
-          photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === targetSub));
-
-          renderGallery();
-          closeNavDrawer();
-          document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-
-    // Sub Navigation Links - filter smoothly
+    // Header Sub-Nav Links
     document.querySelectorAll('.sub-nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
         const targetSection = link.getAttribute('data-section');
@@ -851,15 +1051,58 @@
           link.classList.add('active');
 
           currentFilter = targetSection;
+          currentPhotoSub = 'all';
 
-          // Sync filter buttons
           filterBtns.forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-filter') === currentFilter);
           });
+          photoSubBtns.forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-photo-sub') === 'all');
+          });
 
           renderGallery();
+          updateFilterCounts();
+          closeNavDrawer();
           document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
         }
+      });
+    });
+
+    // Drawer Photo Sub Links
+    document.querySelectorAll('.drawer-sub-photo-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sub = link.getAttribute('data-photo-sub');
+        currentFilter = 'photos';
+        currentPhotoSub = sub;
+
+        filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'photos'));
+        photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === sub));
+        document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('data-section') === 'photos'));
+
+        renderGallery();
+        updateFilterCounts();
+        closeNavDrawer();
+        document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Drawer Video Sub Links
+    document.querySelectorAll('.drawer-sub-video-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sub = link.getAttribute('data-video-sub');
+        currentFilter = 'video';
+        currentPhotoSub = sub;
+
+        filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'video'));
+        photoSubBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-photo-sub') === sub));
+        document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.toggle('active', l.getAttribute('data-section') === 'video'));
+
+        renderGallery();
+        updateFilterCounts();
+        closeNavDrawer();
+        document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
@@ -881,7 +1124,7 @@
       });
     });
 
-    // Drag and Drop on dropzone
+    // Drag and Drop
     if (dropzoneArea) {
       ['dragenter', 'dragover'].forEach(eventName => {
         dropzoneArea.addEventListener(eventName, (e) => {
@@ -918,6 +1161,36 @@
       if (e.target === lightboxModal) closeLightbox();
     });
 
+    // "To Know More" Toggle in Lightbox
+    lightboxKnowMoreBtn?.addEventListener('click', () => {
+      const isOpen = lightboxKnowMorePanel.style.display !== 'none';
+      if (isOpen) {
+        lightboxKnowMorePanel.style.display = 'none';
+        lightboxKnowMoreBtn.classList.remove('active');
+        lightboxKnowMoreBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        lightboxKnowMorePanel.style.display = 'block';
+        lightboxKnowMoreBtn.classList.add('active');
+        lightboxKnowMoreBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Curator Inline Notes Editor in Lightbox
+    btnEditSpeciesNotes?.addEventListener('click', () => {
+      const activeItem = currentlyFilteredItems[activeLightboxIndex];
+      if (!activeItem) return;
+      const currentNotes = activeItem.knowMoreInfo || activeItem.fieldNotes || '';
+      const updatedNotes = prompt(`Enter verified field notes / information for "${activeItem.title}":`, currentNotes);
+      if (updatedNotes !== null && updatedNotes.trim() !== '') {
+        activeItem.knowMoreInfo = updatedNotes.trim();
+        if (lightboxKnowMoreContent) {
+          lightboxKnowMoreContent.textContent = activeItem.knowMoreInfo;
+        }
+        saveUserItemsToStorage();
+        showToast('✓ Species information updated successfully.');
+      }
+    });
+
     // Search Modal Controls
     searchTriggerBtns.forEach(btn => btn.addEventListener('click', openSearchModal));
     closeSearchModalBtn?.addEventListener('click', closeSearchModal);
@@ -946,7 +1219,7 @@
       }
     });
 
-    // Catalog Export / Reset JSON shortcuts (For Power Users & Archivists)
+    // Export Catalog JSON
     const exportBtn = document.getElementById('exportCatalogBtn');
     exportBtn?.addEventListener('click', () => {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(catalog, null, 2));
@@ -959,14 +1232,15 @@
       showToast('Catalog exported as JSON archive.');
     });
 
+    // Reset Catalog
     const resetBtn = document.getElementById('resetCatalogBtn');
     resetBtn?.addEventListener('click', () => {
-      if (confirm('Reset catalog to initial Drongo field dispatches? All local uploads will be cleared.')) {
+      if (confirm('Reset catalog to institutional baseline? All custom local uploads will be cleared.')) {
         localStorage.removeItem(STORAGE_KEY);
         catalog = [...INITIAL_CATALOG];
         renderGallery();
         updateFilterCounts();
-        showToast('Catalog restored to default institutional collection.');
+        showToast('Catalog restored to baseline.');
       }
     });
   }

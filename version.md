@@ -151,3 +151,19 @@
   - Added user-submitted photograph of a ginger-and-white domestic cat (Felis catus) to the Photos > Animal column
   - Documented alert posture and natural ambient lighting details in the institutional catalog
   - Updated live counters: All Visuals (2), Photos (2), Animal (1), Insect (1), All Photos (2)
+
+## [v1.0.11] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UI/UX & Content Expansion
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://drongowildlife.com
+- **Summary:**
+  - Added user photographs for Peach Hibiscus (Flowers), Fawn Pug (Animal), and Periwinkle Blossom (Flowers)
+  - Integrated 'To Know More' species information panel and inline curator note editor without AI hallucinations
+  - Fixed video upload engine with IndexedDB persistence, canvas thumbnail generation, and dedicated video sub-columns
+  - Added hyperrealistic ancient tree trunk and canopy artwork rising from bottom-left to top-left
+  - Enhanced DRONGO typography with metallic finish and sharp aesthetic 'WILDLIFE EDITION' luxury badge
+  - Relocated Search and Upload Photo/Video actions directly beside Information on the category navigation bar
+  - Appended italic motto 'Alta alatis patent' beneath DRONGO title in the navigation drawer
+  - Updated live catalog counters: All Visuals (5), Photos (5), Flowers (2), Animal (2), Insect (1)
