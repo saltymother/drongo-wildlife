@@ -3093,7 +3093,7 @@ a {
 
 /* Maproom Main Section */
 .maproom-section {
-  padding: 80px 24px;
+  padding: 80px 5%;
   background: #F4F7F9;
   border-top: 1px solid rgba(10, 43, 71, 0.08);
   border-bottom: 1px solid rgba(10, 43, 71, 0.08);
@@ -3102,8 +3102,10 @@ a {
 }
 
 .maproom-container {
-  max-width: 1400px;
+  max-width: 1240px;
   margin: 0 auto;
+  padding-right: 28px;
+  padding-left: 12px;
 }
 
 .maproom-header-block {
@@ -4286,7 +4288,7 @@ a {
    -------------------------------------------------------------------------- */
 .tree-branch-scroll-widget {
   position: fixed;
-  right: 18px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 920;
@@ -4301,8 +4303,8 @@ a {
 /* Quick Scroll Twig Action Buttons (Top & Bottom) */
 .branch-nav-action-btn {
   position: relative;
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1.5px solid rgba(212, 175, 55, 0.6);
   background: linear-gradient(135deg, #3A2312 0%, #201308 100%);
@@ -4333,26 +4335,26 @@ a {
 }
 
 .branch-btn-icon {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 }
 
 .branch-sprout-leaf {
   position: absolute;
-  font-size: 13px;
+  font-size: 11px;
   pointer-events: none;
   transition: transform 0.3s ease;
 }
 
 .leaf-top {
-  top: -8px;
-  right: -4px;
+  top: -7px;
+  right: -3px;
   transform: rotate(20deg);
 }
 
 .leaf-bottom {
-  bottom: -8px;
-  right: -4px;
+  bottom: -7px;
+  right: -3px;
   transform: rotate(-20deg);
 }
 
@@ -4363,9 +4365,9 @@ a {
 /* Branch Stem Track */
 .branch-stem-track {
   position: relative;
-  width: 54px;
-  height: 360px;
-  margin: 6px 0;
+  width: 30px;
+  height: 330px;
+  margin: 5px 0;
   cursor: pointer;
 }
 
@@ -4394,14 +4396,14 @@ a {
 
 .branch-node-btn {
   position: absolute;
-  left: 2px;
+  left: -2px;
   transform: translateY(-50%);
   pointer-events: auto;
   background: rgba(18, 10, 5, 0.85);
   border: 1px solid rgba(212, 175, 55, 0.45);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 19px;
+  height: 19px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4412,13 +4414,13 @@ a {
 }
 
 .node-leaf-symbol {
-  font-size: 11px;
+  font-size: 9.5px;
   line-height: 1;
 }
 
 .branch-node-btn:hover,
 .branch-node-btn.active {
-  transform: translateY(-50%) scale(1.28);
+  transform: translateY(-50%) scale(1.25);
   background: linear-gradient(135deg, #4A2E14 0%, #29180A 100%);
   border-color: #F3D99E;
   box-shadow: 
@@ -4433,7 +4435,7 @@ a {
 /* Node Tooltip */
 .node-tooltip {
   position: absolute;
-  right: calc(100% + 12px);
+  right: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%) translateX(6px);
   background: linear-gradient(135deg, rgba(16, 27, 43, 0.96) 0%, rgba(9, 18, 30, 0.98) 100%);
@@ -4444,7 +4446,7 @@ a {
   font-weight: 700;
   letter-spacing: 0.5px;
   white-space: nowrap;
-  padding: 5px 10px;
+  padding: 4px 9px;
   border-radius: 4px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
   opacity: 0;
@@ -4473,7 +4475,7 @@ a {
 /* Perched Drongo Slider Carriage */
 .branch-perch-slider {
   position: absolute;
-  left: 16px;
+  left: 9px;
   top: 0%;
   transform: translateY(-50%);
   display: flex;
@@ -4489,12 +4491,12 @@ a {
 }
 
 .perch-wooden-peg {
-  width: 14px;
-  height: 5px;
+  width: 8px;
+  height: 4px;
   background: linear-gradient(180deg, #A86C32 0%, #563314 100%);
-  border-radius: 3px;
+  border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  margin-right: -4px;
+  margin-right: -3px;
   z-index: 2;
 }
 
@@ -4505,7 +4507,7 @@ a {
 }
 
 .perch-bird-img {
-  width: 32px;
+  width: 24px;
   height: auto;
   display: block;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
@@ -4524,18 +4526,18 @@ a {
 /* Scroll Percentage Badge on Bird */
 .perch-scroll-badge {
   position: absolute;
-  right: calc(100% + 8px);
+  right: calc(100% + 6px);
   top: 50%;
   transform: translateY(-50%);
   background: linear-gradient(135deg, rgba(8, 25, 45, 0.95) 0%, rgba(18, 48, 80, 0.92) 100%);
   border: 1px solid rgba(212, 175, 55, 0.6);
   color: #FFFFFF;
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  padding: 2px 7px;
-  border-radius: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
   white-space: nowrap;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
   opacity: 0;
@@ -4549,11 +4551,19 @@ a {
   opacity: 1;
 }
 
-/* Responsive adjustments for mobile */
+/* Responsive adjustments for mobile & tablets */
+@media (max-width: 1024px) {
+  .tree-branch-scroll-widget {
+    right: 6px;
+    transform: translateY(-50%) scale(0.9);
+    transform-origin: right center;
+  }
+}
+
 @media (max-width: 768px) {
   .tree-branch-scroll-widget {
-    right: 8px;
-    transform: translateY(-50%) scale(0.85);
+    right: 4px;
+    transform: translateY(-50%) scale(0.8);
     transform-origin: right center;
   }
   .node-tooltip {
@@ -4563,8 +4573,8 @@ a {
 
 @media (max-width: 480px) {
   .tree-branch-scroll-widget {
-    right: 4px;
-    transform: translateY(-50%) scale(0.75);
+    right: 2px;
+    transform: translateY(-50%) scale(0.72);
   }
 }
 
@@ -4575,7 +4585,7 @@ a {
   position: relative;
   background: radial-gradient(circle at 80% 20%, rgba(19, 61, 99, 0.45) 0%, transparent 60%),
               linear-gradient(180deg, #061A2B 0%, #0A2B47 50%, #051422 100%);
-  padding: 85px 24px;
+  padding: 85px 5%;
   border-top: 1px solid rgba(212, 175, 55, 0.35);
   border-bottom: 1px solid rgba(212, 175, 55, 0.25);
   color: var(--pure-white);
@@ -4593,8 +4603,10 @@ a {
 }
 
 .drongo-section-container {
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
+  padding-right: 28px;
+  padding-left: 12px;
 }
 
 .drongo-header-badge-row {

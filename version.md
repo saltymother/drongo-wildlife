@@ -374,3 +374,17 @@
   - Redesigned State Selector Toolbar with Regional Fast Filters (All 33, North 7, South 7, East & NE 13, West & Central 6) and live instant search input
   - Upgraded dropdown selector with categorized optgroups covering all zones and corridors across India
   - Populated comprehensive wildlife dossiers, UNESCO heritage monuments, verified creator guides by Aadi, and indigenous flora & fauna for all 33 Indian states
+
+## [v1.0.29] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Bugfix | UI/UX & Layout Clearance
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Slimmed floating Tree Branch scroll navigator stem track from 54px down to 30px and shifted right offset from 18px to 8px
+  - Scaled action buttons from 38px to 30px, milestone node buttons from 24px to 19px, and perched Drongo bird indicator from 32px to 24px
+  - Reclaimed over 34px of screen width while maintaining full scroll tracking, smooth gliding, and milestone jumping
+  - Refined `.maproom-section` and `.drongo-signature-section` horizontal padding from 24px to 5% (matching expedition and media sections)
+  - Balanced `.maproom-container` and `.drongo-section-container` max-width to 1240px with margin 0 auto and subtle right safety gutter (28px right, 12px left)
+  - Eliminated all collision and visual overlap between the tree branch companion and tourist spot cards/images across all screen sizes without making the layout look off-center
