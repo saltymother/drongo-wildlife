@@ -1566,6 +1566,34 @@ a {
   margin: 0;
 }
 
+.creator-manifesto-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.creator-manifesto-body p {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.85;
+  color: #2b3a4a;
+  margin: 0;
+}
+
+.creator-manifesto-body .manifesto-pledge {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: var(--primary-ocean-blue);
+  font-weight: 600;
+  font-style: italic;
+  padding: 16px 22px;
+  background: rgba(200, 155, 60, 0.08);
+  border-left: 4px solid var(--accent-gold);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  margin-top: 6px;
+}
+
 .expedition-callout-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

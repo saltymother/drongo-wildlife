@@ -1135,6 +1135,12 @@
             return;
           }
 
+          if (targetSection === 'creator' || targetSection === 'about-creator' || targetSection === 'expeditions') {
+            closeNavDrawer();
+            document.getElementById('expeditions')?.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+
           currentFilter = targetSection;
           currentPhotoSub = 'all';
 

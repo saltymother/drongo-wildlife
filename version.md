@@ -549,3 +549,16 @@
   - Integrated high-resolution photo file drag-and-drop upload dropzone, external photo URL support, subject tagging, gear specs, and field stories
   - Added curated starter collection of high-resolution 4K wildlife photographs (Black Drongo, Rhinoceros, Bengal Tiger, Paradise Flycatcher, Jewel Bug, Living Rainforest Canopy)
   - Connected 4K Lightbox inspector with fullscreen photo views, exif settings, species taxonomic classification, and curator notes
+
+## [v1.0.42] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Content & Editorial Philosophy
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Replaced the expedition lead section title kicker with 'ABOUT THE CREATOR'
+  - Replaced section headline with 'The Vision Behind Drongo'
+  - Embedded Vaibhav's personal manifesto detailing Drongo as a love letter to India's breathing landscapes and its mission of mindful observation and conservation
+  - Added editorial typography styling (.creator-manifesto-body) and highlighted golden pledge callout for the conservation sign-off
+  - Connected 'ABOUT THE CREATOR' navigation anchors into both the primary sub-navigation bar and slide-in drawer
