@@ -155,18 +155,26 @@
     <!-- Cinematic Looping Video Background Enclosure (Strictly Contained in Rectangular Box) -->
     <div class="editorial-video-bg-container" aria-hidden="true">
       <!-- High-resolution Poster / Ambient Backdrop Image -->
-      <div class="editorial-video-poster" style="background-image: url('https://i.ytimg.com/vi/UunKFFxCMY8/maxresdefault.jpg');"></div>
+      <div class="editorial-video-poster" style="background-image: url('./assets/images/editorial_video_poster.jpg');"></div>
       
-      <!-- Video IFrame Scaled Wrapper for Seamless Cover Fit -->
-      <div class="editorial-video-iframe-wrapper">
-        <iframe
-          id="editorialIntroVideoIframe"
-          src="https://www.youtube-nocookie.com/embed/UunKFFxCMY8?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=UunKFFxCMY8&start=0&end=15&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0"
-          title="Drongo Wildlife - Ambient Introduction Background Video"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      <!-- Native Pure HTML5 Video Player (Zero Icons, Zero Controls, Pure Video Only) -->
+      <div class="editorial-video-element-wrapper">
+        <video
+          id="editorialIntroVideo"
+          class="editorial-intro-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          disablepictureinpicture
+          disableremoteplayback
           tabindex="-1"
-        ></iframe>
+          aria-hidden="true"
+        >
+          <source src="./assets/videos/editorial_wildlife_ambient_loop.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <!-- Dark Semi-Transparent High-Contrast Overlay for 100% Solid Text Legibility -->

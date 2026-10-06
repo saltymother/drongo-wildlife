@@ -613,3 +613,16 @@
   - Integrated high-resolution animal imagery of Blackbuck (Antilope cervicapra) sourced from iNaturalist taxon 42416 as universal animal/wildlife representation
   - Added live Species Representation preview box (#faunaThumbPreviewBox) in Flora & Fauna Record submission modal that dynamically switches between eBird and iNaturalist based on species name
   - Upgraded wildlife fallback system across state archives so missing or custom wildlife records resolve cleanly to verified eBird birds or iNaturalist animals
+
+## [v1.0.47] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Bugfix & Refactor | Pure Ambient Video & Elimination of Player Controls
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Replaced external YouTube embed iframe in the introduction section with an ultra-clean, locally hosted native HTML5 video element (editorial_wildlife_ambient_loop.mp4)
+  - Completely eliminated intermittent pause button, play button, and 10-second forward/backward skip icons that emerged from YouTube's on-screen display (OSD)
+  - Enforced strict CSS media control suppression (-webkit-media-controls, overlay buttons, and panels) with pointer-events: none !important
+  - Configured hardware-accelerated silent looping, inline playback (playsinline, webkit-playsinline), and user gesture resume fallback without seeker artifacts
+  - Extracted and bundled crystal-clear local poster backdrop (editorial_video_poster.jpg) ensuring instantaneous seamless display

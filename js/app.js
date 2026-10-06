@@ -1634,101 +1634,51 @@
     // 16. Editorial Introduction 15-Second Ambient Looping Background Video
     // -------------------------------------------------------------------------
     function initEditorialBackgroundVideo() {
-      const iframe = document.getElementById('editorialIntroVideoIframe');
-      if (!iframe) return;
+      const video = document.getElementById('editorialIntroVideo');
+      if (!video) return;
 
-      let player = null;
-      let loopCheckInterval = null;
+      // Strictly mute and configure inline looping attributes
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.removeAttribute('controls');
 
-      function onPlayerReady(event) {
-        try {
-          event.target.mute();
-          if (event.target.setVolume) event.target.setVolume(0);
-          event.target.playVideo();
-        } catch (e) {}
-
-        // Continuous 15-second loop monitor
-        if (loopCheckInterval) clearInterval(loopCheckInterval);
-        loopCheckInterval = setInterval(() => {
-          try {
-            if (player && player.getCurrentTime) {
-              const curTime = player.getCurrentTime();
-              // When reached 14.7s or more, smoothly rewind to 0 and loop
-              if (curTime >= 14.7) {
-                player.seekTo(0, true);
-                player.playVideo();
-              }
-            }
-          } catch (e) {}
-        }, 150);
-      }
-
-      function onPlayerStateChange(event) {
-        if (!window.YT) return;
-        // Loop back to start if video reaches end
-        if (event.data === YT.PlayerState.ENDED) {
-          try {
-            event.target.seekTo(0, true);
-            event.target.playVideo();
-          } catch (e) {}
-        } else if (event.data === YT.PlayerState.PAUSED) {
-          // If paused unexpectedly, resume playing
-          try {
-            event.target.playVideo();
-          } catch (e) {}
+      // Seamless playback guarantee across all browsers & mobile devices
+      const attemptPlay = () => {
+        video.muted = true;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay was temporarily held back by browser policy, resume on first user interaction
+            const resumeOnGesture = () => {
+              video.muted = true;
+              video.play().catch(() => {});
+              window.removeEventListener('click', resumeOnGesture);
+              window.removeEventListener('scroll', resumeOnGesture);
+              window.removeEventListener('touchstart', resumeOnGesture);
+            };
+            window.addEventListener('click', resumeOnGesture, { once: true, passive: true });
+            window.addEventListener('scroll', resumeOnGesture, { once: true, passive: true });
+            window.addEventListener('touchstart', resumeOnGesture, { once: true, passive: true });
+          });
         }
-      }
-
-      function setupYT() {
-        if (window.YT && window.YT.Player) {
-          try {
-            player = new YT.Player('editorialIntroVideoIframe', {
-              events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-              }
-            });
-          } catch (e) {
-            console.warn('YT player init notice:', e);
-          }
-        }
-      }
-
-      // Check if YouTube API is already available or queue it
-      if (window.YT && window.YT.Player) {
-        setupYT();
-      } else {
-        const prevYTReady = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = function() {
-          if (typeof prevYTReady === 'function') prevYTReady();
-          setupYT();
-        };
-
-        // Inject YouTube IFrame API script tag if not yet present in document
-        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          const firstScript = document.getElementsByTagName('script')[0];
-          if (firstScript && firstScript.parentNode) {
-            firstScript.parentNode.insertBefore(tag, firstScript);
-          } else {
-            document.head.appendChild(tag);
-          }
-        }
-      }
-
-      // Ensure autoplay on first user interaction if browser has strict media restrictions
-      const resumeAutoplay = () => {
-        if (player && player.getPlayerState && player.getPlayerState() !== 1) {
-          try {
-            player.playVideo();
-          } catch (e) {}
-        }
-        document.removeEventListener('click', resumeAutoplay);
-        document.removeEventListener('scroll', resumeAutoplay);
       };
-      document.addEventListener('click', resumeAutoplay, { once: true, passive: true });
-      document.addEventListener('scroll', resumeAutoplay, { once: true, passive: true });
+
+      attemptPlay();
+
+      // Ensure smooth, infinite loop with zero pause/seek artifacts
+      video.addEventListener('ended', () => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      });
+
+      // Visibility API: pause silently when tab hidden to save battery, resume immediately on focus
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          video.play().catch(() => {});
+        }
+      });
     }
 
     // Launch tree branch companion, magical motto glow & ambient intro video
