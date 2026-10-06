@@ -429,3 +429,17 @@
   - Re-engineered Maproom state-level views into Category A (Travel Destinations) with left AI thumbnail, title, intro, dedicated IG/YT link buttons, and structured Tourist Guidelines (Precautions, Timings, Available Facilities), and Category B (Flora & Fauna) with left tiny icon, common name, scientific name, optional description, Photos/Videos/Short Films buttons, and behavioral Spotting Tips block
   - Updated Maproom contribution modals to external URL schemas for both travel destinations and indigenous species sightings
 
+## [v1.0.33] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Photo Upload & Visuals Gallery Enhancement
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Added a dedicated, prominent '+ UPLOAD PHOTO' button with golden camera styling in the Visuals section header and connected it to the photo dispatch interface
+  - Built an interactive Photo File Upload dropzone box supporting direct photo selection from device file picker and drag-and-drop
+  - Implemented automatic client-side photo downscaling and compression via HTML5 canvas to maintain crisp quality while keeping file sizes lightweight (<80KB)
+  - Added live photo preview with filename, compressed file size badge, and instant '✕ Change Photo' removal option
+  - Updated Curator Studio dispatch form to accept direct user photo uploads with optional Instagram links, subject classification, and full observation descriptions
+  - Enhanced Visuals gallery cards to enable clicking any photograph to open and view the high-resolution image in the Drongo species lightbox
+

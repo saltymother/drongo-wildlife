@@ -5878,3 +5878,94 @@ a {
   color: #FFFFFF;
 }
 
+/* Photo File Upload Box & Preview in Dispatch Modal */
+.photo-file-upload-box {
+  background: rgba(10, 43, 71, 0.025);
+  border: 2px dashed rgba(197, 160, 89, 0.45);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+.photo-file-upload-box:hover,
+.photo-file-upload-box.dragover {
+  border-color: var(--accent-gold);
+  background: rgba(197, 160, 89, 0.07);
+  box-shadow: 0 0 16px rgba(197, 160, 89, 0.2);
+}
+.photo-dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.btn-browse-photo-styled {
+  background: #0A2B47;
+  color: #F3D99E;
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-browse-photo-styled:hover {
+  background: #123C5E;
+  color: #FFFFFF;
+  border-color: #F3D99E;
+  transform: translateY(-1px);
+}
+.photo-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.photo-preview-wrap img {
+  max-width: 100%;
+  max-height: 160px;
+  border-radius: 6px;
+  border: 1.5px solid var(--accent-gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+.photo-preview-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.preview-filename {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-ocean-blue);
+  background: rgba(10, 43, 71, 0.06);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.btn-remove-photo-preview {
+  background: none;
+  border: 1px solid #FF6B6B;
+  color: #D32F2F;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-remove-photo-preview:hover {
+  background: #D32F2F;
+  color: #FFFFFF;
+}
+

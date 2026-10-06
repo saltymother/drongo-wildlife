@@ -211,6 +211,18 @@
   const dropzoneNoteText = document.getElementById('dropzoneNoteText');
   const submitBtnText = document.getElementById('submitBtnText');
 
+  // Photo Upload Engine Elements
+  let pendingPhotoDataUrl = null;
+  const photoUploadBox = document.getElementById('photoUploadBox');
+  const hubPhotoFileInput = document.getElementById('hubPhotoFileInput');
+  const photoDropzoneContent = document.getElementById('photoDropzoneContent');
+  const btnBrowsePhoto = document.getElementById('btnBrowsePhoto');
+  const photoPreviewWrap = document.getElementById('photoPreviewWrap');
+  const photoPreviewImg = document.getElementById('photoPreviewImg');
+  const photoPreviewFilename = document.getElementById('photoPreviewFilename');
+  const btnRemovePhotoPreview = document.getElementById('btnRemovePhotoPreview');
+  const btnVisualsUploadPhoto = document.getElementById('btnVisualsUploadPhoto');
+
   // Lightbox Elements
   const lightboxModal = document.getElementById('lightboxModal');
   const closeLightboxBtn = document.getElementById('closeLightboxBtn');
@@ -501,6 +513,15 @@
           const index = parseInt(card.getAttribute('data-index'), 10);
           openLightbox(index, false);
         }
+      });
+    });
+
+    // Attach card click handlers for hub-photo-card to enlarge photo in lightbox
+    mediaGridEl.querySelectorAll('.hub-photo-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.card-delete-btn') || e.target.closest('.btn-hub-link')) return;
+        const index = parseInt(card.getAttribute('data-index'), 10);
+        openLightbox(index, false);
       });
     });
 
@@ -840,10 +861,71 @@
     }
   }
 
+  function handlePhotoFileSelection(file) {
+    if (!file) return;
+    if (!file.type || !file.type.startsWith('image/')) {
+      showToast('⚠️ Please select a valid image file (JPG, PNG, WEBP).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onerror = function() {
+      showToast('⚠️ Could not read image file. Please try another.');
+    };
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onerror = function() {
+        showToast('⚠️ Invalid image file format.');
+      };
+      img.onload = function() {
+        // Auto-scale to max 1200px and compress to JPEG 0.85 to maintain crisp quality while keeping size ~50-80KB
+        const maxDim = 1200;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+        pendingPhotoDataUrl = compressedDataUrl;
+        if (photoPreviewImg) photoPreviewImg.src = compressedDataUrl;
+        if (photoPreviewFilename) {
+          const approxKb = Math.round((compressedDataUrl.length * 0.75) / 1024);
+          photoPreviewFilename.textContent = `${file.name} (~${approxKb} KB)`;
+        }
+        if (photoDropzoneContent) photoDropzoneContent.style.display = 'none';
+        if (photoPreviewWrap) photoPreviewWrap.style.display = 'flex';
+        showToast(`✓ Photo "${file.name}" ready to publish!`);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetPhotoUploadPreview() {
+    pendingPhotoDataUrl = null;
+    if (hubPhotoFileInput) hubPhotoFileInput.value = '';
+    if (photoPreviewImg) photoPreviewImg.src = '';
+    if (photoDropzoneContent) photoDropzoneContent.style.display = 'flex';
+    if (photoPreviewWrap) photoPreviewWrap.style.display = 'none';
+  }
+
   function closeUploadModal() {
     uploadModal.classList.remove('open');
     uploadModal.setAttribute('aria-hidden', 'true');
     uploadForm.reset();
+    resetPhotoUploadPreview();
     document.body.style.overflow = '';
   }
 
@@ -856,12 +938,18 @@
       const name = (document.getElementById('hubPhotoName')?.value || '').trim();
       const sciName = (document.getElementById('hubPhotoScientific')?.value || '').trim();
       const desc = (document.getElementById('hubPhotoDesc')?.value || '').trim();
-      const igUrl = (document.getElementById('hubPhotoIgUrl')?.value || '').trim();
+      const igUrl = (document.getElementById('hubPhotoIgUrl')?.value || '').trim() || 'https://www.instagram.com/explore/tags/wildlifeindia/';
       const subject = document.getElementById('hubPhotoSubjectSelect')?.value || 'animal';
-      const thumb = document.getElementById('hubPhotoIconSelect')?.value || 'assets/images/black_drongo.jpg';
+      const fallbackThumb = document.getElementById('hubPhotoIconSelect')?.value || 'assets/images/black_drongo.jpg';
+      const finalPhoto = pendingPhotoDataUrl || fallbackThumb;
 
-      if (!name || !sciName || !desc || !igUrl) {
-        showToast('⚠️ Please fill out all required photo dispatch fields.');
+      if (!name || !sciName || !desc) {
+        showToast('⚠️ Please fill out Subject Name, Scientific Name, and Short Description.');
+        return;
+      }
+
+      if (!pendingPhotoDataUrl && !fallbackThumb) {
+        showToast('⚠️ Please upload or select a photo.');
         return;
       }
 
@@ -875,12 +963,12 @@
         section: 'Photos',
         tags: ['user-upload', 'photos', subject],
         location: 'Field Observation Site, India',
-        mediaUrl: thumb,
-        thumbIcon: thumb,
+        mediaUrl: finalPhoto,
+        thumbIcon: finalPhoto,
         description: desc,
         fieldNotes: desc,
         instagramUrl: igUrl,
-        knowMoreInfo: `Subject: ${name}\nScientific Name: ${sciName}\nSubject Classification: ${subject.toUpperCase()}\nField Notes: ${desc}\nInstagram High-Res: ${igUrl}`,
+        knowMoreInfo: `Subject: ${name}\nScientific Name: ${sciName}\nSubject Classification: ${subject.toUpperCase()}\nField Notes: ${desc}\nInstagram: ${igUrl}`,
         isUserUploaded: true,
         timestamp: Date.now()
       };
@@ -895,7 +983,7 @@
       renderGallery();
       updateFilterCounts();
       closeUploadModal();
-      showToast(`✓ "${name}" added to Photos archive with Instagram link!`);
+      showToast(`✓ "${name}" photo posted successfully to Visuals!`);
       document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
 
     } else if (sec === 'video') {
@@ -1247,6 +1335,54 @@
     });
 
     uploadForm?.addEventListener('submit', handleFormSubmit);
+
+    // Dedicated Photo Upload Listeners (Visuals Section & Dispatch Modal)
+    btnBrowsePhoto?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hubPhotoFileInput?.click();
+    });
+
+    photoUploadBox?.addEventListener('click', (e) => {
+      if (e.target.closest('#btnRemovePhotoPreview')) return;
+      hubPhotoFileInput?.click();
+    });
+
+    hubPhotoFileInput?.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) handlePhotoFileSelection(file);
+    });
+
+    btnRemovePhotoPreview?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      resetPhotoUploadPreview();
+    });
+
+    ['dragenter', 'dragover'].forEach(evtName => {
+      photoUploadBox?.addEventListener(evtName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        photoUploadBox.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(evtName => {
+      photoUploadBox?.addEventListener(evtName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        photoUploadBox.classList.remove('dragover');
+      });
+    });
+
+    photoUploadBox?.addEventListener('drop', (e) => {
+      const file = e.dataTransfer?.files?.[0];
+      if (file) handlePhotoFileSelection(file);
+    });
+
+    btnVisualsUploadPhoto?.addEventListener('click', (e) => {
+      e.preventDefault();
+      openUploadModal(e);
+      setUploadSection('photos');
+    });
 
     // Global Delegated click listener for any button with .trigger-upload-modal
     document.addEventListener('click', (e) => {

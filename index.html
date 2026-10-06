@@ -183,10 +183,16 @@
     <div class="section-header-block">
       <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; width: 100%;">
         <h2>Visuals</h2>
-        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsAddEntry" aria-label="Add Dispatch to Visuals External Hub">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ ADD DISPATCH</span>
-        </button>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsUploadPhoto" data-upload-section="photos" aria-label="Upload Photo to Visuals Section">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span>+ UPLOAD PHOTO</span>
+          </button>
+          <button class="nav-action-btn btn-nav-secondary trigger-upload-modal" id="btnVisualsAddEntry" data-upload-section="photos" aria-label="Add Dispatch to Visuals External Hub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>+ ADD DISPATCH</span>
+          </button>
+        </div>
       </div>
 
       <!-- Interactive Filter Nav Tabs: Photos, Videos & Short Films, Information, Travelling Guide -->
@@ -1037,6 +1043,36 @@
 
           <!-- PANE 1: Photos Dispatch Form -->
           <div id="hubPanePhotos" class="hub-form-pane">
+            <!-- Dedicated Photo Upload Option -->
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <span><strong>Select / Upload Photo *</strong></span>
+                <span style="font-size: 11px; color: var(--accent-gold);">Auto-scaled &amp; compressed for rapid loading</span>
+              </label>
+              <div class="photo-file-upload-box" id="photoUploadBox">
+                <input type="file" id="hubPhotoFileInput" accept="image/*" style="display: none;" />
+                <div class="photo-dropzone-content" id="photoDropzoneContent">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-gold); margin-bottom: 4px;">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 2px;">Click to Browse Photo or Drag &amp; Drop Here</div>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">Supports JPG, PNG, WEBP camera stills &amp; macro field photography</div>
+                  <button type="button" class="btn-browse-photo-styled" id="btnBrowsePhoto">
+                    📁 Choose Photo from Device
+                  </button>
+                </div>
+                <div class="photo-preview-wrap" id="photoPreviewWrap" style="display: none;">
+                  <img id="photoPreviewImg" src="" alt="Selected Photo Preview" />
+                  <div class="photo-preview-details">
+                    <span class="preview-filename" id="photoPreviewFilename">photo.jpg</span>
+                    <button type="button" class="btn-remove-photo-preview" id="btnRemovePhotoPreview">✕ Change Photo</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="form-group" style="margin-bottom: 12px;">
               <label for="hubPhotoName">Subject Name *</label>
               <input type="text" id="hubPhotoName" class="form-input" placeholder="e.g. Black Drongo / Indian Jewel Beetle" required />
@@ -1053,8 +1089,8 @@
             </div>
 
             <div class="form-group" style="margin-bottom: 12px;">
-              <label for="hubPhotoIgUrl">Instagram URL (High-Res Still) *</label>
-              <input type="url" id="hubPhotoIgUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
+              <label for="hubPhotoIgUrl">Instagram URL (Optional link to high-res still)</label>
+              <input type="url" id="hubPhotoIgUrl" class="form-input" placeholder="https://www.instagram.com/p/... (or leave blank)" />
             </div>
 
             <div class="form-grid-2" style="margin-bottom: 8px;">
@@ -1069,7 +1105,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="hubPhotoIconSelect">Thumbnail Icon</label>
+                <label for="hubPhotoIconSelect">Or Choose Baseline Icon</label>
                 <select id="hubPhotoIconSelect" class="form-select">
                   <option value="assets/images/black_drongo.jpg">🦅 Drongo (Avian)</option>
                   <option value="assets/images/golden_paper_wasp_macro.jpg">🦋 Wasp (Insect Macro)</option>
