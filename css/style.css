@@ -3140,18 +3140,33 @@ a {
   margin: 0 auto;
 }
 
-/* State Chips Bar */
+/* State Chips Toolbar - Upgraded for 33 All India Corridors */
 .maproom-chips-toolbar {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 14px;
   margin-bottom: 28px;
   background: #FFFFFF;
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: 1px solid rgba(10, 43, 71, 0.1);
-  box-shadow: 0 4px 14px rgba(10, 43, 71, 0.04);
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 43, 71, 0.12);
+  box-shadow: 0 4px 18px rgba(10, 43, 71, 0.05);
+}
+
+.chips-toolbar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(10, 43, 71, 0.07);
+}
+
+.chips-label-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .chips-label {
@@ -3163,11 +3178,116 @@ a {
   text-transform: uppercase;
 }
 
+.chips-counter-badge {
+  background: rgba(197, 160, 89, 0.15);
+  color: var(--accent-gold);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.chips-zone-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.zone-filter-btn {
+  background: var(--off-white-bg);
+  color: var(--text-dark);
+  border: 1px solid rgba(10, 43, 71, 0.15);
+  border-radius: 14px;
+  padding: 4px 11px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zone-filter-btn:hover {
+  background: rgba(197, 160, 89, 0.12);
+  border-color: var(--accent-gold);
+  color: var(--primary-ocean-blue);
+}
+
+.zone-filter-btn.active {
+  background: var(--primary-ocean-blue);
+  color: #F3D99E;
+  border-color: var(--accent-gold);
+  box-shadow: 0 2px 6px rgba(10, 43, 71, 0.18);
+}
+
+.chips-search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  border: 1px solid rgba(10, 43, 71, 0.16);
+  border-radius: 20px;
+  padding: 4px 12px;
+  transition: all 0.2s ease;
+}
+
+.chips-search-box:focus-within {
+  border-color: var(--accent-gold);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
+}
+
+.chips-search-box svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.chips-search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  color: var(--primary-ocean-blue);
+  width: 170px;
+}
+
+.chips-search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.chips-search-box button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 0;
+  line-height: 1;
+}
+
 .chips-flex-row {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-gold) rgba(10, 43, 71, 0.05);
+}
+
+.chips-flex-row::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chips-flex-row::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 4px;
 }
 
 .state-chip-btn {
@@ -3175,12 +3295,13 @@ a {
   color: var(--primary-ocean-blue);
   border: 1px solid rgba(10, 43, 71, 0.18);
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 5px 13px;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .state-chip-btn:hover {
@@ -3194,6 +3315,10 @@ a {
   color: #F3D99E;
   border-color: var(--accent-gold);
   box-shadow: 0 2px 8px rgba(10, 43, 71, 0.2);
+}
+
+.state-chip-btn.hidden {
+  display: none !important;
 }
 
 /* Dual Column Layout Grid */

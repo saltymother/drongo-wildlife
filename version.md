@@ -361,3 +361,16 @@
   - Added dedicated thumbnail delete buttons ('🗑️ Delete') on tourist spot user dispatches and field sighting cards
   - Added full-modal delete action ('Delete This Photo / Video') inside the enlarged Lightbox viewer with instant localStorage synchronization and state dossier re-rendering
   - Added removal options for custom traveler tips and sightings, with confirmation prompts and toast notifications
+## [v1.0.28] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Geospatial Cartography & All India Corridors
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Expanded Maproom to cover all 28 Indian States and key Union Territories (33 distinct wildlife corridors in total)
+  - Upgraded SVG cartographic map of India with individual, geometrically accurate vector boundaries for every state and UT
+  - Downloaded official state seals and emblems from Wikipedia for all newly integrated states and territories into assets/images/emblems/
+  - Redesigned State Selector Toolbar with Regional Fast Filters (All 33, North 7, South 7, East & NE 13, West & Central 6) and live instant search input
+  - Upgraded dropdown selector with categorized optgroups covering all zones and corridors across India
+  - Populated comprehensive wildlife dossiers, UNESCO heritage monuments, verified creator guides by Aadi, and indigenous flora & fauna for all 33 Indian states

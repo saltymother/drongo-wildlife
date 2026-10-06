@@ -1622,6 +1622,1135 @@
         }
       ]
     }
+,
+    'uttar_pradesh': {
+      id: 'uttar_pradesh',
+      code: 'IN-UP',
+      name: 'Uttar Pradesh',
+      zone: 'north',
+      tagline: 'Dudhwa Terai Canopies, Chambal Ravines & Ancient Sacred Ghats',
+      emblemTitle: 'Official Seal of Uttar Pradesh',
+      emblemDescription: 'Matsya (Twin Celestial Fishes) symbolizing sovereignty, with the Bow and Arrow of Lord Rama and confluence of Ganga-Yamuna rivers.',
+      emblemUrl: 'assets/images/emblems/uttar_pradesh_emblem.png',
+      biome: 'Sub-Himalayan Terai Sal Corridors & Gangetic Alluvial Riverine Plains',
+      touristSpots: [
+        {
+          id: 'spot-up-dudhwa',
+          name: 'Dudhwa National Park & Tiger Reserve',
+          subName: 'Northern Terai Alluvial Grasslands & Sal Forest Canopy',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          description: 'Lying along the Indo-Nepal border in Lakhimpur Kheri, Dudhwa forms one of the last remaining strongholds of the Terai ecosystem. It is renowned for viable populations of Tigers, Indian Rhinoceros, and Swamp Deer.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Book open-top gypsy safaris in the Bankey Tal and Salukapur ranges for high concentrations of Swamp Deer and Rhinos. Morning fog burns off by 8:30 AM.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-up-chambal',
+          name: 'National Chambal Sanctuary',
+          subName: 'Protected Riverine Haven for Critically Endangered Gharials & Skimmers',
+          imageUrl: 'assets/images/gharial_gandak.jpg',
+          description: 'Stretching along the pristine Chambal River, this sanctuary is India\'s premier reserve for the critically endangered Fish-eating Gharial, Marsh Mugger, Gangetic Dolphin, and rare Indian Skimmer.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Motorized eco-boats near Bateshwar or Pinahat provide steady viewing of nesting Indian Skimmers on sandbanks. Use a 500mm telephoto lens for skimmer skim-feeding flights.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-up-pilibhit',
+          name: 'Pilibhit Tiger Reserve & Chuka Beach',
+          subName: 'Upper Gangetic Plain Sal Canopies & Sharda River Floodplains',
+          imageUrl: 'assets/images/bengal_tiger.jpg',
+          description: 'Awarded the international TX2 award for doubling its tiger population ahead of target, Pilibhit spans over 800 sq km of lush sal canopies, water reservoirs, and tall grassland floodplains.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Stay at the Chuka eco-huts overlooking the Sharda Sagar reservoir. Sunset reflections across the water create magical backdrops for waterfowl photography.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-up-1',
+          name: 'Swamp Deer (Barasingha)',
+          scientific: 'Rucervus duvaucelii',
+          type: 'Herbivore Mammal',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Uttar Pradesh, noted for its magnificent twelve-tined antlers and adaptation to wet marshlands.',
+          sightings: []
+        },
+        {
+          id: 'spec-up-2',
+          name: 'Sarus Crane',
+          scientific: 'Antigone antigone',
+          type: 'Riparian Avian',
+          imageUrl: 'assets/images/sarus_crane.jpg',
+          notes: 'The world\'s tallest flying bird, reverently protected in Uttar Pradesh farming villages as an emblem of lifelong devotion.',
+          sightings: []
+        },
+        {
+          id: 'spec-up-3',
+          name: 'Gharial',
+          scientific: 'Gavialis gangeticus',
+          type: 'Riverine Crocodilian',
+          imageUrl: 'assets/images/gharial_gandak.jpg',
+          notes: 'Distinctive long, narrow snout with a bulbous pot (ghara) at the tip in mature males, specialized for catching fish.',
+          sightings: []
+        }
+      ]
+    },
+    'himachal': {
+      id: 'himachal',
+      code: 'IN-HP',
+      name: 'Himachal Pradesh',
+      zone: 'north',
+      tagline: 'The Western Himalayan Crest & High-Altitude Glacial Biomes',
+      emblemTitle: 'Official Emblem of Himachal Pradesh',
+      emblemDescription: 'Three snow-clad mountain peaks flanked by the sacred Ashoka lion capital over waves of three Himalayan rivers.',
+      emblemUrl: 'assets/images/emblems/himachal_emblem.svg',
+      biome: 'Sub-Alpine Coniferous, Moist Temperate Deodar & High Trans-Himalayan Tundra',
+      touristSpots: [
+        {
+          id: 'spot-hp-ghnp',
+          name: 'Great Himalayan National Park',
+          subName: 'UNESCO World Heritage High-Altitude Biodiversity Hotspot',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'A pristine, roadless mountain wilderness in Kullu district preserving untouched alpine meadows, glacial valleys, and ancient forests of oak and deodar cedar.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Multi-day trekking permits must be obtained from Sai Ropa headquarters. Carry warm fleece layers and weather-sealed camera equipment for sudden snow flurries.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-hp-pin',
+          name: 'Pin Valley National Park',
+          subName: 'High Trans-Himalayan Cold Desert & Snow Leopard Sanctuary',
+          imageUrl: 'assets/images/paradise_flycatcher.jpg',
+          description: 'Located in the cold desert district of Spiti, Pin Valley is home to endangered Snow Leopards, Siberian Ibex, Tibetan Gazelles, and rare alpine medicinal herbs.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Winter expeditions in February-March offer the greatest probability of Snow Leopard tracking along cliff ridges. Carry heavy-duty carbon fiber tripods.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-hp-1',
+          name: 'Western Tragopan (Jujurana)',
+          scientific: 'Tragopan melanocephalus',
+          type: 'Alpine Pheasant',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Known locally as the King of Birds, adorned with crimson neck feathers and white pearl-like spotting across midnight black plumage.',
+          sightings: []
+        },
+        {
+          id: 'spec-hp-2',
+          name: 'Snow Leopard',
+          scientific: 'Panthera uncia',
+          type: 'Apex Alpine Feline',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          notes: 'The Ghost of the Mountains, perfectly camouflaged against rocky scree slopes with a long bushy tail for balance and warmth.',
+          sightings: []
+        }
+      ]
+    },
+    'punjab': {
+      id: 'punjab',
+      code: 'IN-PB',
+      name: 'Punjab',
+      zone: 'north',
+      tagline: 'The Five Rivers Basin & Harike Ramsar Wetland Flyway',
+      emblemTitle: 'Official Emblem of Punjab',
+      emblemDescription: 'Ashoka Lion capital surrounded by wheat stalks and crossed swords, symbolizing agriculture and bravery.',
+      emblemUrl: 'assets/images/emblems/punjab_emblem.svg',
+      biome: 'Indo-Gangetic Alluvial Floodplains & Ramsar Wetland Marshes',
+      touristSpots: [
+        {
+          id: 'spot-pb-harike',
+          name: 'Harike Pattan Wetland & Bird Sanctuary',
+          subName: 'Largest Freshwater Ramsar Wetland in Northern India',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'Formed at the confluence of the Beas and Sutlej rivers, Harike attracts hundreds of thousands of migratory waterfowl each winter along the Central Asian Flyway.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Hire a birding guide at the Harike barrage watchtower. Sunrise mist over the Beas confluence creates ethereal silhouettes of diving ducks and skimmers.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-pb-abohar',
+          name: 'Abohar Wildlife Sanctuary',
+          subName: 'Community-Protected Blackbuck & Nilgai Sanctuary',
+          imageUrl: 'assets/images/bengal_tiger.jpg',
+          description: 'An extraordinary sanctuary spanning 13 Bishnoi villages where thousands of wild Blackbuck roam freely through open agricultural fields protected by local residents.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Always seek permission from village elders when walking farmland perimeter paths. The golden light at 4:30 PM highlights bounding Blackbuck silhouettes.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-pb-1',
+          name: 'Indus River Dolphin',
+          scientific: 'Platanista minor',
+          type: 'Freshwater Cetacean',
+          imageUrl: 'assets/images/gangetic_dolphin.jpg',
+          notes: 'One of the rarest mammals on earth, surviving in a tiny protected stretch of the Beas River in Punjab.',
+          sightings: []
+        },
+        {
+          id: 'spec-pb-2',
+          name: 'Blackbuck',
+          scientific: 'Antilope cervicapra',
+          type: 'Fast Grassland Antelope',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Punjab, famous for spiralling corkscrew horns and incredible leaping speed.',
+          sightings: []
+        }
+      ]
+    },
+    'haryana': {
+      id: 'haryana',
+      code: 'IN-HR',
+      name: 'Haryana',
+      zone: 'north',
+      tagline: 'Sultanpur Ramsar Waterbird Basins & Shivalik Ridge Foothills',
+      emblemTitle: 'Official Emblem of Haryana',
+      emblemDescription: 'Ashoka lion capital rising above a blooming lotus over an emerging sun, framed by stalks of wheat.',
+      emblemUrl: 'assets/images/emblems/haryana_emblem.svg',
+      biome: 'Semi-Arid Scrub, Shivalik Sal Foothills & Ramsar Freshwater Lakes',
+      touristSpots: [
+        {
+          id: 'spot-hr-sultanpur',
+          name: 'Sultanpur National Park',
+          subName: 'Premier Migratory Waterbird Ramsar Haven in Gurugram',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'A renowned bird sanctuary comprising open aquatic marshes, mounds, and acacia woodlands hosting over 250 species of resident and migratory birds.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The four high vantage watchtowers offer 360-degree views of resting pelicans, bar-headed geese, and painted storks. Bring binoculars or 400mm+ telephoto.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-hr-kalesar',
+          name: 'Kalesar National Park',
+          subName: 'Shivalik Foothills Dense Sal Forest & Leopard Sanctuary',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          description: 'Spanning over 13,000 acres in Yamunanagar along the Yamuna river, Kalesar features dense sal, khair, and shisham forests harboring leopards, barking deer, and wild boars.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Drive along the Hathnikund Barrage road in early morning for elephant corridors and red junglefowl crossings.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-hr-1',
+          name: 'Black Francolin',
+          scientific: 'Francolinus francolinus',
+          type: 'Grassland Game Bird',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Official state bird of Haryana, noted for its ringing metallic song echoing across grasslands at dawn.',
+          sightings: []
+        }
+      ]
+    },
+    'delhi': {
+      id: 'delhi',
+      code: 'IN-DL',
+      name: 'Delhi (NCR)',
+      zone: 'north',
+      tagline: 'The Northern Aravalli Biodiversity Ridge & Yamuna Riparian Corridors',
+      emblemTitle: 'National Emblem of India (Delhi NCR)',
+      emblemDescription: 'Lion Capital of Ashoka symbolizing courage, power, and sovereign truth (Satyameva Jayate).',
+      emblemUrl: 'assets/images/emblems/delhi_emblem.svg',
+      biome: 'Tropical Thorn Scrub, Aravalli Quartzite Ridge & Riverine Floodplains',
+      touristSpots: [
+        {
+          id: 'spot-dl-asola',
+          name: 'Asola Bhatti Wildlife Sanctuary',
+          subName: 'Southern Aravalli Ridge Corridor & Reclaimed Lake Basin',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Located on the southern rim of Delhi, Asola Bhatti serves as a crucial wildlife corridor connecting the Aravalli hills with Sariska, hosting leopards, striped hyenas, and golden jackals.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Visit the Neeli Jheel trail early morning on bicycle or foot. The azure waters against rocky sandstone cliffs attract painted sandgrouse.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-dl-yamuna',
+          name: 'Yamuna Biodiversity Park',
+          subName: 'Restored Riverine Wetland Ecosystem of the National Capital',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'An ecologically restored river floodplain sanctuary featuring native wetlands, tall phragmites reeds, and hundreds of wintering diving ducks.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Guided nature trails led by university botanists showcase native heritage trees like Ronj, Dhak, and Khair.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-dl-1',
+          name: 'Nilgai (Blue Bull)',
+          scientific: 'Boselaphus tragocamelus',
+          type: 'Large Forest Antelope',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Delhi, thriving along the thorny thickets of the southern ridge.',
+          sightings: []
+        }
+      ]
+    },
+    'jammu_kashmir': {
+      id: 'jammu_kashmir',
+      code: 'IN-JK',
+      name: 'Jammu & Kashmir',
+      zone: 'north',
+      tagline: 'The Valley of Pir Panjal, Dachigam Oak Corridors & Dal Lake',
+      emblemTitle: 'Official Emblem of Jammu & Kashmir',
+      emblemDescription: 'Ashoka lion capital atop lotus petals flanked by two grain sheaves over the Pir Panjal mountain range.',
+      emblemUrl: 'assets/images/emblems/jammu_kashmir_emblem.svg',
+      biome: 'Temperate Coniferous, Broadleaved Deciduous Valleys & Sub-Alpine Meadows',
+      touristSpots: [
+        {
+          id: 'spot-jk-dachigam',
+          name: 'Dachigam National Park',
+          subName: 'Last Stronghold of the Critically Endangered Kashmir Stag (Hangul)',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Located just 22 km from Srinagar, Dachigam ranges from 5,500 ft to 14,000 ft, featuring pristine oak and conifer canopies along the Dagwan River.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'October is the Hangul rutting season; their resonant bugling echoes across Lower Dachigam. Enter early at 7:00 AM.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-jk-dal',
+          name: 'Hokersar Ramsar Wetland & Dal Lake',
+          subName: 'Central Asian Flyway Avian Haven in Kashmir Valley',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'Known as the Queen of Wetlands, Hokersar hosts up to half a million migratory ducks, greylag geese, and mallards every winter.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Explore via traditional shikara before sunrise for mist-shrouded reflections of snow-covered Pir Panjal peaks.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-jk-1',
+          name: 'Kashmir Stag (Hangul)',
+          scientific: 'Cervus hanglu hanglu',
+          type: 'Critically Endangered Deer',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'The state animal of Jammu & Kashmir, distinguished by its magnificent spreading antlers with 11 to 16 points.',
+          sightings: []
+        }
+      ]
+    },
+    'andhra_pradesh': {
+      id: 'andhra_pradesh',
+      code: 'IN-AP',
+      name: 'Andhra Pradesh',
+      zone: 'south',
+      tagline: 'Eastern Ghats Nallamala Tiger Corridors & Coringa Mangroves',
+      emblemTitle: 'Official Emblem of Andhra Pradesh',
+      emblemDescription: 'Purna Ghatam (Vase of Plenty) adorned with traditional Amaravati Buddhist floral motifs and Ashoka Lions.',
+      emblemUrl: 'assets/images/emblems/andhra_pradesh_emblem.svg',
+      biome: 'Tropical Dry Deciduous Eastern Ghats, Coastal Mangroves & Deltaic Estuaries',
+      touristSpots: [
+        {
+          id: 'spot-ap-srisailam',
+          name: 'Nagarjunsagar-Srisailam Tiger Reserve',
+          subName: 'India\'s Largest Tiger Reserve along the Krishna River Gorge',
+          imageUrl: 'assets/images/bengal_tiger.jpg',
+          description: 'Spanning five districts across the rugged Nallamala Hills, this massive 3,728 sq km reserve cradles deep canyons, bamboo brakes, and dense tiger territories.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The ghat road between Dornala and Srisailam passes through prime tiger country. Stop at Phalangadhara for deep valley overlooks.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-ap-coringa',
+          name: 'Coringa Wildlife Sanctuary',
+          subName: 'Godavari Estuary Mangrove Swamps & Fishing Cat Sanctuary',
+          imageUrl: 'assets/images/sundarbans_tiger.jpg',
+          description: 'The second largest mangrove forest on India\'s east coast, renowned for its extensive wooden boardwalks over tidal creeks and high density of Fishing Cats.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Low tide boat safaris reveal hundreds of mudskippers and fiddler crabs on exposed mudbanks.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-ap-1',
+          name: 'Blackbuck',
+          scientific: 'Antilope cervicapra',
+          type: 'Grassland Antelope',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Andhra Pradesh, celebrated in ancient Telugu literature for grace and agility.',
+          sightings: []
+        }
+      ]
+    },
+    'telangana': {
+      id: 'telangana',
+      code: 'IN-TG',
+      name: 'Telangana',
+      zone: 'south',
+      tagline: 'Deccan Plateau Granitic Ridges & Amrabad Deep Tiger Canyons',
+      emblemTitle: 'Official Emblem of Telangana',
+      emblemDescription: 'Kakatiya Kala Thoranam arch enclosing Charminar with the Ashoka Lion Capital at the crown.',
+      emblemUrl: 'assets/images/emblems/telangana_emblem.svg',
+      biome: 'Southern Tropical Dry Deciduous & Granitic Hillock Scrublands',
+      touristSpots: [
+        {
+          id: 'spot-tg-amrabad',
+          name: 'Amrabad Tiger Reserve',
+          subName: 'Nallamala Plateau Tiger Stronghold & Krishna River Valley',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          description: 'A hilly, rugged tiger sanctuary spanning 2,611 sq km, home to the indigenous Chenchu tribe, leopards, sloth bears, and packs of dholes.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The Farhabad viewpoint offers sweeping vistas of endless teak and bamboo hills rolling towards the horizon.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-tg-kawal',
+          name: 'Kawal Tiger Reserve',
+          subName: 'Godavari Basin Teak Canopies & Wildlife Corridors',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Located in the northern district of Mancherial, Kawal protects lush teak and bamboo forests vital for connecting Central Indian wildlife corridors.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Best explored between November and February when waterholes attract herds of spotted deer, sambar, and nilgai.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-tg-1',
+          name: 'Spotted Deer (Chital)',
+          scientific: 'Axis axis',
+          type: 'Herbivore Mammal',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Telangana, roaming in large herds through deciduous teak woodlands.',
+          sightings: []
+        },
+        {
+          id: 'spec-tg-2',
+          name: 'Indian Roller (Pala Pitta)',
+          scientific: 'Coracias benghalensis',
+          type: 'Acrobatic Avian',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Sacred state bird with brilliant sapphire and turquoise wing flashes visible during display flights.',
+          sightings: []
+        }
+      ]
+    },
+    'goa': {
+      id: 'goa',
+      code: 'IN-GA',
+      name: 'Goa',
+      zone: 'south',
+      tagline: 'Western Ghats Sahyadri Biodiversity Crest & Estuarine Mangroves',
+      emblemTitle: 'Official Emblem of Goa',
+      emblemDescription: 'Vriksha Deepa (traditional brass lamp of light) crowned with the Ashoka Lion Capital, ringed with coconut fronds.',
+      emblemUrl: 'assets/images/emblems/goa_emblem.svg',
+      biome: 'Tropical Wet Evergreen, Semi-Evergreen & Coastal Estuarine Mangroves',
+      touristSpots: [
+        {
+          id: 'spot-ga-mollem',
+          name: 'Bhagwan Mahaveer Sanctuary & Mollem National Park',
+          subName: 'Pristine Western Ghats Rainforest & Dudhsagar Waterfall Canyon',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Nestled on Goa\'s eastern border along the Sahyadri range, Mollem features dense canopy rainforests, dramatic gorges, and the roaring four-tiered Dudhsagar Waterfalls.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The monsoon and post-monsoon months (October-December) bring the lush emerald canopies to life. Look for endemic pit vipers and flying lizards.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-ga-salimali',
+          name: 'Dr. Salim Ali Bird Sanctuary',
+          subName: 'Chorão Island Tidal Estuarine Mangrove Biosphere',
+          imageUrl: 'assets/images/sundarbans_tiger.jpg',
+          description: 'Accessible only by ferry across the Mandovi River, this sanctuary protects dense mangrove ecosystems home to mudskippers, otters, and wintering migratory waterbirds.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Hire a silent rowboat at high tide to enter narrow mangrove channels where kingfishers and night herons hunt.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-ga-1',
+          name: 'Gaur (Indian Bison)',
+          scientific: 'Bos gaurus',
+          type: 'Massive Herbivore',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Goa, the largest wild bovine in the world, with characteristic muscular crest and white stockings.',
+          sightings: []
+        }
+      ]
+    },
+    'chhattisgarh': {
+      id: 'chhattisgarh',
+      code: 'IN-CG',
+      name: 'Chhattisgarh',
+      zone: 'west',
+      tagline: 'Bastar Sal Canopies, Kanger Subterranean Caves & Wild Buffalo',
+      emblemTitle: 'Official Emblem of Chhattisgarh',
+      emblemDescription: 'Circular emblem surrounded by 36 fort bastions symbolizing the 36 royal forts, with ears of paddy and Ashoka Lions.',
+      emblemUrl: 'assets/images/emblems/chhattisgarh_emblem.svg',
+      biome: 'Central Indian Moist Deciduous Sal Forests, Plateaus & Riverine Basins',
+      touristSpots: [
+        {
+          id: 'spot-cg-kanger',
+          name: 'Kanger Ghati National Park',
+          subName: 'Bastar Subterranean Limestone Karst Caves & Tirathgarh Falls',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'A geological marvel in Bastar district featuring deep ravines, cascading waterfalls, and subterranean limestone caves like Kotumsar with blind cave-fish.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Hire local forest department spelunking guides with torches for Kotumsar and Dandak cave explorations.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-cg-indravati',
+          name: 'Indravati Tiger Reserve',
+          subName: 'Southern Wild Buffalo Sanctuary along Indravati River',
+          imageUrl: 'assets/images/bengal_tiger.jpg',
+          description: 'Spanning over 2,799 sq km along the Indravati River, this remote wilderness is one of the last remaining refuges of the endangered wild water buffalo in Central India.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Visit during winter months for river bank tiger sightings and rare hill myna acoustic calls.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-cg-1',
+          name: 'Wild Water Buffalo',
+          scientific: 'Bubalus arnee',
+          type: 'Endangered Bovine',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Chhattisgarh, distinguished by magnificent spreading horns up to 2 meters wide.',
+          sightings: []
+        },
+        {
+          id: 'spec-cg-2',
+          name: 'Bastar Hill Myna',
+          scientific: 'Gracula religiosa peninsularis',
+          type: 'Mimicry Avian',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Official state bird of Chhattisgarh, famous for astonishing vocal mimicry of human speech.',
+          sightings: []
+        }
+      ]
+    },
+    'jharkhand': {
+      id: 'jharkhand',
+      code: 'IN-JH',
+      name: 'Jharkhand',
+      zone: 'east',
+      tagline: 'Chota Nagpur Plateau Elephants, Betla Sal Forests & Waterfalls',
+      emblemTitle: 'Official Seal of Jharkhand',
+      emblemDescription: 'Concentric circles featuring dancing cultural figures, white elephants, bright red Palash flowers, and the Ashoka capital.',
+      emblemUrl: 'assets/images/emblems/jharkhand_emblem.png',
+      biome: 'Chota Nagpur Plateau Dry & Moist Deciduous Sal Forests',
+      touristSpots: [
+        {
+          id: 'spot-jh-betla',
+          name: 'Betla National Park & Palamu Tiger Corridor',
+          subName: 'Historic Site of the World\'s First Tiger Census in 1932',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          description: 'Located in Latehar district, Betla features ancient 16th-century Chero dynasty brick forts rising dramatically out of dense sal, bamboo, and mahua forests.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Climb the watchtower near the Purana Qila fort for panoramic sightings of wild elephant herds crossing the Koel riverbed.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-jh-dalma',
+          name: 'Dalma Wildlife Sanctuary',
+          subName: 'Subarnarekha River Asian Elephant Migration Corridor',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          description: 'Rising atop the Dalma mountain range overlooking Jamshedpur, this sanctuary provides vital refuge for migratory herds of Asian Elephants.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Drive up the winding 11 km hill road in late afternoon; elephant watering holes near the Pindrabera rest house offer close observation.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-jh-1',
+          name: 'Asian Elephant',
+          scientific: 'Elephas maximus',
+          type: 'Keystone Megafauna',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Jharkhand, roaming ancestral migratory corridors through the Sal forests of Chota Nagpur.',
+          sightings: []
+        }
+      ]
+    },
+    'sikkim': {
+      id: 'sikkim',
+      code: 'IN-SK',
+      name: 'Sikkim',
+      zone: 'east',
+      tagline: 'Khangchendzonga UNESCO Biosphere & Himalayan Red Panda Peaks',
+      emblemTitle: 'Official Emblem of Sikkim',
+      emblemDescription: 'Khanda-khorlo (Lotus and Buddhist Dharma Wheel) flanked by Tibetan auspicious clouds and lotus blossom.',
+      emblemUrl: 'assets/images/emblems/sikkim_emblem.svg',
+      biome: 'Sub-Alpine Coniferous, Rhododendron Shrub & High Himalayan Glacial Pastures',
+      touristSpots: [
+        {
+          id: 'spot-sk-kcnp',
+          name: 'Khangchendzonga National Park',
+          subName: 'UNESCO Mixed World Heritage High Himalayan Biosphere',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Dominating western Sikkim beneath the towering 8,586m Mt. Khangchendzonga, this park is an unmatched alpine wilderness of glaciers, sacred lakes, and red panda forests.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The Goecha La trek provides breathtaking close-up views of the eastern face of Kangchenjunga. April-May brings blooming red and pink rhododendrons.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-sk-singba',
+          name: 'Singba Rhododendron Sanctuary',
+          subName: 'Yumthang Valley World of Floral Rainbows',
+          imageUrl: 'assets/images/peach_hibiscus_flower.jpg',
+          description: 'Located in North Sikkim\'s Yumthang Valley along the Lachung River, Singba preserves over forty distinct rhododendron species blooming in a riot of alpine color.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Macro lenses are indispensable for photographing delicate Himalayan orchids and dew-kissed rhododendron petals.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-sk-1',
+          name: 'Red Panda',
+          scientific: 'Ailurus fulgens',
+          type: 'Arboreal Mammal',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          notes: 'Official state animal of Sikkim, with cinnamon-red fur and ringed tail, feeding on tender bamboo shoots in misty oak-rhododendron canopies.',
+          sightings: []
+        },
+        {
+          id: 'spec-sk-2',
+          name: 'Blood Pheasant',
+          scientific: 'Ithaginis cruentus',
+          type: 'High-Altitude Avian',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Official state bird of Sikkim, with crimson splashes across breast plumage, roaming alpine conifer forests up to 4,500m.',
+          sightings: []
+        }
+      ]
+    },
+    'arunachal': {
+      id: 'arunachal',
+      code: 'IN-AR',
+      name: 'Arunachal Pradesh',
+      zone: 'east',
+      tagline: 'Land of the Dawn-Lit Mountains, Namdapha Felines & Hornbills',
+      emblemTitle: 'Official Emblem of Arunachal Pradesh',
+      emblemDescription: 'Mithun head flanked by two Great Hornbills, rising above snow-peaked crests of the Eastern Himalayas.',
+      emblemUrl: 'assets/images/emblems/arunachal_emblem.svg',
+      biome: 'Tropical Wet Rainforest, Subtropical Montane & Alpine Tundra',
+      touristSpots: [
+        {
+          id: 'spot-ar-namdapha',
+          name: 'Namdapha National Park & Tiger Reserve',
+          subName: 'Biodiversity Hotspot Harboring 4 Big Cat Species in Changlang',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'India\'s easternmost wilderness jewel, Namdapha spans 1,985 sq km of primary tropical rainforest to alpine peaks. It is the only park on Earth home to Tigers, Leopards, Snow Leopards, and Clouded Leopards.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Camp at Deban on the Noa-Dihing River. Early morning jungle treks yield sightings of the endangered Hoolock Gibbon and White-bellied Heron.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-ar-pakke',
+          name: 'Pakke Tiger Reserve & Hornbill Nesting Corridor',
+          subName: 'Community-Protected Sanctuary for Four Hornbill Species',
+          imageUrl: 'assets/images/paradise_flycatcher.jpg',
+          description: 'Nestled in East Kameng district along the Kameng River, Pakke has won international acclaim for Nyishi tribal community hornbill nest adoption programs.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Visit during the annual Pakke Paga Hornbill Festival in January. Evening roost flights of hundreds of Wreathed Hornbills are breathtaking.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-ar-1',
+          name: 'Great Hornbill',
+          scientific: 'Buceros bicornis',
+          type: 'Canopy Avian',
+          imageUrl: 'assets/images/racket_tailed_drongo.jpg',
+          notes: 'Official state bird of Arunachal Pradesh, distinguished by massive yellow-black casque and booming wingbeats sounding like incoming trains.',
+          sightings: []
+        },
+        {
+          id: 'spec-ar-2',
+          name: 'Mithun (Gayal)',
+          scientific: 'Bos frontalis',
+          type: 'Indigenous Bovine',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Sacred semi-domesticated bovine of indigenous hill tribes, symbolizing status, prosperity, and ecological harmony.',
+          sightings: []
+        }
+      ]
+    },
+    'meghalaya': {
+      id: 'meghalaya',
+      code: 'IN-ML',
+      name: 'Meghalaya',
+      zone: 'east',
+      tagline: 'The Abode of Clouds, Living Root Bridges & Nokrek Biosphere',
+      emblemTitle: 'Official Seal of Meghalaya',
+      emblemDescription: 'Ashoka lion capital atop traditional Khasi and Garo shields over rolling cloudy mountains.',
+      emblemUrl: 'assets/images/emblems/meghalaya_emblem.png',
+      biome: 'Montane Subtropical Cloud Rainforests & Limestone Karst Canyons',
+      touristSpots: [
+        {
+          id: 'spot-ml-nokrek',
+          name: 'Nokrek Biosphere Reserve',
+          subName: 'UNESCO Biosphere in the Garo Hills & Wild Citrus Gene Sanctuary',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Centred on Nokrek Peak, this untouched cloud forest is the ancestral home of the Indian Wild Orange (Citrus indica) and a vital refuge for Red Pandas and Asian Elephants.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Trek through Daribokgre village to Nokrek summit. The dense evergreen canopy is frequently cloaked in magical swirling mist.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-ml-cherrapunji',
+          name: 'Cherrapunji & Nongriat Living Root Bridges',
+          subName: 'Bio-Engineered Botanical Architecture of the Khasi People',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Centuries-old suspension bridges woven from the living aerial roots of Ficus elastica trees across roaring mountain torrents in the world\'s wettest region.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Trek down the 3,500 stone steps to the Double Decker Root Bridge in Nongriat. Swim in the crystal-clear emerald pools below.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-ml-1',
+          name: 'Clouded Leopard',
+          scientific: 'Neofelis nebulosa',
+          type: 'Arboreal Apex Feline',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          notes: 'Official state animal of Meghalaya, capable of climbing down trees headfirst thanks to flexible ankle joints.',
+          sightings: []
+        }
+      ]
+    },
+    'nagaland': {
+      id: 'nagaland',
+      code: 'IN-NL',
+      name: 'Nagaland',
+      zone: 'east',
+      tagline: 'The Patkai Mountain Ridge, Dzukou Valley & Tragopan Shrines',
+      emblemTitle: 'Official Seal of Nagaland',
+      emblemDescription: 'Mithun bull centered within a circle with crossed Naga spears and the motto Unity.',
+      emblemUrl: 'assets/images/emblems/nagaland_emblem.png',
+      biome: 'Subtropical Evergreen Pine Ridges & Montane Wet Temperate Forests',
+      touristSpots: [
+        {
+          id: 'spot-nl-dzukou',
+          name: 'Dzukou Valley & Lily Sanctuary',
+          subName: 'Pristine High-Altitude Rolling Green Valley of Whispering Brooks',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Sitting at 2,452m on the border of Nagaland and Manipur, Dzukou is renowned for its undulating carpet of green bamboo ridges and endemic Dzukou Lilies.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The Viswema trekking route offers steady ascents. June-July is peak blooming season for white and pink lilies.'
+            }
+          ],
+          userUploads: []
+        },
+        {
+          id: 'spot-nl-intanki',
+          name: 'Intanki National Park',
+          subName: 'Peren Valley Hoolock Gibbon & Hornbill Rainforest',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          description: 'Spanning 202 sq km in Peren district, Intanki features dense semi-evergreen forests, home to wild Mithuns, tiger corridors, and dancing hornbills.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Listen for the haunting duet calls of Hoolock Gibbons echoing across the canopy between 6:00 AM and 8:00 AM.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-nl-1',
+          name: 'Blyth\'s Tragopan',
+          scientific: 'Tragopan blythii',
+          type: 'Endangered Montane Pheasant',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Official state bird of Nagaland, exhibiting radiant crimson and gold plumage, protected passionately by local village conservation reserves.',
+          sightings: []
+        }
+      ]
+    },
+    'manipur': {
+      id: 'manipur',
+      code: 'IN-MN',
+      name: 'Manipur',
+      zone: 'east',
+      tagline: 'Loktak Floating Phumdis & The World\'s Only Floating National Park',
+      emblemTitle: 'Official Emblem of Manipur',
+      emblemDescription: 'Kangla Sha (mythical dragon-lion guardian of the Meitei kings of Kangla Palace).',
+      emblemUrl: 'assets/images/emblems/manipur_emblem.svg',
+      biome: 'Freshwater Wetland Marsh with Floating Phumdis & Subtropical Hills',
+      touristSpots: [
+        {
+          id: 'spot-mn-keibul',
+          name: 'Keibul Lamjao National Park',
+          subName: 'The World\'s Only Floating National Park in Loktak Lake',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'An extraordinary 40 sq km sanctuary formed by floating mats of organic soil and vegetation called phumdis, preserving the critically endangered Sangai dancing deer.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Climb the Sendra hill watchtower at sunrise. The gentle morning mist rising off Loktak Lake creates surreal photography.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-mn-1',
+          name: 'Sangai (Dancing Deer)',
+          scientific: 'Rucervus eldii eldii',
+          type: 'Endangered Wetland Deer',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Manipur, gracefully balancing on floating phumdis with distinctive forward-curving brow antlers.',
+          sightings: []
+        }
+      ]
+    },
+    'mizoram': {
+      id: 'mizoram',
+      code: 'IN-MZ',
+      name: 'Mizoram',
+      zone: 'east',
+      tagline: 'Blue Mountain Phawngpui Canopies & Dampa Tiger Corridors',
+      emblemTitle: 'Official Seal of Mizoram',
+      emblemDescription: 'Ashoka lion capital rising over green mountain peaks framed by bamboo stalks and traditional Mizo patterns.',
+      emblemUrl: 'assets/images/emblems/mizoram_emblem.svg',
+      biome: 'Montane Subtropical Wet Forests & Bamboo Clustered Ridges',
+      touristSpots: [
+        {
+          id: 'spot-mz-phawngpui',
+          name: 'Phawngpui Blue Mountain National Park',
+          subName: 'The Highest Peak in Mizoram & Mountain Rhododendron Forest',
+          imageUrl: 'assets/images/realistic_ancient_tree.jpg',
+          description: 'Perched at 2,157m near the Myanmar border, Phawngpui features steep cliff faces, bamboo brakes, and clouds of orchids overlooking the Chhimtuipui River.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'The cliff cliffs of Thlazuang Kham drop vertically thousands of feet into the valley below. Carry ultra-wide landscape optics.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-mz-1',
+          name: 'Serow',
+          scientific: 'Capricornis sumatraensis',
+          type: 'Montane Goat-Antelope',
+          imageUrl: 'assets/images/kaziranga_rhino.jpg',
+          notes: 'Official state animal of Mizoram, adept at navigating nearly vertical cliff faces in dense mountain bamboo.',
+          sightings: []
+        }
+      ]
+    },
+    'tripura': {
+      id: 'tripura',
+      code: 'IN-TR',
+      name: 'Tripura',
+      zone: 'east',
+      tagline: 'Sepahijala Phayre\'s Leaf Monkey Shrines & Gomati Wetlands',
+      emblemTitle: 'Official Emblem of Tripura',
+      emblemDescription: 'Ashoka lion capital atop the motto Satyameva Jayate surrounded by bamboo and paddy stalks with the Manikya dynasty sun emblem.',
+      emblemUrl: 'assets/images/emblems/tripura_emblem.svg',
+      biome: 'Moist Deciduous Dipterocarp Rainforest & Riparian Basins',
+      touristSpots: [
+        {
+          id: 'spot-tr-clouded',
+          name: 'Clouded Leopard National Park (Rajbari)',
+          subName: 'Protected Feline Sanctuary in the Gomati River Basin',
+          imageUrl: 'assets/images/valmiki_tiger.jpg',
+          description: 'Spanning over 5 sq km of dense sal and moist deciduous forest, Rajbari is famous for preserving Clouded Leopards and herds of wild Indian Bison.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Combine your visit with the nearby Sepahijala Primate Center for close observation of Phayre\'s Leaf Monkeys.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-tr-1',
+          name: 'Phayre\'s Leaf Monkey',
+          scientific: 'Trachypithecus phayrei',
+          type: 'Rare Arboreal Primate',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: 'Official state animal of Tripura, distinguished by dramatic white circles around dark eyes resembling spectacles.',
+          sightings: []
+        }
+      ]
+    },
+    'andaman_nicobar': {
+      id: 'andaman_nicobar',
+      code: 'IN-AN',
+      name: 'Andaman & Nicobar Islands',
+      zone: 'east',
+      tagline: 'Bay of Bengal Pristine Archipelago Coral Atolls & Dugong Realm',
+      emblemTitle: 'National Emblem of India (Andaman & Nicobar)',
+      emblemDescription: 'Ashoka lion capital symbolizing the maritime sovereignty of India across the Andaman Sea.',
+      emblemUrl: 'assets/images/emblems/andaman_nicobar_emblem.svg',
+      biome: 'Tropical Pristine Island Rainforests, Coral Reefs & Mangrove Swamps',
+      touristSpots: [
+        {
+          id: 'spot-an-marine',
+          name: 'Mahatma Gandhi Marine National Park',
+          subName: 'Wandoor Coral Reefs & Turtle Nesting Marine Biosphere',
+          imageUrl: 'assets/images/gangetic_dolphin.jpg',
+          description: 'Encompassing 15 pristine islands in the Labyrinth archipelago, this marine park protects vibrant coral gardens, sea turtles, and over 270 bird species.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Take the glass-bottom boat and snorkeling expeditions at Jolly Buoy or Red Skin Island. Water clarity exceeds 20 meters.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-an-1',
+          name: 'Dugong (Sea Cow)',
+          scientific: 'Dugong dugon',
+          type: 'Herbivorous Marine Mammal',
+          imageUrl: 'assets/images/gangetic_dolphin.jpg',
+          notes: 'Official state animal of Andaman & Nicobar, gently grazing on submerged seagrass meadows in shallow coastal bays.',
+          sightings: []
+        }
+      ]
+    },
+    'lakshadweep': {
+      id: 'lakshadweep',
+      code: 'IN-LD',
+      name: 'Lakshadweep',
+      zone: 'south',
+      tagline: 'Arabian Sea Coral Atolls, Lagoons & Pelagic Bird Colonies',
+      emblemTitle: 'National Emblem of India (Lakshadweep)',
+      emblemDescription: 'Ashoka lion capital framed by twin butterflyfish and coconut palms over ocean waves.',
+      emblemUrl: 'assets/images/emblems/lakshadweep_emblem.svg',
+      biome: 'Coral Atolls, Pelagic Marine Reefs & Coconut Littoral Forests',
+      touristSpots: [
+        {
+          id: 'spot-ld-pitti',
+          name: 'Pitti Bird Sanctuary',
+          subName: 'Isolated Pelagic Tern Breeding Coral Atoll in the Arabian Sea',
+          imageUrl: 'assets/images/kabar_lotus_flower.jpg',
+          description: 'An uninhabited sand bank atoll serving as one of the most critical breeding grounds in the Indian Ocean for Sooty Terns and Greater Crested Terns.',
+          tipsAndTricks: [
+            {
+              author: 'Aadi [Creator]',
+              isCreator: true,
+              date: 'Verified Creator Guide',
+              tip: 'Boat journeys from Kavaratti or Agatti require special permits. Binoculars are essential as landings are restricted to protect ground nests.'
+            }
+          ],
+          userUploads: []
+        }
+      ],
+      floraFauna: [
+        {
+          id: 'spec-ld-1',
+          name: 'Butterflyfish',
+          scientific: 'Chaetodontidae',
+          type: 'Coral Reef Teleost',
+          imageUrl: 'assets/images/jewel_beetle_macro.jpg',
+          notes: 'Official state animal of Lakshadweep, displaying brilliant geometric yellow, white, and black markings across coral reefs.',
+          sightings: []
+        }
+      ]
+    }
   };
 
   /* --------------------------------------------------------------------------
@@ -1656,6 +2785,12 @@
   let pendingSpeciesId = null;
   let pendingSpeciesName = null;
 
+  let chipsContainer;
+  let zoneFilterBtns;
+  let stateSearchInput;
+  let btnClearStateSearch;
+  let chipsCounterBadge;
+
   /* --------------------------------------------------------------------------
      Initialization
      -------------------------------------------------------------------------- */
@@ -1663,6 +2798,7 @@
     loadMaproomData();
     cacheDOMElements();
     setupModals();
+    setupStateChips();
     bindMaproomEvents();
     renderStateDossier(activeStateKey);
   }
@@ -1712,8 +2848,95 @@
     tabFaunaBtn = document.getElementById('maproomTabFauna');
     contentDisplayPane = document.getElementById('maproomContentDisplay');
     mapStatePaths = document.querySelectorAll('.map-state-path');
-    stateSelectChips = document.querySelectorAll('.state-chip-btn');
     mapStateDropdown = document.getElementById('mapStateDropdown');
+    chipsContainer = document.getElementById('maproomChipsContainer');
+    zoneFilterBtns = document.querySelectorAll('.zone-filter-btn');
+    stateSearchInput = document.getElementById('maproomStateSearchInput');
+    btnClearStateSearch = document.getElementById('btnClearStateSearch');
+    chipsCounterBadge = document.getElementById('chipsCounterBadge');
+  }
+
+  function setupStateChips() {
+    if (!chipsContainer) return;
+
+    // Render chips dynamically for all 33 states
+    const stateKeys = Object.keys(STATES_DATA);
+    chipsContainer.innerHTML = stateKeys.map(key => {
+      const state = STATES_DATA[key];
+      const isActive = key === activeStateKey;
+      return `
+        <button type="button" 
+                class="state-chip-btn ${isActive ? 'active' : ''}" 
+                data-state="${key}" 
+                data-zone="${state.zone || 'north'}"
+                title="Explore ${escapeHtml(state.name)} Wildlife Corridors"
+        >${escapeHtml(state.name)}</button>
+      `;
+    }).join('');
+
+    stateSelectChips = chipsContainer.querySelectorAll('.state-chip-btn');
+
+    // Click on chip
+    stateSelectChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const stateKey = chip.getAttribute('data-state');
+        if (stateKey && STATES_DATA[stateKey]) {
+          renderStateDossier(stateKey);
+        }
+      });
+    });
+
+    // Zone filters
+    zoneFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        zoneFilterBtns.forEach(b => b.classList.toggle('active', b === btn));
+        filterChipsByZoneAndSearch();
+      });
+    });
+
+    // Live search input
+    stateSearchInput?.addEventListener('input', (e) => {
+      const q = e.target.value.trim();
+      if (btnClearStateSearch) {
+        btnClearStateSearch.style.display = q ? 'inline-block' : 'none';
+      }
+      filterChipsByZoneAndSearch();
+    });
+
+    // Clear search button
+    btnClearStateSearch?.addEventListener('click', () => {
+      if (stateSearchInput) stateSearchInput.value = '';
+      btnClearStateSearch.style.display = 'none';
+      filterChipsByZoneAndSearch();
+      stateSearchInput?.focus();
+    });
+  }
+
+  function filterChipsByZoneAndSearch() {
+    const activeZoneBtn = document.querySelector('.zone-filter-btn.active');
+    const selectedZone = activeZoneBtn ? activeZoneBtn.getAttribute('data-zone') : 'all';
+    const query = stateSearchInput ? stateSearchInput.value.toLowerCase().trim() : '';
+
+    let visibleCount = 0;
+    if (stateSelectChips) {
+      stateSelectChips.forEach(chip => {
+        const chipZone = chip.getAttribute('data-zone') || 'north';
+        const chipText = chip.textContent.toLowerCase();
+        const matchesZone = (selectedZone === 'all' || chipZone === selectedZone);
+        const matchesQuery = !query || chipText.includes(query);
+
+        if (matchesZone && matchesQuery) {
+          chip.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          chip.classList.add('hidden');
+        }
+      });
+    }
+
+    if (chipsCounterBadge) {
+      chipsCounterBadge.textContent = `${visibleCount} SHOWN`;
+    }
   }
 
   function renderStateDossier(stateKey) {
@@ -1747,10 +2970,16 @@
       path.classList.toggle('active', isSelected);
     });
 
-    // Highlight active chip
+    // Highlight active chip and ensure visibility
     document.querySelectorAll('.state-chip-btn').forEach(chip => {
       const isSelected = chip.getAttribute('data-state') === stateKey;
       chip.classList.toggle('active', isSelected);
+      if (isSelected) {
+        if (chip.classList.contains('hidden')) {
+          chip.classList.remove('hidden');
+        }
+        chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
     });
 
     // Render active tab content
