@@ -443,3 +443,16 @@
   - Updated Curator Studio dispatch form to accept direct user photo uploads with optional Instagram links, subject classification, and full observation descriptions
   - Enhanced Visuals gallery cards to enable clicking any photograph to open and view the high-resolution image in the Drongo species lightbox
 
+## [v1.0.34] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Multimedia & Ambient Background Video
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Integrated 15-second looping ambient YouTube background video (ID: UunKFFxCMY8) strictly inside the rectangular introduction section box (#editorialIntro) behind the text
+  - Configured continuous 15-second loop mechanism via YouTube iframe player and dedicated JavaScript interval monitor seeking back to 0s at 14.7s
+  - Enforced muted playback by default for autoplay compliance, with an ambient indicator pill and optional sound toggle button
+  - Applied dual-layer dark semi-transparent radial and linear gradient overlay with backdrop blur between video and foreground content
+  - Styled all introduction title and narrative text in 100% solid, fully opaque ivory/white typography with dual-layer text shadows for crystal-clear readability
+

@@ -783,20 +783,87 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   6. Main Editorial Intro (White Section)
+   6. Main Editorial Intro with Cinematic Looping Background Video
    -------------------------------------------------------------------------- */
 .editorial-intro-section {
-  background-color: var(--pure-white);
-  color: var(--text-dark);
-  padding: 80px 10% 70px;
-  border-bottom: 1px solid rgba(10, 43, 71, 0.06);
   position: relative;
+  overflow: hidden;
+  background-color: #04121F;
+  color: #FFFFFF;
+  padding: 95px 6% 85px;
+  border-top: 1px solid rgba(212, 175, 55, 0.4);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 24px 48px rgba(0, 0, 0, 0.65), inset 0 -24px 48px rgba(0, 0, 0, 0.65);
 }
 
+/* Video Background Layer Strictly Contained Within the Section Rectangular Box */
+.editorial-video-bg-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.editorial-video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.55;
+  filter: blur(2px) brightness(0.7);
+  transition: opacity 1.2s ease;
+}
+
+/* Scaled Iframe Wrapper: Covers Entire Section without Player Letterboxes */
+.editorial-video-iframe-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.3);
+  width: 100vw;
+  height: 56.25vw; /* 16:9 aspect ratio */
+  min-height: 100%;
+  min-width: 177.78%;
+  pointer-events: none;
+}
+
+.editorial-video-iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+}
+
+/* Dark, Semi-Transparent Overlay for 100% Solid & High-Contrast Text Legibility */
+.editorial-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at center, rgba(6, 26, 43, 0.72) 0%, rgba(3, 13, 24, 0.9) 100%),
+    linear-gradient(180deg, rgba(4, 18, 31, 0.85) 0%, rgba(3, 14, 25, 0.75) 50%, rgba(3, 12, 22, 0.90) 100%);
+  backdrop-filter: blur(1.5px);
+  z-index: 2;
+}
+
+/* Solid, Opaque Foreground Content on Top of the Video */
 .editorial-intro-container {
+  position: relative;
+  z-index: 5;
   max-width: 1040px;
   margin: 0 auto;
   text-align: center;
+  padding: 0 16px;
 }
 
 .editorial-kicker {
@@ -805,41 +872,116 @@ a {
   font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--accent-gold);
+  color: #F5E6BE;
   margin-bottom: 20px;
   display: inline-block;
-  padding: 5px 16px;
-  background-color: rgba(197, 160, 89, 0.12);
-  border: 1px solid rgba(197, 160, 89, 0.25);
+  padding: 6px 18px;
+  background-color: rgba(197, 160, 89, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.5);
   border-radius: var(--radius-xs);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .editorial-intro-title {
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 2.7vw, 2.35rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 700;
   line-height: 1.32;
-  color: var(--primary-ocean-blue);
-  margin: 0 auto 16px;
+  color: #FFFFFF;
+  margin: 0 auto 18px;
   max-width: 980px;
   letter-spacing: -0.015em;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 .editorial-intro-divider {
-  width: 68px;
+  width: 78px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
   margin: 18px auto 24px;
 }
 
 .editorial-intro-text {
   font-family: var(--font-serif);
-  line-height: 1.88;
-  font-size: 1.16rem;
-  color: #374151;
-  margin: 0 auto 24px;
+  line-height: 1.9;
+  font-size: 1.18rem;
+  color: #E2E8F0;
+  margin: 0 auto 28px;
   max-width: 940px;
   text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.92);
+}
+
+/* Ambient Video Info & Sound Toggle Bar */
+.editorial-video-controls-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 8px auto 0;
+  padding: 7px 18px;
+  background: rgba(3, 14, 25, 0.65);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.video-ambient-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #E2E8F0;
+  text-transform: uppercase;
+}
+
+.ambient-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #48bb78;
+  box-shadow: 0 0 8px #48bb78;
+  animation: ambientDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes ambientDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+.btn-video-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  color: #F5E6BE;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-video-sound-toggle:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: #D4AF37;
+  color: #FFFFFF;
+}
+
+.btn-video-sound-toggle.audio-active {
+  background: rgba(212, 175, 55, 0.35);
+  border-color: #D4AF37;
+  color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 /* Upload Callout Prompt Card in Media Section */

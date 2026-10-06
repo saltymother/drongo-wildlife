@@ -1719,9 +1719,137 @@
       });
     }
 
-    // Launch tree branch companion & magical motto glow
+    // -------------------------------------------------------------------------
+    // 16. Editorial Introduction 15-Second Ambient Looping Background Video
+    // -------------------------------------------------------------------------
+    function initEditorialBackgroundVideo() {
+      const iframe = document.getElementById('editorialIntroVideoIframe');
+      const soundBtn = document.getElementById('btnIntroVideoAudioToggle');
+      const soundIcon = document.getElementById('soundToggleIcon');
+      const soundText = document.getElementById('soundToggleText');
+      if (!iframe) return;
+
+      let player = null;
+      let loopCheckInterval = null;
+      let isMuted = true;
+
+      function onPlayerReady(event) {
+        try {
+          event.target.mute();
+          event.target.playVideo();
+        } catch (e) {}
+
+        // Continuous 15-second loop monitor
+        if (loopCheckInterval) clearInterval(loopCheckInterval);
+        loopCheckInterval = setInterval(() => {
+          try {
+            if (player && player.getCurrentTime) {
+              const curTime = player.getCurrentTime();
+              // When reached 14.7s or more, smoothly rewind to 0 and loop
+              if (curTime >= 14.7) {
+                player.seekTo(0, true);
+                player.playVideo();
+              }
+            }
+          } catch (e) {}
+        }, 150);
+      }
+
+      function onPlayerStateChange(event) {
+        if (!window.YT) return;
+        // Loop back to start if video reaches end
+        if (event.data === YT.PlayerState.ENDED) {
+          try {
+            event.target.seekTo(0, true);
+            event.target.playVideo();
+          } catch (e) {}
+        } else if (event.data === YT.PlayerState.PAUSED) {
+          // If paused unexpectedly, resume playing
+          try {
+            event.target.playVideo();
+          } catch (e) {}
+        }
+      }
+
+      function setupYT() {
+        if (window.YT && window.YT.Player) {
+          try {
+            player = new YT.Player('editorialIntroVideoIframe', {
+              events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+              }
+            });
+          } catch (e) {
+            console.warn('YT player init notice:', e);
+          }
+        }
+      }
+
+      // Check if YouTube API is already available or queue it
+      if (window.YT && window.YT.Player) {
+        setupYT();
+      } else {
+        const prevYTReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function() {
+          if (typeof prevYTReady === 'function') prevYTReady();
+          setupYT();
+        };
+
+        // Inject YouTube IFrame API script tag if not yet present in document
+        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          const firstScript = document.getElementsByTagName('script')[0];
+          if (firstScript && firstScript.parentNode) {
+            firstScript.parentNode.insertBefore(tag, firstScript);
+          } else {
+            document.head.appendChild(tag);
+          }
+        }
+      }
+
+      // Discreet Audio Toggle Handler (Default is muted for autoplay compliance)
+      if (soundBtn) {
+        soundBtn.addEventListener('click', () => {
+          if (!player) return;
+          try {
+            if (isMuted) {
+              player.unMute();
+              player.setVolume(75);
+              isMuted = false;
+              if (soundIcon) soundIcon.textContent = '🔊';
+              if (soundText) soundText.textContent = 'Audio Playing';
+              soundBtn.classList.add('audio-active');
+            } else {
+              player.mute();
+              isMuted = true;
+              if (soundIcon) soundIcon.textContent = '🔇';
+              if (soundText) soundText.textContent = 'Audio Muted';
+              soundBtn.classList.remove('audio-active');
+            }
+          } catch (e) {}
+        });
+      }
+
+      // Ensure autoplay on first user interaction if browser has strict media restrictions
+      const resumeAutoplay = () => {
+        if (player && player.getPlayerState && player.getPlayerState() !== 1) {
+          try {
+            player.playVideo();
+          } catch (e) {}
+        }
+        document.removeEventListener('click', resumeAutoplay);
+        document.removeEventListener('scroll', resumeAutoplay);
+      };
+      document.addEventListener('click', resumeAutoplay, { once: true, passive: true });
+      document.addEventListener('scroll', resumeAutoplay, { once: true, passive: true });
+    }
+
+    // Launch tree branch companion, magical motto glow & ambient intro video
     initTreeBranchScroll();
     initMagicalMottoGlow();
+    initEditorialBackgroundVideo();
   }
 
   // Start Engine on DOM Ready
