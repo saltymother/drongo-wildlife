@@ -283,11 +283,15 @@
         <!-- Left Column: Realistic Proportioned Map of India with Clickable State Borders -->
         <div class="maproom-map-card">
           <div class="map-card-topbar">
-            <div class="map-card-title-group">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-              <span>Map of India • State Corridors</span>
+            <div class="map-card-title-group" id="mapCardTitleGroup">
+              <span class="map-mode-indicator-icon" id="mapModeIcon">🗺️</span>
+              <span id="mapCardTitleText">Political Map of India • State Corridors</span>
             </div>
             <div class="map-topbar-controls">
+              <div class="map-mode-toggle-group" role="group" aria-label="Map Style Selector">
+                <button type="button" class="map-mode-toggle-btn active" id="btnMapPolitical" title="View Official Political Map">Political</button>
+                <button type="button" class="map-mode-toggle-btn" id="btnMapPhysical" title="Transform into Topographic Physical Map">Physical</button>
+              </div>
               <label for="mapStateDropdown" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;">Select State</label>
               <select class="map-state-dropdown" id="mapStateDropdown" aria-label="Select Indian State Corridor">
                 <optgroup label="— Northern Corridors —">
@@ -332,275 +336,278 @@
                   <option value="lakshadweep">Lakshadweep (Pitti Coral Atolls)</option>
                 </optgroup>
               </select>
-              <span class="map-tap-prompt">Tap border or select</span>
+              <span class="map-tap-prompt">Tap pin or select</span>
             </div>
           </div>
 
-          <!-- Realistic India SVG Map -->
-          <div class="india-map-viewport">
-            <svg viewBox="0 0 650 720" class="india-svg-map" aria-label="Interactive Map of India">
-              <defs>
-                <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <linearGradient id="mapOceanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#071E32" />
-                  <stop offset="100%" stop-color="#0A2B47" />
-                </linearGradient>
-              </defs>
+          <!-- Authentic Dual-Layer Indian Cartographic Viewport with Magical Bottom-to-Top Physical Transformation -->
+          <div class="india-map-viewport" id="indiaMapViewport">
+            <!-- Base Layer: Authentic Official Political Map of India -->
+            <div class="map-layer-container map-layer-political">
+              <img src="assets/images/india_political_map.jpg" alt="Official Political Map of India with State Boundaries" class="india-map-image" id="indiaPoliticalImg" loading="eager" />
+            </div>
 
-              <!-- Ocean / Base Background -->
-              <rect width="650" height="720" fill="url(#mapOceanGrad)" rx="8" />
+            <!-- Revealing Overlay Layer: Topographic Physical Relief Map of India (Reveals from Bottom to Top) -->
+            <div class="map-layer-container map-layer-physical" id="indiaPhysicalLayer">
+              <img src="assets/images/india_physical_map.jpg" alt="Topographic Physical Map of India with Biomes and Mountain Ranges" class="india-map-image" id="indiaPhysicalImg" loading="eager" />
+            </div>
 
-              <!-- Geographic Grid Lines -->
-              <g stroke="rgba(197, 160, 89, 0.12)" stroke-width="0.8" stroke-dasharray="4,6">
-                <line x1="50" y1="180" x2="600" y2="180" />
-                <line x1="50" y1="360" x2="600" y2="360" />
-                <line x1="50" y1="540" x2="600" y2="540" />
-                <line x1="200" y1="50" x2="200" y2="680" />
-                <line x1="380" y1="50" x2="380" y2="680" />
-                <line x1="520" y1="50" x2="520" y2="680" />
+            <!-- Magical Transformation Shimmer Aurora Light Beam -->
+            <div class="map-aurora-sweep" id="mapAuroraSweep" aria-hidden="true"></div>
+
+            <!-- Interactive Vector Overlay with Accurate State Pins -->
+            <svg viewBox="0 0 1200 896" class="india-interactive-overlay" id="indiaInteractiveOverlay" aria-label="Interactive State Corridors of India">
+              <!-- Subtle Geographic Guide Grid -->
+              <g class="overlay-grid" stroke="rgba(243, 217, 158, 0.15)" stroke-width="0.8" stroke-dasharray="6,8" pointer-events="none">
+                <line x1="80" y1="220" x2="1120" y2="220" />
+                <line x1="80" y1="448" x2="1120" y2="448" />
+                <line x1="80" y1="672" x2="1120" y2="672" />
+                <line x1="300" y1="60" x2="300" y2="840" />
+                <line x1="600" y1="60" x2="600" y2="840" />
+                <line x1="900" y1="60" x2="900" y2="840" />
               </g>
 
-              <!-- Ocean Labels -->
-              <text x="100" y="520" fill="rgba(243, 217, 158, 0.25)" font-family="'Cinzel', serif" font-size="11" letter-spacing="2">ARABIAN SEA</text>
-              <text x="470" y="520" fill="rgba(243, 217, 158, 0.25)" font-family="'Cinzel', serif" font-size="11" letter-spacing="2">BAY OF BENGAL</text>
-              <text x="280" y="695" fill="rgba(243, 217, 158, 0.3)" font-family="'Cinzel', serif" font-size="12" letter-spacing="3" text-anchor="middle">INDIAN OCEAN</text>
-
-                            <!-- All Indian States with realistic curved vector borders and data-state attributes -->
-              <g class="india-states-layer">
-                <!-- 1. Ladakh (Trans-Himalayan Cold Desert & Hemis Snow Leopard Realm) -->
-                <path class="map-state-path highlight-state" data-state="ladakh" d="M 228,45 C 255,22 295,28 325,48 C 345,65 350,95 342,122 C 310,124 275,125 242,125 C 240,95 235,65 228,45 Z" aria-label="Ladakh">
-                  <title>Ladakh • Hemis Snow Leopard Realm &amp; High-Altitude Trans-Himalayas</title>
-                </path>
-
-                <!-- 2. Jammu & Kashmir (Pir Panjal, Dachigam Hangul Stag Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="jammu_kashmir" d="M 195,115 C 190,85 205,55 228,45 C 235,65 240,95 242,125 C 228,132 208,128 195,115 Z" aria-label="Jammu &amp; Kashmir">
-                  <title>Jammu &amp; Kashmir • Dachigam Hangul Stag Sanctuary &amp; Kashmir Valley</title>
-                </path>
-
-                <!-- 3. Himachal Pradesh (Great Himalayan National Park & Pin Valley) -->
-                <path class="map-state-path highlight-state" data-state="himachal" d="M 240,138 C 255,132 278,128 300,124 C 310,126 318,135 320,150 C 316,165 295,172 278,170 C 265,168 250,165 240,152 Z" aria-label="Himachal Pradesh">
-                  <title>Himachal Pradesh • Great Himalayan National Park &amp; Western Tragopan</title>
-                </path>
-
-                <!-- 4. Punjab (Harike Wetland & Indus Dolphin Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="punjab" d="M 188,132 C 202,130 220,132 238,138 C 238,155 235,175 230,186 C 210,186 195,180 184,168 C 182,152 184,140 188,132 Z" aria-label="Punjab">
-                  <title>Punjab • Harike Wetland &amp; Indus River Dolphin Sanctuary</title>
-                </path>
-
-                <!-- 5. Uttarakhand (Jim Corbett & Rajaji Tiger Corridors) -->
-                <path class="map-state-path highlight-state" data-state="uttarakhand" d="M 278,170 C 295,172 316,165 320,150 C 330,155 348,168 355,182 C 348,198 332,208 305,204 C 290,202 282,185 278,170 Z" aria-label="Uttarakhand">
-                  <title>Uttarakhand • Jim Corbett &amp; Rajaji Tiger Corridors</title>
-                </path>
-
-                <!-- 6. Haryana (Sultanpur Ramsar Wetland & Kalesar Sal Canopies) -->
-                <path class="map-state-path highlight-state" data-state="haryana" d="M 230,186 C 248,184 265,180 278,170 C 282,185 290,202 305,204 C 295,220 280,230 262,230 C 245,225 235,210 230,186 Z" aria-label="Haryana">
-                  <title>Haryana • Sultanpur Ramsar Wetland &amp; Kalesar Sal Forest</title>
-                </path>
-
-                <!-- 7. Delhi NCR (Asola Bhatti & Aravalli Biodiversity Ridge) -->
-                <path class="map-state-path highlight-state" data-state="delhi" d="M 264,208 C 272,206 276,214 272,220 C 265,222 261,216 264,208 Z" aria-label="Delhi NCR">
-                  <title>Delhi NCR • Asola Bhatti &amp; Aravalli Biodiversity Ridge</title>
-                </path>
-
-                <!-- 8. Rajasthan (Thar Desert & Ranthambore Tiger Realm) -->
-                <path class="map-state-path highlight-state" data-state="rajasthan" d="M 184,168 C 195,180 210,186 230,186 C 235,210 245,225 262,230 C 268,255 260,285 245,308 C 220,314 185,310 152,298 C 125,285 110,250 120,225 C 135,195 160,180 184,168 Z" aria-label="Rajasthan">
-                  <title>Rajasthan • Thar Desert &amp; Ranthambore Tiger Realm</title>
-                </path>
-
-                <!-- 9. Uttar Pradesh (Dudhwa Terai & National Chambal Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="uttar_pradesh" d="M 262,230 C 280,230 295,220 305,204 C 332,208 348,198 355,182 C 385,212 410,235 425,252 C 418,278 395,298 360,302 C 320,306 285,290 268,255 C 262,245 262,238 262,230 Z" aria-label="Uttar Pradesh">
-                  <title>Uttar Pradesh • Dudhwa Terai &amp; National Chambal Sanctuary</title>
-                </path>
-
-                <!-- 10. Bihar (Valmiki Tiger Reserve & Vikramshila Dolphin Sanctuary) -->
-                <path class="map-state-path highlight-state active" data-state="bihar" d="M 425,252 C 445,248 472,245 490,250 C 492,275 480,296 460,310 C 438,312 418,308 408,300 C 415,280 420,265 425,252 Z" aria-label="Bihar">
-                  <title>Bihar • Nalanda Mahavihara &amp; Valmiki Tiger Reserve</title>
-                </path>
-
-                <!-- 11. Sikkim (Khangchendzonga UNESCO Biosphere & Red Panda Habitat) -->
-                <path class="map-state-path highlight-state" data-state="sikkim" d="M 490,222 C 498,214 512,216 515,226 C 512,238 498,242 490,238 C 488,230 488,225 490,222 Z" aria-label="Sikkim">
-                  <title>Sikkim • Khangchendzonga Biosphere &amp; Red Panda Habitat</title>
-                </path>
-
-                <!-- 12. West Bengal (Sundarbans Tiger Realm & Singalila Alpine Crest) -->
-                <path class="map-state-path highlight-state" data-state="west_bengal" d="M 490,238 C 498,242 512,238 515,248 C 500,260 488,280 488,305 C 498,328 502,352 485,372 C 468,375 452,365 448,345 C 448,325 460,310 460,310 C 480,296 492,275 490,250 Z" aria-label="West Bengal">
-                  <title>West Bengal • Sundarbans Tiger Realm &amp; Mangrove Delta</title>
-                </path>
-
-                <!-- 13. Assam (Kaziranga Rhino Basin & Manas Riverine Biosphere) -->
-                <path class="map-state-path highlight-state" data-state="assam" d="M 515,248 C 538,240 575,235 605,242 C 615,255 618,272 598,280 C 572,282 548,270 530,272 C 520,274 515,262 515,248 Z" aria-label="Assam">
-                  <title>Assam • Kaziranga Rhino Basin &amp; Brahmaputra Valley</title>
-                </path>
-
-                <!-- 14. Arunachal Pradesh (Namdapha Tiger Reserve & Great Hornbill Canopies) -->
-                <path class="map-state-path highlight-state" data-state="arunachal" d="M 538,240 C 555,212 590,200 625,210 C 640,225 642,248 625,260 C 610,255 605,242 575,235 C 555,235 545,238 538,240 Z" aria-label="Arunachal Pradesh">
-                  <title>Arunachal Pradesh • Namdapha &amp; Clouded Leopard Sanctuary</title>
-                </path>
-
-                <!-- 15. Meghalaya (Nokrek Biosphere Reserve & Living Root Bridges) -->
-                <path class="map-state-path highlight-state" data-state="meghalaya" d="M 522,274 C 542,272 562,272 572,278 C 568,295 540,298 522,295 C 518,286 518,280 522,274 Z" aria-label="Meghalaya">
-                  <title>Meghalaya • Living Root Bridges &amp; Cloud Forests</title>
-                </path>
-
-                <!-- 16. Nagaland (Dzukou Valley & Blyth's Tragopan Sanctuaries) -->
-                <path class="map-state-path highlight-state" data-state="nagaland" d="M 598,252 C 615,250 626,262 624,280 C 612,285 596,280 590,272 C 592,260 595,255 598,252 Z" aria-label="Nagaland">
-                  <title>Nagaland • Dzukou Valley &amp; Blyth's Tragopan Sanctuaries</title>
-                </path>
-
-                <!-- 17. Manipur (Keibul Lamjao Floating Park & Loktak Sangai Dancing Deer) -->
-                <path class="map-state-path highlight-state" data-state="manipur" d="M 590,272 C 612,280 624,280 622,302 C 610,312 590,310 585,296 C 585,285 588,278 590,272 Z" aria-label="Manipur">
-                  <title>Manipur • Keibul Lamjao Floating Park &amp; Loktak Sangai</title>
-                </path>
-
-                <!-- 18. Mizoram (Phawngpui Blue Mountain & Dampa Tiger Reserve) -->
-                <path class="map-state-path highlight-state" data-state="mizoram" d="M 585,296 C 605,302 612,318 604,342 C 592,355 578,350 575,335 C 575,318 580,305 585,296 Z" aria-label="Mizoram">
-                  <title>Mizoram • Phawngpui Blue Mountain &amp; Dampa Tiger Reserve</title>
-                </path>
-
-                <!-- 19. Tripura (Clouded Leopard National Park & Sepahijala Primate Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="tripura" d="M 565,305 C 578,302 585,315 580,332 C 568,336 558,328 560,316 C 562,310 564,306 565,305 Z" aria-label="Tripura">
-                  <title>Tripura • Clouded Leopard National Park &amp; Sepahijala</title>
-                </path>
-
-                <!-- 20. Gujarat (Gir Asiatic Lion Sanctuary & Little Rann Wild Ass) -->
-                <path class="map-state-path highlight-state" data-state="gujarat" d="M 152,298 C 185,310 195,330 195,355 C 185,372 165,378 145,375 C 148,362 140,352 128,352 C 105,352 82,342 75,322 C 70,305 85,290 115,288 C 128,288 135,278 122,272 C 100,268 78,272 65,280 C 60,265 80,255 115,255 C 135,255 145,275 152,298 Z" aria-label="Gujarat">
-                  <title>Gujarat • Gir National Park Asiatic Lion Sanctuary</title>
-                </path>
-
-                <!-- 21. Madhya Pradesh (Kanha, Bandhavgarh & Central Tiger Heartland) -->
-                <path class="map-state-path highlight-state" data-state="madhya_pradesh" d="M 245,308 C 260,285 268,255 268,255 C 285,290 320,306 360,302 C 390,325 390,345 390,368 C 365,385 330,392 295,388 C 265,385 235,370 225,355 C 235,335 240,320 245,308 Z" aria-label="Madhya Pradesh">
-                  <title>Madhya Pradesh • Kanha &amp; Bandhavgarh Sal Canopies</title>
-                </path>
-
-                <!-- 22. Jharkhand (Betla National Park & Dalma Asian Elephant Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="jharkhand" d="M 408,300 C 418,308 438,312 460,310 C 448,325 448,345 448,358 C 428,368 402,362 390,345 C 390,325 398,310 408,300 Z" aria-label="Jharkhand">
-                  <title>Jharkhand • Betla National Park &amp; Dalma Sanctuary</title>
-                </path>
-
-                <!-- 23. Odisha (Similipal Tiger Reserve & Chilika Lagoon) -->
-                <path class="map-state-path highlight-state" data-state="odisha" d="M 448,358 C 468,368 472,392 462,422 C 445,445 415,455 388,435 C 388,410 395,385 402,362 C 420,362 435,360 448,358 Z" aria-label="Odisha">
-                  <title>Odisha • Similipal Tiger Reserve &amp; Chilika Lake</title>
-                </path>
-
-                <!-- 24. Chhattisgarh (Kanger Valley Karst & Bastar Wild Buffalo Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="chhattisgarh" d="M 360,325 C 378,322 390,345 390,368 C 395,385 388,410 388,435 C 372,448 358,450 350,425 C 348,390 352,355 360,325 Z" aria-label="Chhattisgarh">
-                  <title>Chhattisgarh • Kanger Ghati &amp; Bastar Wild Buffalo</title>
-                </path>
-
-                <!-- 25. Maharashtra (Tadoba-Andhari & Sahyadri Western Ghats) -->
-                <path class="map-state-path highlight-state" data-state="maharashtra" d="M 195,355 C 225,355 265,385 295,388 C 330,392 352,355 350,425 C 332,445 298,458 260,465 C 225,465 190,455 178,435 C 172,405 180,375 195,355 Z" aria-label="Maharashtra">
-                  <title>Maharashtra • Tadoba-Andhari Tiger Reserve &amp; Sahyadri</title>
-                </path>
-
-                <!-- 26. Goa (Bhagwan Mahaveer & Mollem Rainforest Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="goa" d="M 178,485 C 188,482 195,488 192,498 C 185,502 176,498 178,485 Z" aria-label="Goa">
-                  <title>Goa • Bhagwan Mahaveer &amp; Mollem Rainforest Sanctuary</title>
-                </path>
-
-                <!-- 27. Karnataka (Nagarhole, Bandipur & Kabini River Corridors) -->
-                <path class="map-state-path highlight-state" data-state="karnataka" d="M 178,435 C 190,455 225,465 260,465 C 275,488 285,520 278,555 C 255,572 225,575 200,560 C 188,535 180,505 178,485 C 176,498 185,502 192,498 C 188,482 178,485 178,435 Z" aria-label="Karnataka">
-                  <title>Karnataka • Nagarhole &amp; Bandipur Elephant Corridors</title>
-                </path>
-
-                <!-- 28. Telangana (Amrabad Tiger Reserve & Kawal Teak Sanctuary) -->
-                <path class="map-state-path highlight-state" data-state="telangana" d="M 260,465 C 285,455 315,445 345,432 C 352,445 358,460 350,480 C 335,498 305,510 280,505 C 270,490 264,475 260,465 Z" aria-label="Telangana">
-                  <title>Telangana • Amrabad Tiger Reserve &amp; Kawal Teak Valley</title>
-                </path>
-
-                <!-- 29. Andhra Pradesh (Nagarjunsagar-Srisailam & Coringa Mangroves) -->
-                <path class="map-state-path highlight-state" data-state="andhra_pradesh" d="M 345,432 C 370,438 388,435 415,455 C 425,485 398,525 365,565 320,580 292,572 C 280,550 280,505 350,480 C 358,460 352,445 345,432 Z" aria-label="Andhra Pradesh">
-                  <title>Andhra Pradesh • Nagarjunsagar-Srisailam &amp; Coringa Mangroves</title>
-                </path>
-
-                <!-- 30. Kerala (Periyar Tiger Reserve & Silent Valley Shola Forests) -->
-                <path class="map-state-path highlight-state" data-state="kerala" d="M 200,560 C 225,575 235,595 240,625 C 238,655 232,675 224,675 C 215,665 208,635 202,605 C 198,585 198,570 200,560 Z" aria-label="Kerala">
-                  <title>Kerala • Periyar &amp; Western Ghats Shola Canopies</title>
-                </path>
-
-                <!-- 31. Tamil Nadu (Mudumalai, Anamalai & Gulf of Mannar Marine Biosphere) -->
-                <path class="map-state-path highlight-state" data-state="tamil_nadu" d="M 278,555 C 292,572 320,580 305,615 C 285,655 258,680 232,680 C 232,675 240,625 235,595 C 255,572 270,565 278,555 Z" aria-label="Tamil Nadu">
-                  <title>Tamil Nadu • Mudumalai, Anamalai &amp; Nilgiri Tahr</title>
-                </path>
-
-                <!-- 32. Andaman & Nicobar Islands (Marine Biosphere & Dugong Realm) -->
-                <g class="map-islands map-state-path highlight-state" data-state="andaman_nicobar" fill="#C5A059" opacity="0.85" style="cursor:pointer;">
-                  <title>Andaman &amp; Nicobar Islands • Pristine Coral Reefs &amp; Dugong Realm</title>
-                  <ellipse cx="585" cy="540" rx="4" ry="9" />
-                  <ellipse cx="587" cy="565" rx="4" ry="11" />
-                  <ellipse cx="590" cy="595" rx="5" ry="13" />
-                  <ellipse cx="593" cy="625" rx="4.5" ry="9" />
-                </g>
-
-                <!-- 33. Lakshadweep (Coral Reef Atolls & Pitti Bird Sanctuary) -->
-                <g class="map-islands map-state-path highlight-state" data-state="lakshadweep" fill="#C5A059" opacity="0.85" style="cursor:pointer;">
-                  <title>Lakshadweep • Pitti Bird Sanctuary &amp; Coral Lagoon Atolls</title>
-                  <circle cx="160" cy="590" r="3.5" />
-                  <circle cx="165" cy="610" r="4" />
-                  <circle cx="170" cy="635" r="3.5" />
-                </g>
+              <!-- State Interactive Hotspot Pins -->
+              <g class="map-pins-layer">
+              <g class="map-interactive-pin" data-state="ladakh" transform="translate(400, 115)" role="button" tabindex="0" aria-label="Ladakh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-25.200000000000003" y="-28" width="50.400000000000006" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Ladakh</text>
               </g>
-                <!-- Lakshadweep -->
-                <g class="map-islands" fill="#C5A059" opacity="0.85">
-                  <circle cx="160" cy="590" r="3" />
-                  <circle cx="165" cy="610" r="3.5" />
-                  <circle cx="170" cy="635" r="3" />
-                </g>
+              <g class="map-interactive-pin" data-state="jammu_kashmir" transform="translate(340, 140)" role="button" tabindex="0" aria-label="Jammu & Kashmir">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-63.0" y="-28" width="126.0" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Jammu & Kashmir</text>
               </g>
-
-              <!-- State Markers & Labels for Key Wildlife States -->
-              <g class="map-labels-group" pointer-events="none">
-                <!-- Bihar pin -->
-                <circle cx="445" cy="278" r="4.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="445" y="268" fill="#F3D99E" font-family="'Cinzel', serif" font-size="9" font-weight="bold" text-anchor="middle">BIHAR</text>
-
-                <!-- Assam pin -->
-                <circle cx="560" cy="256" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="560" y="246" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">ASSAM</text>
-
-                <!-- West Bengal pin -->
-                <circle cx="482" cy="330" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="512" y="333" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">BENGAL</text>
-
-                <!-- Madhya Pradesh pin -->
-                <circle cx="305" cy="340" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="305" y="356" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">M.P.</text>
-
-                <!-- Rajasthan pin -->
-                <circle cx="185" cy="245" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="185" y="235" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">RAJASTHAN</text>
-
-                <!-- Gujarat pin -->
-                <circle cx="130" cy="325" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="130" y="315" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">GUJARAT</text>
-
-                <!-- Maharashtra pin -->
-                <circle cx="240" cy="415" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="240" y="405" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">MAHARASHTRA</text>
-
-                <!-- Karnataka pin -->
-                <circle cx="230" cy="510" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="230" y="500" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">KARNATAKA</text>
-
-                <!-- Kerala pin -->
-                <circle cx="220" cy="620" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="180" y="623" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">KERALA</text>
-
-                <!-- Tamil Nadu pin -->
-                <circle cx="270" cy="625" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="312" y="628" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold">TAMIL NADU</text>
-
-                <!-- Uttarakhand pin -->
-                <circle cx="310" cy="180" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="310" y="172" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">UTTARAKHAND</text>
-
-                <!-- Ladakh pin -->
-                <circle cx="265" cy="75" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
-                <text x="265" y="66" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">LADAKH</text>
+              <g class="map-interactive-pin" data-state="himachal" transform="translate(395, 195)" role="button" tabindex="0" aria-label="Himachal Pradesh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-67.2" y="-28" width="134.4" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Himachal Pradesh</text>
+              </g>
+              <g class="map-interactive-pin" data-state="punjab" transform="translate(350, 245)" role="button" tabindex="0" aria-label="Punjab">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-25.200000000000003" y="-28" width="50.400000000000006" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Punjab</text>
+              </g>
+              <g class="map-interactive-pin" data-state="haryana" transform="translate(365, 275)" role="button" tabindex="0" aria-label="Haryana">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-29.400000000000002" y="-28" width="58.800000000000004" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Haryana</text>
+              </g>
+              <g class="map-interactive-pin" data-state="delhi" transform="translate(392, 290)" role="button" tabindex="0" aria-label="Delhi NCR">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Delhi NCR</text>
+              </g>
+              <g class="map-interactive-pin" data-state="uttarakhand" transform="translate(430, 255)" role="button" tabindex="0" aria-label="Uttarakhand">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-46.2" y="-28" width="92.4" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Uttarakhand</text>
+              </g>
+              <g class="map-interactive-pin" data-state="rajasthan" transform="translate(315, 360)" role="button" tabindex="0" aria-label="Rajasthan">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Rajasthan</text>
+              </g>
+              <g class="map-interactive-pin" data-state="uttar_pradesh" transform="translate(475, 330)" role="button" tabindex="0" aria-label="Uttar Pradesh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-54.6" y="-28" width="109.2" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Uttar Pradesh</text>
+              </g>
+              <g class="map-interactive-pin active" data-state="bihar" transform="translate(595, 370)" role="button" tabindex="0" aria-label="Bihar">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-21.0" y="-28" width="42.0" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Bihar</text>
+              </g>
+              <g class="map-interactive-pin" data-state="sikkim" transform="translate(655, 325)" role="button" tabindex="0" aria-label="Sikkim">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-25.200000000000003" y="-28" width="50.400000000000006" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Sikkim</text>
+              </g>
+              <g class="map-interactive-pin" data-state="west_bengal" transform="translate(635, 435)" role="button" tabindex="0" aria-label="West Bengal">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-46.2" y="-28" width="92.4" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">West Bengal</text>
+              </g>
+              <g class="map-interactive-pin" data-state="jharkhand" transform="translate(585, 430)" role="button" tabindex="0" aria-label="Jharkhand">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Jharkhand</text>
+              </g>
+              <g class="map-interactive-pin" data-state="odisha" transform="translate(565, 505)" role="button" tabindex="0" aria-label="Odisha">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-25.200000000000003" y="-28" width="50.400000000000006" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Odisha</text>
+              </g>
+              <g class="map-interactive-pin" data-state="chhattisgarh" transform="translate(505, 480)" role="button" tabindex="0" aria-label="Chhattisgarh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-50.400000000000006" y="-28" width="100.80000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Chhattisgarh</text>
+              </g>
+              <g class="map-interactive-pin" data-state="madhya_pradesh" transform="translate(435, 445)" role="button" tabindex="0" aria-label="Madhya Pradesh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-58.800000000000004" y="-28" width="117.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Madhya Pradesh</text>
+              </g>
+              <g class="map-interactive-pin" data-state="gujarat" transform="translate(265, 465)" role="button" tabindex="0" aria-label="Gujarat">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-29.400000000000002" y="-28" width="58.800000000000004" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Gujarat</text>
+              </g>
+              <g class="map-interactive-pin" data-state="maharashtra" transform="translate(375, 570)" role="button" tabindex="0" aria-label="Maharashtra">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-46.2" y="-28" width="92.4" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Maharashtra</text>
+              </g>
+              <g class="map-interactive-pin" data-state="goa" transform="translate(315, 695)" role="button" tabindex="0" aria-label="Goa">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-12.600000000000001" y="-28" width="25.200000000000003" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Goa</text>
+              </g>
+              <g class="map-interactive-pin" data-state="karnataka" transform="translate(355, 700)" role="button" tabindex="0" aria-label="Karnataka">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Karnataka</text>
+              </g>
+              <g class="map-interactive-pin" data-state="telangana" transform="translate(440, 615)" role="button" tabindex="0" aria-label="Telangana">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Telangana</text>
+              </g>
+              <g class="map-interactive-pin" data-state="andhra_pradesh" transform="translate(435, 685)" role="button" tabindex="0" aria-label="Andhra Pradesh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-58.800000000000004" y="-28" width="117.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Andhra Pradesh</text>
+              </g>
+              <g class="map-interactive-pin" data-state="kerala" transform="translate(375, 825)" role="button" tabindex="0" aria-label="Kerala">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-25.200000000000003" y="-28" width="50.400000000000006" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Kerala</text>
+              </g>
+              <g class="map-interactive-pin" data-state="tamil_nadu" transform="translate(425, 810)" role="button" tabindex="0" aria-label="Tamil Nadu">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-42.0" y="-28" width="84.0" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Tamil Nadu</text>
+              </g>
+              <g class="map-interactive-pin" data-state="assam" transform="translate(760, 365)" role="button" tabindex="0" aria-label="Assam">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-21.0" y="-28" width="42.0" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Assam</text>
+              </g>
+              <g class="map-interactive-pin" data-state="arunachal" transform="translate(815, 310)" role="button" tabindex="0" aria-label="Arunachal Pradesh">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-71.4" y="-28" width="142.8" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Arunachal Pradesh</text>
+              </g>
+              <g class="map-interactive-pin" data-state="meghalaya" transform="translate(720, 400)" role="button" tabindex="0" aria-label="Meghalaya">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-37.800000000000004" y="-28" width="75.60000000000001" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Meghalaya</text>
+              </g>
+              <g class="map-interactive-pin" data-state="nagaland" transform="translate(820, 385)" role="button" tabindex="0" aria-label="Nagaland">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-33.6" y="-28" width="67.2" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Nagaland</text>
+              </g>
+              <g class="map-interactive-pin" data-state="manipur" transform="translate(810, 435)" role="button" tabindex="0" aria-label="Manipur">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-29.400000000000002" y="-28" width="58.800000000000004" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Manipur</text>
+              </g>
+              <g class="map-interactive-pin" data-state="mizoram" transform="translate(795, 470)" role="button" tabindex="0" aria-label="Mizoram">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-29.400000000000002" y="-28" width="58.800000000000004" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Mizoram</text>
+              </g>
+              <g class="map-interactive-pin" data-state="tripura" transform="translate(745, 445)" role="button" tabindex="0" aria-label="Tripura">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-29.400000000000002" y="-28" width="58.800000000000004" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Tripura</text>
+              </g>
+              <g class="map-interactive-pin" data-state="andaman_nicobar" transform="translate(815, 750)" role="button" tabindex="0" aria-label="Andaman & Nicobar">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-71.4" y="-28" width="142.8" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Andaman & Nicobar</text>
+              </g>
+              <g class="map-interactive-pin" data-state="lakshadweep" transform="translate(265, 810)" role="button" tabindex="0" aria-label="Lakshadweep">
+                <circle class="pin-hit-target" r="26" fill="transparent" />
+                <circle class="pin-pulse-ring" r="14" />
+                <circle class="pin-core-circle" r="6" />
+                <rect class="pin-label-bg" x="-46.2" y="-28" width="92.4" height="18" rx="4" />
+                <text class="pin-text-label" y="-16" text-anchor="middle">Lakshadweep</text>
+              </g>
               </g>
             </svg>
+
+            <!-- Floating Mode Indicator Pill -->
+            <div class="map-mode-indicator-pill" id="mapModeIndicatorPill">
+              <span class="pill-pulse-dot"></span>
+              <span class="pill-mode-label" id="mapModePillText">Political Map • State Corridors</span>
+            </div>
           </div>
 
           <div class="map-legend-row">

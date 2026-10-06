@@ -2773,6 +2773,14 @@
   let stateSelectChips;
   let mapStateDropdown;
 
+  // Dual-Layer Map Transformation Elements
+  let indiaMapViewport;
+  let mapModeIcon;
+  let mapCardTitleText;
+  let btnMapPolitical;
+  let btnMapPhysical;
+  let mapModePillText;
+
   // Modals for Maproom Contributions
   let spotMediaModal;
   let spotTipModal;
@@ -2868,6 +2876,13 @@
     stateSearchInput = document.getElementById('maproomStateSearchInput');
     btnClearStateSearch = document.getElementById('btnClearStateSearch');
     chipsCounterBadge = document.getElementById('chipsCounterBadge');
+
+    indiaMapViewport = document.getElementById('indiaMapViewport');
+    mapModeIcon = document.getElementById('mapModeIcon');
+    mapCardTitleText = document.getElementById('mapCardTitleText');
+    btnMapPolitical = document.getElementById('btnMapPolitical');
+    btnMapPhysical = document.getElementById('btnMapPhysical');
+    mapModePillText = document.getElementById('mapModePillText');
   }
 
   function setupStateChips() {
@@ -2978,10 +2993,10 @@
       mapStateDropdown.value = stateKey;
     }
 
-    // Highlight active state on SVG map
-    document.querySelectorAll('.map-state-path').forEach(path => {
-      const isSelected = path.getAttribute('data-state') === stateKey;
-      path.classList.toggle('active', isSelected);
+    // Highlight active state on map pins & paths
+    document.querySelectorAll('.map-state-path, .map-interactive-pin').forEach(el => {
+      const isSelected = el.getAttribute('data-state') === stateKey;
+      el.classList.toggle('active', isSelected);
     });
 
     // Highlight active chip and ensure visibility
@@ -4104,10 +4119,62 @@
   }
 
   /* --------------------------------------------------------------------------
+     Dual-Layer Map Transformation (Political <-> Physical Bottom-to-Top)
+     -------------------------------------------------------------------------- */
+  function setMapMode(mode, triggerSweep = true) {
+    if (!indiaMapViewport) indiaMapViewport = document.getElementById('indiaMapViewport');
+    if (!indiaMapViewport) return;
+
+    const isPhysical = mode === 'physical';
+
+    if (isPhysical) {
+      indiaMapViewport.classList.remove('transforming-to-political');
+      if (triggerSweep) {
+        indiaMapViewport.classList.add('transforming-to-physical');
+        setTimeout(() => {
+          indiaMapViewport?.classList.remove('transforming-to-physical');
+        }, 1900);
+      }
+      indiaMapViewport.classList.add('mode-physical');
+
+      if (btnMapPhysical) btnMapPhysical.classList.add('active');
+      if (btnMapPolitical) btnMapPolitical.classList.remove('active');
+      if (mapModeIcon) mapModeIcon.textContent = '🌿';
+      if (mapCardTitleText) mapCardTitleText.textContent = 'Physical Map of India • Biomes & Wildlife';
+      if (mapModePillText) mapModePillText.textContent = 'Physical Relief Map • Topography';
+    } else {
+      indiaMapViewport.classList.remove('transforming-to-physical');
+      if (triggerSweep) {
+        indiaMapViewport.classList.add('transforming-to-political');
+        setTimeout(() => {
+          indiaMapViewport?.classList.remove('transforming-to-political');
+        }, 1600);
+      }
+      indiaMapViewport.classList.remove('mode-physical');
+
+      if (btnMapPolitical) btnMapPolitical.classList.add('active');
+      if (btnMapPhysical) btnMapPhysical.classList.remove('active');
+      if (mapModeIcon) mapModeIcon.textContent = '🗺️';
+      if (mapCardTitleText) mapCardTitleText.textContent = 'Political Map of India • State Corridors';
+      if (mapModePillText) mapModePillText.textContent = 'Political Map • State Corridors';
+    }
+  }
+
+  /* --------------------------------------------------------------------------
      Event Listeners
      -------------------------------------------------------------------------- */
   function bindMaproomEvents() {
-    // Map State Paths click
+    // Interactive Map Pins & State Paths Click
+    document.querySelectorAll('.map-interactive-pin').forEach(pin => {
+      pin.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const stateKey = pin.getAttribute('data-state');
+        if (stateKey && STATES_DATA[stateKey]) {
+          renderStateDossier(stateKey);
+        }
+      });
+    });
+
     document.querySelectorAll('.map-state-path').forEach(path => {
       path.addEventListener('click', () => {
         const stateKey = path.getAttribute('data-state');
@@ -4116,6 +4183,15 @@
           document.getElementById('maproomStateArchive')?.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
+
+    // Map style manual toggle buttons
+    btnMapPolitical?.addEventListener('click', () => {
+      setMapMode('political', true);
+    });
+
+    btnMapPhysical?.addEventListener('click', () => {
+      setMapMode('physical', true);
     });
 
     // State Selector Chips click
@@ -4136,11 +4212,12 @@
       }
     });
 
-    // Tab buttons (Tourist Spots vs Flora & Fauna)
+    // Tab buttons (Travel Destinations vs Flora & Fauna)
     tabTouristBtn?.addEventListener('click', () => {
       activeTabType = 'touristSpots';
       tabTouristBtn.classList.add('active');
       tabFaunaBtn?.classList.remove('active');
+      setMapMode('political', true);
       renderStateDossier(activeStateKey);
     });
 
@@ -4148,6 +4225,7 @@
       activeTabType = 'floraFauna';
       tabFaunaBtn.classList.add('active');
       tabTouristBtn?.classList.remove('active');
+      setMapMode('physical', true);
       renderStateDossier(activeStateKey);
     });
   }

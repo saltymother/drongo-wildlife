@@ -575,3 +575,17 @@
   - Eliminated CSS drag-lag transition fighting with JavaScript position updates via dynamic .is-dragging class override
   - Boosted tree branch widget layering to z-index 2200 and updated milestone node targets and tooltips (linking node 5 to 'About the Creator')
   - Isolated tree branch companion, motto glow, and video player initializations in safe individual try/catch execution blocks inside init()
+
+## [v1.0.44] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature & Refactor | Authentic Map of India & Magical Bottom-to-Top Physical Transformation
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Replaced distorted placeholder bezier map with high-resolution authentic cartographic map of India showing clear, official state borders and labels
+  - Implemented dual-layer map viewport pairing crisp Political Map with pixel-aligned Topographic Physical Relief Map
+  - Engineered magical bottom-to-top transformation when switching from 'Travel Destinations' to 'Flora & Fauna' tab via smooth clip-path transition and glowing emerald-gold aurora light beam sweep
+  - Seamlessly returns to Political Map when shifting back to 'Travel Destinations' tab
+  - Added dedicated Political/Physical style toggle buttons on the map topbar for instant manual control
+  - Integrated interactive vector overlay with pulse pins and hover tooltips for all 33 Indian states and Union Territories, fully synchronized with the state dossier archive and dropdown
