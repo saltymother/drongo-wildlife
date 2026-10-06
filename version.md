@@ -313,3 +313,14 @@
   - Removed redundant '+ UPLOAD' button and 'CURATOR ARCHIVE' badge from the primary masthead header right column
   - Retained the primary '+ UPLOAD PHOTO / VIDEO' studio action directly beside SEARCH and INFORMATION in the sub-navigation bar
   - Preserved symmetrical three-column header grid layout to maintain brand identity and logo crest alignment
+
+## [v1.0.24] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Refactor | UI/UX
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed redundant 'Contribute New Visual Records to Drongo' box below the Visuals gallery grid
+  - Cleaned up redundant '+ Open Upload Studio', 'Export Catalog JSON', and 'Reset to Defaults' banner to prevent clutter
+  - Retained dedicated upload access points beside SEARCH in the navigation bar and inside the gallery controls
