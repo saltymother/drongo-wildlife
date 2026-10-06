@@ -3983,3 +3983,413 @@ a {
     transform: translateY(-50%) scale(0.75);
   }
 }
+
+/* --------------------------------------------------------------------------
+   23. Signature Bird Monograph: The Black Drongo (Dicrurus macrocercus)
+   -------------------------------------------------------------------------- */
+.drongo-signature-section {
+  position: relative;
+  background: radial-gradient(circle at 80% 20%, rgba(19, 61, 99, 0.45) 0%, transparent 60%),
+              linear-gradient(180deg, #061A2B 0%, #0A2B47 50%, #051422 100%);
+  padding: 85px 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  color: var(--pure-white);
+  overflow: hidden;
+}
+
+.drongo-signature-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.8) 50%, transparent 100%);
+}
+
+.drongo-section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.drongo-header-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed rgba(212, 175, 55, 0.25);
+}
+
+.drongo-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #F3D99E;
+  text-transform: uppercase;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.drongo-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #E5BE65;
+  box-shadow: 0 0 8px #F3D99E;
+}
+
+.drongo-badge-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(243, 217, 158, 0.75);
+}
+
+/* Showcase Grid Layout */
+.drongo-showcase-grid {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Left Column: Big Glowing Drongo Picture */
+.drongo-media-col {
+  position: relative;
+}
+
+.drongo-image-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.drongo-img-glow-frame {
+  position: relative;
+  border-radius: 12px;
+  padding: 5px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(92, 58, 30, 0.6) 50%, rgba(243, 217, 158, 0.9) 100%);
+  box-shadow: 
+    0 0 28px rgba(212, 175, 55, 0.45),
+    0 16px 36px rgba(0, 0, 0, 0.75);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.drongo-img-glow-frame:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 
+    0 0 42px rgba(243, 217, 158, 0.7),
+    0 24px 48px rgba(0, 0, 0, 0.85);
+}
+
+.drongo-featured-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3.4;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  filter: contrast(1.05) brightness(1.02);
+  transition: filter 0.3s ease;
+}
+
+.drongo-img-glow-frame:hover .drongo-featured-img {
+  filter: contrast(1.1) brightness(1.05);
+}
+
+.drongo-img-overlay-vignette {
+  position: absolute;
+  inset: 5px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 35px rgba(6, 26, 43, 0.5);
+  pointer-events: none;
+}
+
+.drongo-photo-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, rgba(6, 26, 43, 0.92) 0%, rgba(10, 43, 71, 0.95) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #F3D99E;
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.drongo-photo-badge-icon {
+  color: #E5BE65;
+}
+
+.drongo-img-caption {
+  background: rgba(6, 26, 43, 0.65);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.drongo-caption-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.caption-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+}
+
+.caption-specs {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: #F3D99E;
+}
+
+.caption-desc {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.5;
+}
+
+/* Right Column: Title, Scientific Name, Sword, Content */
+.drongo-content-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.drongo-title-header {
+  margin-bottom: 8px;
+}
+
+.drongo-main-heading {
+  margin: 0 0 6px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.drongo-common-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  letter-spacing: 3px;
+  line-height: 1.1;
+  background: linear-gradient(
+    175deg,
+    #FFFFFF 0%,
+    #FFF9E6 18%,
+    #F3D99E 42%,
+    #D4AF37 68%,
+    #FFF0C2 82%,
+    #AA8022 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.7))
+          drop-shadow(0 4px 14px rgba(212, 175, 55, 0.4));
+}
+
+.drongo-scientific-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  color: #F3D99E;
+  letter-spacing: 1px;
+}
+
+.drongo-epithet-sub {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14.5px;
+  color: rgba(243, 217, 158, 0.85);
+  letter-spacing: 1px;
+}
+
+/* Horizontal Sword Divider */
+.drongo-sword-divider {
+  margin: 14px 0 24px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.drongo-sword-svg {
+  width: 100%;
+  height: 28px;
+  display: block;
+  overflow: visible;
+}
+
+/* In-depth Introduction Body */
+.drongo-intro-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.drongo-lead-paragraph {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.drongo-lead-paragraph strong {
+  color: #FFFFFF;
+}
+
+.drongo-lead-paragraph em {
+  color: #F3D99E;
+}
+
+/* Highlights 2x2 Grid */
+.drongo-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.drongo-highlight-card {
+  background: rgba(6, 26, 43, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.drongo-highlight-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(212, 175, 55, 0.25);
+}
+
+.card-icon-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card-icon-symbol {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.card-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #F3D99E;
+  letter-spacing: 0.5px;
+}
+
+.card-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.card-text em {
+  color: #FFF275;
+}
+
+/* Taxonomy Data Strip */
+.drongo-taxa-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.taxa-pill {
+  background: rgba(6, 26, 43, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.taxa-label {
+  color: rgba(243, 217, 158, 0.7);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.taxa-val {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.taxa-val.status-green {
+  color: #4ADE80;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .drongo-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .drongo-media-col {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .drongo-sword-divider {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .drongo-signature-section {
+    padding: 60px 16px;
+  }
+
+  .drongo-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drongo-main-heading {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+

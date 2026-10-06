@@ -1141,6 +1141,18 @@
           document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.remove('active'));
           link.classList.add('active');
 
+          if (targetSection === 'maproom') {
+            closeNavDrawer();
+            document.getElementById('maproom')?.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+
+          if (targetSection === 'drongo') {
+            closeNavDrawer();
+            document.getElementById('drongo')?.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+
           currentFilter = targetSection;
           currentPhotoSub = 'all';
 

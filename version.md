@@ -276,3 +276,16 @@
   - Integrated dynamic golden-amber tree sap progress vein that fills smoothly with scroll percentage
   - Added perched Anime Drongo bird mascot slider that glides along the branch, draggable to scroll in real-time
   - Added quick Canopy (top) and Roots (bottom) organic scroll action twig buttons and milestone section tooltips
+
+## [v1.0.21] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Monograph | Content
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Added dedicated Signature Bird Monograph section for the Black Drongo (Dicrurus macrocercus) above the footer
+  - Integrated high-resolution Wikipedia/Wikimedia Commons field photography with golden glowing frame and badge
+  - Added header with common name, scientific name in brackets, and ceremonial royal talwar sword divider SVG
+  - Embedded comprehensive Wikipedia dossier detailing plumage, King Crow aggression, sentinel nesting, and deceptive vocal mimicry
+  - Synchronized navigation bar, drawer links, and Tree Branch scroll companion with new #drongo section
