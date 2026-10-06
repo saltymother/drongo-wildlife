@@ -589,3 +589,15 @@
   - Seamlessly returns to Political Map when shifting back to 'Travel Destinations' tab
   - Added dedicated Political/Physical style toggle buttons on the map topbar for instant manual control
   - Integrated interactive vector overlay with pulse pins and hover tooltips for all 33 Indian states and Union Territories, fully synchronized with the state dossier archive and dropdown
+
+## [v1.0.45] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Bugfix & Refactor | Destination Creation Manual Media & Precautions Integrity
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Removed AI/Wikipedia auto-filling of Instagram photo links, YouTube video tour links, and guidelines/precautions in destination creation
+  - Restricted AI/Wikipedia synchronization strictly to landmark pictorial representations (app-icon thumbnail generation and brief overview)
+  - Preserved complete user manual control over media links and tourist precautions
+  - Prevented automatic default precautions from being injected into user submissions when left blank

@@ -3708,18 +3708,6 @@
       return placeholder;
     }
 
-    // Default Instagram & YouTube links + guidelines
-    const cleanTag = cleanName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'touristspot';
-    if (photoInput && (!photoInput.value || photoInput.value.includes('/tags/'))) {
-      photoInput.value = `https://www.instagram.com/explore/tags/${cleanTag}/`;
-    }
-    if (videoInput && (!videoInput.value || videoInput.value.includes('search_query='))) {
-      videoInput.value = `https://www.youtube.com/results?search_query=${encodeURIComponent(cleanName + ' tour travel')}`;
-    }
-    if (tipsTextarea && !tipsTextarea.value.trim()) {
-      tipsTextarea.value = `Precautions: Wear comfortable walking shoes and follow heritage rules.\nTimings: 09:00 AM – 06:00 PM.\nAvailable Facilities: Drinking water, restrooms, certified local guides.`;
-    }
-
     if (loader) loader.style.display = 'flex';
     if (badge) badge.textContent = 'SEARCHING';
 
@@ -3939,10 +3927,6 @@
         if (!intro) {
           intro = `${name} is an important cultural, historical, and wildlife landmark in ${stateData.name}.`;
         }
-        if (!tips) {
-          tips = `Precautions: Wear comfortable shoes and preserve heritage integrity.\nTimings: 09:00 AM – 06:00 PM.\nAvailable Facilities: Drinking water, restrooms, authorized guides.`;
-        }
-
         const newSpot = {
           id: 'custom-spot-' + Date.now(),
           name: name,
@@ -3950,13 +3934,13 @@
           description: intro,
           photoUrl: photoUrl || '',
           videoUrl: videoUrl || '',
-          guidelines: tips,
-          tipsAndTricks: [{
+          guidelines: tips || '',
+          tipsAndTricks: tips ? [{
             author: author,
             isCreator: author.toLowerCase().includes('aadi') || author.toLowerCase().includes('creator'),
-            date: 'Verified Creator Guide',
+            date: 'Field Guide Note',
             tip: tips
-          }],
+          }] : [],
           isUserAdded: true
         };
 
