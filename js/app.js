@@ -8,9 +8,9 @@
   'use strict';
 
   // Storage key for catalog metadata in localStorage
-  const STORAGE_KEY = 'drongo_custom_catalog_v6';
+  const STORAGE_KEY = 'drongo_custom_catalog_v7';
 
-  // Base catalog containing strictly Travelling Guides and Creator Future Updates
+  // Base catalog containing Travelling Guides, High-Quality Photos, and Creator Updates
   const INITIAL_CATALOG = [
     {
       id: 'guide-dehradun-dharadhon',
@@ -52,6 +52,102 @@
       isUserUploaded: false
     },
     {
+      id: 'photo-black-drongo-canopy',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'birds',
+      title: 'Black Drongo (Dicrurus macrocercus) — Sovereign of the Canopy',
+      location: 'Valmiki Tiger Reserve & Terai Grasslands',
+      mediaUrl: 'assets/images/black_drongo.jpg',
+      specs: 'Nikon Z9 • 400mm f/2.8 TC • 1/3200s, f/2.8, ISO 400',
+      fieldNotes: 'Perched motionless on an ancient Sal branch before executing an acrobatic aerial interception with surgical precision.',
+      knowMoreInfo: 'Species: Black Drongo (Dicrurus macrocercus)\nFamily: Dicruridae\nHabitat: Forest edges, open agricultural savannah, and riverine canopies\nField Notes: Renowned for its fearless demeanor, attacking crows, raptors, and falcons that venture near its nesting canopy.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
+      id: 'photo-kaziranga-rhino-dawn',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'mammals',
+      title: 'Greater One-Horned Rhinoceros — Dawn in Kaziranga Elephant Grass',
+      location: 'Bagori Range, Kaziranga National Park, Assam',
+      mediaUrl: 'assets/images/kaziranga_rhino.jpg',
+      specs: 'Canon EOS R5 • RF 100-500mm f/4.5-7.1L • 1/1600s, f/7.1, ISO 640',
+      fieldNotes: 'A majestic bull rhino emerging through morning river mist from the Brahmaputra channels into golden sunlight.',
+      knowMoreInfo: 'Species: Rhinoceros unicornis (Greater One-Horned Rhinoceros)\nStatus: Vulnerable (IUCN Red List)\nConservation Sanctuary: Kaziranga hosts over 70% of the world wild population.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
+      id: 'photo-bengal-tiger-stream',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'mammals',
+      title: 'Royal Bengal Tiger — Silent Patrol along Forest Stream',
+      location: 'Ranthambore National Park, Rajasthan',
+      mediaUrl: 'assets/images/bengal_tiger.jpg',
+      specs: 'Sony A1 • FE 600mm f/4 GM OSS • 1/2000s, f/4, ISO 800',
+      fieldNotes: 'Stepping deliberately through sun-dappled dry deciduous forest, locking eyes across the rocky ravine.',
+      knowMoreInfo: 'Species: Panthera tigris tigris\nApex Predator: Sovereign ruler of the Indian subcontinent forests, vital umbrella species preserving forest watersheds.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
+      id: 'photo-paradise-flycatcher',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'birds',
+      title: 'Asian Paradise Flycatcher — White Ribbon Streamer in Flight',
+      location: 'Western Ghats Rainforest Corridor, Kerala',
+      mediaUrl: 'assets/images/paradise_flycatcher.jpg',
+      specs: 'Nikon Z8 • 500mm f/4E FL ED • 1/4000s, f/4, ISO 1000',
+      fieldNotes: 'Elongated twin tail streamers undulating like liquid silver through the dense dark understory.',
+      knowMoreInfo: 'Species: Terpsiphone paradisi\nDimorphism: Adult males feature mesmerizing 30 cm elongated tail streamers with rufous or white morph plumages.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
+      id: 'photo-jewel-bug-macro',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'insects',
+      title: 'Iridescent Metallic Jewel Bug — Microcosm of the Rainforest',
+      location: 'Namdapha National Park, Arunachal Pradesh',
+      mediaUrl: 'assets/images/jewel_beetle_macro.jpg',
+      specs: 'Olympus OM-1 • 90mm f/3.5 Macro IS PRO • Focus Stacked (15 shots)',
+      fieldNotes: 'High-magnification handheld focus bracketing revealing natural optical diffraction and metallic chitin.',
+      knowMoreInfo: 'Family: Scutelleridae (Shield-backed bugs)\nColoration: Structural optical interference generates brilliant emerald, sapphire, and gold reflections.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
+      id: 'photo-ancient-rainforest-tree',
+      type: 'photo',
+      category: 'photos',
+      section: 'Wildlife Photos',
+      photoSubject: 'landscapes',
+      title: 'Ancient Rainforest Canopy & Sacred Banyan Living Corridors',
+      location: 'Mawlynnong Living Root Corridors, Meghalaya',
+      mediaUrl: 'assets/images/realistic_ancient_tree.jpg',
+      specs: 'Fujifilm GFX 100 II • GF 20-35mm f/4 R WR • 1/125s, f/11, ISO 100',
+      fieldNotes: 'Centuries of aerial root weaving creating an ecological cathedral spanning over the forest floor.',
+      knowMoreInfo: 'Botanical: Ficus elastica / Ficus benghalensis\nLiving Bridges: Indigenous Khasi architecture training aerial ficus roots across turbulent monsoon river beds.',
+      author: 'Aadi [Creator]',
+      date: 'High-Res Field Archive',
+      isUserUploaded: false
+    },
+    {
       id: 'item-info-future-update-1',
       type: 'information',
       category: 'information',
@@ -60,7 +156,7 @@
       infoCategory: 'Platform Roadmap',
       author: 'Creator / Drongo Core Team',
       date: 'Official Creator Notice',
-      infoText: 'Welcome to Drongo Visuals 2.0! Based on user direction, the Visuals section is now exclusively streamlined into two dedicated pillars: Travelling Guides (where any traveler can document destinations, transport routes, and freeform planning notes) and Creator Updates (where the creator posts official announcements on future updates and release milestones).',
+      infoText: 'Welcome to Drongo Visuals 2.0! Based on user direction, the Visuals section now features three streamlined pillars: Travelling Guides (documenting routes & traveler notes), High-Quality Photos (sharing 4K wildlife & nature visuals), and Creator Updates (official updates on future platform releases).',
       isUserUploaded: false
     },
     {
@@ -181,34 +277,38 @@
   /* --------------------------------------------------------------------------
      Initialization & Storage Sync
      -------------------------------------------------------------------------- */
-  async function init() {
-    await initMediaDB();
-    await loadCatalogFromStorage();
-    renderGallery();
-    updateFilterCounts();
-    bindEventListeners();
+  function init() {
+    try {
+      loadCatalogFromStorage();
+    } catch (e) {
+      console.warn('Catalog load error', e);
+    }
+    try {
+      renderGallery();
+      updateFilterCounts();
+    } catch (e) {
+      console.error('Gallery render error', e);
+    }
+    try {
+      bindEventListeners();
+    } catch (e) {
+      console.error('Event listeners binding error', e);
+    }
   }
 
-  async function loadCatalogFromStorage() {
+  function loadCatalogFromStorage() {
     try {
       localStorage.removeItem('drongo_custom_catalog_v1');
       localStorage.removeItem('drongo_custom_catalog_v2');
       localStorage.removeItem('drongo_custom_catalog_v3');
+      localStorage.removeItem('drongo_custom_catalog_v4');
+      localStorage.removeItem('drongo_custom_catalog_v5');
+      localStorage.removeItem('drongo_custom_catalog_v6');
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const userItems = JSON.parse(stored);
         const baseIds = new Set(INITIAL_CATALOG.map(item => item.id));
         const customUploads = Array.isArray(userItems) ? userItems.filter(item => item.isUserUploaded && !baseIds.has(item.id)) : [];
-        
-        // Rehydrate videos from IndexedDB if needed
-        for (const item of customUploads) {
-          if (item.hasBlobInDB && !item.videoUrl) {
-            const blob = await retrieveMediaBlob(item.id);
-            if (blob) {
-              item.videoUrl = URL.createObjectURL(blob);
-            }
-          }
-        }
         catalog = [...INITIAL_CATALOG, ...customUploads];
       } else {
         catalog = [...INITIAL_CATALOG];
@@ -221,16 +321,7 @@
 
   function saveUserItemsToStorage() {
     try {
-      // Clean clone without giant video base64 to prevent QuotaExceededError
-      const safeItemsToStore = catalog
-        .filter(item => item.isUserUploaded)
-        .map(item => {
-          const clone = Object.assign({}, item);
-          if (clone.videoUrl && clone.videoUrl.startsWith('blob:')) {
-            clone.videoUrl = ''; // will be rehydrated from IndexedDB
-          }
-          return clone;
-        });
+      const safeItemsToStore = catalog.filter(item => item.isUserUploaded);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(safeItemsToStore));
     } catch (e) {
       console.warn('Failed to write metadata to localStorage', e);
@@ -243,8 +334,11 @@
   function renderGallery() {
     if (!mediaGridEl) return;
 
-    // Filter only for the active tab (travelling-guide or information)
+    // Filter for active tab: travelling-guide, photos, or information
     currentlyFilteredItems = catalog.filter(item => {
+      if (currentFilter === 'photos') {
+        return item.category === 'photos' || item.type === 'photo' || item.section === 'Wildlife Photos';
+      }
       if (currentFilter === 'information') {
         return item.category === 'information' || item.type === 'information' || item.section === 'Information';
       }
@@ -252,26 +346,29 @@
       return item.category === 'travelling-guide' || item.type === 'travelling-guide' || item.section === 'Travelling Guide';
     });
 
-    // Ensure sub-filter bar is hidden since photos and videos columns are removed
+    // Ensure sub-filter bar is hidden
     if (photoSubFilterRow) {
       photoSubFilterRow.style.display = 'none';
     }
 
     if (currentlyFilteredItems.length === 0) {
       const isInfo = currentFilter === 'information';
+      const isPhotos = currentFilter === 'photos';
       mediaGridEl.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
-          <div style="font-size: 34px; margin-bottom: 10px;">${isInfo ? '📢' : '🗺️'}</div>
+          <div style="font-size: 34px; margin-bottom: 10px;">${isInfo ? '📢' : (isPhotos ? '📸' : '🗺️')}</div>
           <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 8px;">
-            ${isInfo ? 'No Creator Updates Yet' : 'No Travelling Guides Yet'}
+            ${isInfo ? 'No Creator Updates Yet' : (isPhotos ? 'No High-Quality Photos Yet' : 'No Travelling Guides Yet')}
           </h3>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px; max-width: 480px; margin-left: auto; margin-right: auto;">
             ${isInfo 
               ? 'Official roadmap milestones and future platform updates from the creator will appear here.' 
-              : 'Be the first explorer to write a destination guide, route directions, and personal travel notes!'}
+              : (isPhotos
+                  ? 'Be the first explorer to upload and showcase high-resolution wildlife and nature photography!'
+                  : 'Be the first explorer to write a destination guide, route directions, and personal travel notes!')}
           </p>
           <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="${escapeHtml(currentFilter)}" style="margin: 0 auto;">
-            ${isInfo ? '+ Post Creator Update' : '+ Write Travel Note / Guide'}
+            ${isInfo ? '+ Post Creator Update' : (isPhotos ? '+ Upload High-Quality Photo' : '+ Write Travel Note / Guide')}
           </button>
         </div>
       `;
@@ -280,7 +377,7 @@
     }
 
     mediaGridEl.innerHTML = currentlyFilteredItems.map((item, index) => {
-      // 1. Travelling Guide Card: Place, How to move there, Traveler Note (anyone can write), Author
+      // 1. Travelling Guide Card: Place, How to move there, Traveler Note, Author
       if (item.category === 'travelling-guide' || item.type === 'travelling-guide' || item.section === 'Travelling Guide') {
         return `
           <article class="travel-guide-card" data-index="${index}" data-id="${item.id}">
@@ -291,12 +388,12 @@
             <h3 class="guide-card-place-title">${escapeHtml(item.place || item.title)}</h3>
             
             <div class="guide-block-section">
-              <h4 class="guide-section-heading">🧭 How to Move There & Logistics</h4>
+              <h4 class="guide-section-heading">🧭 How to Move There &amp; Logistics</h4>
               <div class="guide-block-content">${escapeHtml(item.travelGuide || item.fieldNotes || '')}</div>
             </div>
             
             <div class="guide-note-section">
-              <div class="guide-note-label">📝 Traveler Note & Tips</div>
+              <div class="guide-note-label">📝 Traveler Note &amp; Tips</div>
               <div class="guide-note-content">${escapeHtml(item.travelerNote || item.description || '')}</div>
             </div>
             
@@ -312,7 +409,40 @@
         `;
       }
 
-      // 2. Information Card: Strictly Creator Updates for Future Updates & Roadmap
+      // 2. High-Quality Photo Card: Visuals Showcase with Lightbox Inspection
+      if (item.category === 'photos' || item.type === 'photo' || item.section === 'Wildlife Photos') {
+        return `
+          <article class="media-card" data-index="${index}" data-id="${item.id}">
+            <div class="card-media-wrapper trigger-card-lightbox" data-index="${index}" style="cursor: pointer;" title="Click to inspect 4K photo">
+              <img src="${escapeHtml(item.mediaUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.src='assets/images/black_drongo.jpg';" />
+              <span class="card-category-badge">📸 4K PHOTO</span>
+            </div>
+            <div class="card-data-bar">
+              <div class="card-title-row">
+                <h3 class="card-title">${escapeHtml(item.title)}</h3>
+              </div>
+              <div class="card-location">📍 ${escapeHtml(item.location || 'India')}</div>
+              <p class="card-story-snippet" style="font-size: 12px; color: #475569; margin: 4px 0 6px; line-height: 1.45;">${escapeHtml(item.fieldNotes || '')}</p>
+              <div class="card-specs">
+                <span>📷 ${escapeHtml(item.specs || 'High-Resolution Visual')}</span>
+                <span style="margin-left: auto;">✍️ ${escapeHtml(item.author || 'Wildlife Photographer')}</span>
+              </div>
+              <div class="card-actions-row" style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(10,43,71,0.06);">
+                <button type="button" class="btn-card-to-know-more trigger-card-lightbox" data-index="${index}" style="background: none; border: none; color: var(--accent-gold); font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                  🔍 INSPECT 4K PHOTO &rarr;
+                </button>
+                ${item.isUserUploaded ? `
+                  <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove photo" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
+                    ✕ Delete
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      // 3. Information Card: Strictly Creator Updates for Future Updates & Roadmap
       const catBadge = (item.infoCategory || 'FUTURE UPDATE').toUpperCase();
       return `
         <article class="hub-info-card" data-index="${index}" data-id="${item.id}">
@@ -331,6 +461,15 @@
         </article>
       `;
     }).join('');
+
+    // Lightbox triggers on photo cards
+    mediaGridEl.querySelectorAll('.trigger-card-lightbox').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(el.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) openLightbox(idx, false);
+      });
+    });
 
     // Delete handler
     mediaGridEl.querySelectorAll('.card-delete-btn').forEach(btn => {
@@ -351,6 +490,8 @@
       let count = 0;
       if (filter === 'travelling-guide') {
         count = catalog.filter(i => i.category === 'travelling-guide' || i.type === 'travelling-guide' || i.section === 'Travelling Guide').length;
+      } else if (filter === 'photos') {
+        count = catalog.filter(i => i.category === 'photos' || i.type === 'photo' || i.section === 'Wildlife Photos').length;
       } else if (filter === 'information') {
         count = catalog.filter(i => i.category === 'information' || i.type === 'information' || i.section === 'Information').length;
       } else {
@@ -598,25 +739,31 @@
      Curator Studio: Video & Photo Upload Engine
      -------------------------------------------------------------------------- */
   /* --------------------------------------------------------------------------
-     Curator Studio: Travelling Guide & Creator Updates Engine
+     Curator Studio: Travelling Guide, Photos & Creator Updates Engine
      -------------------------------------------------------------------------- */
   function setUploadSection(sec) {
     if (sectionSelect) sectionSelect.value = sec;
 
     const tabGuide = document.getElementById('hubTabBtnGuide');
+    const tabPhotos = document.getElementById('hubTabBtnPhotos');
     const tabInfo = document.getElementById('hubTabBtnInfo');
 
     const paneGuide = document.getElementById('hubPaneGuide');
+    const panePhotos = document.getElementById('hubPanePhotos');
     const paneInfo = document.getElementById('hubPaneInfo');
 
     if (tabGuide) tabGuide.classList.toggle('active', sec === 'travelling-guide');
+    if (tabPhotos) tabPhotos.classList.toggle('active', sec === 'photos');
     if (tabInfo) tabInfo.classList.toggle('active', sec === 'information');
 
     if (paneGuide) paneGuide.style.display = (sec === 'travelling-guide') ? 'block' : 'none';
+    if (panePhotos) panePhotos.style.display = (sec === 'photos') ? 'block' : 'none';
     if (paneInfo) paneInfo.style.display = (sec === 'information') ? 'block' : 'none';
 
     if (submitBtnText) {
-      if (sec === 'information') {
+      if (sec === 'photos') {
+        submitBtnText.textContent = 'PUBLISH HIGH-QUALITY PHOTO';
+      } else if (sec === 'information') {
         submitBtnText.textContent = 'PUBLISH CREATOR UPDATE';
       } else {
         submitBtnText.textContent = 'PUBLISH TRAVEL GUIDE & NOTE';
@@ -633,7 +780,9 @@
     if (modalBodyEl) modalBodyEl.scrollTop = 0;
 
     const targetSec = e?.currentTarget?.getAttribute('data-upload-section');
-    if (targetSec === 'information' || currentFilter === 'information') {
+    if (targetSec === 'photos' || (!targetSec && currentFilter === 'photos')) {
+      setUploadSection('photos');
+    } else if (targetSec === 'information' || (!targetSec && currentFilter === 'information')) {
       setUploadSection('information');
     } else {
       setUploadSection('travelling-guide');
@@ -644,6 +793,15 @@
     uploadModal.classList.remove('open');
     uploadModal.setAttribute('aria-hidden', 'true');
     uploadForm.reset();
+    pendingPhotoDataUrl = null;
+    const previewWrap = document.getElementById('photoPreviewWrap');
+    const promptWrap = document.getElementById('photoDropzonePrompt');
+    if (previewWrap) previewWrap.style.display = 'none';
+    if (promptWrap) promptWrap.style.display = 'block';
+    const previewImg = document.getElementById('photoPreviewImg');
+    if (previewImg) previewImg.src = '';
+    const fileInput = document.getElementById('hubPhotoFileInput');
+    if (fileInput) fileInput.value = '';
     document.body.style.overflow = '';
   }
 
@@ -693,6 +851,63 @@
       updateFilterCounts();
       closeUploadModal();
       showToast(`✓ Travel guide & note for "${place}" published successfully!`);
+      document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
+
+    } else if (sec === 'photos') {
+      const photoUrlInput = (document.getElementById('hubPhotoUrlInput')?.value || '').trim();
+      const photoUrl = pendingPhotoDataUrl || photoUrlInput;
+      const title = (document.getElementById('hubPhotoTitle')?.value || '').trim();
+      const subject = document.getElementById('hubPhotoSubject')?.value || 'birds';
+      const location = (document.getElementById('hubPhotoLocation')?.value || '').trim();
+      const specs = (document.getElementById('hubPhotoSpecs')?.value || '').trim() || 'High-Resolution Wildlife Rig';
+      const story = (document.getElementById('hubPhotoStory')?.value || '').trim();
+      const author = (document.getElementById('hubPhotoAuthor')?.value || '').trim() || 'Aadi [Creator]';
+
+      if (!photoUrl) {
+        showToast('⚠️ Please upload a high-resolution photo file or enter an image URL.');
+        return;
+      }
+      if (!title) {
+        showToast('⚠️ Please enter the photo title or species name.');
+        return;
+      }
+      if (!location) {
+        showToast('⚠️ Please enter the location or sanctuary name.');
+        return;
+      }
+      if (!story) {
+        showToast('⚠️ Please provide field observation details.');
+        return;
+      }
+
+      const newRecord = {
+        id: uniqueId,
+        type: 'photo',
+        category: 'photos',
+        section: 'Wildlife Photos',
+        photoSubject: subject,
+        title: title,
+        mediaUrl: photoUrl,
+        location: location,
+        specs: specs,
+        camera: specs,
+        fieldNotes: story,
+        knowMoreInfo: `Subject: ${title}\nCategory: High-Resolution Wildlife Photograph\nLocation: ${location}\nGear & Settings: ${specs}\nPhotographer: ${author}\n\nObservation Narrative:\n${story}`,
+        author: author,
+        date: `${currentDate} • Verified High-Res Visual`,
+        isUserUploaded: true,
+        timestamp: Date.now()
+      };
+
+      catalog.unshift(newRecord);
+      saveUserItemsToStorage();
+
+      currentFilter = 'photos';
+      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'photos'));
+      renderGallery();
+      updateFilterCounts();
+      closeUploadModal();
+      showToast(`✓ High-quality photo "${title}" published to Visuals!`);
       document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
 
     } else if (sec === 'information') {
@@ -946,11 +1161,18 @@
       if (e.target === uploadModal) closeUploadModal();
     });
 
-    // Travelling Guide & Creator Information Modal Tabs
+    // Travelling Guide, Photos & Creator Information Modal Tabs
     document.getElementById('hubTabBtnGuide')?.addEventListener('click', () => setUploadSection('travelling-guide'));
+    document.getElementById('hubTabBtnPhotos')?.addEventListener('click', () => setUploadSection('photos'));
     document.getElementById('hubTabBtnInfo')?.addEventListener('click', () => setUploadSection('information'));
 
     // Visuals Section Header Action Buttons
+    document.getElementById('btnVisualsUploadPhoto')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      setUploadSection('photos');
+      openUploadModal(e);
+    });
+
     document.getElementById('btnVisualsAddGuide')?.addEventListener('click', (e) => {
       e.preventDefault();
       setUploadSection('travelling-guide');
@@ -961,6 +1183,74 @@
       e.preventDefault();
       setUploadSection('information');
       openUploadModal(e);
+    });
+
+    // High-Resolution Photo File Upload Dropzone Wiring
+    const dropzoneBox = document.getElementById('photoDropzoneBox');
+    const photoFileInput = document.getElementById('hubPhotoFileInput');
+    const promptWrap = document.getElementById('photoDropzonePrompt');
+    const previewWrap = document.getElementById('photoPreviewWrap');
+    const previewImg = document.getElementById('photoPreviewImg');
+    const previewFilename = document.getElementById('photoPreviewFilename');
+    const removePreviewBtn = document.getElementById('btnRemovePhotoPreview');
+
+    if (dropzoneBox && photoFileInput) {
+      dropzoneBox.addEventListener('click', (e) => {
+        if (e.target.id === 'btnRemovePhotoPreview' || e.target.closest('#btnRemovePhotoPreview')) return;
+        photoFileInput.click();
+      });
+
+      dropzoneBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzoneBox.style.borderColor = 'var(--accent-gold)';
+        dropzoneBox.style.backgroundColor = 'rgba(197, 160, 89, 0.08)';
+      });
+
+      ['dragleave', 'dragend'].forEach(evt => {
+        dropzoneBox.addEventListener(evt, () => {
+          dropzoneBox.style.borderColor = 'rgba(197, 160, 89, 0.5)';
+          dropzoneBox.style.backgroundColor = 'rgba(10, 43, 71, 0.02)';
+        });
+      });
+
+      dropzoneBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzoneBox.style.borderColor = 'rgba(197, 160, 89, 0.5)';
+        dropzoneBox.style.backgroundColor = 'rgba(10, 43, 71, 0.02)';
+        const file = e.dataTransfer?.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+          handleSelectedPhotoFile(file);
+        } else {
+          showToast('⚠️ Please drop a valid high-resolution image file (JPG, PNG, WEBP).');
+        }
+      });
+
+      photoFileInput.addEventListener('change', () => {
+        const file = photoFileInput.files?.[0];
+        if (file) handleSelectedPhotoFile(file);
+      });
+    }
+
+    function handleSelectedPhotoFile(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        pendingPhotoDataUrl = e.target.result;
+        if (previewImg) previewImg.src = pendingPhotoDataUrl;
+        if (previewFilename) previewFilename.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+        if (promptWrap) promptWrap.style.display = 'none';
+        if (previewWrap) previewWrap.style.display = 'flex';
+        showToast('✓ Photo loaded and ready to publish!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    removePreviewBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      pendingPhotoDataUrl = null;
+      if (photoFileInput) photoFileInput.value = '';
+      if (previewImg) previewImg.src = '';
+      if (previewWrap) previewWrap.style.display = 'none';
+      if (promptWrap) promptWrap.style.display = 'block';
     });
 
     uploadForm?.addEventListener('submit', handleFormSubmit);

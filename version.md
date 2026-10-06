@@ -535,3 +535,17 @@
   - Added a dedicated A–Z alphabet quick-jump bar at the top of the destination panel to instantly navigate or filter directly to any initial letter (e.g. 'N' for Nalanda University)
   - Balanced the Maproom proportions so the destination list fits cleanly alongside the sticky India map
 
+## [v1.0.41] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Bugfix & Feature | Navigation, Logo Zoom, Notes, and High-Quality Photo Upload Stream
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Fixed Menu button trigger (#menuTriggerBtn) and navigation drawer slide-in controls by eliminating unhandled exceptions during engine initialization
+  - Restored Drongo logo zoom / enlargement lightbox modal (#logoDetailModal) across header, drawer, and footer brand emblems
+  - Restored '+ WRITE TRAVEL NOTE / GUIDE' (#btnVisualsAddGuide) and '+ POST CREATOR UPDATE' (#btnVisualsAddInfo) action buttons and modal forms
+  - Added dedicated '📸 High-Quality Photos' section to Visuals alongside Travelling Guide and Creator Updates
+  - Integrated high-resolution photo file drag-and-drop upload dropzone, external photo URL support, subject tagging, gear specs, and field stories
+  - Added curated starter collection of high-resolution 4K wildlife photographs (Black Drongo, Rhinoceros, Bengal Tiger, Paradise Flycatcher, Jewel Bug, Living Rainforest Canopy)
+  - Connected 4K Lightbox inspector with fullscreen photo views, exif settings, species taxonomic classification, and curator notes

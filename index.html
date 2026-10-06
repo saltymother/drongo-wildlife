@@ -128,6 +128,7 @@
       <!-- Section Links Group -->
       <div class="sub-nav-links-cluster">
         <a href="#visuals" class="sub-nav-link active" data-section="travelling-guide">TRAVELLING GUIDE</a>
+        <a href="#visuals" class="sub-nav-link" data-section="photos">PHOTOS</a>
         <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION (CREATOR UPDATES)</a>
         <a href="#maproom" class="sub-nav-link" data-section="maproom">MAPROOM</a>
         <a href="#drongo" class="sub-nav-link" data-section="drongo">THE DRONGO</a>
@@ -201,7 +202,11 @@
       <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; width: 100%;">
         <h2>Visuals</h2>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsAddGuide" data-upload-section="travelling-guide" aria-label="Write a Travel Note or Guide">
+          <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsUploadPhoto" data-upload-section="photos" aria-label="Upload High-Quality Photo">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span>+ UPLOAD PHOTO</span>
+          </button>
+          <button class="nav-action-btn btn-nav-secondary trigger-upload-modal" id="btnVisualsAddGuide" data-upload-section="travelling-guide" aria-label="Write a Travel Note or Guide">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
             <span>+ WRITE TRAVEL NOTE / GUIDE</span>
           </button>
@@ -212,10 +217,13 @@
         </div>
       </div>
 
-      <!-- Interactive Filter Nav Tabs: Only Travelling Guide and Information -->
+      <!-- Interactive Filter Nav Tabs: Travelling Guide, Photos, and Information -->
       <div class="gallery-filter-tabs" role="tablist" aria-label="Visual Categories">
         <button class="filter-btn active" data-filter="travelling-guide" role="tab" aria-selected="true">
           🗺️ Travelling Guide <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" data-filter="photos" role="tab" aria-selected="false">
+          📸 High-Quality Photos <span class="filter-count">6</span>
         </button>
         <button class="filter-btn" data-filter="information" role="tab" aria-selected="false">
           📢 Information (Future Updates) <span class="filter-count">3</span>
@@ -994,29 +1002,35 @@
       <form id="uploadMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
-            <strong>Visuals Dispatch Protocol:</strong> Visuals is dedicated to two community streams: <strong>Travelling Guides</strong> (documenting destination plans, routes, and freeform traveler notes) and <strong>Creator Updates</strong> (official creator updates on future features and releases).
+            <strong>Visuals Dispatch Protocol:</strong> Contribute to Drongo Visuals across three streams: <strong>Travelling Guides</strong> (routes, transit &amp; traveler notes), <strong>High-Quality Photos</strong> (upload raw or 4K nature photography), or <strong>Creator Updates</strong> (official creator updates on future features &amp; roadmap).
           </p>
           
-          <!-- Category Selector Tabs: Travelling Guide & Creator Updates Only -->
+          <!-- Category Selector Tabs: Travelling Guide, Photos, Creator Updates -->
           <div class="upload-step-block" style="margin-bottom: 16px;">
             <label class="step-label" style="margin-bottom: 10px;">
               <strong>Select Contribution Type:</strong>
             </label>
-            <div class="section-choice-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="section-choice-grid" style="grid-template-columns: repeat(3, 1fr);">
               <button type="button" class="section-choice-pill active" data-section="travelling-guide" id="hubTabBtnGuide">
                 <span class="sec-icon">🗺️</span>
                 <span class="sec-title">TRAVELLING GUIDE</span>
-                <span class="sec-sub">Places, Transit &amp; Notes</span>
+                <span class="sec-sub">Places &amp; Notes</span>
+              </button>
+              <button type="button" class="section-choice-pill" data-section="photos" id="hubTabBtnPhotos">
+                <span class="sec-icon">📸</span>
+                <span class="sec-title">HQ PHOTOS</span>
+                <span class="sec-sub">Upload Visuals</span>
               </button>
               <button type="button" class="section-choice-pill" data-section="information" id="hubTabBtnInfo">
                 <span class="sec-icon">📢</span>
                 <span class="sec-title">CREATOR UPDATES</span>
-                <span class="sec-sub">Future Release Info</span>
+                <span class="sec-sub">Future Releases</span>
               </button>
             </div>
             <!-- Hidden native select for section binding -->
             <select id="uploadSection" class="form-select visually-hidden">
               <option value="travelling-guide" selected>Travelling Guide</option>
+              <option value="photos">Photos</option>
               <option value="information">Information</option>
             </select>
           </div>
@@ -1044,7 +1058,79 @@
             </div>
           </div>
 
-          <!-- PANE 2: Creator Information / Future Updates Form -->
+          <!-- PANE 2: High-Quality Photo Upload Form -->
+          <div id="hubPanePhotos" class="hub-form-pane" style="display: none;">
+            <div style="background: rgba(197, 160, 89, 0.12); border-left: 3px solid var(--accent-gold); padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; color: var(--primary-ocean-blue);">
+              <strong>📸 High-Quality Wildlife &amp; Nature Photography Desk:</strong> Upload raw or processed high-resolution visuals directly from your device, or paste an external high-res photo URL.
+            </div>
+
+            <!-- Device File Upload Dropzone -->
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label>High-Resolution Photo (Upload from Device)</label>
+              <div class="photo-upload-dropzone" id="photoDropzoneBox" style="border: 2px dashed rgba(197, 160, 89, 0.5); border-radius: 8px; padding: 22px 16px; text-align: center; background: rgba(10, 43, 71, 0.02); cursor: pointer; transition: all 0.2s ease;">
+                <input type="file" id="hubPhotoFileInput" accept="image/*" style="display: none;" />
+                <div id="photoDropzonePrompt">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--accent-gold); margin-bottom: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  <p style="margin: 0 0 4px; font-weight: 700; color: var(--primary-ocean-blue); font-size: 13px;">Drag &amp; drop high-res photo here, or <span style="color: var(--accent-gold); text-decoration: underline;">Browse Device</span></p>
+                  <span style="font-size: 11px; color: var(--text-muted);">Supports JPG, PNG, WEBP, TIFF (High-Res / 4K)</span>
+                </div>
+                <div id="photoPreviewWrap" style="display: none; align-items: center; justify-content: center; flex-direction: column; gap: 8px;">
+                  <img id="photoPreviewImg" src="" alt="Selected Photo" style="max-height: 180px; max-width: 100%; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.2); object-fit: contain;" />
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <span id="photoPreviewFilename" style="font-size: 12px; font-weight: 600; color: var(--primary-ocean-blue);"></span>
+                    <button type="button" id="btnRemovePhotoPreview" style="background: none; border: none; color: #ff6b6b; font-size: 12px; cursor: pointer; text-decoration: underline;">✕ Remove / Change</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Optional External Image URL -->
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoUrlInput">Or External High-Res Photo URL (Alternative)</label>
+              <input type="url" id="hubPhotoUrlInput" class="form-input" placeholder="https://example.com/wildlife_image.jpg or Instagram image URL" />
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom: 12px;">
+              <div class="form-group">
+                <label for="hubPhotoTitle">Photo Title / Subject *</label>
+                <input type="text" id="hubPhotoTitle" class="form-input" placeholder="e.g. Rufous Treepie at Dawn Canopy" required />
+              </div>
+              <div class="form-group">
+                <label for="hubPhotoSubject">Wildlife Category</label>
+                <select id="hubPhotoSubject" class="form-select">
+                  <option value="birds" selected>🦅 Avian / Birds</option>
+                  <option value="mammals">🐅 Mammals &amp; Big Cats</option>
+                  <option value="flora">🌺 Flora &amp; Exotic Botanicals</option>
+                  <option value="landscapes">🏔️ Sanctuaries &amp; Landscapes</option>
+                  <option value="insects">🦗 Insects &amp; Macro Wildlife</option>
+                  <option value="reptiles">🐊 Reptiles &amp; Amphibians</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom: 12px;">
+              <div class="form-group">
+                <label for="hubPhotoLocation">Location / Sanctuary *</label>
+                <input type="text" id="hubPhotoLocation" class="form-input" placeholder="e.g. Corbett National Park, Uttarakhand" required />
+              </div>
+              <div class="form-group">
+                <label for="hubPhotoSpecs">Camera Gear &amp; Settings (Optional)</label>
+                <input type="text" id="hubPhotoSpecs" class="form-input" placeholder="e.g. Sony A1 • 600mm f/4 • 1/2000s, f/4, ISO 400" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoStory">Field Story &amp; Observation Details *</label>
+              <textarea id="hubPhotoStory" class="form-textarea" rows="3" placeholder="Describe the animal behavior, lighting, timing, and encounter story..." required></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoAuthor">Photographer Attribution</label>
+              <input type="text" id="hubPhotoAuthor" class="form-input" value="Aadi [Creator]" />
+            </div>
+          </div>
+
+          <!-- PANE 3: Creator Information / Future Updates Form -->
           <div id="hubPaneInfo" class="hub-form-pane" style="display: none;">
             <div style="background: rgba(197, 160, 89, 0.12); border-left: 3px solid var(--accent-gold); padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 12px; color: var(--primary-ocean-blue);">
               <strong>📢 Creator Notice Desk:</strong> This section is dedicated to the creator for sharing upcoming features, future platform updates, release schedules, and expedition announcements.
@@ -1086,9 +1172,6 @@
           </button>
         </div>
       </form>
-
-    </div>
-  </div>
 
     </div>
   </div>
@@ -1208,13 +1291,20 @@
 
     <div class="drawer-links-container">
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">🗺️ Travelling Guide</a>
+      <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="photos">📸 High-Quality Photos</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="information">📢 Information (Creator Updates)</a>
       <a href="#maproom" class="drawer-nav-link sub-nav-link" data-section="maproom">🧭 Maproom Cartography</a>
       <a href="#drongo" class="drawer-nav-link sub-nav-link" data-section="drongo">🦅 The Drongo Monograph</a>
       
-      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-        <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="travelling-guide" style="width: 100%; justify-content: center;">
+      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 8px;">
+        <button class="header-action-btn btn-gold trigger-upload-modal" data-upload-section="photos" style="width: 100%; justify-content: center;">
+          + Upload High-Quality Photo
+        </button>
+        <button class="header-action-btn trigger-upload-modal" data-upload-section="travelling-guide" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
           + Write Travel Note / Guide
+        </button>
+        <button class="header-action-btn trigger-upload-modal" data-upload-section="information" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+          + Post Creator Update
         </button>
       </div>
     </div>
