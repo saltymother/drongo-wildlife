@@ -416,3 +416,16 @@
   - Equipped Destination Modal with high-res hero image, fullscreen zoom, historical and ecological narrative, and prominent '+ Add Photos, Videos & Short Film' and '+ Share Tips & Tricks' action buttons
   - Included full Tips, Tricks & Experience Feed with verified creator badges and traveler uploads gallery with deletion and lightbox inspection directly inside the modal
   - Implemented live data synchronization ensuring any new media or tips added/deleted inside the modal immediately update the view
+## [v1.0.32] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | External Hub Content Architecture Redesign
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Enforced global External Hub architecture with complete removal of direct server media/video file uploads
+  - Redesigned Visuals section with dedicated tabs: Photos (left thumbnail, subject name, scientific name, 2-3 line description, 'View High-Res on Instagram' button), Videos & Short Films (left icon, name, sci name, brief info, 'Watch Video on YouTube' & 'Watch Short on Instagram' buttons), Information (strictly text-based categorized dossiers with no images/icons), and Travelling Guide
+  - Re-architected Curator Studio Dispatch modal with 3 zero-file-input forms validating external Instagram and YouTube links
+  - Re-engineered Maproom state-level views into Category A (Travel Destinations) with left AI thumbnail, title, intro, dedicated IG/YT link buttons, and structured Tourist Guidelines (Precautions, Timings, Available Facilities), and Category B (Flora & Fauna) with left tiny icon, common name, scientific name, optional description, Photos/Videos/Short Films buttons, and behavioral Spotting Tips block
+  - Updated Maproom contribution modals to external URL schemas for both travel destinations and indigenous species sightings
+

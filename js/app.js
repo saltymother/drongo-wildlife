@@ -8,156 +8,167 @@
   'use strict';
 
   // Storage key for catalog metadata in localStorage
-  const STORAGE_KEY = 'drongo_custom_catalog_v4';
+  const STORAGE_KEY = 'drongo_custom_catalog_v5';
 
-  // IndexedDB Configuration for reliable Large Media (Video & Raw Stills)
-  const IDB_NAME = 'DrongoMediaStore';
-  const IDB_VERSION = 1;
-  const IDB_STORE = 'media_blobs';
-  let dbInstance = null;
-
-  function initMediaDB() {
-    return new Promise((resolve) => {
-      if (!window.indexedDB) {
-        resolve(null);
-        return;
-      }
-      const request = indexedDB.open(IDB_NAME, IDB_VERSION);
-      request.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains(IDB_STORE)) {
-          db.createObjectStore(IDB_STORE, { keyPath: 'id' });
-        }
-      };
-      request.onsuccess = (e) => {
-        dbInstance = e.target.result;
-        resolve(dbInstance);
-      };
-      request.onerror = () => {
-        console.warn('IndexedDB unavailable, continuing with memory cache');
-        resolve(null);
-      };
-    });
-  }
-
-  async function persistMediaBlob(id, fileOrBlob) {
-    if (!dbInstance) await initMediaDB();
-    if (!dbInstance) return false;
-    return new Promise((resolve) => {
-      try {
-        const tx = dbInstance.transaction(IDB_STORE, 'readwrite');
-        const store = tx.objectStore(IDB_STORE);
-        store.put({ id: id, blob: fileOrBlob, timestamp: Date.now() });
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => resolve(false);
-      } catch (err) {
-        resolve(false);
-      }
-    });
-  }
-
-  async function retrieveMediaBlob(id) {
-    if (!dbInstance) await initMediaDB();
-    if (!dbInstance) return null;
-    return new Promise((resolve) => {
-      try {
-        const tx = dbInstance.transaction(IDB_STORE, 'readonly');
-        const store = tx.objectStore(IDB_STORE);
-        const req = store.get(id);
-        req.onsuccess = () => resolve(req.result ? req.result.blob : null);
-        req.onerror = () => resolve(null);
-      } catch (err) {
-        resolve(null);
-      }
-    });
-  }
-
-  // Base catalog containing strictly user-provided media
+  // Base catalog containing strictly External Hub records (No heavy server media)
   const INITIAL_CATALOG = [
     {
       id: 'item-insect-golden-wasp',
       type: 'photo',
-      title: 'Golden Paper Wasp (Polistes wattii)',
+      title: 'Golden Paper Wasp',
+      scientificName: 'Polistes wattii',
       category: 'photos',
       photoSubject: 'insect',
       section: 'Photos',
-      tags: ['photos', 'insect', 'macro', 'wasp', 'hymenoptera'],
+      tags: ['photos', 'insect', 'macro', 'wasp'],
       location: 'Field Observation Site, Bihar',
-      camera: 'Macro Wildlife Photography',
-      lens: 'Macro Prime Lens',
-      exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/golden_paper_wasp_macro.jpg',
-      fieldNotes: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure.',
-      knowMoreInfo: 'Scientific Name: Polistes wattii (Indian yellow paper wasp)\nClassification: Hymenoptera • Vespidae\nObserved Traits: Distinct golden-yellow coloration, intricate antenna segments, triangular light-polarizing ocelli between compound eyes.\nEcological Role: Natural predator of caterpillars and garden pests, vital for ecosystem balance.\nCurator Notes: Awaiting detailed field notes from curator. Click "Edit Notes" above to add your observations.',
-      isUserUploaded: true
+      thumbIcon: 'assets/images/golden_paper_wasp_macro.jpg',
+      description: 'Close-up macro study of the Indian yellow paper wasp (Polistes wattii) showing triangular optical ocelli, compound eyes, and thoracic structure in natural daylight.',
+      instagramUrl: 'https://www.instagram.com/explore/tags/polisteswattii/',
+      isUserUploaded: false
     },
     {
       id: 'item-animal-ginger-cat',
       type: 'photo',
-      title: 'Domestic Cat (Felis catus)',
+      title: 'Domestic Cat',
+      scientificName: 'Felis catus',
       category: 'photos',
       photoSubject: 'animal',
       section: 'Photos',
-      tags: ['photos', 'animal', 'feline', 'cat', 'felis-catus', 'fauna'],
+      tags: ['photos', 'animal', 'cat'],
       location: 'Habitat Observation Point',
-      camera: 'Wildlife & Animal Portraiture',
-      lens: 'Wide Aperture Standard Lens',
-      exposure: 'Natural Ambient Daylight',
       mediaUrl: 'assets/images/ginger_white_cat.jpg',
-      fieldNotes: 'Candid daylight subject study of a ginger-and-white domestic cat (Felis catus) showing alert posture, facial features, and amber ocular coloration.',
-      knowMoreInfo: 'Subject: Domestic Cat (Felis catus)\nColoration: Ginger marmalade and white bicolor coat.\nBehavior: Keen alert posture, forward-facing ears, observant gaze.\nHabitat: Human settlement and rural borders.\nCurator Notes: Awaiting detailed field notes from curator. Click "Edit Notes" above to add your observations.',
-      isUserUploaded: true
+      thumbIcon: 'assets/images/ginger_white_cat.jpg',
+      description: 'Candid daylight subject study of a ginger-and-white domestic cat showing alert posture, facial features, and warm amber ocular coloration.',
+      instagramUrl: 'https://www.instagram.com/explore/tags/feliscatus/',
+      isUserUploaded: false
     },
     {
       id: 'item-flowers-peach-hibiscus',
       type: 'photo',
       title: 'Peach Hibiscus Flower',
+      scientificName: 'Hibiscus rosa-sinensis',
       category: 'photos',
       photoSubject: 'flowers',
       section: 'Photos',
-      tags: ['photos', 'flowers', 'flora', 'hibiscus', 'botanical'],
+      tags: ['photos', 'flowers', 'flora'],
       location: 'Garden Observation Point',
-      camera: 'Botanical Macro Photography',
-      lens: 'Wide Aperture Prime Lens',
-      exposure: 'Soft Ambient Morning Light',
       mediaUrl: 'assets/images/peach_hibiscus_flower.jpg',
-      fieldNotes: 'Vibrant peach-toned hibiscus flower in full bloom with visible stamen and delicate ruffled petals, captured in natural daylight.',
-      knowMoreInfo: 'Botanical Subject: Peach Hibiscus (Hibiscus rosa-sinensis cultivar)\nFamily: Malvaceae\nCharacteristics: Delicate apricot-peach ruffled petals with an elongated central staminal column tipped with golden pollen grains.\nGrowth Habit: Tropical evergreen flowering shrub.\nCurator Notes: Awaiting detailed botanical notes from curator. Click "Edit Notes" above to add your observations.',
-      isUserUploaded: true
+      thumbIcon: 'assets/images/peach_hibiscus_flower.jpg',
+      description: 'Vibrant peach-toned hibiscus flower in full bloom with visible stamen and delicate ruffled petals, captured in soft ambient morning daylight.',
+      instagramUrl: 'https://www.instagram.com/explore/tags/hibiscus/',
+      isUserUploaded: false
     },
     {
       id: 'item-animal-fawn-pug',
       type: 'photo',
       title: 'Fawn Pug Dog',
+      scientificName: 'Canis lupus familiaris',
       category: 'photos',
       photoSubject: 'animal',
       section: 'Photos',
-      tags: ['photos', 'animal', 'canine', 'dog', 'pug', 'fauna'],
+      tags: ['photos', 'animal', 'dog'],
       location: 'Domestic Interior Habitat',
-      camera: 'Animal Close-Up Photography',
-      lens: 'Standard Portrait Lens',
-      exposure: 'Ambient Room Light',
       mediaUrl: 'assets/images/pug_dog_portrait.jpg',
-      fieldNotes: 'Expressive close-up portrait of a fawn pug dog lying on its back, capturing facial wrinkles, glossy eyes, and characteristic muzzle.',
-      knowMoreInfo: 'Subject: Fawn Pug (Canis lupus familiaris)\nBreed Type: Toy canine breed of ancient lineage.\nDistinctive Features: Brachycephalic facial structure with deep forehead skin wrinkles, curled tail, large expressive dark eyes, and black velvet muzzle mask.\nCurator Notes: Awaiting detailed notes from curator. Click "Edit Notes" above to add your observations.',
-      isUserUploaded: true
+      thumbIcon: 'assets/images/pug_dog_portrait.jpg',
+      description: 'Expressive close-up portrait of a fawn pug dog lying on its back, capturing facial skin wrinkles, glossy dark eyes, and velvet black muzzle.',
+      instagramUrl: 'https://www.instagram.com/explore/tags/pug/',
+      isUserUploaded: false
     },
     {
       id: 'item-flowers-periwinkle',
       type: 'photo',
-      title: 'Periwinkle Blossom (Catharanthus roseus)',
+      title: 'Madagascar Periwinkle Blossom',
+      scientificName: 'Catharanthus roseus',
       category: 'photos',
       photoSubject: 'flowers',
       section: 'Photos',
-      tags: ['photos', 'flowers', 'flora', 'periwinkle', 'botanical'],
+      tags: ['photos', 'flowers', 'flora'],
       location: 'Flora Field Study',
-      camera: 'Monochrome Botanical Study',
-      lens: 'Close-Up Prime Lens',
-      exposure: 'Diffused Daylight',
       mediaUrl: 'assets/images/periwinkle_flower_art.jpg',
-      fieldNotes: 'Fine monochrome study of a five-petaled periwinkle blossom with water droplet on petal, accented with field annotation contour overlays.',
-      knowMoreInfo: 'Botanical Subject: Madagascar Periwinkle / Sadabahar (Catharanthus roseus)\nFamily: Apocynaceae\nMorphology: Symmetrical salverform corolla with five spreading lobes, central eye with glistening dewdrop.\nMedicinal Significance: Renowned source of vinca alkaloids (vincristine and vinblastine).\nCurator Notes: Awaiting detailed botanical notes from curator. Click "Edit Notes" above to add your observations.',
-      isUserUploaded: true
+      thumbIcon: 'assets/images/periwinkle_flower_art.jpg',
+      description: 'Fine botanical monochrome study of a five-petaled periwinkle blossom with water droplet on petal, accented with field annotation contour overlays.',
+      instagramUrl: 'https://www.instagram.com/explore/tags/catharanthusroseus/',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-video-drongo-flight',
+      type: 'video',
+      title: 'The Black Drongo in Aerial Combat',
+      scientificName: 'Dicrurus macrocercus',
+      category: 'video',
+      photoSubject: 'birds',
+      section: 'Videos & Short Films',
+      tags: ['video', 'birds', 'drongo', 'short-film'],
+      location: 'Open Savannah Corridors, India',
+      mediaUrl: 'assets/images/black_drongo.jpg',
+      thumbIcon: 'assets/images/black_drongo.jpg',
+      iconSymbol: '🦅',
+      description: 'High-speed behavioral study tracking aerial acrobatics, fork-tailed maneuvers, and fearless raptor mobbing tactics across open scrublands.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      instagramUrl: 'https://www.instagram.com/reels/',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-video-dolphin-breach',
+      type: 'video',
+      title: 'Ganges River Dolphin Echolocation Breaching',
+      scientificName: 'Platanista gangetica',
+      category: 'video',
+      photoSubject: 'animal',
+      section: 'Videos & Short Films',
+      tags: ['video', 'animal', 'dolphin'],
+      location: 'Vikramshila Dolphin Sanctuary, Bihar',
+      mediaUrl: 'assets/images/gangetic_dolphin.jpg',
+      thumbIcon: 'assets/images/gangetic_dolphin.jpg',
+      iconSymbol: '🌿',
+      description: 'Documentary footage capturing ultrasonic echolocating freshwater dolphins surfacing across turbulent Ganges river currents in early morning light.',
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      instagramUrl: 'https://www.instagram.com/reels/',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-info-tiger-thermo',
+      type: 'information',
+      title: 'Thermoregulation & Camouflage in Royal Bengal Tigers',
+      scientificName: 'Panthera tigris tigris',
+      category: 'information',
+      infoCategory: 'Animal',
+      section: 'Information',
+      tags: ['information', 'animal'],
+      author: 'Drongo Naturalist Desk',
+      date: 'Field Dossier',
+      infoText: 'The vertical stripe pattern of Panthera tigris functions as disruptive camouflage in tall elephant grass and dense sal canopies, breaking up the tiger’s bodily outline against dappled sunlight.\n\nEach individual possesses a unique stripe fingerprint that remains unchanged through life. During intense Terai summer heatwaves exceeding 42°C, tigers lack efficient sweat glands and rely heavily on wallowing in deep river channels and secluded pools to dissipate excess heat.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-info-bodhi-ecology',
+      type: 'information',
+      title: 'Ecological Adaptations of the Sacred Bodhi Tree',
+      scientificName: 'Ficus religiosa',
+      category: 'information',
+      infoCategory: 'Plant',
+      section: 'Information',
+      tags: ['information', 'plant'],
+      author: 'Botanical Field Division',
+      date: 'Field Dossier',
+      infoText: 'Ficus religiosa displays remarkable adaptations for monsoon floodplains. Its distinct heart-shaped leaves feature an extended drip tip (acuminate apex) that accelerates the runoff of rainwater, keeping the foliage dry and drastically reducing parasitic fungal growth.\n\nEcologically, it serves as a keystone species in northern Indian river basins, sustaining hundreds of frugivorous birds, bats, and pollinators that feed on its syconia figs throughout the year.',
+      isUserUploaded: false
+    },
+    {
+      id: 'item-info-wasp-vision',
+      type: 'information',
+      title: 'Optical Ocelli & Polarized Vision in Paper Wasps',
+      scientificName: 'Polistes wattii',
+      category: 'information',
+      infoCategory: 'Insect',
+      section: 'Information',
+      tags: ['information', 'insect'],
+      author: 'Micro-Entomology Lab',
+      date: 'Field Dossier',
+      infoText: 'The Indian yellow paper wasp navigates through a dual optical system consisting of compound eyes and three dorsal ocelli situated on the vertex of the head in a triangle.\n\nThese ocelli detect polarized skylight and ultra-violet wavelengths, allowing the wasp to orient itself and calculate compass directions even when the sun is obstructed by thick monsoon cloud covers.',
+      isUserUploaded: false
     }
   ];
 
@@ -359,84 +370,113 @@
     }
 
     mediaGridEl.innerHTML = currentlyFilteredItems.map((item, index) => {
-      const isVideo = item.type === 'video';
-
-      let badgeClass = 'badge-photo';
-      let categoryLabel = item.section || 'PHOTO';
-
+      // 1. Photos Tab Card: Left tiny thumbnail icon, Right Name + Scientific + 2-3 line desc, Bottom IG button
       if (item.category === 'photos' || item.type === 'photo') {
-        const sub = (item.photoSubject || 'birds').toLowerCase();
-        badgeClass = `badge-photo badge-subject-${sub}`;
-        categoryLabel = `PHOTO • ${sub.toUpperCase()}`;
-      } else if (item.category === 'video' || item.type === 'video') {
-        const sub = (item.photoSubject || 'general').toLowerCase();
-        badgeClass = 'badge-video';
-        categoryLabel = `VIDEO • ${sub.toUpperCase()}`;
-      } else if (item.category === 'short-film') {
-        badgeClass = 'badge-short-film';
-        categoryLabel = 'SHORT FILM';
-      } else if (item.category === 'travelling-guide') {
-        badgeClass = 'badge-guide';
-        categoryLabel = 'TRAVELLING GUIDE';
-      } else if (item.category === 'ideas') {
-        badgeClass = 'badge-ideas';
-        categoryLabel = 'IDEAS';
-      } else if (item.category === 'information') {
-        badgeClass = 'badge-info';
-        categoryLabel = 'INFORMATION';
-      }
-
-      return `
-        <article class="media-card" data-index="${index}" data-id="${item.id}" tabindex="0" role="button" aria-label="${escapeHtml(item.title)}">
-          <div class="card-media-wrapper">
-            <span class="card-category-badge ${badgeClass}">${escapeHtml(categoryLabel)}</span>
-            <img 
-              src="${escapeHtml(item.mediaUrl)}" 
-              alt="${escapeHtml(item.title)}" 
-              loading="lazy"
-              onerror="this.onerror=null; this.src='assets/images/black_drongo.jpg';"
-            />
-            ${isVideo ? `
-              <div class="video-play-overlay" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
+        const thumbSrc = item.thumbIcon || item.mediaUrl || 'assets/images/black_drongo.jpg';
+        const igLink = item.instagramUrl || 'https://www.instagram.com/explore/tags/wildlifeindia/';
+        return `
+          <article class="hub-photo-card" data-index="${index}" data-id="${item.id}">
+            <div class="hub-photo-top-row">
+              <img 
+                src="${escapeHtml(thumbSrc)}" 
+                alt="${escapeHtml(item.title)}" 
+                class="hub-thumb-icon"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/images/black_drongo.jpg';"
+              />
+              <div class="hub-photo-info">
+                <h3 class="hub-photo-name">${escapeHtml(item.title)}</h3>
+                <span class="hub-scientific-name">${escapeHtml(item.scientificName || item.title)}</span>
+                <p class="hub-desc-text">${escapeHtml(item.description || item.fieldNotes || '')}</p>
               </div>
-            ` : ''}
-          </div>
-
-          <div class="card-data-bar">
-            <div class="card-title-row">
-              <h3 class="card-title">${escapeHtml(item.title)}</h3>
-              ${item.isUserUploaded ? '<span class="user-tag">User Upload</span>' : ''}
             </div>
-
-            <div class="card-location">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              <span>${escapeHtml(item.location)}</span>
-            </div>
-
-            <div class="card-specs">
-              <span><strong>Gear:</strong> ${escapeHtml(item.camera)}</span>
-              ${item.lens ? `<span class="spec-bullet">•</span><span>${escapeHtml(item.lens)}</span>` : ''}
-            </div>
-
-            <div class="card-actions-row">
-              <button class="card-know-more-btn" data-know-more-index="${index}" title="Learn more about ${escapeHtml(item.title)}">
-                📖 To Know More &rarr;
-              </button>
-
+            <div class="hub-photo-bottom-row">
+              <a href="${escapeHtml(igLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View high-res photo on Instagram">
+                📸 View High-Res on Instagram ↗
+              </a>
               ${item.isUserUploaded ? `
-                <button class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                  </svg>
-                  Remove
+                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
+                  ✕ Delete
                 </button>
               ` : ''}
             </div>
+          </article>
+        `;
+      }
+
+      // 2. Videos & Short Films Tab Card: Left tiny icon, Right Name + Scientific + brief info, Bottom YT & IG buttons
+      if (item.category === 'video' || item.type === 'video' || item.category === 'short-film') {
+        const iconSymbol = item.iconSymbol || '🌿';
+        const ytLink = item.youtubeUrl || 'https://www.youtube.com/';
+        const igLink = item.instagramUrl || 'https://www.instagram.com/reels/';
+        return `
+          <article class="hub-video-card" data-index="${index}" data-id="${item.id}">
+            <div class="hub-video-top-row">
+              <div class="hub-video-icon" title="${escapeHtml(item.title)}">
+                <span>${iconSymbol}</span>
+              </div>
+              <div class="hub-video-info">
+                <h3 class="hub-video-name">${escapeHtml(item.title)}</h3>
+                <span class="hub-scientific-name">${escapeHtml(item.scientificName || '')}</span>
+                <p class="hub-desc-text">${escapeHtml(item.description || item.fieldNotes || '')}</p>
+              </div>
+            </div>
+            <div class="hub-video-bottom-buttons">
+              <a href="${escapeHtml(ytLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch full video on YouTube">
+                ▶ Watch Video on YouTube ↗
+              </a>
+              <a href="${escapeHtml(igLink)}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="Watch short reel on Instagram">
+                🎬 Watch Short on Instagram ↗
+              </a>
+              ${item.isUserUploaded ? `
+                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px; margin-left: auto;">
+                  ✕ Delete
+                </button>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      // 3. Information Tab Card: Strictly text-based! No images or icons allowed.
+      if (item.category === 'information' || item.type === 'information') {
+        const catBadge = (item.infoCategory || 'GENERAL').toUpperCase();
+        return `
+          <article class="hub-info-card" data-index="${index}" data-id="${item.id}">
+            <span class="hub-info-category-badge">[${escapeHtml(catBadge)}]</span>
+            <h3 class="hub-info-title">${escapeHtml(item.title)}</h3>
+            <div class="hub-info-body">${escapeHtml(item.infoText || item.fieldNotes || '')}</div>
+            <div class="hub-info-footer">
+              <span>Field Dossier • ${escapeHtml(item.author || 'Drongo Research Desk')}</span>
+              <span>${escapeHtml(item.date || 'Verified Archive')}</span>
+              ${item.isUserUploaded ? `
+                <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
+                  ✕ Delete
+                </button>
+              ` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      // 4. Travelling Guide Tab Card (Leave as is for now)
+      return `
+        <article class="hub-photo-card" data-index="${index}" data-id="${item.id}">
+          <div class="hub-photo-top-row">
+            <div class="hub-thumb-icon">🧭</div>
+            <div class="hub-photo-info">
+              <h3 class="hub-photo-name">${escapeHtml(item.title)}</h3>
+              <span class="hub-scientific-name">${escapeHtml(item.location || 'India Trails')}</span>
+              <p class="hub-desc-text">${escapeHtml(item.fieldNotes || item.description || '')}</p>
+            </div>
+          </div>
+          <div class="hub-photo-bottom-row">
+            <span style="font-size: 11px; color: var(--accent-gold); font-weight: 700;">TRAVELLING GUIDE</span>
+            ${item.isUserUploaded ? `
+              <button type="button" class="card-delete-btn" data-delete-id="${item.id}" title="Remove this record" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px;">
+                ✕ Delete
+              </button>
+            ` : ''}
           </div>
         </article>
       `;
@@ -752,56 +792,33 @@
   /* --------------------------------------------------------------------------
      Curator Studio: Video & Photo Upload Engine
      -------------------------------------------------------------------------- */
-  function setMediaType(type) {
-    if (type === 'video') {
-      if (mediaTypeSelect) mediaTypeSelect.value = 'video';
-      typeToggleVideo?.classList.add('active');
-      typeTogglePhoto?.classList.remove('active');
-      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Video Footage Here';
-      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports MP4, MOV, WEBM wildlife reels and clips.';
-      if (dropzoneInput) dropzoneInput.accept = 'video/*';
-      if (sectionSelect && sectionSelect.value === 'photos') {
-        setUploadSection('video');
-      }
-    } else {
-      if (mediaTypeSelect) mediaTypeSelect.value = 'photo';
-      typeTogglePhoto?.classList.add('active');
-      typeToggleVideo?.classList.remove('active');
-      if (dropzoneTitleText) dropzoneTitleText.textContent = 'Click to Browse or Drag & Drop Photo Here';
-      if (dropzoneNoteText) dropzoneNoteText.textContent = 'Supports JPG, PNG, WEBP stills from cameras or phones.';
-      if (dropzoneInput) dropzoneInput.accept = 'image/*';
-      if (sectionSelect && sectionSelect.value === 'video') {
-        setUploadSection('photos');
-      }
-    }
-  }
-
+  /* --------------------------------------------------------------------------
+     Curator Studio: External Hub Dispatch Engine (No File Uploads)
+     -------------------------------------------------------------------------- */
   function setUploadSection(sec) {
-    if (!sectionSelect) return;
-    sectionSelect.value = sec;
-    sectionChoicePills.forEach(pill => {
-      pill.classList.toggle('active', pill.getAttribute('data-section') === sec);
-    });
+    if (sectionSelect) sectionSelect.value = sec;
 
-    // Show subject picker for both Photos AND Video
-    if (photoSubjectPicker) {
-      photoSubjectPicker.style.display = (sec === 'photos' || sec === 'video') ? 'block' : 'none';
-      const pickerLabel = document.getElementById('uploadSubjectPickerLabel');
-      if (pickerLabel) {
-        pickerLabel.textContent = sec === 'video' ? 'Video Subject Column:' : 'Photo Subject Column:';
-      }
-    }
+    const tabPhotos = document.getElementById('hubTabBtnPhotos');
+    const tabVideo = document.getElementById('hubTabBtnVideo');
+    const tabInfo = document.getElementById('hubTabBtnInfo');
 
-    const sectionDisplayNames = {
-      'photos': 'Photos',
-      'video': 'Video',
-      'short-film': 'Short Film',
-      'travelling-guide': 'Travelling Guide',
-      'ideas': 'Ideas',
-      'information': 'Information'
-    };
+    const panePhotos = document.getElementById('hubPanePhotos');
+    const paneVideo = document.getElementById('hubPaneVideo');
+    const paneInfo = document.getElementById('hubPaneInfo');
+
+    if (tabPhotos) tabPhotos.classList.toggle('active', sec === 'photos');
+    if (tabVideo) tabVideo.classList.toggle('active', sec === 'video');
+    if (tabInfo) tabInfo.classList.toggle('active', sec === 'information');
+
+    if (panePhotos) panePhotos.style.display = (sec === 'photos') ? 'block' : 'none';
+    if (paneVideo) paneVideo.style.display = (sec === 'video') ? 'block' : 'none';
+    if (paneInfo) paneInfo.style.display = (sec === 'information') ? 'block' : 'none';
+
     if (submitBtnText) {
-      submitBtnText.textContent = `Publish Dispatch to ${sectionDisplayNames[sec] || sec}`;
+      if (sec === 'photos') submitBtnText.textContent = 'PUBLISH TO PHOTOS ARCHIVE';
+      else if (sec === 'video') submitBtnText.textContent = 'PUBLISH TO VIDEOS & FILMS';
+      else if (sec === 'information') submitBtnText.textContent = 'PUBLISH RESEARCH DOSSIER';
+      else submitBtnText.textContent = 'PUBLISH TO DRONGO HUB';
     }
   }
 
@@ -810,23 +827,14 @@
     uploadModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Ensure modal body is scrolled to the top so user sees Step 1 immediately
     const modalBodyEl = uploadModal.querySelector('.modal-body');
     if (modalBodyEl) modalBodyEl.scrollTop = 0;
 
-    const targetType = e?.currentTarget?.getAttribute('data-upload-type');
     const targetSec = e?.currentTarget?.getAttribute('data-upload-section');
-
-    if (targetType) {
-      setMediaType(targetType);
-    } else {
-      setMediaType('photo');
-    }
-
-    if (targetSec && targetSec !== 'all') {
-      setUploadSection(targetSec);
-    } else if (targetType === 'video') {
+    if (targetSec === 'video' || currentFilter === 'video') {
       setUploadSection('video');
+    } else if (targetSec === 'information' || currentFilter === 'information') {
+      setUploadSection('information');
     } else {
       setUploadSection('photos');
     }
@@ -836,272 +844,144 @@
     uploadModal.classList.remove('open');
     uploadModal.setAttribute('aria-hidden', 'true');
     uploadForm.reset();
-    resetUploadPreview();
     document.body.style.overflow = '';
   }
 
-  function resetUploadPreview() {
-    pendingFileDataUrl = null;
-    pendingVideoBlob = null;
-    pendingVideoPoster = null;
-    previewContainer.style.display = 'none';
-    previewImage.style.display = 'none';
-    previewImage.src = '';
-    previewVideo.style.display = 'none';
-    previewVideo.src = '';
-    dropzoneArea.style.display = 'block';
-    if (dropzoneFileStatus) {
-      dropzoneFileStatus.textContent = '';
-      dropzoneFileStatus.style.display = 'none';
-    }
-  }
-
-  function generateVideoThumbnail(videoUrl) {
-    return new Promise((resolve) => {
-      const tempVideo = document.createElement('video');
-      tempVideo.src = videoUrl;
-      tempVideo.muted = true;
-      tempVideo.playsInline = true;
-      tempVideo.crossOrigin = 'anonymous';
-
-      tempVideo.addEventListener('loadeddata', () => {
-        tempVideo.currentTime = Math.min(0.5, (tempVideo.duration || 1) / 2);
-      });
-
-      tempVideo.addEventListener('seeked', () => {
-        try {
-          const canvas = document.createElement('canvas');
-          canvas.width = tempVideo.videoWidth || 640;
-          canvas.height = tempVideo.videoHeight || 360;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-          resolve(dataUrl);
-        } catch (e) {
-          resolve('assets/images/gangetic_dolphin.jpg');
-        }
-      });
-
-      tempVideo.addEventListener('error', () => {
-        resolve('assets/images/gangetic_dolphin.jpg');
-      });
-
-      setTimeout(() => resolve('assets/images/gangetic_dolphin.jpg'), 3500);
-    });
-  }
-
-  function handleFileSelection(file) {
-    if (!file) return;
-
-    const isVideoFile = file.type.startsWith('video/');
-    const isImageFile = file.type.startsWith('image/');
-
-    if (!isVideoFile && !isImageFile) {
-      showToast('⚠️ Please select a valid photo or video file.');
-      return;
-    }
-
-    const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2);
-    const cleanFileName = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
-    const autoTitleCandidate = cleanFileName.charAt(0).toUpperCase() + cleanFileName.slice(1);
-
-    const titleInput = document.getElementById('uploadTitle');
-    if (titleInput && (!titleInput.value || titleInput.value.trim() === '')) {
-      titleInput.value = autoTitleCandidate;
-    }
-    const locInput = document.getElementById('uploadLocation');
-    if (locInput && (!locInput.value || locInput.value.trim() === '')) {
-      locInput.value = 'Field Observation Site, India';
-    }
-
-    if (isVideoFile) {
-      setMediaType('video');
-      pendingVideoBlob = file;
-      const objectUrl = URL.createObjectURL(file);
-      pendingFileDataUrl = objectUrl;
-
-      if (dropzoneFileStatus) {
-        dropzoneFileStatus.textContent = `✓ Loaded Video: ${file.name} (${fileSizeMb} MB) — Ready to Publish`;
-        dropzoneFileStatus.style.display = 'block';
-      }
-
-      dropzoneArea.style.display = 'none';
-      previewContainer.style.display = 'block';
-      previewVideo.src = objectUrl;
-      previewVideo.style.display = 'block';
-      previewImage.style.display = 'none';
-
-      // Extract video frame thumbnail for gallery card
-      generateVideoThumbnail(objectUrl).then(poster => {
-        pendingVideoPoster = poster;
-      });
-
-      showToast(`✓ Video footage loaded (${fileSizeMb} MB).`);
-    } else {
-      setMediaType('photo');
-      pendingVideoBlob = null;
-      pendingVideoPoster = null;
-
-      if (dropzoneFileStatus) {
-        dropzoneFileStatus.textContent = `✓ Loaded Photo: ${file.name} (${fileSizeMb} MB) — Ready to Publish`;
-        dropzoneFileStatus.style.display = 'block';
-      }
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        // High-performance client-side scaling to ensure rapid load & no QuotaExceededError
-        const img = new Image();
-        img.onload = function () {
-          const maxDim = 1600;
-          let w = img.width;
-          let h = img.height;
-          if (w > maxDim || h > maxDim) {
-            if (w > h) {
-              h = Math.round((h * maxDim) / w);
-              w = maxDim;
-            } else {
-              w = Math.round((w * maxDim) / h);
-              h = maxDim;
-            }
-          }
-          const canvas = document.createElement('canvas');
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-          pendingFileDataUrl = canvas.toDataURL('image/jpeg', 0.88);
-
-          dropzoneArea.style.display = 'none';
-          previewContainer.style.display = 'block';
-          previewImage.src = pendingFileDataUrl;
-          previewImage.style.display = 'block';
-          previewVideo.style.display = 'none';
-          showToast(`✓ Image loaded and optimized (${fileSizeMb} MB).`);
-        };
-        img.onerror = function () {
-          pendingFileDataUrl = e.target.result;
-          dropzoneArea.style.display = 'none';
-          previewContainer.style.display = 'block';
-          previewImage.src = pendingFileDataUrl;
-          previewImage.style.display = 'block';
-          previewVideo.style.display = 'none';
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  async function handleFormSubmit(e) {
+  function handleFormSubmit(e) {
     if (e && e.preventDefault) e.preventDefault();
-
-    const titleEl = document.getElementById('uploadTitle');
-    const title = titleEl ? titleEl.value.trim() : '';
-    const mediaType = mediaTypeSelect ? mediaTypeSelect.value : 'photo';
-    const section = (document.getElementById('uploadSection') && document.getElementById('uploadSection').value) || 'photos';
-    const locationEl = document.getElementById('uploadLocation');
-    const location = locationEl ? locationEl.value.trim() : '';
-    const camera = (document.getElementById('uploadCamera') && document.getElementById('uploadCamera').value.trim()) || 'Wildlife Camera Rig';
-    const lens = (document.getElementById('uploadLens') && document.getElementById('uploadLens').value.trim()) || 'Telephoto Lens';
-    const exposure = (document.getElementById('uploadExposure') && document.getElementById('uploadExposure').value.trim()) || 'Natural Ambient Light';
-    const fieldNotes = (document.getElementById('uploadStory') && document.getElementById('uploadStory').value.trim()) || 'Documented during field observation.';
-    const knowMoreInput = document.getElementById('uploadKnowMore');
-    const knowMoreInfo = knowMoreInput ? knowMoreInput.value.trim() : '';
-    const externalUrl = (document.getElementById('uploadUrlInput') && document.getElementById('uploadUrlInput').value.trim()) || '';
-
-    let finalMediaUrl = pendingFileDataUrl || externalUrl;
-    let finalVideoUrl = null;
-
-    if (!finalMediaUrl && !pendingVideoBlob) {
-      showToast('⚠️ Please select a photo or video from your device or paste a URL.');
-      if (dropzoneArea) {
-        dropzoneArea.style.borderColor = '#C5A059';
-        dropzoneArea.style.boxShadow = '0 0 12px rgba(197, 160, 89, 0.4)';
-        setTimeout(() => {
-          dropzoneArea.style.borderColor = '';
-          dropzoneArea.style.boxShadow = '';
-        }, 2200);
-      }
-      return;
-    }
-
+    const sec = sectionSelect ? sectionSelect.value : 'photos';
     const uniqueId = 'custom-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
 
-    if (mediaType === 'video') {
-      finalVideoUrl = pendingFileDataUrl;
-      finalMediaUrl = pendingVideoPoster || 'assets/images/gangetic_dolphin.jpg';
-      if (pendingVideoBlob) {
-        await persistMediaBlob(uniqueId, pendingVideoBlob);
+    if (sec === 'photos') {
+      const name = (document.getElementById('hubPhotoName')?.value || '').trim();
+      const sciName = (document.getElementById('hubPhotoScientific')?.value || '').trim();
+      const desc = (document.getElementById('hubPhotoDesc')?.value || '').trim();
+      const igUrl = (document.getElementById('hubPhotoIgUrl')?.value || '').trim();
+      const subject = document.getElementById('hubPhotoSubjectSelect')?.value || 'animal';
+      const thumb = document.getElementById('hubPhotoIconSelect')?.value || 'assets/images/black_drongo.jpg';
+
+      if (!name || !sciName || !desc || !igUrl) {
+        showToast('⚠️ Please fill out all required photo dispatch fields.');
+        return;
       }
+
+      const newRecord = {
+        id: uniqueId,
+        type: 'photo',
+        title: name,
+        scientificName: sciName,
+        category: 'photos',
+        photoSubject: subject,
+        section: 'Photos',
+        tags: ['user-upload', 'photos', subject],
+        location: 'Field Observation Site, India',
+        mediaUrl: thumb,
+        thumbIcon: thumb,
+        description: desc,
+        fieldNotes: desc,
+        instagramUrl: igUrl,
+        knowMoreInfo: `Subject: ${name}\nScientific Name: ${sciName}\nSubject Classification: ${subject.toUpperCase()}\nField Notes: ${desc}\nInstagram High-Res: ${igUrl}`,
+        isUserUploaded: true,
+        timestamp: Date.now()
+      };
+
+      catalog.unshift(newRecord);
+      saveUserItemsToStorage();
+
+      currentFilter = 'photos';
+      currentPhotoSub = subject;
+      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'photos'));
+      photoSubBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-photo-sub') === subject));
+      renderGallery();
+      updateFilterCounts();
+      closeUploadModal();
+      showToast(`✓ "${name}" added to Photos archive with Instagram link!`);
+      document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
+
+    } else if (sec === 'video') {
+      const name = (document.getElementById('hubVideoName')?.value || '').trim();
+      const sciName = (document.getElementById('hubVideoScientific')?.value || '').trim();
+      const desc = (document.getElementById('hubVideoDesc')?.value || '').trim();
+      const ytUrl = (document.getElementById('hubVideoYtUrl')?.value || '').trim();
+      const igUrl = (document.getElementById('hubVideoIgUrl')?.value || '').trim();
+      const icon = document.getElementById('hubVideoIconSelect')?.value || '🌿';
+
+      if (!name || !sciName || !desc || !ytUrl) {
+        showToast('⚠️ Please provide Name, Scientific Name, Brief Info, and YouTube URL.');
+        return;
+      }
+
+      const newRecord = {
+        id: uniqueId,
+        type: 'video',
+        title: name,
+        scientificName: sciName,
+        category: 'video',
+        photoSubject: 'other',
+        section: 'Videos & Short Films',
+        tags: ['user-upload', 'video', 'external-hub'],
+        location: 'Cinematography Field Corridor',
+        mediaUrl: 'assets/images/gangetic_dolphin.jpg',
+        thumbIcon: 'assets/images/gangetic_dolphin.jpg',
+        iconSymbol: icon,
+        description: desc,
+        fieldNotes: desc,
+        youtubeUrl: ytUrl,
+        instagramUrl: igUrl || 'https://www.instagram.com/reels/',
+        knowMoreInfo: `Film Title: ${name}\nScientific Name: ${sciName}\nCinematography Summary: ${desc}\nYouTube Stream: ${ytUrl}\nInstagram Reel: ${igUrl || 'N/A'}`,
+        isUserUploaded: true,
+        timestamp: Date.now()
+      };
+
+      catalog.unshift(newRecord);
+      saveUserItemsToStorage();
+
+      currentFilter = 'video';
+      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'video'));
+      renderGallery();
+      updateFilterCounts();
+      closeUploadModal();
+      showToast(`✓ "${name}" published to Videos & Short Films!`);
+      document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
+
+    } else if (sec === 'information') {
+      const cat = document.getElementById('hubInfoCategory')?.value || 'General';
+      const title = (document.getElementById('hubInfoTitle')?.value || '').trim() || `${cat} Ecological Monograph`;
+      const text = (document.getElementById('hubInfoText')?.value || '').trim();
+
+      if (!text) {
+        showToast('⚠️ Please provide the text dossier for this information dispatch.');
+        return;
+      }
+
+      const newRecord = {
+        id: uniqueId,
+        type: 'information',
+        title: title,
+        category: 'information',
+        infoCategory: cat,
+        section: 'Information',
+        tags: ['user-upload', 'information', cat.toLowerCase()],
+        location: 'Drongo Research Desk',
+        description: text.substring(0, 160) + (text.length > 160 ? '...' : ''),
+        fieldNotes: text,
+        infoText: text,
+        knowMoreInfo: `Dossier: ${title}\nCategory: ${cat}\nInformation:\n${text}`,
+        isUserUploaded: true,
+        timestamp: Date.now()
+      };
+
+      catalog.unshift(newRecord);
+      saveUserItemsToStorage();
+
+      currentFilter = 'information';
+      filterBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'information'));
+      renderGallery();
+      updateFilterCounts();
+      closeUploadModal();
+      showToast(`✓ "${title}" added to Information Dossiers!`);
+      document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
     }
-
-    const chosenSubject = (section === 'photos' || section === 'video') && uploadPhotoSubjectInput ? uploadPhotoSubjectInput.value : 'animal';
-
-    const tags = ['user-upload', section];
-    if (mediaType === 'video') tags.push('video');
-    if (mediaType === 'photo') tags.push('photos');
-    if (chosenSubject) tags.push(chosenSubject);
-
-    const sectionDisplayNames = {
-      'photos': 'Photos',
-      'video': 'Video',
-      'short-film': 'Short Film',
-      'travelling-guide': 'Travelling Guide',
-      'ideas': 'Ideas',
-      'information': 'Information'
-    };
-    const displaySection = sectionDisplayNames[section] || section;
-
-    const displayTitle = title || `Wild Observation (${chosenSubject.charAt(0).toUpperCase() + chosenSubject.slice(1)})`;
-    const displayLocation = location || 'Field Observation Site, India';
-
-    const newRecord = {
-      id: uniqueId,
-      type: mediaType,
-      title: displayTitle,
-      category: section,
-      photoSubject: chosenSubject,
-      section: displaySection,
-      tags: tags,
-      location: displayLocation,
-      camera: camera,
-      lens: lens,
-      exposure: exposure,
-      mediaUrl: finalMediaUrl,
-      videoUrl: finalVideoUrl,
-      fieldNotes: fieldNotes,
-      knowMoreInfo: knowMoreInfo || `Subject: ${displayTitle}\nCategory: ${displaySection} • ${(chosenSubject || 'General').toUpperCase()}\nLocation: ${displayLocation}\nCurator Field Notes: ${fieldNotes}`,
-      isUserUploaded: true,
-      hasBlobInDB: !!pendingVideoBlob,
-      timestamp: Date.now()
-    };
-
-    // Add record to catalog
-    catalog.unshift(newRecord);
-    saveUserItemsToStorage();
-
-    // Automatically switch active filters so user immediately sees their upload in the grid
-    currentFilter = section;
-    if (chosenSubject && (section === 'photos' || section === 'video')) {
-      currentPhotoSub = chosenSubject;
-    } else {
-      currentPhotoSub = 'all';
-    }
-
-    filterBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-filter') === currentFilter);
-    });
-    photoSubBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-photo-sub') === currentPhotoSub);
-    });
-
-    renderGallery();
-    updateFilterCounts();
-    closeUploadModal();
-    showToast(`✓ "${newRecord.title}" successfully added to ${newRecord.section}!`);
-
-    // Smooth scroll to gallery
-    document.getElementById('visuals')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   function deleteUpload(id) {
@@ -1354,8 +1234,10 @@
       if (e.target === uploadModal) closeUploadModal();
     });
 
-    typeTogglePhoto?.addEventListener('click', () => setMediaType('photo'));
-    typeToggleVideo?.addEventListener('click', () => setMediaType('video'));
+    // External Hub Modal Tabs
+    document.getElementById('hubTabBtnPhotos')?.addEventListener('click', () => setUploadSection('photos'));
+    document.getElementById('hubTabBtnVideo')?.addEventListener('click', () => setUploadSection('video'));
+    document.getElementById('hubTabBtnInfo')?.addEventListener('click', () => setUploadSection('information'));
 
     sectionChoicePills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -1364,52 +1246,7 @@
       });
     });
 
-    // Drag and Drop
-    if (dropzoneArea) {
-      ['dragenter', 'dragover'].forEach(eventName => {
-        dropzoneArea.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          dropzoneArea.classList.add('dragover');
-        });
-      });
-
-      ['dragleave', 'drop'].forEach(eventName => {
-        dropzoneArea.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          dropzoneArea.classList.remove('dragover');
-        });
-      });
-
-      dropzoneArea.addEventListener('drop', (e) => {
-        const files = e.dataTransfer.files;
-        if (files.length > 0) handleFileSelection(files[0]);
-      });
-    }
-
-    // Explicit Device File Selection Trigger
-    btnBrowseDevice?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropzoneInput?.click();
-    });
-
-    dropzoneArea?.addEventListener('click', (e) => {
-      if (e.target !== dropzoneInput && e.target !== btnBrowseDevice && !btnBrowseDevice?.contains(e.target)) {
-        dropzoneInput?.click();
-      }
-    });
-
-    dropzoneInput?.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
-    });
-
-    clearPreviewBtn?.addEventListener('click', resetUploadPreview);
     uploadForm?.addEventListener('submit', handleFormSubmit);
-
-    // Quick upload button inside preview area
-    document.getElementById('btnPreviewUploadNow')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      handleFormSubmit(e);
-    });
 
     // Global Delegated click listener for any button with .trigger-upload-modal
     document.addEventListener('click', (e) => {
@@ -1746,137 +1583,9 @@
       });
     }
 
-    // -------------------------------------------------------------------------
-    // 16. Editorial Introduction 15-Second Ambient Looping Background Video
-    // -------------------------------------------------------------------------
-    function initEditorialBackgroundVideo() {
-      const iframe = document.getElementById('editorialIntroVideoIframe');
-      const soundBtn = document.getElementById('btnIntroVideoAudioToggle');
-      const soundIcon = document.getElementById('soundToggleIcon');
-      const soundText = document.getElementById('soundToggleText');
-      if (!iframe) return;
-
-      let player = null;
-      let loopCheckInterval = null;
-      let isMuted = true;
-
-      function onPlayerReady(event) {
-        try {
-          event.target.mute();
-          event.target.playVideo();
-        } catch (e) {}
-
-        // Continuous 15-second loop monitor
-        if (loopCheckInterval) clearInterval(loopCheckInterval);
-        loopCheckInterval = setInterval(() => {
-          try {
-            if (player && player.getCurrentTime) {
-              const curTime = player.getCurrentTime();
-              // When reached 14.7s or more, smoothly rewind to 0 and loop
-              if (curTime >= 14.7) {
-                player.seekTo(0, true);
-                player.playVideo();
-              }
-            }
-          } catch (e) {}
-        }, 150);
-      }
-
-      function onPlayerStateChange(event) {
-        if (!window.YT) return;
-        // Loop back to start if video reaches end
-        if (event.data === YT.PlayerState.ENDED) {
-          try {
-            event.target.seekTo(0, true);
-            event.target.playVideo();
-          } catch (e) {}
-        } else if (event.data === YT.PlayerState.PAUSED) {
-          // If paused unexpectedly, resume playing
-          try {
-            event.target.playVideo();
-          } catch (e) {}
-        }
-      }
-
-      function setupYT() {
-        if (window.YT && window.YT.Player) {
-          try {
-            player = new YT.Player('editorialIntroVideoIframe', {
-              events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-              }
-            });
-          } catch (e) {
-            console.warn('YT player init notice:', e);
-          }
-        }
-      }
-
-      // Check if YouTube API is already available or queue it
-      if (window.YT && window.YT.Player) {
-        setupYT();
-      } else {
-        const prevYTReady = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = function() {
-          if (typeof prevYTReady === 'function') prevYTReady();
-          setupYT();
-        };
-
-        // Inject YouTube IFrame API script tag if not yet present in document
-        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          const firstScript = document.getElementsByTagName('script')[0];
-          if (firstScript && firstScript.parentNode) {
-            firstScript.parentNode.insertBefore(tag, firstScript);
-          } else {
-            document.head.appendChild(tag);
-          }
-        }
-      }
-
-      // Discreet Audio Toggle Handler (Default is muted for autoplay compliance)
-      if (soundBtn) {
-        soundBtn.addEventListener('click', () => {
-          if (!player) return;
-          try {
-            if (isMuted) {
-              player.unMute();
-              player.setVolume(75);
-              isMuted = false;
-              if (soundIcon) soundIcon.textContent = '🔊';
-              if (soundText) soundText.textContent = 'Audio Playing';
-              soundBtn.classList.add('audio-active');
-            } else {
-              player.mute();
-              isMuted = true;
-              if (soundIcon) soundIcon.textContent = '🔇';
-              if (soundText) soundText.textContent = 'Audio Muted';
-              soundBtn.classList.remove('audio-active');
-            }
-          } catch (e) {}
-        });
-      }
-
-      // Ensure autoplay on first user interaction if browser has strict media restrictions
-      const resumeAutoplay = () => {
-        if (player && player.getPlayerState && player.getPlayerState() !== 1) {
-          try {
-            player.playVideo();
-          } catch (e) {}
-        }
-        document.removeEventListener('click', resumeAutoplay);
-        document.removeEventListener('scroll', resumeAutoplay);
-      };
-      document.addEventListener('click', resumeAutoplay, { once: true, passive: true });
-      document.addEventListener('scroll', resumeAutoplay, { once: true, passive: true });
-    }
-
-    // Launch tree branch companion, magical motto glow & ambient intro video
+    // Launch tree branch companion & magical motto glow
     initTreeBranchScroll();
     initMagicalMottoGlow();
-    initEditorialBackgroundVideo();
   }
 
   // Start Engine on DOM Ready

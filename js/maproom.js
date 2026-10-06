@@ -2996,21 +2996,68 @@
   function renderTouristSpots(data) {
     if (!contentDisplayPane) return;
 
-    const spots = data.touristSpots || [];
+    // Category A: Travel Destinations (Max 10 locations per state for now)
+    const spots = (data.touristSpots || []).slice(0, 10);
 
     contentDisplayPane.innerHTML = `
-      <div class="maproom-spots-grid">
-        ${spots.map(spot => {
+      <div class="maproom-category-header">
+        <div class="category-meta">
+          <span class="category-pill-tag">CATEGORY A</span>
+          <h3 class="category-title">Travel Destinations in ${escapeHtml(data.name)}</h3>
+          <p class="category-desc">Verified archaeological enclaves, national parks, and wild river corridors (Max 10 locations). Visuals and footage hosted on Instagram &amp; YouTube.</p>
+        </div>
+        <button type="button" class="btn-maproom-add-action" id="btnAddTravelDest">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Add Travel Destination</span>
+        </button>
+      </div>
+
+      <div class="maproom-dest-grid">
+        ${spots.map((spot, index) => {
+          const photoLink = spot.photoUrl || spot.igUrl || `https://www.instagram.com/explore/tags/${encodeURIComponent(spot.name.replace(/\s+/g, ''))}/`;
+          const videoLink = spot.videoUrl || spot.ytUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(spot.name + ' documentary')}`;
+
+          let guidelinesHtml = '';
+          if (spot.guidelines) {
+            guidelinesHtml = escapeHtml(spot.guidelines).replace(/\n/g, '<br/>');
+          } else if (spot.tipsAndTricks && spot.tipsAndTricks.length > 0) {
+            const firstTip = spot.tipsAndTricks[0];
+            guidelinesHtml = `<div class="dest-guideline-item"><strong>Precautions &amp; Timings:</strong> ${escapeHtml(firstTip.tip)}</div><div class="dest-guideline-item" style="margin-top:4px;"><strong>Available Facilities:</strong> Forest rest houses, certified eco-guides, vehicle safaris, and authorized checkpoints.</div>`;
+          } else {
+            guidelinesHtml = `<div class="dest-guideline-item"><strong>Precautions:</strong> Maintain silent field discipline and carry approved permits.</div><div class="dest-guideline-item" style="margin-top:4px;"><strong>Timings:</strong> 06:00 AM – 05:30 PM.</div><div class="dest-guideline-item" style="margin-top:4px;"><strong>Available Facilities:</strong> Registered eco-guides, observation towers, visitor interpretation center.</div>`;
+          }
+
           return `
-            <article class="tourist-spot-card compact-spot-card" id="${spot.id}" data-spot-id="${spot.id}" role="button" tabindex="0" title="Tap to explore ${escapeHtml(spot.name)}">
-              <div class="spot-image-wrapper">
-                <img src="${spot.imageUrl}" alt="${spot.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';" />
-                <div class="spot-overlay-badge">
-                  <span class="spot-explore-hint">Tap to Open ↗</span>
+            <article class="maproom-dest-card" id="${spot.id}">
+              <div class="dest-card-top-row">
+                <div class="dest-card-thumb-wrap">
+                  <img src="${spot.imageUrl || 'assets/images/nalanda_ruins.jpg'}" alt="${escapeHtml(spot.name)}" class="dest-card-thumb" loading="lazy" onerror="this.src='assets/images/nalanda_ruins.jpg';" />
+                </div>
+                <div class="dest-card-main">
+                  <div class="dest-header-row">
+                    <h4 class="dest-card-title">${escapeHtml(spot.name)}</h4>
+                    <span class="dest-index-badge">#${index + 1}</span>
+                  </div>
+                  <p class="dest-card-intro">${escapeHtml(spot.description || spot.introText || '')}</p>
+                  <div class="dest-link-buttons-row">
+                    <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View field photography on Instagram">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                      <span>View Photos</span>
+                    </a>
+                    <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch 4K video footage on YouTube">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      <span>Watch Video</span>
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div class="spot-compact-body">
-                <h4 class="spot-compact-name">${escapeHtml(spot.name)}</h4>
+              <div class="dest-tips-structured-block">
+                <div class="dest-tips-title">
+                  <span>✦ Tourist Guidelines (Precautions, Timings, Available Facilities)</span>
+                </div>
+                <div class="dest-guidelines-body">
+                  ${guidelinesHtml}
+                </div>
               </div>
             </article>
           `;
@@ -3018,21 +3065,8 @@
       </div>
     `;
 
-    // Click anywhere on compact spot card -> Open dedicated Destination Detail Lightbox Modal!
-    contentDisplayPane.querySelectorAll('.compact-spot-card').forEach(card => {
-      const spotId = card.getAttribute('data-spot-id');
-      const spotObj = spots.find(s => s.id === spotId);
-      if (!spotObj) return;
-
-      const triggerOpen = () => openDestinationDetailModal(spotObj, data);
-
-      card.addEventListener('click', triggerOpen);
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          triggerOpen();
-        }
-      });
+    document.getElementById('btnAddTravelDest')?.addEventListener('click', () => {
+      openSpotMediaModal(data.id, data.name, data.name);
     });
   }
 
@@ -3252,80 +3286,66 @@
   function renderFloraFauna(data) {
     if (!contentDisplayPane) return;
 
+    // Category B: Flora and Fauna
     const speciesList = data.floraFauna || [];
 
     contentDisplayPane.innerHTML = `
-      <div class="maproom-fauna-intro">
-        <h3 style="font-family: var(--font-display); color: var(--primary-ocean-blue); margin-bottom: 6px;">
-          🌿 Indigenous Flora &amp; Fauna of ${data.name} (Top 10 Authentic Species)
-        </h3>
-        <p style="font-size: 13px; color: var(--text-muted); max-width: 700px; margin: 0 0 16px;">
-          Curated botanical specimens, state emblems, endemic mammals, and avian residents verified against Wikipedia &amp; Wildlife Institute of India records. Spot an animal or flower? Record your field sighting and post photos, videos, or reels below!
-        </p>
+      <div class="maproom-category-header">
+        <div class="category-meta">
+          <span class="category-pill-tag">CATEGORY B</span>
+          <h3 class="category-title">Flora and Fauna of ${escapeHtml(data.name)}</h3>
+          <p class="category-desc">Indigenous species, state emblems, and migratory wildlife. Media hosted externally on Instagram &amp; YouTube with instant access links.</p>
+        </div>
+        <button type="button" class="btn-maproom-add-action" id="btnAddFaunaRecord">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Add Flora &amp; Fauna Record</span>
+        </button>
       </div>
 
       <div class="maproom-fauna-grid">
         ${speciesList.map((spec, index) => {
-          const customSightings = (maproomDispatches[spec.id]?.sightings) || [];
+          const photoLink = spec.photoUrl || spec.igUrl || `https://www.instagram.com/explore/tags/${encodeURIComponent(spec.name.replace(/\s+/g, ''))}/`;
+          const videoLink = spec.videoUrl || spec.ytUrl || `https://www.youtube.com/results?search_query=${encodeURIComponent(spec.name + ' wildlife footage')}`;
+          const shortLink = spec.shortUrl || spec.igShortUrl || 'https://www.instagram.com/reels/';
+
+          const tipsText = spec.spottingTips || spec.tips || 'Best observed at early morning and twilight near river channels and canopy corridors. Maintain ethical telephoto distance of 25+ meters.';
 
           return `
-            <article class="fauna-card" id="${spec.id}">
-              <div class="fauna-image-wrapper fauna-open-lightbox-trigger" data-species-name="${escapeHtml(spec.name)}" data-image-url="${spec.imageUrl}" data-species-notes="${escapeHtml(spec.notes)}" data-species-scientific="${escapeHtml(spec.scientific)}" data-state-name="${escapeHtml(data.name)}" title="Click to view full photo of ${escapeHtml(spec.name)}" style="cursor: pointer;">
-                <img src="${spec.imageUrl}" alt="${spec.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';"/>
-                <span class="fauna-rank">#${index + 1}</span>
-                <span class="fauna-type-badge">${spec.type}</span>
-                <span class="fauna-enlarge-badge">🔍 VIEW FULL PHOTO</span>
-              </div>
-
-              <div class="fauna-body">
-                <h4 class="fauna-name">${spec.name}</h4>
-                <div class="fauna-scientific"><em>${spec.scientific}</em></div>
-                <p class="fauna-notes">${spec.notes}</p>
-
-                <!-- Post Sighting Button -->
-                <button type="button" class="btn-record-sighting" data-species-id="${spec.id}" data-species-name="${escapeHtml(spec.name)}">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                  <span>+ Log Sighting / Post Photo, Video &amp; Reel</span>
-                </button>
-
-                <!-- Sightings Feed -->
-                ${customSightings.length > 0 ? `
-                  <div class="fauna-sightings-feed">
-                    <span class="sightings-header">Field Encounters (${customSightings.length}):</span>
-                    ${customSightings.map((s, sIdx) => {
-                      const isCreator = s.author.toLowerCase().includes('aadi') || s.author.toLowerCase().includes('creator');
-                      const sightingId = s.id || `sighting-${spec.id}-${sIdx}`;
-                      return `
-                        <div class="sighting-item">
-                          <div class="sighting-author">
-                            <span class="${isCreator ? 'creator-badge' : 'visitor-badge'}">
-                              ${isCreator ? '👑 Aadi [Creator]' : `📸 ${escapeHtml(s.author)}`}
-                            </span>
-                            <small>• ${s.date}</small>
-                          </div>
-                          <p class="sighting-exp">${escapeHtml(s.experience)}</p>
-                          ${s.mediaUrl ? `
-                            <div class="sighting-media-preview sighting-open-lightbox-trigger" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-media-url="${s.mediaUrl}" data-media-type="${s.mediaType || 'photo'}" data-author="${escapeHtml(s.author)}" data-experience="${escapeHtml(s.experience)}" data-species-name="${escapeHtml(spec.name)}" data-state-name="${escapeHtml(data.name)}" title="Tap to enlarge this sighting media">
-                              ${s.mediaType === 'video' ? `<video src="${s.mediaUrl}" preload="metadata" muted></video><span class="video-play-overlay">▶ 4K VIDEO</span>` : `<img src="${s.mediaUrl}" alt="Sighting photo" onerror="this.src='assets/images/valmiki_tiger.jpg';"/><span class="photo-expand-overlay">🔍 ENLARGE</span>`}
-                              <button type="button" class="btn-delete-sighting" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-species-name="${escapeHtml(spec.name)}" title="Delete this sighting record">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                                Delete
-                              </button>
-                            </div>
-                          ` : `
-                            <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
-                              <button type="button" class="btn-delete-sighting" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-species-name="${escapeHtml(spec.name)}" title="Delete this sighting text" style="position: static; padding: 2px 6px;">
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                                Delete
-                              </button>
-                            </div>
-                          `}
-                        </div>
-                      `;
-                    }).join('')}
+            <article class="maproom-fauna-card" id="${spec.id}">
+              <div class="fauna-card-top-row">
+                <div class="fauna-card-icon-wrap">
+                  <img src="${spec.imageUrl || 'assets/images/black_drongo.jpg'}" alt="${escapeHtml(spec.name)}" class="fauna-card-icon" loading="lazy" onerror="this.src='assets/images/black_drongo.jpg';" />
+                </div>
+                <div class="fauna-card-main">
+                  <div class="fauna-header-row">
+                    <h4 class="fauna-card-name">${escapeHtml(spec.name)}</h4>
+                    <span class="fauna-rank-badge">#${index + 1}</span>
                   </div>
-                ` : ''}
-
+                  <div class="fauna-card-scientific"><em>${escapeHtml(spec.scientific || '')}</em></div>
+                  ${(spec.notes || spec.description) ? `<p class="fauna-card-desc">${escapeHtml(spec.notes || spec.description)}</p>` : ''}
+                  <div class="fauna-link-buttons-row">
+                    <a href="${photoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-ig" title="View photography on Instagram">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                      <span>Photos</span>
+                    </a>
+                    <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-yt" title="Watch video on YouTube">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      <span>Videos</span>
+                    </a>
+                    <a href="${shortLink}" target="_blank" rel="noopener noreferrer" class="btn-hub-link btn-hub-short" title="Watch short film on Instagram">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                      <span>Short Films</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="fauna-tips-block">
+                <div class="fauna-tips-title">
+                  <span>💡 Spotting Tips &amp; Behavioral Notes</span>
+                </div>
+                <div class="fauna-tips-text">
+                  ${escapeHtml(tipsText).replace(/\n/g, '<br/>')}
+                </div>
               </div>
             </article>
           `;
@@ -3333,276 +3353,77 @@
       </div>
     `;
 
-    // Attach click events to sighting buttons
-    contentDisplayPane.querySelectorAll('.btn-record-sighting').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const specId = btn.getAttribute('data-species-id');
-        const specName = btn.getAttribute('data-species-name');
-        openSpeciesSightingModal(specId, specName);
-      });
-    });
-
-    // Fauna Image -> Open in Lightbox
-    contentDisplayPane.querySelectorAll('.fauna-open-lightbox-trigger').forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const specName = trigger.getAttribute('data-species-name');
-        const imgUrl = trigger.getAttribute('data-image-url');
-        const notes = trigger.getAttribute('data-species-notes');
-        const scientific = trigger.getAttribute('data-species-scientific');
-        const stateName = trigger.getAttribute('data-state-name');
-
-        if (window.openDrongoLightbox) {
-          window.openDrongoLightbox({
-            type: 'photo',
-            title: specName,
-            mediaUrl: imgUrl,
-            badge: `INDIGENOUS SPECIES • ${stateName.toUpperCase()}`,
-            location: `${specName} (${scientific}) • ${stateName}`,
-            author: 'Wildlife Institute of India & Drongo Records',
-            description: notes,
-            date: 'Verified Species Record'
-          });
-        }
-      });
-    });
-
-    // Sighting Media -> Open in Lightbox
-    contentDisplayPane.querySelectorAll('.sighting-open-lightbox-trigger').forEach(trigger => {
-      trigger.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-delete-sighting')) return;
-
-        const specId = trigger.getAttribute('data-species-id');
-        const sightingId = trigger.getAttribute('data-sighting-id');
-        const mediaUrl = trigger.getAttribute('data-media-url');
-        const mediaType = trigger.getAttribute('data-media-type');
-        const author = trigger.getAttribute('data-author');
-        const exp = trigger.getAttribute('data-experience');
-        const specName = trigger.getAttribute('data-species-name');
-        const stateName = trigger.getAttribute('data-state-name');
-
-        if (window.openDrongoLightbox && mediaUrl) {
-          window.openDrongoLightbox({
-            type: mediaType || 'photo',
-            title: `Sighting Encounter: ${specName}`,
-            mediaUrl: mediaUrl,
-            videoUrl: mediaType === 'video' ? mediaUrl : null,
-            badge: `FIELD ENCOUNTER • ${stateName.toUpperCase()}`,
-            location: `${specName} • ${stateName}`,
-            author: author,
-            description: exp,
-            date: 'Contributor Sighting Log',
-            onDelete: () => deleteSpeciesSighting(specId, sightingId, specName)
-          });
-        }
-      });
-    });
-
-    // Delete Sighting Button
-    contentDisplayPane.querySelectorAll('.btn-delete-sighting').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const specId = btn.getAttribute('data-species-id');
-        const sightingId = btn.getAttribute('data-sighting-id');
-        const specName = btn.getAttribute('data-species-name') || 'this species';
-        deleteSpeciesSighting(specId, sightingId, specName);
-      });
+    document.getElementById('btnAddFaunaRecord')?.addEventListener('click', () => {
+      openSpeciesSightingModal(data.id, data.name);
     });
   }
 
   /* --------------------------------------------------------------------------
-     User Contributions: Spot Media Upload Modal
+     User Contributions: Travel Destination Modal (External Hub)
      -------------------------------------------------------------------------- */
   function openSpotMediaModal(spotId, spotName, stateName) {
-    pendingSpotId = spotId;
-    pendingSpotName = spotName;
-    pendingStateName = stateName;
-
+    const targetState = STATES_DATA[activeStateKey] || STATES_DATA['bihar'];
     const modal = document.getElementById('maproomSpotMediaModal');
-    if (!modal) {
-      // Fallback prompt if modal element missing
-      const title = prompt(`Enter title for your photo/video at ${spotName} (${stateName}):`, `Field Exploration at ${spotName}`);
-      if (!title) return;
-      const author = prompt('Your Name / Attribution:', 'Aadi [Creator]');
-      if (!author) return;
-      const fileUrl = prompt('Enter image or video URL:', 'assets/images/nalanda_ruins.jpg');
-      if (!fileUrl) return;
-
-      saveSpotMedia(spotId, title, author, fileUrl, fileUrl.endsWith('.mp4') ? 'video' : 'photo');
-      return;
-    }
+    if (!modal) return;
 
     const titleTarget = document.getElementById('spotMediaModalTarget');
-    if (titleTarget) titleTarget.textContent = `${spotName} (${stateName})`;
+    if (titleTarget) titleTarget.textContent = targetState.name;
 
-    const authorInput = document.getElementById('spotMediaAuthor');
-    if (authorInput) authorInput.value = 'Aadi [Creator]';
+    const nameInput = document.getElementById('destInputName');
+    if (nameInput) nameInput.value = '';
 
-    const titleInput = document.getElementById('spotMediaTitle');
-    if (titleInput) titleInput.value = `Expedition Dispatch at ${spotName}`;
+    const introInput = document.getElementById('destInputIntro');
+    if (introInput) introInput.value = '';
 
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
+    const photoInput = document.getElementById('destInputPhotoUrl');
+    if (photoInput) photoInput.value = '';
 
-  function saveSpotMedia(spotId, title, author, mediaUrl, mediaType) {
-    if (!maproomDispatches[spotId]) maproomDispatches[spotId] = { uploads: [], tips: [] };
-    const uploadId = 'up-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-    maproomDispatches[spotId].uploads.unshift({
-      id: uploadId,
-      title: title.trim(),
-      author: author.trim(),
-      url: mediaUrl.trim(),
-      type: mediaType || 'photo',
-      date: new Date().toLocaleDateString()
-    });
+    const videoInput = document.getElementById('destInputVideoUrl');
+    if (videoInput) videoInput.value = '';
 
-    saveMaproomData();
-    renderStateDossier(activeStateKey);
-    if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
-      renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
-    }
-    showMapToast(`✓ Media added to ${pendingSpotName || 'tourist spot'}!`);
-  }
-
-  function deleteSpotMedia(spotId, uploadId, spotName = 'this destination') {
-    if (!maproomDispatches[spotId] || !maproomDispatches[spotId].uploads) return;
-    if (confirm(`Are you sure you want to delete this photo/video from ${spotName}?`)) {
-      maproomDispatches[spotId].uploads = maproomDispatches[spotId].uploads.filter(u => u.id !== uploadId);
-      saveMaproomData();
-      renderStateDossier(activeStateKey);
-      if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
-        renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
-      }
-      if (window.closeDrongoLightbox) window.closeDrongoLightbox();
-      showMapToast(`✓ Media dispatch deleted from ${spotName}.`);
-    }
-  }
-
-  function deleteSpotTip(spotId, tipIndex) {
-    if (!maproomDispatches[spotId] || !maproomDispatches[spotId].tips) return;
-    if (confirm('Are you sure you want to remove this tip?')) {
-      maproomDispatches[spotId].tips.splice(tipIndex, 1);
-      saveMaproomData();
-      renderStateDossier(activeStateKey);
-      if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
-        renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
-      }
-      showMapToast('✓ Tip removed from feed.');
-    }
-  }
-
-  function deleteSpeciesSighting(specId, sightingId, specName = 'this species') {
-    if (!maproomDispatches[specId] || !maproomDispatches[specId].sightings) return;
-    if (confirm(`Are you sure you want to delete this field encounter record for ${specName}?`)) {
-      maproomDispatches[specId].sightings = maproomDispatches[specId].sightings.filter(s => s.id !== sightingId);
-      saveMaproomData();
-      renderStateDossier(activeStateKey);
-      if (window.closeDrongoLightbox) window.closeDrongoLightbox();
-      showMapToast(`✓ Sighting record removed.`);
-    }
-  }
-
-  /* --------------------------------------------------------------------------
-     User Contributions: Spot Tips & Tricks Modal
-     -------------------------------------------------------------------------- */
-  function openSpotTipModal(spotId, spotName) {
-    pendingSpotId = spotId;
-    pendingSpotName = spotName;
-
-    const modal = document.getElementById('maproomSpotTipModal');
-    if (!modal) {
-      // Fallback prompt
-      const author = prompt(`Your Name / Attribution:`, 'Aadi [Creator]');
-      if (!author) return;
-      const tip = prompt(`Share your tips, tricks & photography advice for ${spotName}:`);
-      if (!tip || tip.trim() === '') return;
-
-      const isCreator = author.toLowerCase().includes('aadi') || author.toLowerCase().includes('creator');
-      saveSpotTip(spotId, author, isCreator, tip);
-      return;
-    }
-
-    const target = document.getElementById('spotTipModalTarget');
-    if (target) target.textContent = spotName;
-
-    const authorInput = document.getElementById('spotTipAuthor');
-    if (authorInput) authorInput.value = 'Aadi [Creator]';
-
-    const textInput = document.getElementById('spotTipText');
-    if (textInput) textInput.value = '';
+    const tipsInput = document.getElementById('destInputTips');
+    if (tipsInput) tipsInput.value = '';
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
 
-  function saveSpotTip(spotId, author, isCreator, tip) {
-    if (!maproomDispatches[spotId]) maproomDispatches[spotId] = { uploads: [], tips: [] };
-    maproomDispatches[spotId].tips.unshift({
-      author: author.trim(),
-      isCreator: !!isCreator,
-      date: new Date().toLocaleDateString(),
-      tip: tip.trim()
-    });
-
-    saveMaproomData();
-    renderStateDossier(activeStateKey);
-    if (activeDetailSpot && activeDetailStateData && activeDetailSpot.id === spotId) {
-      renderDestinationModalContent(activeDetailSpot, activeDetailStateData);
-    }
-    showMapToast(`✓ Tips & tricks shared for ${pendingSpotName || 'tourist spot'}!`);
-  }
-
   /* --------------------------------------------------------------------------
-     User Contributions: Species Sighting Modal
+     User Contributions: Flora & Fauna Entry Modal (External Hub)
      -------------------------------------------------------------------------- */
   function openSpeciesSightingModal(specId, specName) {
-    pendingSpeciesId = specId;
-    pendingSpeciesName = specName;
-
+    const targetState = STATES_DATA[activeStateKey] || STATES_DATA['bihar'];
     const modal = document.getElementById('maproomSightingModal');
-    if (!modal) {
-      // Fallback prompt
-      const author = prompt(`Observer / Photographer Name:`, 'Aadi [Creator]');
-      if (!author) return;
-      const exp = prompt(`Describe your sighting experience of ${specName} (behavior, time of day, location notes):`);
-      if (!exp || exp.trim() === '') return;
-      const mediaUrl = prompt('Enter media URL for this sighting (photo/video link, optional):', '');
-
-      saveSpeciesSighting(specId, author, exp, mediaUrl, mediaUrl && mediaUrl.endsWith('.mp4') ? 'video' : 'photo');
-      return;
-    }
+    if (!modal) return;
 
     const target = document.getElementById('sightingModalTarget');
-    if (target) target.textContent = specName;
+    if (target) target.textContent = targetState.name;
 
-    const authorInput = document.getElementById('sightingAuthor');
-    if (authorInput) authorInput.value = 'Aadi [Creator]';
+    const commonInput = document.getElementById('faunaInputCommonName');
+    if (commonInput) commonInput.value = '';
 
-    const textInput = document.getElementById('sightingExperience');
-    if (textInput) textInput.value = '';
+    const sciInput = document.getElementById('faunaInputScientificName');
+    if (sciInput) sciInput.value = '';
+
+    const descInput = document.getElementById('faunaInputDesc');
+    if (descInput) descInput.value = '';
+
+    const photoInput = document.getElementById('faunaInputPhotoUrl');
+    if (photoInput) photoInput.value = '';
+
+    const videoInput = document.getElementById('faunaInputVideoUrl');
+    if (videoInput) videoInput.value = '';
+
+    const shortInput = document.getElementById('faunaInputShortUrl');
+    if (shortInput) shortInput.value = '';
+
+    const tipsInput = document.getElementById('faunaInputTips');
+    if (tipsInput) tipsInput.value = '';
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-  }
-
-  function saveSpeciesSighting(specId, author, exp, mediaUrl, mediaType) {
-    if (!maproomDispatches[specId]) maproomDispatches[specId] = { sightings: [] };
-    const sightingId = 'sighting-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-    maproomDispatches[specId].sightings.unshift({
-      id: sightingId,
-      author: author.trim(),
-      date: new Date().toLocaleDateString(),
-      experience: exp.trim(),
-      mediaUrl: mediaUrl ? mediaUrl.trim() : null,
-      mediaType: mediaType || 'photo'
-    });
-
-    saveMaproomData();
-    renderStateDossier(activeStateKey);
-    showMapToast(`✓ Sighting logged for ${pendingSpeciesName || 'fauna species'}!`);
   }
 
   function setupModals() {
@@ -3610,29 +3431,53 @@
     spotTipModal = document.getElementById('maproomSpotTipModal');
     sightingModal = document.getElementById('maproomSightingModal');
 
-    // Spot Media Form Submit
+    // Category A: Travel Destination Form Submit (External Hub - No direct file uploads)
     const spotMediaForm = document.getElementById('spotMediaForm');
     spotMediaForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const title = document.getElementById('spotMediaTitle').value.trim() || `Field Photo at ${pendingSpotName}`;
-      const author = document.getElementById('spotMediaAuthor').value.trim() || 'Aadi [Creator]';
-      const fileInput = document.getElementById('spotMediaFileInput');
-      const urlInput = document.getElementById('spotMediaUrlInput').value.trim();
-      const typeSelect = document.getElementById('spotMediaTypeSelect').value;
+      const name = document.getElementById('destInputName')?.value.trim();
+      const intro = document.getElementById('destInputIntro')?.value.trim();
+      const photoUrl = document.getElementById('destInputPhotoUrl')?.value.trim();
+      const videoUrl = document.getElementById('destInputVideoUrl')?.value.trim();
+      const tips = document.getElementById('destInputTips')?.value.trim();
+      const author = document.getElementById('destInputAuthor')?.value.trim() || 'Aadi [Creator]';
 
-      if (fileInput && fileInput.files && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const isVideo = file.type.startsWith('video/');
-        const reader = new FileReader();
-        reader.onload = function (evt) {
-          saveSpotMedia(pendingSpotId, title, author, evt.target.result, isVideo ? 'video' : 'photo');
-          closeModal(spotMediaModal);
+      if (!name || !intro || !photoUrl || !videoUrl || !tips) {
+        showMapToast('⚠️ Please fill out all required destination fields.');
+        return;
+      }
+
+      const stateData = STATES_DATA[activeStateKey];
+      if (stateData) {
+        if (!stateData.touristSpots) stateData.touristSpots = [];
+        const newSpot = {
+          id: 'custom-spot-' + Date.now(),
+          name: name,
+          imageUrl: 'assets/images/nalanda_ruins.jpg',
+          description: intro,
+          photoUrl: photoUrl,
+          videoUrl: videoUrl,
+          guidelines: tips,
+          tipsAndTricks: [{
+            author: author,
+            isCreator: author.toLowerCase().includes('aadi') || author.toLowerCase().includes('creator'),
+            date: 'Verified Creator Guide',
+            tip: tips
+          }],
+          isUserAdded: true
         };
-        reader.readAsDataURL(file);
-      } else {
-        const finalUrl = urlInput || 'assets/images/nalanda_ruins.jpg';
-        saveSpotMedia(pendingSpotId, title, author, finalUrl, typeSelect);
+
+        // Add to state spots and limit view
+        stateData.touristSpots.unshift(newSpot);
+
+        if (!maproomDispatches[activeStateKey]) maproomDispatches[activeStateKey] = {};
+        if (!maproomDispatches[activeStateKey].customDestinations) maproomDispatches[activeStateKey].customDestinations = [];
+        maproomDispatches[activeStateKey].customDestinations.unshift(newSpot);
+
+        saveMaproomData();
+        renderTouristSpots(stateData);
         closeModal(spotMediaModal);
+        showMapToast(`✓ "${name}" added to ${stateData.name} Destinations!`);
       }
     });
 
@@ -3643,7 +3488,7 @@
       const author = document.getElementById('spotTipAuthor').value.trim() || 'Aadi [Creator]';
       const tipText = document.getElementById('spotTipText').value.trim();
       if (!tipText) {
-        showMapToast('Please enter your tips and tricks notes.');
+        showMapToast('Please enter your tourist guidelines notes.');
         return;
       }
       const isCreator = author.toLowerCase().includes('aadi') || author.toLowerCase().includes('creator');
@@ -3651,32 +3496,53 @@
       closeModal(spotTipModal);
     });
 
-    // Sighting Form Submit
+    // Category B: Flora & Fauna Form Submit (External Hub - No direct file uploads)
     const sightingForm = document.getElementById('sightingForm');
     sightingForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const author = document.getElementById('sightingAuthor').value.trim() || 'Aadi [Creator]';
-      const exp = document.getElementById('sightingExperience').value.trim();
-      if (!exp) {
-        showMapToast('Please describe your sighting experience.');
+      const commonName = document.getElementById('faunaInputCommonName')?.value.trim();
+      const sciName = document.getElementById('faunaInputScientificName')?.value.trim();
+      const desc = document.getElementById('faunaInputDesc')?.value.trim() || '';
+      const photoUrl = document.getElementById('faunaInputPhotoUrl')?.value.trim();
+      const videoUrl = document.getElementById('faunaInputVideoUrl')?.value.trim();
+      const shortUrl = document.getElementById('faunaInputShortUrl')?.value.trim();
+      const tips = document.getElementById('faunaInputTips')?.value.trim();
+      const author = document.getElementById('faunaInputAuthor')?.value.trim() || 'Aadi [Creator]';
+
+      if (!commonName || !sciName || !photoUrl || !videoUrl || !shortUrl || !tips) {
+        showMapToast('⚠️ Please fill out all required species fields.');
         return;
       }
-      const fileInput = document.getElementById('sightingFileInput');
-      const urlInput = document.getElementById('sightingUrlInput').value.trim();
 
-      if (fileInput && fileInput.files && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const isVideo = file.type.startsWith('video/');
-        const reader = new FileReader();
-        reader.onload = function (evt) {
-          saveSpeciesSighting(pendingSpeciesId, author, exp, evt.target.result, isVideo ? 'video' : 'photo');
-          closeModal(sightingModal);
+      const stateData = STATES_DATA[activeStateKey];
+      if (stateData) {
+        if (!stateData.floraFauna) stateData.floraFauna = [];
+        const newFauna = {
+          id: 'custom-fauna-' + Date.now(),
+          name: commonName,
+          scientific: sciName,
+          type: 'Indigenous Species',
+          imageUrl: 'assets/images/black_drongo.jpg',
+          notes: desc,
+          description: desc,
+          photoUrl: photoUrl,
+          videoUrl: videoUrl,
+          shortUrl: shortUrl,
+          spottingTips: tips,
+          author: author,
+          isUserAdded: true
         };
-        reader.readAsDataURL(file);
-      } else {
-        const finalUrl = urlInput || null;
-        saveSpeciesSighting(pendingSpeciesId, author, exp, finalUrl, finalUrl && finalUrl.endsWith('.mp4') ? 'video' : 'photo');
+
+        stateData.floraFauna.unshift(newFauna);
+
+        if (!maproomDispatches[activeStateKey]) maproomDispatches[activeStateKey] = {};
+        if (!maproomDispatches[activeStateKey].customFauna) maproomDispatches[activeStateKey].customFauna = [];
+        maproomDispatches[activeStateKey].customFauna.unshift(newFauna);
+
+        saveMaproomData();
+        renderFloraFauna(stateData);
         closeModal(sightingModal);
+        showMapToast(`✓ "${commonName}" added to ${stateData.name} Flora & Fauna!`);
       }
     });
 

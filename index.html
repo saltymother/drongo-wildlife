@@ -148,12 +148,12 @@
           <span>SEARCH</span>
         </button>
 
-        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Open Curator Upload Studio" id="topUploadBtn">
+        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Open External Hub Dispatch Studio" id="topUploadBtn">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <span>+ UPLOAD PHOTO / VIDEO</span>
+          <span>+ ADD DISPATCH</span>
         </button>
       </div>
     </div>
@@ -183,34 +183,25 @@
     <div class="section-header-block">
       <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; width: 100%;">
         <h2>Visuals</h2>
-        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" aria-label="Upload Photo or Video to Visuals">
+        <button class="nav-action-btn btn-nav-gold trigger-upload-modal" id="btnVisualsAddEntry" aria-label="Add Dispatch to Visuals External Hub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ UPLOAD PHOTO / VIDEO</span>
+          <span>+ ADD DISPATCH</span>
         </button>
       </div>
 
-      <!-- Interactive Filter Nav Tabs in the exact requested manner -->
+      <!-- Interactive Filter Nav Tabs: Photos, Videos & Short Films, Information, Travelling Guide -->
       <div class="gallery-filter-tabs" role="tablist" aria-label="Visual Categories">
-        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
-          All Visuals <span class="filter-count">5</span>
-        </button>
-        <button class="filter-btn" data-filter="photos" role="tab" aria-selected="false">
+        <button class="filter-btn active" data-filter="photos" role="tab" aria-selected="true">
           Photos <span class="filter-count">5</span>
         </button>
         <button class="filter-btn" data-filter="video" role="tab" aria-selected="false">
-          Video <span class="filter-count">0</span>
+          Videos &amp; Short Films <span class="filter-count">2</span>
         </button>
-        <button class="filter-btn" data-filter="short-film" role="tab" aria-selected="false">
-          Short Film <span class="filter-count">0</span>
+        <button class="filter-btn" data-filter="information" role="tab" aria-selected="false">
+          Information <span class="filter-count">3</span>
         </button>
         <button class="filter-btn" data-filter="travelling-guide" role="tab" aria-selected="false">
           Travelling Guide <span class="filter-count">0</span>
-        </button>
-        <button class="filter-btn" data-filter="ideas" role="tab" aria-selected="false">
-          Ideas <span class="filter-count">0</span>
-        </button>
-        <button class="filter-btn" data-filter="information" role="tab" aria-selected="false">
-          Information <span class="filter-count">0</span>
         </button>
       </div>
 
@@ -641,15 +632,15 @@
             </div>
           </div>
 
-          <!-- Two Mandated Options/Tabs -->
+          <!-- Two Mandated State Categories: Travel Destinations and Flora & Fauna -->
           <div class="maproom-tab-selector-bar" role="tablist">
             <button class="maproom-tab-btn active" id="maproomTabTourist" role="tab" aria-selected="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span>Option 1: Tourist Spots &amp; Expeditions</span>
+              <span>Travel Destinations</span>
             </button>
             <button class="maproom-tab-btn" id="maproomTabFauna" role="tab" aria-selected="false">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-              <span>Option 2: Indigenous Flora &amp; Fauna (Top 10)</span>
+              <span>Flora &amp; Fauna</span>
             </button>
           </div>
 
@@ -995,216 +986,162 @@
        (Allows uploading photos & videos to particular sections)
        ======================================================================= -->
   <div class="modal-backdrop" id="uploadModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="uploadModalTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 600px;">
       
       <div class="modal-header">
         <h3 id="uploadModalTitle">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
           </svg>
-          Drongo Archive • Dispatch Upload Studio
+          Drongo External Hub • Dispatch Studio
         </h3>
-        <button class="modal-close-btn" id="closeUploadModalBtn" aria-label="Close Curator Studio">&times;</button>
+        <button class="modal-close-btn" id="closeUploadModalBtn" aria-label="Close Dispatch Studio">&times;</button>
       </div>
 
       <form id="uploadMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
+            <strong>External Hub Protocol:</strong> Direct video and high-resolution server uploads are disabled. Heavy media is hosted on Instagram and YouTube. Entries feature lightweight thumbnail icons with direct links to your content.
+          </p>
           
-          <!-- STEP 1: What to Upload (Photo vs Video) -->
-          <div class="upload-step-block">
-            <label class="step-label">
-              <span class="step-num">1</span>
-              <strong>What are you uploading?</strong>
-              <span class="step-help">Choose format</span>
+          <!-- Category Selector Tabs -->
+          <div class="upload-step-block" style="margin-bottom: 16px;">
+            <label class="step-label" style="margin-bottom: 10px;">
+              <strong>Select Dispatch Format:</strong>
             </label>
-            <div class="media-type-toggle-grid">
-              <button type="button" class="type-toggle-card active" data-type="photo" id="typeTogglePhoto">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                <div>
-                  <strong>Photograph</strong>
-                  <small>High-Res Still (JPG, PNG, WEBP)</small>
-                </div>
-                <span class="type-check-badge">✓</span>
-              </button>
-              <button type="button" class="type-toggle-card" data-type="video" id="typeToggleVideo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                <div>
-                  <strong>Short Film / Video</strong>
-                  <small>Cinematic Reel (MP4, WEBM, MOV)</small>
-                </div>
-                <span class="type-check-badge">✓</span>
-              </button>
-            </div>
-            <!-- Native select for form state binding -->
-            <select id="uploadMediaType" class="form-select visually-hidden">
-              <option value="photo" selected>Photograph (High-Res Still)</option>
-              <option value="video">Cinematic Short Film (Video)</option>
-            </select>
-          </div>
-
-          <!-- STEP 2: Which Category (Where it will appear) -->
-          <div class="upload-step-block">
-            <label class="step-label">
-              <span class="step-num">2</span>
-              <strong>Which column/category should it go to?</strong>
-              <span class="step-help">Choose destination</span>
-            </label>
-            <div class="section-choice-grid">
-              <button type="button" class="section-choice-pill active" data-section="photos">
+            <div class="section-choice-grid" style="grid-template-columns: repeat(3, 1fr);">
+              <button type="button" class="section-choice-pill active" data-section="photos" id="hubTabBtnPhotos">
                 <span class="sec-icon">📷</span>
                 <span class="sec-title">PHOTOS</span>
-                <span class="sec-sub">Wildlife Stills</span>
+                <span class="sec-sub">Instagram Link</span>
               </button>
-              <button type="button" class="section-choice-pill" data-section="video">
-                <span class="sec-icon">📹</span>
-                <span class="sec-title">VIDEO</span>
-                <span class="sec-sub">4K Footage</span>
-              </button>
-              <button type="button" class="section-choice-pill" data-section="short-film">
+              <button type="button" class="section-choice-pill" data-section="video" id="hubTabBtnVideo">
                 <span class="sec-icon">🎬</span>
-                <span class="sec-title">SHORT FILM</span>
-                <span class="sec-sub">Cinema Reel</span>
+                <span class="sec-title">VIDEOS &amp; REELS</span>
+                <span class="sec-sub">YouTube &amp; IG</span>
               </button>
-              <button type="button" class="section-choice-pill" data-section="travelling-guide">
-                <span class="sec-icon">🧭</span>
-                <span class="sec-title">TRAVELLING GUIDE</span>
-                <span class="sec-sub">Routes &amp; Trails</span>
-              </button>
-              <button type="button" class="section-choice-pill" data-section="ideas">
-                <span class="sec-icon">💡</span>
-                <span class="sec-title">IDEAS</span>
-                <span class="sec-sub">Filming Concepts</span>
-              </button>
-              <button type="button" class="section-choice-pill" data-section="information">
+              <button type="button" class="section-choice-pill" data-section="information" id="hubTabBtnInfo">
                 <span class="sec-icon">ℹ️</span>
                 <span class="sec-title">INFORMATION</span>
-                <span class="sec-sub">Species &amp; Ecology</span>
+                <span class="sec-sub">Strictly Text</span>
               </button>
             </div>
-            <!-- Native select for form state binding -->
+            <!-- Hidden native select for section binding -->
             <select id="uploadSection" class="form-select visually-hidden">
               <option value="photos" selected>Photos</option>
-              <option value="video">Video</option>
-              <option value="short-film">Short Film</option>
-              <option value="travelling-guide">Travelling Guide</option>
-              <option value="ideas">Ideas</option>
+              <option value="video">Videos &amp; Short Films</option>
               <option value="information">Information</option>
             </select>
+          </div>
 
-            <!-- Sub-Category Column Selector for Photos and Videos -->
-            <div class="photo-subject-picker" id="photoSubjectPicker" style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(10, 43, 71, 0.15);">
-              <label style="display: block; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--primary-ocean-blue); margin-bottom: 6px; text-transform: uppercase;" id="uploadSubjectPickerLabel">
-                Subject Column (for Photos &amp; Video):
-              </label>
-              <div class="photo-subject-pills">
-                <button type="button" class="subject-pill active" data-subject="animal">Animal</button>
-                <button type="button" class="subject-pill" data-subject="birds">Birds</button>
-                <button type="button" class="subject-pill" data-subject="insect">Insect</button>
-                <button type="button" class="subject-pill" data-subject="flowers">Flowers</button>
-                <button type="button" class="subject-pill" data-subject="other">Other</button>
+          <!-- PANE 1: Photos Dispatch Form -->
+          <div id="hubPanePhotos" class="hub-form-pane">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoName">Subject Name *</label>
+              <input type="text" id="hubPhotoName" class="form-input" placeholder="e.g. Black Drongo / Indian Jewel Beetle" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoScientific">Scientific Name *</label>
+              <input type="text" id="hubPhotoScientific" class="form-input" placeholder="e.g. Dicrurus macrocercus / Chrysochroa buqueti" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoDesc">Short Description (2-3 lines) *</label>
+              <textarea id="hubPhotoDesc" class="form-textarea" rows="3" placeholder="Describe the behavior observed, unique physical traits, lighting and habitat..." required></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubPhotoIgUrl">Instagram URL (High-Res Still) *</label>
+              <input type="url" id="hubPhotoIgUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom: 8px;">
+              <div class="form-group">
+                <label for="hubPhotoSubjectSelect">Subject Classification</label>
+                <select id="hubPhotoSubjectSelect" class="form-select">
+                  <option value="animal">Animal</option>
+                  <option value="birds">Birds</option>
+                  <option value="insect">Insect</option>
+                  <option value="flowers">Flowers</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
-              <input type="hidden" id="uploadPhotoSubject" value="animal" />
+              <div class="form-group">
+                <label for="hubPhotoIconSelect">Thumbnail Icon</label>
+                <select id="hubPhotoIconSelect" class="form-select">
+                  <option value="assets/images/black_drongo.jpg">🦅 Drongo (Avian)</option>
+                  <option value="assets/images/golden_paper_wasp_macro.jpg">🦋 Wasp (Insect Macro)</option>
+                  <option value="assets/images/peach_hibiscus_flower.jpg">🌺 Hibiscus (Flora)</option>
+                  <option value="assets/images/valmiki_tiger.jpg">🐅 Bengal Tiger (Mammal)</option>
+                  <option value="assets/images/ginger_white_cat.jpg">🐾 Domestic Cat (Fauna)</option>
+                  <option value="assets/images/periwinkle_flower_art.jpg">🌸 Periwinkle (Botanical)</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <!-- STEP 3: Dropzone & File Selection -->
-          <div class="upload-step-block">
-            <label class="step-label">
-              <span class="step-num">3</span>
-              <strong>Select or Drop your File</strong>
-              <span class="step-help" id="fileHelpText">Photo or video file</span>
-            </label>
-            
-            <div class="upload-dropzone" id="uploadDropzoneArea">
-              <input type="file" id="dropzoneFileInput" accept="image/*,video/*" />
-              <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-              <p class="dropzone-title" id="dropzoneTitleText">Click to Browse or Drag &amp; Drop Photo / Video Here</p>
-              <p class="dropzone-note" id="dropzoneNoteText">Supports JPG, PNG, WEBP stills and MP4, WEBM, MOV video footage.</p>
-              <div style="margin-top: 14px;">
-                <button type="button" class="btn-browse-file-cta" id="btnBrowseDevice">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: middle; margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                  <span>Select File from Computer / Phone</span>
-                </button>
-              </div>
-              <div class="dropzone-file-status" id="dropzoneFileStatus" style="display: none;"></div>
+          <!-- PANE 2: Videos & Short Films Dispatch Form -->
+          <div id="hubPaneVideo" class="hub-form-pane" style="display: none;">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubVideoName">Name *</label>
+              <input type="text" id="hubVideoName" class="form-input" placeholder="e.g. Drongo Aerial Raptor Mobbing Tactics" />
             </div>
 
-            <!-- Preview Area -->
-            <div class="upload-preview-container" id="uploadPreviewContainer">
-              <button type="button" class="clear-preview-btn" id="clearPreviewBtn" title="Remove file">&times;</button>
-              <img id="uploadPreviewImage" alt="Upload Preview" style="display: none;" />
-              <video id="uploadPreviewVideo" controls style="display: none; width: 100%; max-height: 240px; background: #000; border-radius: 4px;"></video>
-              <div class="preview-upload-bar" id="previewUploadBar" style="margin-top: 14px; text-align: center;">
-                <button type="submit" class="btn-preview-upload-cta" id="btnPreviewUploadNow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>⚡ UPLOAD THIS FILE NOW</span>
-                </button>
-              </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubVideoScientific">Scientific Name *</label>
+              <input type="text" id="hubVideoScientific" class="form-input" placeholder="e.g. Dicrurus macrocercus" />
             </div>
 
-            <!-- Web URL Fallback -->
-            <div style="margin-top: 8px;">
-              <details class="url-fallback-details">
-                <summary>Or paste an external web URL instead of a file</summary>
-                <input type="url" id="uploadUrlInput" class="form-input" style="margin-top: 8px;" placeholder="https://... or video URL" />
-              </details>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubVideoDesc">Brief Info / Short Description *</label>
+              <textarea id="hubVideoDesc" class="form-textarea" rows="3" placeholder="Summary of video footage, acoustic vocalizations, filming context..."></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubVideoYtUrl">YouTube URL (Watch Video) *</label>
+              <input type="url" id="hubVideoYtUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubVideoIgUrl">Instagram URL (Watch Short / Reel) *</label>
+              <input type="url" id="hubVideoIgUrl" class="form-input" placeholder="https://www.instagram.com/reel/..." />
+            </div>
+
+            <div class="form-group">
+              <label for="hubVideoIconSelect">Subject Icon Representation</label>
+              <select id="hubVideoIconSelect" class="form-select">
+                <option value="🌿">🌿 Plant / Flora Graphic</option>
+                <option value="🦅">🦅 Avian / Bird Flight</option>
+                <option value="🐅">🐅 Wildlife / Big Cat</option>
+                <option value="🌊">🌊 Aquatic / River</option>
+                <option value="🎬">🎬 Cinematic Reel</option>
+              </select>
             </div>
           </div>
 
-          <!-- STEP 4: Details & Specs -->
-          <div class="upload-step-block">
-            <label class="step-label">
-              <span class="step-num">4</span>
-              <strong>Subject Information &amp; Narrative</strong>
-              <span class="step-help">Title &amp; species notes</span>
-            </label>
-
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label for="uploadTitle">Title / Species Name</label>
-                <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. Indian Rock Python / Snake (Leave blank for auto-title)" />
-              </div>
-
-              <div class="form-group">
-                <label for="uploadLocation">Field Observation Location</label>
-                <input type="text" id="uploadLocation" class="form-input" placeholder="e.g. Habitat Observation Site (Default: Field Sighting, India)" />
-              </div>
+          <!-- PANE 3: Information Dispatch Form (Strictly Text-Based) -->
+          <div id="hubPaneInfo" class="hub-form-pane" style="display: none;">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubInfoCategory">Category Selection *</label>
+              <select id="hubInfoCategory" class="form-select" required>
+                <option value="Insect">Insect</option>
+                <option value="Plant">Plant</option>
+                <option value="Flower">Flower</option>
+                <option value="Animal">Animal</option>
+                <option value="General" selected>General</option>
+              </select>
             </div>
 
-            <div class="form-group" style="margin-top: 10px;">
-              <label for="uploadStory">Short Description / Field Notes</label>
-              <textarea id="uploadStory" class="form-textarea" rows="2" placeholder="Describe about the subject (behavior observed, context of sighting)..."></textarea>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubInfoTitle">Topic / Subject Title *</label>
+              <input type="text" id="hubInfoTitle" class="form-input" placeholder="e.g. Diurnal Hunting Strategies of Dicrurus macrocercus" />
             </div>
 
-            <div class="form-group" style="margin-top: 12px; background: rgba(10, 43, 71, 0.03); padding: 12px; border-radius: 4px; border: 1px dashed rgba(10, 43, 71, 0.15);">
-              <label for="uploadKnowMore" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-weight: 700; color: var(--primary-ocean-blue); font-size: 12px;">📖 "To Know More" Information (Detailed Dossier)</span>
-                <span style="font-size: 10px; color: var(--accent-gold); font-weight: 700;">Author Verified Notes</span>
-              </label>
-              <textarea id="uploadKnowMore" class="form-textarea" rows="3" placeholder="Write full details about this animal, bird, insect, or flower (diet, habits, physical traits, habitat). Only your authentic notes will be shown when people click 'To Know More'!"></textarea>
-            </div>
-
-            <div class="form-grid-2" style="margin-top: 10px;">
-              <div class="form-group">
-                <label for="uploadCamera">Camera Rig (Optional)</label>
-                <input type="text" id="uploadCamera" class="form-input" placeholder="e.g. Wildlife Photography Rig" />
-              </div>
-
-              <div class="form-group">
-                <label for="uploadLens">Lens / Optics (Optional)</label>
-                <input type="text" id="uploadLens" class="form-input" placeholder="e.g. Telephoto Prime Lens" />
-              </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 8px;">
-              <label for="uploadExposure">EXIF / Exposure Specs (Optional)</label>
-              <input type="text" id="uploadExposure" class="form-input" placeholder="e.g. Natural Ambient Light" />
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="hubInfoText">Information &amp; Ecological Dossier *</label>
+              <textarea id="hubInfoText" class="form-textarea" rows="6" placeholder="Provide complete ecological research notes, scientific taxonomy, behavioral patterns, seasonal cycles, and conservation status. (Strictly text-based: images and icons are disabled in this section)." required></textarea>
             </div>
           </div>
 
@@ -1214,10 +1151,13 @@
           <button type="button" class="btn-secondary" id="cancelUploadBtn">Cancel</button>
           <button type="submit" class="btn-upload-gold-large" id="submitUploadBtn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span id="submitBtnText">UPLOAD PHOTO / VIDEO NOW</span>
+            <span id="submitBtnText">PUBLISH TO DRONGO HUB</span>
           </button>
         </div>
       </form>
+
+    </div>
+  </div>
 
     </div>
   </div>
@@ -1382,56 +1322,57 @@
        12. MAPROOM INTERACTIVE CONTRIBUTION MODALS
        ======================================================================= -->
   
-  <!-- Modal 1: Spot Media Upload (Photos, Videos, Short Films) -->
+  <!-- Modal 1: Travel Destination Submission (External Hub: Photo URL, Video URL, Guidelines) -->
   <div class="modal-backdrop" id="maproomSpotMediaModal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <h3>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-          Add Media to <span id="spotMediaModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Tourist Spot</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Add Travel Destination: <span id="spotMediaModalTarget" style="color: var(--accent-gold); margin-left: 4px;">State</span>
         </h3>
         <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
       </div>
       <form id="spotMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-            Contribute high-resolution photographs, 4K wildlife footage, or cinematic short films to this specific destination archive.
+            Add a verified travel location (Max 10 locations per state). Heavy media is hosted externally on Instagram &amp; YouTube.
           </p>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="spotMediaTitle">Media Title / Subject Description *</label>
-            <input type="text" id="spotMediaTitle" class="form-input" placeholder="e.g. Sunset over Ancient Brick Stupa No. 3" required />
+            <label for="destInputName">Destination Name *</label>
+            <input type="text" id="destInputName" class="form-input" placeholder="e.g. Nalanda Mahavihara Enclave" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="destInputIntro">Brief Introductory Text *</label>
+            <textarea id="destInputIntro" class="form-textarea" rows="2" placeholder="Brief overview of history, landscape, and significance..." required></textarea>
           </div>
 
           <div class="form-grid-2" style="margin-bottom: 12px;">
             <div class="form-group">
-              <label for="spotMediaAuthor">Contributor Attribution</label>
-              <input type="text" id="spotMediaAuthor" class="form-input" value="Aadi [Creator]" required />
+              <label for="destInputPhotoUrl">Photo URL (Instagram) *</label>
+              <input type="url" id="destInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
             </div>
             <div class="form-group">
-              <label for="spotMediaTypeSelect">Format Classification</label>
-              <select id="spotMediaTypeSelect" class="form-select">
-                <option value="photo" selected>High-Resolution Photo</option>
-                <option value="video">Wildlife Video Footage</option>
-                <option value="video">Cinematic Short Film</option>
-              </select>
+              <label for="destInputVideoUrl">Video URL (YouTube / IG) *</label>
+              <input type="url" id="destInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." required />
             </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="spotMediaFileInput">Select File from Device (Photo / Video)</label>
-            <input type="file" id="spotMediaFileInput" class="form-input" accept="image/*,video/*" />
+            <label for="destInputTips">Tourist Guidelines (Precautions, Timings, Facilities) *</label>
+            <textarea id="destInputTips" class="form-textarea" rows="3" placeholder="Precautions: ...&#10;Timings: ...&#10;Available Facilities: ..." required></textarea>
           </div>
 
           <div class="form-group">
-            <label for="spotMediaUrlInput">Or Paste Web URL (Image / Video)</label>
-            <input type="url" id="spotMediaUrlInput" class="form-input" placeholder="https://..." />
+            <label for="destInputAuthor">Contributor Attribution</label>
+            <input type="text" id="destInputAuthor" class="form-input" value="Aadi [Creator]" />
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
-          <button type="submit" class="header-action-btn btn-gold">+ Publish to Spot Archive</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Destination</button>
         </div>
       </form>
     </div>
@@ -1443,78 +1384,97 @@
       <div class="modal-header">
         <h3>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-          Share Tips &amp; Tricks for <span id="spotTipModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Tourist Spot</span>
+          Guidelines &amp; Tips for <span id="spotTipModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Tourist Spot</span>
         </h3>
         <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
       </div>
       <form id="spotTipForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-            Share best photography vantage points, optical filter recommendations, morning light angles, and field navigation tips. Entries by <strong>Aadi [Creator]</strong> will feature the verified creator gold badge.
+            Share field guidelines, precautions, timings, and photography tips. Entries by <strong>Aadi [Creator]</strong> will feature the verified creator gold badge.
           </p>
 
           <div class="form-group" style="margin-bottom: 12px;">
             <label for="spotTipAuthor">Your Name / Identity *</label>
             <input type="text" id="spotTipAuthor" class="form-input" value="Aadi [Creator]" required />
-            <small style="font-size: 11px; color: var(--accent-gold); display: block; margin-top: 3px;">
-              👑 Will display as "Aadi [Creator]" with verified badge
-            </small>
           </div>
 
           <div class="form-group">
-            <label for="spotTipText">Field Tips, Tricks &amp; Photography Experience *</label>
-            <textarea id="spotTipText" class="form-textarea" rows="4" placeholder="Write your tips, tricks, ideal timing, recommended lenses, or etiquette visitors should follow..." required></textarea>
+            <label for="spotTipText">Tourist Guidelines &amp; Experience Notes *</label>
+            <textarea id="spotTipText" class="form-textarea" rows="4" placeholder="Write precautions, entry timings, available facilities, or vantage points..." required></textarea>
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
-          <button type="submit" class="header-action-btn btn-gold">+ Publish Tips &amp; Tricks</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Guidelines</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 3: Flora & Fauna Sighting Log (Post Photos, Videos & Reels) -->
+  <!-- Modal 3: Flora & Fauna Entry (External Hub: Photo URL, Video URL, Short Film URL, Spotting Tips) -->
   <div class="modal-backdrop" id="maproomSightingModal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <h3>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-          Record Field Sighting: <span id="sightingModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Species</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          Add Flora &amp; Fauna Record: <span id="sightingModalTarget" style="color: var(--accent-gold); margin-left: 4px;">State Species</span>
         </h3>
         <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
       </div>
       <form id="sightingForm" class="upload-form" novalidate>
         <div class="modal-body">
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-            Document your wildlife encounter. When you spot a Bengal tiger, Ganges dolphin, or rare orchid, upload your photo, video, or reel and write your experience notes below.
+            Document indigenous species with external media links on Instagram and YouTube.
           </p>
 
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label for="sightingAuthor">Observer / Photographer Name *</label>
-            <input type="text" id="sightingAuthor" class="form-input" value="Aadi [Creator]" required />
+          <div class="form-grid-2" style="margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="faunaInputCommonName">Common Name *</label>
+              <input type="text" id="faunaInputCommonName" class="form-input" placeholder="e.g. Gangetic River Dolphin" required />
+            </div>
+            <div class="form-group">
+              <label for="faunaInputScientificName">Scientific Name *</label>
+              <input type="text" id="faunaInputScientificName" class="form-input" placeholder="e.g. Platanista gangetica" required />
+            </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="sightingExperience">Sighting Experience &amp; Field Notes *</label>
-            <textarea id="sightingExperience" class="form-textarea" rows="3" placeholder="Describe the behavior observed, time of day, lighting, weather, and habitat notes..." required></textarea>
+            <label for="faunaInputDesc">Description (1-2 lines, optional)</label>
+            <input type="text" id="faunaInputDesc" class="form-input" placeholder="Brief ecological notes or habitat overview..." />
           </div>
 
           <div class="form-group" style="margin-bottom: 12px;">
-            <label for="sightingFileInput">Upload Photo, Video or Reel (File from Device)</label>
-            <input type="file" id="sightingFileInput" class="form-input" accept="image/*,video/*" />
+            <label for="faunaInputPhotoUrl">Photo URL (Instagram) *</label>
+            <input type="url" id="faunaInputPhotoUrl" class="form-input" placeholder="https://www.instagram.com/p/..." required />
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="faunaInputVideoUrl">Video URL (YouTube) *</label>
+              <input type="url" id="faunaInputVideoUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=..." required />
+            </div>
+            <div class="form-group">
+              <label for="faunaInputShortUrl">Short Film URL (IG / YT Short) *</label>
+              <input type="url" id="faunaInputShortUrl" class="form-input" placeholder="https://www.instagram.com/reel/..." required />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="faunaInputTips">Spotting Tips &amp; Behavioral Notes *</label>
+            <textarea id="faunaInputTips" class="form-textarea" rows="3" placeholder="Best observation hours, behavioral signals, seasonal migrations..." required></textarea>
           </div>
 
           <div class="form-group">
-            <label for="sightingUrlInput">Or Media URL (Photo / Video Link)</label>
-            <input type="url" id="sightingUrlInput" class="form-input" placeholder="https://..." />
+            <label for="faunaInputAuthor">Observer Attribution</label>
+            <input type="text" id="faunaInputAuthor" class="form-input" value="Aadi [Creator]" />
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
-          <button type="submit" class="header-action-btn btn-gold">+ Publish Sighting Record</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Species Record</button>
         </div>
       </form>
     </div>
@@ -1592,11 +1552,11 @@
     </div>
   </div>
 
-  <!-- Floating Quick Upload Action Button (Always Accessible on Desktop and Mobile) -->
+  <!-- Floating Quick Dispatch Action Button (Always Accessible on Desktop and Mobile) -->
   <div class="floating-upload-fab-wrap">
-    <button class="floating-upload-fab trigger-upload-modal" id="floatingUploadFab" aria-label="Upload Photo or Video to Archive">
+    <button class="floating-upload-fab trigger-upload-modal" id="floatingUploadFab" aria-label="Add Dispatch to Hub">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span>+ UPLOAD</span>
+      <span>+ DISPATCH</span>
     </button>
   </div>
 
