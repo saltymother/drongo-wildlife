@@ -167,3 +167,17 @@
   - Relocated Search and Upload Photo/Video actions directly beside Information on the category navigation bar
   - Appended italic motto 'Alta alatis patent' beneath DRONGO title in the navigation drawer
   - Updated live catalog counters: All Visuals (5), Photos (5), Flowers (2), Animal (2), Insect (1)
+
+## [v1.0.12] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | Bugfix | Cartography
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Resolved upload failure by removing blocking HTML5 required constraints on hidden elements and adding explicit device file browse trigger
+  - Added MAPROOM interactive geospatial cartography section directly beneath the Visuals media grid
+  - Integrated realistic vector map of India with clickable state borders, hover glow, and quick state selector chips
+  - Implemented dynamic State Dossier displaying official State Emblems (Bihar, Assam, West Bengal, MP, Kerala, Rajasthan, Uttarakhand)
+  - Added Option 1 (Tourist Spots & Expeditions) with photo, italic title, description, spot media contribution modal, and Tips & Tricks feed attributed to Aadi [Creator]
+  - Added Option 2 (Indigenous Flora & Fauna) featuring top 10 authentic Wikipedia species per state with sighting log modal for photos, videos, and reels

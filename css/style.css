@@ -2415,3 +2415,846 @@ a {
   background: var(--accent-gold);
   color: var(--ocean-blue-deep);
 }
+
+/* ==========================================================================
+   MAPROOM & CARTOGRAPHY STYLING
+   ========================================================================== */
+
+/* Device File Browse Button in Upload Modal */
+.btn-browse-file-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-ocean-blue);
+  color: #FFFFFF;
+  border: 1px solid var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(10, 43, 71, 0.15);
+}
+
+.btn-browse-file-cta:hover {
+  background: var(--accent-gold);
+  color: var(--primary-ocean-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(197, 160, 89, 0.3);
+}
+
+.dropzone-file-status {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: rgba(46, 125, 50, 0.12);
+  color: #2E7D32;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(46, 125, 50, 0.25);
+  display: inline-block;
+}
+
+/* Maproom Main Section */
+.maproom-section {
+  padding: 80px 24px;
+  background: #F4F7F9;
+  border-top: 1px solid rgba(10, 43, 71, 0.08);
+  border-bottom: 1px solid rgba(10, 43, 71, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.maproom-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.maproom-header-block {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.maproom-kicker {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.maproom-main-heading {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  letter-spacing: 3px;
+  margin: 0 0 12px;
+}
+
+.maproom-lead-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* State Chips Bar */
+.maproom-chips-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  background: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(10, 43, 71, 0.1);
+  box-shadow: 0 4px 14px rgba(10, 43, 71, 0.04);
+  flex-wrap: wrap;
+}
+
+.chips-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--primary-ocean-blue);
+  text-transform: uppercase;
+}
+
+.chips-flex-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.state-chip-btn {
+  background: var(--off-white-bg);
+  color: var(--primary-ocean-blue);
+  border: 1px solid rgba(10, 43, 71, 0.18);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.state-chip-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-1px);
+}
+
+.state-chip-btn.active {
+  background: var(--primary-ocean-blue);
+  color: #F3D99E;
+  border-color: var(--accent-gold);
+  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.2);
+}
+
+/* Dual Column Layout Grid */
+.maproom-grid-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .maproom-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Map Card */
+.maproom-map-card {
+  background: #061B2E;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  box-shadow: 0 12px 36px rgba(10, 43, 71, 0.25);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.map-card-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  margin-bottom: 14px;
+}
+
+.map-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #F3D99E;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+}
+
+.map-tap-prompt {
+  font-size: 11px;
+  color: rgba(243, 217, 158, 0.7);
+  background: rgba(197, 160, 89, 0.15);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.india-map-viewport {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #051829;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.india-svg-map {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+}
+
+/* SVG State Borders & Hover Interactions */
+.map-state-path {
+  fill: #0F3556;
+  stroke: #C5A059;
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.map-state-path:hover {
+  fill: rgba(197, 160, 89, 0.55);
+  stroke: #FFFFFF;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 8px rgba(243, 217, 158, 0.6));
+}
+
+.map-state-path.active {
+  fill: #C5A059;
+  stroke: #FFFFFF;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 12px rgba(243, 217, 158, 0.8));
+}
+
+.map-state-path.highlight-state {
+  stroke-width: 1.6;
+}
+
+.map-legend-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.legend-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.legend-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-indicator.selected {
+  background: #C5A059;
+  box-shadow: 0 0 6px #C5A059;
+}
+
+.legend-indicator.selectable {
+  background: #0F3556;
+  border: 1px solid #C5A059;
+}
+
+.legend-indicator.wildlife-corridor {
+  background: #2E7D32;
+}
+
+/* Right Column: Dossier Card */
+.maproom-dossier-card {
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 43, 71, 0.12);
+  box-shadow: 0 12px 36px rgba(10, 43, 71, 0.08);
+  padding: 24px;
+}
+
+/* State Header & Official Emblem Logo */
+.state-dossier-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(10, 43, 71, 0.1);
+  margin-bottom: 20px;
+}
+
+.state-emblem-wrapper {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 4px 14px rgba(197, 160, 89, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0A2B47;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.state-emblem-wrapper:hover {
+  transform: rotate(5deg) scale(1.04);
+}
+
+.state-emblem-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.state-meta-details {
+  flex: 1;
+}
+
+.state-biome-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(46, 125, 50, 0.1);
+  color: #2E7D32;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  margin-bottom: 6px;
+}
+
+.state-title-heading {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin: 0 0 4px;
+  letter-spacing: 1.5px;
+}
+
+.state-tagline-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Maproom Tab Selector Bar */
+.maproom-tab-selector-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  background: var(--off-white-bg);
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(10, 43, 71, 0.08);
+}
+
+.maproom-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.maproom-tab-btn:hover {
+  color: var(--primary-ocean-blue);
+}
+
+.maproom-tab-btn.active {
+  background: var(--primary-ocean-blue);
+  color: #F3D99E;
+  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.15);
+}
+
+/* Tourist Spots Grid */
+.maproom-spots-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tourist-spot-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 43, 71, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(10, 43, 71, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tourist-spot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 43, 71, 0.08);
+}
+
+.spot-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: #0A2B47;
+  overflow: hidden;
+}
+
+.spot-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tourist-spot-card:hover .spot-image-wrapper img {
+  transform: scale(1.03);
+}
+
+.spot-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(10, 43, 71, 0.85);
+  backdrop-filter: blur(4px);
+  color: #F3D99E;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+}
+
+.spot-body {
+  padding: 18px;
+}
+
+.spot-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin: 0 0 4px;
+}
+
+.spot-italic-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--accent-gold);
+  margin-bottom: 10px;
+}
+
+.spot-info {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4A5568;
+  margin: 0 0 16px;
+}
+
+/* Spot Actions */
+.spot-action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.btn-spot-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-upload-spot-media {
+  background: rgba(197, 160, 89, 0.12);
+  color: #8C6F2D;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+}
+
+.btn-upload-spot-media:hover {
+  background: var(--accent-gold);
+  color: #0A2B47;
+}
+
+.btn-add-spot-tip {
+  background: rgba(10, 43, 71, 0.08);
+  color: var(--primary-ocean-blue);
+  border: 1px solid rgba(10, 43, 71, 0.2);
+}
+
+.btn-add-spot-tip:hover {
+  background: var(--primary-ocean-blue);
+  color: #FFFFFF;
+}
+
+/* Tips & Tricks Feed with Creator Attribution */
+.spot-tips-feed {
+  background: #F8FAFC;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(10, 43, 71, 0.08);
+  margin-top: 12px;
+}
+
+.tips-feed-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary-ocean-blue);
+  margin-bottom: 10px;
+  letter-spacing: 0.8px;
+}
+
+.tip-card {
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.tip-card:last-child {
+  margin-bottom: 0;
+}
+
+.tip-card.creator-tip {
+  background: #FFFDF8;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  box-shadow: 0 2px 6px rgba(197, 160, 89, 0.08);
+}
+
+.tip-card.contributor-tip {
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 43, 71, 0.08);
+}
+
+.tip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.creator-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #9A7727;
+  background: rgba(197, 160, 89, 0.18);
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.visitor-badge, .contributor-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  background: rgba(10, 43, 71, 0.06);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.tip-date {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.tip-text {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #2D3748;
+  margin: 0;
+}
+
+/* Spot Uploads Mini Grid */
+.spot-custom-uploads {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(10, 43, 71, 0.12);
+}
+
+.uploads-feed-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mini-uploads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.mini-upload-thumb {
+  background: #0A2B47;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(10, 43, 71, 0.15);
+}
+
+.mini-upload-thumb img, .mini-upload-thumb video {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+.mini-upload-caption {
+  padding: 5px 6px;
+  background: #FFFFFF;
+}
+
+.mini-upload-caption strong {
+  display: block;
+  font-size: 10px;
+  color: var(--primary-ocean-blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-upload-caption small {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+/* Option 2: Flora & Fauna Grid (Top 10 Species) */
+.maproom-fauna-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.fauna-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 43, 71, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(10, 43, 71, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.fauna-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(10, 43, 71, 0.08);
+}
+
+@media (max-width: 640px) {
+  .fauna-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fauna-image-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  background: #0A2B47;
+}
+
+.fauna-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fauna-rank {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--primary-ocean-blue);
+  color: #F3D99E;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--accent-gold);
+}
+
+.fauna-type-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  background: rgba(10, 43, 71, 0.85);
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  font-size: 8.5px;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 2px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fauna-body {
+  padding: 12px 14px 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 640px) {
+  .fauna-body {
+    padding: 12px;
+  }
+}
+
+.fauna-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin: 0 0 2px;
+}
+
+.fauna-scientific {
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--accent-gold);
+  margin-bottom: 6px;
+}
+
+.fauna-notes {
+  font-size: 12px;
+  line-height: 1.55;
+  color: #4A5568;
+  margin: 0 0 10px;
+  flex-grow: 1;
+}
+
+.btn-record-sighting {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(10, 43, 71, 0.06);
+  color: var(--primary-ocean-blue);
+  border: 1px solid rgba(10, 43, 71, 0.18);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-record-sighting:hover {
+  background: var(--accent-gold);
+  color: var(--primary-ocean-blue);
+  border-color: var(--accent-gold);
+}
+
+/* Sighting encounters list */
+.fauna-sightings-feed {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: #F8FAFC;
+  border-radius: 4px;
+  border: 1px solid rgba(10, 43, 71, 0.08);
+}
+
+.sightings-header {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--primary-ocean-blue);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.sighting-item {
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed rgba(10, 43, 71, 0.1);
+}
+
+.sighting-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sighting-author {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.sighting-exp {
+  font-size: 11.5px;
+  color: #2D3748;
+  margin: 3px 0 6px;
+  line-height: 1.45;
+}
+
+.sighting-media-preview video, .sighting-media-preview img {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 4px;
+  display: block;
+}

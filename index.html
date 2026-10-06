@@ -102,6 +102,7 @@
         <a href="#visuals" class="sub-nav-link" data-section="travelling-guide">TRAVELLING GUIDE</a>
         <a href="#visuals" class="sub-nav-link" data-section="ideas">IDEAS</a>
         <a href="#visuals" class="sub-nav-link" data-section="information">INFORMATION</a>
+        <a href="#maproom" class="sub-nav-link" data-section="maproom">MAPROOM</a>
       </div>
 
       <!-- Search & Upload placed directly beside Information per user wireframe -->
@@ -218,6 +219,297 @@
       </div>
     </div>
 
+  </section>
+
+  <!-- =======================================================================
+       MAPROOM: GEOSPATIAL WILDLIFE CARTOGRAPHY & STATE FIELD ARCHIVES
+       ======================================================================= -->
+  <section class="maproom-section" id="maproom">
+    <div class="maproom-container">
+      
+      <!-- Section Header -->
+      <div class="maproom-header-block">
+        <span class="maproom-kicker">CARTOGRAPHY &amp; STATE FIELD ARCHIVES</span>
+        <h2 class="maproom-main-heading">MAPROOM</h2>
+        <p class="maproom-lead-desc">
+          Interactive wildlife geography of India. Select any state on the map to inspect its official state emblem, landmark tourist spots, verified field guides by <em>Aadi [Creator]</em>, and unique indigenous flora and fauna.
+        </p>
+      </div>
+
+      <!-- Quick-Access State Selector Chips Bar -->
+      <div class="maproom-chips-toolbar" role="tablist" aria-label="Quick State Selection">
+        <span class="chips-label">SELECT STATE:</span>
+        <div class="chips-flex-row">
+          <button class="state-chip-btn active" data-state="bihar">Bihar</button>
+          <button class="state-chip-btn" data-state="assam">Assam</button>
+          <button class="state-chip-btn" data-state="west_bengal">West Bengal</button>
+          <button class="state-chip-btn" data-state="madhya_pradesh">Madhya Pradesh</button>
+          <button class="state-chip-btn" data-state="kerala">Kerala</button>
+          <button class="state-chip-btn" data-state="rajasthan">Rajasthan</button>
+          <button class="state-chip-btn" data-state="uttarakhand">Uttarakhand</button>
+        </div>
+      </div>
+
+      <!-- Main Maproom Dual Column Layout Grid -->
+      <div class="maproom-grid-layout">
+        
+        <!-- Left Column: Realistic Map of India with Clickable State Borders -->
+        <div class="maproom-map-card">
+          <div class="map-card-topbar">
+            <div class="map-card-title-group">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Map of India • State Corridors</span>
+            </div>
+            <span class="map-tap-prompt">Tap any state border</span>
+          </div>
+
+          <!-- Realistic India SVG Map -->
+          <div class="india-map-viewport">
+            <svg viewBox="0 0 650 720" class="india-svg-map" aria-label="Interactive Map of India">
+              <defs>
+                <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <linearGradient id="mapOceanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#071E32" />
+                  <stop offset="100%" stop-color="#0A2B47" />
+                </linearGradient>
+              </defs>
+
+              <!-- Ocean / Base Background -->
+              <rect width="650" height="720" fill="url(#mapOceanGrad)" rx="8" />
+
+              <!-- Geographic Grid Lines -->
+              <g stroke="rgba(197, 160, 89, 0.12)" stroke-width="0.8" stroke-dasharray="4,6">
+                <line x1="50" y1="180" x2="600" y2="180" />
+                <line x1="50" y1="360" x2="600" y2="360" />
+                <line x1="50" y1="540" x2="600" y2="540" />
+                <line x1="200" y1="50" x2="200" y2="680" />
+                <line x1="380" y1="50" x2="380" y2="680" />
+                <line x1="520" y1="50" x2="520" y2="680" />
+              </g>
+
+              <!-- Ocean Labels -->
+              <text x="100" y="520" fill="rgba(243, 217, 158, 0.25)" font-family="'Cinzel', serif" font-size="11" letter-spacing="2">ARABIAN SEA</text>
+              <text x="470" y="520" fill="rgba(243, 217, 158, 0.25)" font-family="'Cinzel', serif" font-size="11" letter-spacing="2">BAY OF BENGAL</text>
+              <text x="280" y="695" fill="rgba(243, 217, 158, 0.3)" font-family="'Cinzel', serif" font-size="12" letter-spacing="3" text-anchor="middle">INDIAN OCEAN</text>
+
+              <!-- All Indian States with realistic borders and data-state attributes -->
+              <g class="india-states-layer">
+                <!-- Ladakh & Jammu & Kashmir -->
+                <path class="map-state-path" data-state="ladakh" d="M220 50 L270 30 L320 60 L335 110 L300 120 L270 115 L245 130 L210 110 L205 75 Z" aria-label="Ladakh and Jammu & Kashmir">
+                  <title>Ladakh &amp; Jammu &amp; Kashmir</title>
+                </path>
+
+                <!-- Himachal Pradesh -->
+                <path class="map-state-path" data-state="himachal" d="M245 130 L270 115 L300 120 L295 150 L260 160 L240 145 Z" aria-label="Himachal Pradesh">
+                  <title>Himachal Pradesh</title>
+                </path>
+
+                <!-- Punjab -->
+                <path class="map-state-path" data-state="punjab" d="M205 135 L240 145 L235 175 L195 170 L200 145 Z" aria-label="Punjab">
+                  <title>Punjab</title>
+                </path>
+
+                <!-- Uttarakhand (Interactive Wildlife State) -->
+                <path class="map-state-path highlight-state" data-state="uttarakhand" d="M295 150 L340 160 L330 195 L285 190 L260 160 Z" aria-label="Uttarakhand">
+                  <title>Uttarakhand • Garhwal &amp; Corbett Tiger Basin</title>
+                </path>
+
+                <!-- Haryana & Delhi -->
+                <path class="map-state-path" data-state="haryana" d="M235 175 L260 160 L285 190 L270 215 L230 205 Z" aria-label="Haryana &amp; Delhi">
+                  <title>Haryana &amp; National Capital Region</title>
+                </path>
+
+                <!-- Rajasthan (Interactive Wildlife State) -->
+                <path class="map-state-path highlight-state" data-state="rajasthan" d="M140 185 L230 205 L260 250 L230 305 L160 300 L120 250 Z" aria-label="Rajasthan">
+                  <title>Rajasthan • Thar Desert &amp; Ranthambore</title>
+                </path>
+
+                <!-- Uttar Pradesh -->
+                <path class="map-state-path" data-state="uttar_pradesh" d="M270 215 L285 190 L330 195 L405 240 L395 295 L310 290 L260 250 Z" aria-label="Uttar Pradesh">
+                  <title>Uttar Pradesh • Dudhwa Terai &amp; Gangetic Plain</title>
+                </path>
+
+                <!-- Bihar (Interactive Wildlife State - Prominently Featured) -->
+                <path class="map-state-path highlight-state active" data-state="bihar" d="M405 240 L480 235 L475 290 L455 305 L395 295 Z" aria-label="Bihar">
+                  <title>Bihar • Nalanda Mahavihara &amp; Valmiki Tiger Reserve</title>
+                </path>
+
+                <!-- Sikkim -->
+                <path class="map-state-path" data-state="sikkim" d="M480 220 L500 220 L495 240 L480 235 Z" aria-label="Sikkim">
+                  <title>Sikkim • Kangchenjunga Biosphere</title>
+                </path>
+
+                <!-- Assam (Interactive Wildlife State - Prominently Featured) -->
+                <path class="map-state-path highlight-state" data-state="assam" d="M515 240 L590 230 L610 265 L575 285 L535 270 L515 280 L495 260 Z" aria-label="Assam">
+                  <title>Assam • Kaziranga &amp; Brahmaputra Valley</title>
+                </path>
+
+                <!-- Arunachal Pradesh, Meghalaya & Northeast States -->
+                <path class="map-state-path" data-state="arunachal" d="M545 190 L620 200 L635 240 L590 230 L545 220 Z" aria-label="Arunachal Pradesh">
+                  <title>Arunachal Pradesh</title>
+                </path>
+                <path class="map-state-path" data-state="meghalaya" d="M515 275 L565 270 L560 290 L510 290 Z" aria-label="Meghalaya">
+                  <title>Meghalaya • Living Root Bridges &amp; Cloud Forests</title>
+                </path>
+                <path class="map-state-path" data-state="northeast_other" d="M575 285 L615 280 L605 350 L570 350 L560 295 Z" aria-label="Nagaland, Manipur, Mizoram &amp; Tripura">
+                  <title>Nagaland, Manipur, Mizoram &amp; Tripura</title>
+                </path>
+
+                <!-- West Bengal (Interactive Wildlife State - Prominently Featured) -->
+                <path class="map-state-path highlight-state" data-state="west_bengal" d="M475 238 L495 240 L485 280 L495 330 L455 355 L445 315 L470 290 Z" aria-label="West Bengal">
+                  <title>West Bengal • Sundarbans Tiger Realm &amp; Darjeeling</title>
+                </path>
+
+                <!-- Gujarat -->
+                <path class="map-state-path" data-state="gujarat" d="M85 270 L150 255 L160 300 L180 340 L125 365 L105 320 L70 310 Z" aria-label="Gujarat">
+                  <title>Gujarat • Gir Asiatic Lion Sanctuary</title>
+                </path>
+
+                <!-- Madhya Pradesh (Interactive Wildlife State - Prominently Featured) -->
+                <path class="map-state-path highlight-state" data-state="madhya_pradesh" d="M230 305 L260 250 L310 290 L395 295 L400 350 L330 375 L250 365 L220 340 Z" aria-label="Madhya Pradesh">
+                  <title>Madhya Pradesh • Kanha &amp; Bandhavgarh Sal Canopies</title>
+                </path>
+
+                <!-- Jharkhand -->
+                <path class="map-state-path" data-state="jharkhand" d="M400 295 L455 305 L445 355 L395 360 L390 325 Z" aria-label="Jharkhand">
+                  <title>Jharkhand • Betla National Park</title>
+                </path>
+
+                <!-- Odisha -->
+                <path class="map-state-path" data-state="odisha" d="M395 360 L455 355 L460 410 L415 450 L370 415 L380 370 Z" aria-label="Odisha">
+                  <title>Odisha • Similipal &amp; Chilika Lake</title>
+                </path>
+
+                <!-- Chhattisgarh -->
+                <path class="map-state-path" data-state="chhattisgarh" d="M360 325 L395 360 L375 430 L345 440 L340 370 Z" aria-label="Chhattisgarh">
+                  <title>Chhattisgarh • Kanger Ghati &amp; Bastar Sal</title>
+                </path>
+
+                <!-- Maharashtra -->
+                <path class="map-state-path" data-state="maharashtra" d="M155 355 L250 365 L330 375 L320 440 L240 460 L180 435 L160 380 Z" aria-label="Maharashtra">
+                  <title>Maharashtra • Tadoba Andhari Tiger Corridor</title>
+                </path>
+
+                <!-- Goa -->
+                <path class="map-state-path" data-state="goa" d="M185 490 L200 488 L198 505 L182 505 Z" aria-label="Goa">
+                  <title>Goa • Bhagwan Mahaveer Sanctuary</title>
+                </path>
+
+                <!-- Karnataka -->
+                <path class="map-state-path" data-state="karnataka" d="M190 475 L240 460 L280 490 L270 560 L210 565 L185 505 Z" aria-label="Karnataka">
+                  <title>Karnataka • Nagarhole &amp; Bandipur Elephant Corridor</title>
+                </path>
+
+                <!-- Telangana & Andhra Pradesh -->
+                <path class="map-state-path" data-state="telangana_andhra" d="M280 440 L340 440 L370 415 L415 450 L350 560 L275 540 L280 490 Z" aria-label="Telangana &amp; Andhra Pradesh">
+                  <title>Telangana &amp; Andhra Pradesh</title>
+                </path>
+
+                <!-- Kerala (Interactive Wildlife State - Prominently Featured) -->
+                <path class="map-state-path highlight-state" data-state="kerala" d="M210 565 L240 565 L250 635 L225 670 L210 630 Z" aria-label="Kerala">
+                  <title>Kerala • Periyar &amp; Western Ghats Shola</title>
+                </path>
+
+                <!-- Tamil Nadu -->
+                <path class="map-state-path" data-state="tamil_nadu" d="M240 565 L275 540 L330 565 L290 665 L250 675 L250 635 Z" aria-label="Tamil Nadu">
+                  <title>Tamil Nadu • Mudumalai &amp; Anamalai</title>
+                </path>
+
+                <!-- Andaman & Nicobar Islands -->
+                <g class="map-islands" fill="#C5A059" opacity="0.8">
+                  <ellipse cx="585" cy="540" rx="3" ry="8" />
+                  <ellipse cx="587" cy="565" rx="3" ry="10" />
+                  <ellipse cx="590" cy="595" rx="4" ry="12" />
+                  <ellipse cx="593" cy="625" rx="3.5" ry="8" />
+                </g>
+                <!-- Lakshadweep -->
+                <g class="map-islands" fill="#C5A059" opacity="0.8">
+                  <circle cx="160" cy="590" r="2.5" />
+                  <circle cx="165" cy="610" r="3" />
+                  <circle cx="170" cy="635" r="2.5" />
+                </g>
+              </g>
+
+              <!-- State Markers & Labels for Key Wildlife States -->
+              <g class="map-labels-group" pointer-events="none">
+                <!-- Bihar pin -->
+                <circle cx="440" cy="270" r="4.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="440" y="260" fill="#F3D99E" font-family="'Cinzel', serif" font-size="9" font-weight="bold" text-anchor="middle">BIHAR</text>
+
+                <!-- Assam pin -->
+                <circle cx="560" cy="260" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="560" y="250" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">ASSAM</text>
+
+                <!-- West Bengal pin -->
+                <circle cx="465" cy="325" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="495" y="325" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">BENGAL</text>
+
+                <!-- Madhya Pradesh pin -->
+                <circle cx="310" cy="325" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="310" y="342" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">M.P.</text>
+
+                <!-- Rajasthan pin -->
+                <circle cx="195" cy="250" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="195" y="240" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold" text-anchor="middle">RAJASTHAN</text>
+
+                <!-- Kerala pin -->
+                <circle cx="230" cy="620" r="4" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="195" y="622" fill="#F3D99E" font-family="'Cinzel', serif" font-size="8" font-weight="bold">KERALA</text>
+
+                <!-- Uttarakhand pin -->
+                <circle cx="300" cy="175" r="3.5" fill="#F3D99E" stroke="#0A2B47" stroke-width="1.5" />
+                <text x="300" y="168" fill="#F3D99E" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" text-anchor="middle">UTTARAKHAND</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="map-legend-row">
+            <div class="legend-badge-item"><span class="legend-indicator selected"></span> Active State</div>
+            <div class="legend-badge-item"><span class="legend-indicator selectable"></span> Tap to Explore</div>
+            <div class="legend-badge-item"><span class="legend-indicator wildlife-corridor"></span> Wildlife Corridor</div>
+          </div>
+        </div>
+
+        <!-- Right Column: State Field Archive & Dynamic Dossier Pane -->
+        <div class="maproom-dossier-card" id="maproomStateArchive">
+          
+          <!-- State Dossier Header: Displays State Emblem & Biome Banner -->
+          <div class="state-dossier-header">
+            <div class="state-emblem-wrapper" id="maproomStateEmblem" title="Official State Emblem / Seal">
+              <!-- Dynamically rendered by maproom.js -->
+            </div>
+            <div class="state-meta-details">
+              <span class="state-biome-badge" id="maproomStateBiome">Biome: Gangetic Alluvial Floodplains</span>
+              <h2 class="state-title-heading" id="maproomStateTitle">BIHAR</h2>
+              <p class="state-tagline-sub" id="maproomStateTagline">The Prehistoric Gangetic Basin &amp; Terai Foothills</p>
+            </div>
+          </div>
+
+          <!-- Two Mandated Options/Tabs -->
+          <div class="maproom-tab-selector-bar" role="tablist">
+            <button class="maproom-tab-btn active" id="maproomTabTourist" role="tab" aria-selected="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Option 1: Tourist Spots &amp; Expeditions</span>
+            </button>
+            <button class="maproom-tab-btn" id="maproomTabFauna" role="tab" aria-selected="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+              <span>Option 2: Indigenous Flora &amp; Fauna (Top 10)</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Content Display Pane (Populated via js/maproom.js) -->
+          <div class="maproom-content-display" id="maproomContentDisplay">
+            <!-- Dynamically populated -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
   </section>
 
   <!-- =======================================================================
@@ -378,7 +670,7 @@
         <button class="modal-close-btn" id="closeUploadModalBtn" aria-label="Close Curator Studio">&times;</button>
       </div>
 
-      <form id="uploadMediaForm">
+      <form id="uploadMediaForm" class="upload-form" novalidate>
         <div class="modal-body">
           
           <!-- STEP 1: What to Upload (Photo vs Video) -->
@@ -407,7 +699,7 @@
               </button>
             </div>
             <!-- Native select for form state binding -->
-            <select id="uploadMediaType" class="form-select visually-hidden" required>
+            <select id="uploadMediaType" class="form-select visually-hidden">
               <option value="photo" selected>Photograph (High-Res Still)</option>
               <option value="video">Cinematic Short Film (Video)</option>
             </select>
@@ -453,7 +745,7 @@
               </button>
             </div>
             <!-- Native select for form state binding -->
-            <select id="uploadSection" class="form-select visually-hidden" required>
+            <select id="uploadSection" class="form-select visually-hidden">
               <option value="photos" selected>Photos</option>
               <option value="video">Video</option>
               <option value="short-film">Short Film</option>
@@ -495,6 +787,13 @@
               </svg>
               <p class="dropzone-title" id="dropzoneTitleText">Click to Browse or Drag &amp; Drop Photo / Video Here</p>
               <p class="dropzone-note" id="dropzoneNoteText">Supports JPG, PNG, WEBP stills and MP4, WEBM, MOV video footage.</p>
+              <div style="margin-top: 14px;">
+                <button type="button" class="btn-browse-file-cta" id="btnBrowseDevice">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: middle; margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Select File from Computer / Phone</span>
+                </button>
+              </div>
+              <div class="dropzone-file-status" id="dropzoneFileStatus" style="display: none;"></div>
             </div>
 
             <!-- Preview Area -->
@@ -523,13 +822,13 @@
 
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="uploadTitle">Title / Species Name *</label>
-                <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. Indian Rock Python / Snake" required />
+                <label for="uploadTitle">Title / Species Name</label>
+                <input type="text" id="uploadTitle" class="form-input" placeholder="e.g. Indian Rock Python / Snake (Leave blank for auto-title)" />
               </div>
 
               <div class="form-group">
-                <label for="uploadLocation">Field Observation Location *</label>
-                <input type="text" id="uploadLocation" class="form-input" placeholder="e.g. Habitat Observation Site" required />
+                <label for="uploadLocation">Field Observation Location</label>
+                <input type="text" id="uploadLocation" class="form-input" placeholder="e.g. Habitat Observation Site (Default: Field Sighting, India)" />
               </div>
             </div>
 
@@ -703,6 +1002,7 @@
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="travelling-guide">Travelling Guide</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="ideas">Ideas</a>
       <a href="#visuals" class="drawer-nav-link sub-nav-link" data-section="information">Information</a>
+      <a href="#maproom" class="drawer-nav-link sub-nav-link" data-section="maproom">Maproom Cartography</a>
       
       <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
         <button class="header-action-btn btn-gold trigger-upload-modal" style="width: 100%; justify-content: center;">
@@ -718,11 +1018,154 @@
   </aside>
 
   <!-- =======================================================================
-       12. TOAST NOTIFICATION SYSTEM
+       12. MAPROOM INTERACTIVE CONTRIBUTION MODALS
+       ======================================================================= -->
+  
+  <!-- Modal 1: Spot Media Upload (Photos, Videos, Short Films) -->
+  <div class="modal-backdrop" id="maproomSpotMediaModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Add Media to <span id="spotMediaModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Tourist Spot</span>
+        </h3>
+        <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
+      </div>
+      <form id="spotMediaForm" class="upload-form" novalidate>
+        <div class="modal-body">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            Contribute high-resolution photographs, 4K wildlife footage, or cinematic short films to this specific destination archive.
+          </p>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="spotMediaTitle">Media Title / Subject Description *</label>
+            <input type="text" id="spotMediaTitle" class="form-input" placeholder="e.g. Sunset over Ancient Brick Stupa No. 3" required />
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom: 12px;">
+            <div class="form-group">
+              <label for="spotMediaAuthor">Contributor Attribution</label>
+              <input type="text" id="spotMediaAuthor" class="form-input" value="Aadi [Creator]" required />
+            </div>
+            <div class="form-group">
+              <label for="spotMediaTypeSelect">Format Classification</label>
+              <select id="spotMediaTypeSelect" class="form-select">
+                <option value="photo" selected>High-Resolution Photo</option>
+                <option value="video">Wildlife Video Footage</option>
+                <option value="video">Cinematic Short Film</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="spotMediaFileInput">Select File from Device (Photo / Video)</label>
+            <input type="file" id="spotMediaFileInput" class="form-input" accept="image/*,video/*" />
+          </div>
+
+          <div class="form-group">
+            <label for="spotMediaUrlInput">Or Paste Web URL (Image / Video)</label>
+            <input type="url" id="spotMediaUrlInput" class="form-input" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish to Spot Archive</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Spot Tips & Tricks (Creator & Visitor Guidance) -->
+  <div class="modal-backdrop" id="maproomSpotTipModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          Share Tips &amp; Tricks for <span id="spotTipModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Tourist Spot</span>
+        </h3>
+        <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
+      </div>
+      <form id="spotTipForm" class="upload-form" novalidate>
+        <div class="modal-body">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            Share best photography vantage points, optical filter recommendations, morning light angles, and field navigation tips. Entries by <strong>Aadi [Creator]</strong> will feature the verified creator gold badge.
+          </p>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="spotTipAuthor">Your Name / Identity *</label>
+            <input type="text" id="spotTipAuthor" class="form-input" value="Aadi [Creator]" required />
+            <small style="font-size: 11px; color: var(--accent-gold); display: block; margin-top: 3px;">
+              👑 Will display as "Aadi [Creator]" with verified badge
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="spotTipText">Field Tips, Tricks &amp; Photography Experience *</label>
+            <textarea id="spotTipText" class="form-textarea" rows="4" placeholder="Write your tips, tricks, ideal timing, recommended lenses, or etiquette visitors should follow..." required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Tips &amp; Tricks</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Flora & Fauna Sighting Log (Post Photos, Videos & Reels) -->
+  <div class="modal-backdrop" id="maproomSightingModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          Record Field Sighting: <span id="sightingModalTarget" style="color: var(--accent-gold); margin-left: 4px;">Species</span>
+        </h3>
+        <button class="modal-close-btn maproom-modal-close-btn">&times;</button>
+      </div>
+      <form id="sightingForm" class="upload-form" novalidate>
+        <div class="modal-body">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            Document your wildlife encounter. When you spot a Bengal tiger, Ganges dolphin, or rare orchid, upload your photo, video, or reel and write your experience notes below.
+          </p>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="sightingAuthor">Observer / Photographer Name *</label>
+            <input type="text" id="sightingAuthor" class="form-input" value="Aadi [Creator]" required />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="sightingExperience">Sighting Experience &amp; Field Notes *</label>
+            <textarea id="sightingExperience" class="form-textarea" rows="3" placeholder="Describe the behavior observed, time of day, lighting, weather, and habitat notes..." required></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="sightingFileInput">Upload Photo, Video or Reel (File from Device)</label>
+            <input type="file" id="sightingFileInput" class="form-input" accept="image/*,video/*" />
+          </div>
+
+          <div class="form-group">
+            <label for="sightingUrlInput">Or Media URL (Photo / Video Link)</label>
+            <input type="url" id="sightingUrlInput" class="form-input" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary maproom-modal-cancel-btn">Cancel</button>
+          <button type="submit" class="header-action-btn btn-gold">+ Publish Sighting Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       13. TOAST NOTIFICATION SYSTEM
        ======================================================================= -->
   <div class="drongo-toast" id="drongoToast" role="status" aria-live="polite"></div>
 
-  <!-- JavaScript Engine -->
+  <!-- JavaScript Engines -->
   <script src="js/app.js"></script>
+  <script src="js/maproom.js"></script>
 </body>
 </html>

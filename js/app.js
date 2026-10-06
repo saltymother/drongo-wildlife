@@ -185,6 +185,8 @@
   const uploadForm = document.getElementById('uploadMediaForm');
   const dropzoneInput = document.getElementById('dropzoneFileInput');
   const dropzoneArea = document.getElementById('uploadDropzoneArea');
+  const btnBrowseDevice = document.getElementById('btnBrowseDevice');
+  const dropzoneFileStatus = document.getElementById('dropzoneFileStatus');
   const previewContainer = document.getElementById('uploadPreviewContainer');
   const previewImage = document.getElementById('uploadPreviewImage');
   const previewVideo = document.getElementById('uploadPreviewVideo');
@@ -707,6 +709,10 @@
     previewVideo.style.display = 'none';
     previewVideo.src = '';
     dropzoneArea.style.display = 'block';
+    if (dropzoneFileStatus) {
+      dropzoneFileStatus.textContent = '';
+      dropzoneFileStatus.style.display = 'none';
+    }
   }
 
   function generateVideoThumbnail(videoUrl) {
@@ -750,8 +756,21 @@
     const isImageFile = file.type.startsWith('image/');
 
     if (!isVideoFile && !isImageFile) {
-      showToast('Please select a valid image or video file.');
+      showToast('⚠️ Please select a valid photo or video file.');
       return;
+    }
+
+    const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2);
+    const cleanFileName = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
+    const autoTitleCandidate = cleanFileName.charAt(0).toUpperCase() + cleanFileName.slice(1);
+
+    const titleInput = document.getElementById('uploadTitle');
+    if (titleInput && (!titleInput.value || titleInput.value.trim() === '')) {
+      titleInput.value = autoTitleCandidate;
+    }
+    const locInput = document.getElementById('uploadLocation');
+    if (locInput && (!locInput.value || locInput.value.trim() === '')) {
+      locInput.value = 'Field Observation Site, India';
     }
 
     if (isVideoFile) {
@@ -759,6 +778,11 @@
       pendingVideoBlob = file;
       const objectUrl = URL.createObjectURL(file);
       pendingFileDataUrl = objectUrl;
+
+      if (dropzoneFileStatus) {
+        dropzoneFileStatus.textContent = `✓ Loaded Video: ${file.name} (${fileSizeMb} MB) — Ready to Publish`;
+        dropzoneFileStatus.style.display = 'block';
+      }
 
       dropzoneArea.style.display = 'none';
       previewContainer.style.display = 'block';
@@ -771,46 +795,92 @@
         pendingVideoPoster = poster;
       });
 
-      showToast('Video clip loaded for preview.');
+      showToast(`✓ Video footage loaded (${fileSizeMb} MB).`);
     } else {
       setMediaType('photo');
       pendingVideoBlob = null;
       pendingVideoPoster = null;
 
+      if (dropzoneFileStatus) {
+        dropzoneFileStatus.textContent = `✓ Loaded Photo: ${file.name} (${fileSizeMb} MB) — Ready to Publish`;
+        dropzoneFileStatus.style.display = 'block';
+      }
+
       const reader = new FileReader();
       reader.onload = function (e) {
-        pendingFileDataUrl = e.target.result;
-        dropzoneArea.style.display = 'none';
-        previewContainer.style.display = 'block';
-        previewImage.src = pendingFileDataUrl;
-        previewImage.style.display = 'block';
-        previewVideo.style.display = 'none';
-        showToast('Image file loaded.');
+        // High-performance client-side scaling to ensure rapid load & no QuotaExceededError
+        const img = new Image();
+        img.onload = function () {
+          const maxDim = 1600;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          pendingFileDataUrl = canvas.toDataURL('image/jpeg', 0.88);
+
+          dropzoneArea.style.display = 'none';
+          previewContainer.style.display = 'block';
+          previewImage.src = pendingFileDataUrl;
+          previewImage.style.display = 'block';
+          previewVideo.style.display = 'none';
+          showToast(`✓ Image loaded and optimized (${fileSizeMb} MB).`);
+        };
+        img.onerror = function () {
+          pendingFileDataUrl = e.target.result;
+          dropzoneArea.style.display = 'none';
+          previewContainer.style.display = 'block';
+          previewImage.src = pendingFileDataUrl;
+          previewImage.style.display = 'block';
+          previewVideo.style.display = 'none';
+        };
+        img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   }
 
   async function handleFormSubmit(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
-    const title = document.getElementById('uploadTitle').value.trim();
-    const mediaType = mediaTypeSelect.value;
-    const section = document.getElementById('uploadSection').value;
-    const location = document.getElementById('uploadLocation').value.trim();
-    const camera = document.getElementById('uploadCamera').value.trim() || 'Wildlife Camera Rig';
-    const lens = document.getElementById('uploadLens').value.trim() || 'Telephoto Lens';
-    const exposure = document.getElementById('uploadExposure').value.trim() || 'Natural Ambient Light';
-    const fieldNotes = document.getElementById('uploadStory').value.trim() || 'Documented during field observation.';
+    const titleEl = document.getElementById('uploadTitle');
+    const title = titleEl ? titleEl.value.trim() : '';
+    const mediaType = mediaTypeSelect ? mediaTypeSelect.value : 'photo';
+    const section = (document.getElementById('uploadSection') && document.getElementById('uploadSection').value) || 'photos';
+    const locationEl = document.getElementById('uploadLocation');
+    const location = locationEl ? locationEl.value.trim() : '';
+    const camera = (document.getElementById('uploadCamera') && document.getElementById('uploadCamera').value.trim()) || 'Wildlife Camera Rig';
+    const lens = (document.getElementById('uploadLens') && document.getElementById('uploadLens').value.trim()) || 'Telephoto Lens';
+    const exposure = (document.getElementById('uploadExposure') && document.getElementById('uploadExposure').value.trim()) || 'Natural Ambient Light';
+    const fieldNotes = (document.getElementById('uploadStory') && document.getElementById('uploadStory').value.trim()) || 'Documented during field observation.';
     const knowMoreInput = document.getElementById('uploadKnowMore');
     const knowMoreInfo = knowMoreInput ? knowMoreInput.value.trim() : '';
-    const externalUrl = document.getElementById('uploadUrlInput').value.trim();
+    const externalUrl = (document.getElementById('uploadUrlInput') && document.getElementById('uploadUrlInput').value.trim()) || '';
 
     let finalMediaUrl = pendingFileDataUrl || externalUrl;
     let finalVideoUrl = null;
 
     if (!finalMediaUrl && !pendingVideoBlob) {
-      showToast('Please select a photo/video file or enter a valid URL.');
+      showToast('⚠️ Please select a photo or video from your device or paste a URL.');
+      if (dropzoneArea) {
+        dropzoneArea.style.borderColor = '#C5A059';
+        dropzoneArea.style.boxShadow = '0 0 12px rgba(197, 160, 89, 0.4)';
+        setTimeout(() => {
+          dropzoneArea.style.borderColor = '';
+          dropzoneArea.style.boxShadow = '';
+        }, 2200);
+      }
       return;
     }
 
@@ -824,7 +894,7 @@
       }
     }
 
-    const chosenSubject = (section === 'photos' || section === 'video') && uploadPhotoSubjectInput ? uploadPhotoSubjectInput.value : null;
+    const chosenSubject = (section === 'photos' || section === 'video') && uploadPhotoSubjectInput ? uploadPhotoSubjectInput.value : 'animal';
 
     const tags = ['user-upload', section];
     if (mediaType === 'video') tags.push('video');
@@ -841,22 +911,25 @@
     };
     const displaySection = sectionDisplayNames[section] || section;
 
+    const displayTitle = title || `Wild Observation (${chosenSubject.charAt(0).toUpperCase() + chosenSubject.slice(1)})`;
+    const displayLocation = location || 'Field Observation Site, India';
+
     const newRecord = {
       id: uniqueId,
       type: mediaType,
-      title: title || 'Expedition Dispatch #' + (catalog.length + 1),
+      title: displayTitle,
       category: section,
       photoSubject: chosenSubject,
       section: displaySection,
       tags: tags,
-      location: location || 'Field Observation Site',
+      location: displayLocation,
       camera: camera,
       lens: lens,
       exposure: exposure,
       mediaUrl: finalMediaUrl,
       videoUrl: finalVideoUrl,
       fieldNotes: fieldNotes,
-      knowMoreInfo: knowMoreInfo || `Subject: ${title}\nCategory: ${displaySection} • ${(chosenSubject || 'General').toUpperCase()}\nLocation: ${location}\nCurator Field Notes: ${fieldNotes}`,
+      knowMoreInfo: knowMoreInfo || `Subject: ${displayTitle}\nCategory: ${displaySection} • ${(chosenSubject || 'General').toUpperCase()}\nLocation: ${displayLocation}\nCurator Field Notes: ${fieldNotes}`,
       isUserUploaded: true,
       hasBlobInDB: !!pendingVideoBlob,
       timestamp: Date.now()
@@ -866,7 +939,21 @@
     catalog.unshift(newRecord);
     saveUserItemsToStorage();
 
-    // Re-render
+    // Automatically switch active filters so user immediately sees their upload in the grid
+    currentFilter = section;
+    if (chosenSubject && (section === 'photos' || section === 'video')) {
+      currentPhotoSub = chosenSubject;
+    } else {
+      currentPhotoSub = 'all';
+    }
+
+    filterBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-filter') === currentFilter);
+    });
+    photoSubBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-photo-sub') === currentPhotoSub);
+    });
+
     renderGallery();
     updateFilterCounts();
     closeUploadModal();
@@ -1146,8 +1233,20 @@
       });
     }
 
+    // Explicit Device File Selection Trigger
+    btnBrowseDevice?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropzoneInput?.click();
+    });
+
+    dropzoneArea?.addEventListener('click', (e) => {
+      if (e.target !== dropzoneInput && e.target !== btnBrowseDevice && !btnBrowseDevice?.contains(e.target)) {
+        dropzoneInput?.click();
+      }
+    });
+
     dropzoneInput?.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) handleFileSelection(e.target.files[0]);
+      if (e.target.files && e.target.files.length > 0) handleFileSelection(e.target.files[0]);
     });
 
     clearPreviewBtn?.addEventListener('click', resetUploadPreview);
