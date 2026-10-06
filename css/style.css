@@ -3732,41 +3732,200 @@ a {
 
 .mini-uploads-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: 12px;
 }
 
 .mini-upload-thumb {
   background: #0A2B47;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid rgba(10, 43, 71, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.mini-upload-thumb img, .mini-upload-thumb video {
+.mini-upload-thumb:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(212, 175, 55, 0.4);
+  border-color: var(--accent-gold);
+}
+
+.thumb-media-wrapper {
+  position: relative;
   width: 100%;
-  height: 90px;
+  height: 96px;
+  overflow: hidden;
+  background: #000;
+}
+
+.thumb-media-wrapper img, 
+.thumb-media-wrapper video {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.mini-upload-thumb:hover .thumb-media-wrapper img,
+.mini-upload-thumb:hover .thumb-media-wrapper video {
+  transform: scale(1.08);
+}
+
+.photo-expand-overlay,
+.video-play-overlay {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(10, 43, 71, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #F3D99E;
+  font-family: var(--font-sans);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Delete Button on thumbnail */
+.btn-delete-spot-media {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(180, 40, 40, 0.9);
+  border: 1px solid rgba(255, 120, 120, 0.6);
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-size: 9.5px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  z-index: 6;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.btn-delete-spot-media:hover {
+  background: rgba(220, 30, 30, 1);
+  transform: scale(1.08);
+  box-shadow: 0 3px 8px rgba(220, 30, 30, 0.6);
 }
 
 .mini-upload-caption {
-  padding: 5px 6px;
+  padding: 6px 8px;
   background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .mini-upload-caption strong {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--primary-ocean-blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+}
+
+.mini-upload-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.mini-upload-meta small {
+  font-size: 9.5px;
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.mini-upload-caption small {
+.tap-to-open-hint {
   font-size: 9px;
-  color: var(--text-muted);
+  color: #A07820;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+/* Enlarge badges on main spot and fauna cards */
+.spot-enlarge-badge,
+.fauna-enlarge-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(10, 43, 71, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #F3D99E;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.spot-image-wrapper:hover .spot-enlarge-badge,
+.fauna-image-wrapper:hover .fauna-enlarge-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sighting Media Delete Button */
+.sighting-media-preview {
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.btn-delete-sighting {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(180, 40, 40, 0.88);
+  border: 1px solid rgba(255, 120, 120, 0.6);
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  z-index: 5;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-sighting:hover {
+  background: rgba(220, 30, 30, 1);
+  transform: scale(1.08);
 }
 
 /* Option 2: Flora & Fauna Grid (Compact Visual Section Style) */

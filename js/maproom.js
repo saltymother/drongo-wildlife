@@ -1672,6 +1672,19 @@
       const stored = localStorage.getItem(MAPROOM_STORAGE_KEY);
       if (stored) {
         maproomDispatches = JSON.parse(stored);
+        // Ensure all stored uploads and sightings have an id for reliable deletion
+        Object.keys(maproomDispatches).forEach(key => {
+          if (Array.isArray(maproomDispatches[key].uploads)) {
+            maproomDispatches[key].uploads.forEach((up, idx) => {
+              if (!up.id) up.id = 'up-' + key + '-' + idx + '-' + Date.now();
+            });
+          }
+          if (Array.isArray(maproomDispatches[key].sightings)) {
+            maproomDispatches[key].sightings.forEach((s, idx) => {
+              if (!s.id) s.id = 'sighting-' + key + '-' + idx + '-' + Date.now();
+            });
+          }
+        });
       } else {
         maproomDispatches = {};
       }
@@ -1763,9 +1776,10 @@
 
           return `
             <article class="tourist-spot-card" id="${spot.id}">
-              <div class="spot-image-wrapper">
+              <div class="spot-image-wrapper spot-open-lightbox-trigger" data-spot-name="${escapeHtml(spot.name)}" data-image-url="${spot.imageUrl}" data-spot-desc="${escapeHtml(spot.description)}" data-state-name="${escapeHtml(data.name)}" title="Click to view full photo of ${escapeHtml(spot.name)}" style="cursor: pointer;">
                 <img src="${spot.imageUrl}" alt="${spot.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';"/>
                 <span class="spot-badge">HERITAGE &amp; WILDLIFE DESTINATION</span>
+                <span class="spot-enlarge-badge">🔍 VIEW FULL PHOTO</span>
               </div>
 
               <div class="spot-body">
@@ -1793,8 +1807,9 @@
                     <span>Tips, Tricks &amp; Experience Feed:</span>
                   </div>
 
-                  ${allTips.map(t => {
+                  ${allTips.map((t, tIdx) => {
                     const isCreator = t.isCreator || t.author.toLowerCase().includes('aadi') || t.author.toLowerCase().includes('creator');
+                    const isCustomTip = tIdx >= spot.tipsAndTricks.length;
                     return `
                       <div class="tip-card ${isCreator ? 'creator-tip' : 'contributor-tip'}">
                         <div class="tip-header">
@@ -1802,6 +1817,11 @@
                             ${isCreator ? '👑 Aadi [Creator]' : `🌿 ${escapeHtml(t.author)}`}
                           </span>
                           <span class="tip-date">${t.date || 'Field Guide'}</span>
+                          ${isCustomTip ? `
+                            <button type="button" class="btn-delete-tip" data-spot-id="${spot.id}" data-tip-index="${tIdx - spot.tipsAndTricks.length}" title="Delete this tip" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 11px; margin-left: auto;">
+                              ✕ Delete
+                            </button>
+                          ` : ''}
                         </div>
                         <p class="tip-text">${escapeHtml(t.tip)}</p>
                       </div>
@@ -1813,22 +1833,36 @@
                 ${customSpotUploads.length > 0 ? `
                   <div class="spot-custom-uploads">
                     <div class="uploads-feed-title">
-                      <span>Recent Dispatches &amp; Media (${customSpotUploads.length}):</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                      <span>Field Dispatches &amp; Uploaded Media (${customSpotUploads.length}):</span>
                     </div>
                     <div class="mini-uploads-grid">
-                      ${customSpotUploads.map(up => `
-                        <div class="mini-upload-thumb" title="${escapeHtml(up.title)} by ${escapeHtml(up.author)}">
-                          ${up.type === 'video' ? `
-                            <video src="${up.url}" controls poster="${up.poster || 'assets/images/gangetic_dolphin.jpg'}"></video>
-                          ` : `
-                            <img src="${up.url}" alt="${escapeHtml(up.title)}" onerror="this.src='assets/images/nalanda_ruins.jpg';"/>
-                          `}
+                      ${customSpotUploads.map((up, uIdx) => {
+                        const uploadId = up.id || `up-${spot.id}-${uIdx}`;
+                        return `
+                        <div class="mini-upload-thumb" data-spot-id="${spot.id}" data-upload-id="${uploadId}" title="Tap to enlarge: ${escapeHtml(up.title)}">
+                          <div class="thumb-media-wrapper">
+                            ${up.type === 'video' ? `
+                              <video src="${up.url}" preload="metadata" muted></video>
+                              <span class="video-play-overlay">▶ 4K VIDEO</span>
+                            ` : `
+                              <img src="${up.url}" alt="${escapeHtml(up.title)}" loading="lazy" onerror="this.src='assets/images/nalanda_ruins.jpg';"/>
+                              <span class="photo-expand-overlay">🔍 ENLARGE</span>
+                            `}
+                            <button type="button" class="btn-delete-spot-media" data-spot-id="${spot.id}" data-upload-id="${uploadId}" data-spot-name="${escapeHtml(spot.name)}" title="Delete this ${up.type}">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                              Delete
+                            </button>
+                          </div>
                           <div class="mini-upload-caption">
                             <strong>${escapeHtml(up.title)}</strong>
-                            <small>By ${escapeHtml(up.author)}</small>
+                            <div class="mini-upload-meta">
+                              <small>By ${escapeHtml(up.author)}</small>
+                              <span class="tap-to-open-hint">Open ↗</span>
+                            </div>
                           </div>
                         </div>
-                      `).join('')}
+                      `}).join('')}
                     </div>
                   </div>
                 ` : ''}
@@ -1857,6 +1891,81 @@
         openSpotTipModal(spotId, spotName);
       });
     });
+
+    // Tap/Click on uploaded media thumbnail -> OPEN BIG IN LIGHTBOX
+    contentDisplayPane.querySelectorAll('.mini-upload-thumb').forEach(thumb => {
+      thumb.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-delete-spot-media')) return;
+
+        const spotId = thumb.getAttribute('data-spot-id');
+        const uploadId = thumb.getAttribute('data-upload-id');
+        const uploads = maproomDispatches[spotId]?.uploads || [];
+        const item = uploads.find(u => u.id === uploadId);
+        if (!item) return;
+
+        const spotObj = spots.find(s => s.id === spotId);
+        const spotName = spotObj ? spotObj.name : 'Tourist Spot';
+
+        if (window.openDrongoLightbox) {
+          window.openDrongoLightbox({
+            type: item.type || 'photo',
+            title: item.title,
+            mediaUrl: item.url,
+            videoUrl: item.type === 'video' ? item.url : null,
+            badge: `${item.type === 'video' ? '4K VIDEO' : 'PHOTO'} DISPATCH • ${data.name.toUpperCase()}`,
+            location: `${spotName} • ${data.name}`,
+            author: item.author,
+            date: item.date,
+            description: `Field media dispatch contributed to ${spotName} archive in ${data.name}. Recorded by ${item.author}.`,
+            onDelete: () => deleteSpotMedia(spotId, uploadId, spotName)
+          });
+        }
+      });
+    });
+
+    // Delete Button inside thumbnail
+    contentDisplayPane.querySelectorAll('.btn-delete-spot-media').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const spotId = btn.getAttribute('data-spot-id');
+        const uploadId = btn.getAttribute('data-upload-id');
+        const spotName = btn.getAttribute('data-spot-name') || 'this spot';
+        deleteSpotMedia(spotId, uploadId, spotName);
+      });
+    });
+
+    // Delete tip button
+    contentDisplayPane.querySelectorAll('.btn-delete-tip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const spotId = btn.getAttribute('data-spot-id');
+        const tipIdx = parseInt(btn.getAttribute('data-tip-index'), 10);
+        deleteSpotTip(spotId, tipIdx);
+      });
+    });
+
+    // Spot Main Image -> Open in Lightbox
+    contentDisplayPane.querySelectorAll('.spot-open-lightbox-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const spotName = trigger.getAttribute('data-spot-name');
+        const imgUrl = trigger.getAttribute('data-image-url');
+        const spotDesc = trigger.getAttribute('data-spot-desc');
+        const stateName = trigger.getAttribute('data-state-name');
+
+        if (window.openDrongoLightbox) {
+          window.openDrongoLightbox({
+            type: 'photo',
+            title: spotName,
+            mediaUrl: imgUrl,
+            badge: `HERITAGE DESTINATION • ${stateName.toUpperCase()}`,
+            location: `${spotName} • ${stateName}`,
+            author: 'Drongo Wildlife Cartography',
+            description: spotDesc,
+            date: 'Institutional Record'
+          });
+        }
+      });
+    });
   }
 
   function renderFloraFauna(data) {
@@ -1880,10 +1989,11 @@
 
           return `
             <article class="fauna-card" id="${spec.id}">
-              <div class="fauna-image-wrapper">
+              <div class="fauna-image-wrapper fauna-open-lightbox-trigger" data-species-name="${escapeHtml(spec.name)}" data-image-url="${spec.imageUrl}" data-species-notes="${escapeHtml(spec.notes)}" data-species-scientific="${escapeHtml(spec.scientific)}" data-state-name="${escapeHtml(data.name)}" title="Click to view full photo of ${escapeHtml(spec.name)}" style="cursor: pointer;">
                 <img src="${spec.imageUrl}" alt="${spec.name}" loading="lazy" onerror="this.src='assets/images/valmiki_tiger.jpg';"/>
                 <span class="fauna-rank">#${index + 1}</span>
                 <span class="fauna-type-badge">${spec.type}</span>
+                <span class="fauna-enlarge-badge">🔍 VIEW FULL PHOTO</span>
               </div>
 
               <div class="fauna-body">
@@ -1901,8 +2011,9 @@
                 ${customSightings.length > 0 ? `
                   <div class="fauna-sightings-feed">
                     <span class="sightings-header">Field Encounters (${customSightings.length}):</span>
-                    ${customSightings.map(s => {
+                    ${customSightings.map((s, sIdx) => {
                       const isCreator = s.author.toLowerCase().includes('aadi') || s.author.toLowerCase().includes('creator');
+                      const sightingId = s.id || `sighting-${spec.id}-${sIdx}`;
                       return `
                         <div class="sighting-item">
                           <div class="sighting-author">
@@ -1913,10 +2024,21 @@
                           </div>
                           <p class="sighting-exp">${escapeHtml(s.experience)}</p>
                           ${s.mediaUrl ? `
-                            <div class="sighting-media-preview">
-                              ${s.mediaType === 'video' ? `<video src="${s.mediaUrl}" controls></video>` : `<img src="${s.mediaUrl}" alt="Sighting photo" onerror="this.src='assets/images/valmiki_tiger.jpg';"/>`}
+                            <div class="sighting-media-preview sighting-open-lightbox-trigger" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-media-url="${s.mediaUrl}" data-media-type="${s.mediaType || 'photo'}" data-author="${escapeHtml(s.author)}" data-experience="${escapeHtml(s.experience)}" data-species-name="${escapeHtml(spec.name)}" data-state-name="${escapeHtml(data.name)}" title="Tap to enlarge this sighting media">
+                              ${s.mediaType === 'video' ? `<video src="${s.mediaUrl}" preload="metadata" muted></video><span class="video-play-overlay">▶ 4K VIDEO</span>` : `<img src="${s.mediaUrl}" alt="Sighting photo" onerror="this.src='assets/images/valmiki_tiger.jpg';"/><span class="photo-expand-overlay">🔍 ENLARGE</span>`}
+                              <button type="button" class="btn-delete-sighting" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-species-name="${escapeHtml(spec.name)}" title="Delete this sighting record">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                Delete
+                              </button>
                             </div>
-                          ` : ''}
+                          ` : `
+                            <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+                              <button type="button" class="btn-delete-sighting" data-species-id="${spec.id}" data-sighting-id="${sightingId}" data-species-name="${escapeHtml(spec.name)}" title="Delete this sighting text" style="position: static; padding: 2px 6px;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                Delete
+                              </button>
+                            </div>
+                          `}
                         </div>
                       `;
                     }).join('')}
@@ -1936,6 +2058,72 @@
         const specId = btn.getAttribute('data-species-id');
         const specName = btn.getAttribute('data-species-name');
         openSpeciesSightingModal(specId, specName);
+      });
+    });
+
+    // Fauna Image -> Open in Lightbox
+    contentDisplayPane.querySelectorAll('.fauna-open-lightbox-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const specName = trigger.getAttribute('data-species-name');
+        const imgUrl = trigger.getAttribute('data-image-url');
+        const notes = trigger.getAttribute('data-species-notes');
+        const scientific = trigger.getAttribute('data-species-scientific');
+        const stateName = trigger.getAttribute('data-state-name');
+
+        if (window.openDrongoLightbox) {
+          window.openDrongoLightbox({
+            type: 'photo',
+            title: specName,
+            mediaUrl: imgUrl,
+            badge: `INDIGENOUS SPECIES • ${stateName.toUpperCase()}`,
+            location: `${specName} (${scientific}) • ${stateName}`,
+            author: 'Wildlife Institute of India & Drongo Records',
+            description: notes,
+            date: 'Verified Species Record'
+          });
+        }
+      });
+    });
+
+    // Sighting Media -> Open in Lightbox
+    contentDisplayPane.querySelectorAll('.sighting-open-lightbox-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-delete-sighting')) return;
+
+        const specId = trigger.getAttribute('data-species-id');
+        const sightingId = trigger.getAttribute('data-sighting-id');
+        const mediaUrl = trigger.getAttribute('data-media-url');
+        const mediaType = trigger.getAttribute('data-media-type');
+        const author = trigger.getAttribute('data-author');
+        const exp = trigger.getAttribute('data-experience');
+        const specName = trigger.getAttribute('data-species-name');
+        const stateName = trigger.getAttribute('data-state-name');
+
+        if (window.openDrongoLightbox && mediaUrl) {
+          window.openDrongoLightbox({
+            type: mediaType || 'photo',
+            title: `Sighting Encounter: ${specName}`,
+            mediaUrl: mediaUrl,
+            videoUrl: mediaType === 'video' ? mediaUrl : null,
+            badge: `FIELD ENCOUNTER • ${stateName.toUpperCase()}`,
+            location: `${specName} • ${stateName}`,
+            author: author,
+            description: exp,
+            date: 'Contributor Sighting Log',
+            onDelete: () => deleteSpeciesSighting(specId, sightingId, specName)
+          });
+        }
+      });
+    });
+
+    // Delete Sighting Button
+    contentDisplayPane.querySelectorAll('.btn-delete-sighting').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const specId = btn.getAttribute('data-species-id');
+        const sightingId = btn.getAttribute('data-sighting-id');
+        const specName = btn.getAttribute('data-species-name') || 'this species';
+        deleteSpeciesSighting(specId, sightingId, specName);
       });
     });
   }
@@ -1978,7 +2166,9 @@
 
   function saveSpotMedia(spotId, title, author, mediaUrl, mediaType) {
     if (!maproomDispatches[spotId]) maproomDispatches[spotId] = { uploads: [], tips: [] };
+    const uploadId = 'up-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
     maproomDispatches[spotId].uploads.unshift({
+      id: uploadId,
       title: title.trim(),
       author: author.trim(),
       url: mediaUrl.trim(),
@@ -1989,6 +2179,38 @@
     saveMaproomData();
     renderStateDossier(activeStateKey);
     showMapToast(`✓ Media added to ${pendingSpotName || 'tourist spot'}!`);
+  }
+
+  function deleteSpotMedia(spotId, uploadId, spotName = 'this destination') {
+    if (!maproomDispatches[spotId] || !maproomDispatches[spotId].uploads) return;
+    if (confirm(`Are you sure you want to delete this photo/video from ${spotName}?`)) {
+      maproomDispatches[spotId].uploads = maproomDispatches[spotId].uploads.filter(u => u.id !== uploadId);
+      saveMaproomData();
+      renderStateDossier(activeStateKey);
+      if (window.closeDrongoLightbox) window.closeDrongoLightbox();
+      showMapToast(`✓ Media dispatch deleted from ${spotName}.`);
+    }
+  }
+
+  function deleteSpotTip(spotId, tipIndex) {
+    if (!maproomDispatches[spotId] || !maproomDispatches[spotId].tips) return;
+    if (confirm('Are you sure you want to remove this tip?')) {
+      maproomDispatches[spotId].tips.splice(tipIndex, 1);
+      saveMaproomData();
+      renderStateDossier(activeStateKey);
+      showMapToast('✓ Tip removed from feed.');
+    }
+  }
+
+  function deleteSpeciesSighting(specId, sightingId, specName = 'this species') {
+    if (!maproomDispatches[specId] || !maproomDispatches[specId].sightings) return;
+    if (confirm(`Are you sure you want to delete this field encounter record for ${specName}?`)) {
+      maproomDispatches[specId].sightings = maproomDispatches[specId].sightings.filter(s => s.id !== sightingId);
+      saveMaproomData();
+      renderStateDossier(activeStateKey);
+      if (window.closeDrongoLightbox) window.closeDrongoLightbox();
+      showMapToast(`✓ Sighting record removed.`);
+    }
   }
 
   /* --------------------------------------------------------------------------
@@ -2075,7 +2297,9 @@
 
   function saveSpeciesSighting(specId, author, exp, mediaUrl, mediaType) {
     if (!maproomDispatches[specId]) maproomDispatches[specId] = { sightings: [] };
+    const sightingId = 'sighting-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
     maproomDispatches[specId].sightings.unshift({
+      id: sightingId,
       author: author.trim(),
       date: new Date().toLocaleDateString(),
       experience: exp.trim(),

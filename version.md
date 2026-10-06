@@ -349,3 +349,15 @@
   - Preserved rock-solid positioning of the Latin motto to prevent jitter or layout shifts
   - Added tap-to-toggle mobile support and keyboard accessibility across header, footer, drawer, and crest detail modal
 
+## [v1.0.27] - 2026-10-06
+- **Commit:** pending (Signed)
+- **Author:** saltymother <saltymother@users.noreply.github.com>
+- **Type:** Feature | UI/UX & Media Management
+- **Status:** Deployed & Verified
+- **GitHub Pages:** https://saltymother.github.io/drongo-wildlife/
+- **Summary:**
+  - Implemented tap-to-enlarge Lightbox modal viewer for Maproom tourist spot media uploads (photos and 4K videos) across all states
+  - Enabled full-resolution lightbox inspection for primary tourist spot showcase cards and indigenous flora & fauna species imagery
+  - Added dedicated thumbnail delete buttons ('🗑️ Delete') on tourist spot user dispatches and field sighting cards
+  - Added full-modal delete action ('Delete This Photo / Video') inside the enlarged Lightbox viewer with instant localStorage synchronization and state dossier re-rendering
+  - Added removal options for custom traveler tips and sightings, with confirmation prompts and toast notifications

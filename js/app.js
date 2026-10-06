@@ -215,6 +215,7 @@
   const lightboxKnowMorePanel = document.getElementById('lightboxKnowMorePanel');
   const lightboxKnowMoreContent = document.getElementById('lightboxKnowMoreContent');
   const btnEditSpeciesNotes = document.getElementById('btnEditSpeciesNotes');
+  const lightboxActionContainer = document.getElementById('lightboxActionContainer');
 
   // Search Elements
   const searchTriggerBtns = document.querySelectorAll('.trigger-search-modal');
@@ -523,6 +524,16 @@
     activeLightboxIndex = index;
     const item = currentlyFilteredItems[index];
 
+    // Reset custom action container
+    if (lightboxActionContainer) {
+      lightboxActionContainer.innerHTML = '';
+      lightboxActionContainer.style.display = 'none';
+    }
+    if (lightboxPrevBtn && lightboxNextBtn) {
+      lightboxPrevBtn.style.display = '';
+      lightboxNextBtn.style.display = '';
+    }
+
     // Populate Info
     lightboxBadge.textContent = item.section || (item.type === 'video' ? 'VIDEO DISPATCH' : 'WILDLIFE PHOTOGRAPH');
     lightboxTitle.textContent = item.title;
@@ -557,6 +568,22 @@
       ${item.isUserUploaded ? '<div class="spec-line"><strong>Source</strong> Verified Contributor Upload</div>' : ''}
     `;
 
+    // If user uploaded, add delete option inside lightbox
+    if (lightboxActionContainer && item.isUserUploaded) {
+      lightboxActionContainer.innerHTML = `
+        <button type="button" class="btn-lightbox-delete" id="btnLightboxGalleryDelete" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 16px; background: rgba(201, 59, 43, 0.16); border: 1px solid #c93b2b; color: #ff6b6b; border-radius: 4px; font-family: var(--font-sans); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; transition: all 0.25s ease;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          Delete This Contributor Upload
+        </button>
+      `;
+      lightboxActionContainer.style.display = 'block';
+      document.getElementById('btnLightboxGalleryDelete')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+        deleteUpload(item.id);
+      });
+    }
+
     // Render Media (Video or Photo)
     if (item.type === 'video') {
       const vidSource = item.videoUrl || item.mediaUrl;
@@ -588,6 +615,108 @@
     document.body.style.overflow = 'hidden';
   }
 
+  // Universal Lightbox for Maproom and Custom Media (Expands any photo or video)
+  function openCustomLightbox(item, options = {}) {
+    if (!item) return;
+
+    // Reset standard gallery index
+    activeLightboxIndex = -1;
+
+    // Populate Info
+    lightboxBadge.textContent = item.badge || (item.type === 'video' ? '4K VIDEO DISPATCH' : 'WILDLIFE PHOTOGRAPH');
+    lightboxTitle.textContent = item.title || 'Field Dispatch';
+    lightboxLocation.textContent = item.location || 'India Wildlife Corridors';
+    lightboxStory.textContent = item.description || item.fieldNotes || item.story || 'Recorded during field exploration.';
+
+    // Populate "To Know More" panel
+    if (lightboxKnowMoreContent) {
+      if (item.knowMoreInfo) {
+        lightboxKnowMoreContent.textContent = item.knowMoreInfo;
+      } else {
+        lightboxKnowMoreContent.textContent = `Subject: ${item.title}\nLocation: ${item.location || 'Regional Biosphere'}\nContributor: ${item.author || 'Aadi [Creator]'}\nStatus: Verified Field Record in Drongo Maproom.`;
+      }
+    }
+
+    if (lightboxKnowMorePanel && lightboxKnowMoreBtn) {
+      lightboxKnowMorePanel.style.display = options.openKnowMore ? 'block' : 'none';
+      lightboxKnowMoreBtn.classList.toggle('active', !!options.openKnowMore);
+      lightboxKnowMoreBtn.setAttribute('aria-expanded', options.openKnowMore ? 'true' : 'false');
+    }
+
+    // Specs
+    let specsHtml = `
+      <div class="spec-line"><strong>Subject Title</strong> ${escapeHtml(item.title || 'Untitled')}</div>
+      <div class="spec-line"><strong>Contributor</strong> ${escapeHtml(item.author || 'Aadi [Creator]')}</div>
+      <div class="spec-line"><strong>Location</strong> ${escapeHtml(item.location || 'Regional Wildlife Corridor')}</div>
+      <div class="spec-line"><strong>Classification</strong> ${escapeHtml((item.type === 'video' ? 'Video Footage' : 'Still Photo')).toUpperCase()}</div>
+      <div class="spec-line"><strong>Dispatch Date</strong> ${escapeHtml(item.date || 'Field Record')}</div>
+      <div class="spec-line"><strong>Archive Source</strong> Maproom Community Dispatch</div>
+    `;
+    lightboxSpecs.innerHTML = specsHtml;
+
+    // Custom Action Container (e.g. Delete button for user uploads)
+    if (lightboxActionContainer) {
+      if (options.onDelete) {
+        lightboxActionContainer.innerHTML = `
+          <button type="button" class="btn-lightbox-delete" id="btnLightboxCustomDelete" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 16px; background: rgba(201, 59, 43, 0.16); border: 1px solid #c93b2b; color: #ff6b6b; border-radius: 4px; font-family: var(--font-sans); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; transition: all 0.25s ease;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            Delete This Photo / Video
+          </button>
+        `;
+        lightboxActionContainer.style.display = 'block';
+
+        const delBtn = document.getElementById('btnLightboxCustomDelete');
+        delBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          options.onDelete();
+        });
+      } else {
+        lightboxActionContainer.innerHTML = '';
+        lightboxActionContainer.style.display = 'none';
+      }
+    }
+
+    // Navigation buttons visibility
+    if (lightboxPrevBtn && lightboxNextBtn) {
+      lightboxPrevBtn.style.display = 'none';
+      lightboxNextBtn.style.display = 'none';
+    }
+
+    // Render Media (Video or Photo)
+    if (item.type === 'video') {
+      const vidSource = item.videoUrl || item.url || item.mediaUrl;
+      lightboxMediaPane.innerHTML = `
+        <video 
+          src="${escapeHtml(vidSource)}" 
+          controls 
+          autoplay 
+          playsinline 
+          style="width: 100%; max-height: 80vh; outline: none; background: #000; border-radius: 4px;"
+        >
+          Your browser does not support HTML5 video playback.
+        </video>
+      `;
+    } else {
+      const imgSrc = item.url || item.mediaUrl || 'assets/images/nalanda_ruins.jpg';
+      lightboxMediaPane.innerHTML = `
+        <img 
+          src="${escapeHtml(imgSrc)}" 
+          alt="${escapeHtml(item.title || 'Enlarged View')}" 
+          style="max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 4px;"
+          onerror="this.onerror=null; this.src='assets/images/valmiki_tiger.jpg';"
+        />
+      `;
+    }
+
+    lightboxModal.classList.add('open');
+    lightboxModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Expose on global window for Maproom module
+  window.openDrongoLightbox = openCustomLightbox;
+  window.closeDrongoLightbox = closeLightbox;
+
   function closeLightbox() {
     lightboxModal.classList.remove('open');
     lightboxModal.setAttribute('aria-hidden', 'true');
@@ -597,6 +726,14 @@
       video.currentTime = 0;
     }
     lightboxMediaPane.innerHTML = '';
+    if (lightboxActionContainer) {
+      lightboxActionContainer.innerHTML = '';
+      lightboxActionContainer.style.display = 'none';
+    }
+    if (lightboxPrevBtn && lightboxNextBtn) {
+      lightboxPrevBtn.style.display = '';
+      lightboxNextBtn.style.display = '';
+    }
     document.body.style.overflow = '';
   }
 
